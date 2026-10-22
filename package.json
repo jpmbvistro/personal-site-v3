@@ -1,0 +1,32 @@
+{
+  "name": "personal-site-v3",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "tinacms dev -c \"astro dev --ignore-lock\"",
+    "build": "tinacms build --local --skip-cloud-checks -c \"astro build\"",
+    "build:cloud": "node --env-file-if-exists=.env.local ./node_modules/@tinacms/cli/bin/tinacms build && astro build",
+    "check": "astro check",
+    "preview": "node ./dist/server/entry.mjs",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.1.9",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tinacms/astro": "^0.8.0",
+    "astro": "^7.4.2",
+    "tailwindcss": "^4.3.3",
+    "tinacms": "^3.15.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@playwright/test": "^1.64.1",
+    "@tinacms/cli": "^4.0.3",
+    "@types/node": "^24.19.2",
+    "typescript": "^6.0.3"
+  }
+}

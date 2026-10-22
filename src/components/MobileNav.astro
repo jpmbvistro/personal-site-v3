@@ -1,0 +1,71 @@
+---
+import { navigation } from '../lib/navigation';
+---
+
+<details data-mobile-nav>
+  <summary>
+    Menu
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M3 6h12M3 12h12" stroke="currentColor" stroke-width="1.5" />
+    </svg>
+  </summary>
+  <nav aria-label="Mobile navigation">
+    {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
+  </nav>
+</details>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('[data-mobile-nav]');
+  if (menu) {
+    const summary = menu.querySelector('summary');
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && menu.open) {
+        menu.open = false;
+        summary?.focus();
+      }
+    });
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.open = false;
+        // Let native link/fragment navigation move focus to the destination.
+      });
+    });
+    window.matchMedia('(min-width: 48rem)').addEventListener('change', (event) => {
+      if (event.matches) menu.open = false;
+    });
+  }
+</script>
+
+<style>
+  details { display: block; }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 2.75rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker { display: none; }
+  details[open] summary { background: var(--secondary); }
+  nav {
+    position: absolute;
+    inset: calc(100% - 1px) 0 auto;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4) var(--gutter);
+    background: var(--background);
+    border-bottom: 1px solid var(--border);
+  }
+  a {
+    padding: var(--space-3) var(--space-2);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  a:hover { color: var(--primary); background: var(--muted); }
+  @media (min-width: 48rem) { details { display: none; } }
+</style>

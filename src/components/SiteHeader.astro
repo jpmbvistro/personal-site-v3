@@ -1,0 +1,51 @@
+---
+import Container from './Container.astro';
+import MobileNav from './MobileNav.astro';
+import { navigation } from '../lib/navigation';
+---
+
+<header>
+  <Container class="header-inner">
+    <a class="wordmark" href="/" aria-label="Juan Vistro — home">
+      <span class="mark" aria-hidden="true">jv.</span>
+      <span>Juan Vistro</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
+    </nav>
+    <MobileNav />
+  </Container>
+</header>
+
+<style>
+  header { position: relative; border-bottom: 1px solid var(--border); }
+  header :global(.header-inner) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: 5.5rem;
+  }
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 2.75rem;
+    color: var(--foreground);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .mark { color: var(--primary); font-family: var(--font-serif); font-size: 2rem; }
+  .desktop-nav { display: none; gap: var(--space-8); }
+  .desktop-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--foreground);
+    font-size: var(--text-small);
+    text-decoration: none;
+  }
+  .desktop-nav a:hover { color: var(--primary); text-decoration: underline; }
+  @media (min-width: 48rem) { .desktop-nav { display: flex; } }
+</style>

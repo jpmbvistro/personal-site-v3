@@ -1,0 +1,29 @@
+---
+import Container from './Container.astro';
+import { navigation } from '../lib/navigation';
+---
+
+<footer>
+  <Container class="footer-inner">
+    <p>© {new Date().getFullYear()} Juan Vistro</p>
+    <nav aria-label="Footer navigation">
+      {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
+    </nav>
+    <p class="colophon">Considered systems. Human perspective.</p>
+  </Container>
+</footer>
+
+<style>
+  footer { border-top: 1px solid var(--border); font-size: var(--text-small); }
+  footer :global(.footer-inner) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+  }
+  nav { display: flex; flex-wrap: wrap; gap: var(--space-6); }
+  nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .colophon { color: var(--muted-foreground); }
+</style>
