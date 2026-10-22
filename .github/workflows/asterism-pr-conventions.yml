@@ -1,0 +1,16 @@
+# Installed by asterism-ops scripts/install.sh repo <path> --ci
+# Requires access to this private reusable workflow from the consuming repository.
+name: Asterism PR conventions
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+  issues: read
+  pull-requests: read
+
+jobs:
+  asterism-conventions:
+    uses: jpmbvistro/asterism-ops/.github/workflows/pr-conventions.yml@main
