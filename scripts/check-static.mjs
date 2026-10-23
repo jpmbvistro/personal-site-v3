@@ -9,10 +9,11 @@ import { setTimeout as delay } from 'node:timers/promises';
 const fixtures = [
   new URL('../content/work/static-fixture.mdx', import.meta.url),
   new URL('../content/projects/static-fixture.mdx', import.meta.url),
+  new URL('../content/projects/static-unpublished.mdx', import.meta.url),
 ];
 const created = [];
-const runBuild = async () => {
-  const child = spawn('npm', ['run', 'build'], { stdio: 'inherit' });
+const runBuild = async (env = {}) => {
+  const child = spawn('npm', ['run', 'build'], { stdio: 'inherit', env: { ...process.env, ...env } });
   const [code] = await once(child, 'exit');
   assert.equal(code, 0, 'Static build failed');
 };
@@ -23,7 +24,22 @@ try {
   created.push(fixtures[0]);
   await writeFile(fixtures[1], '---\ntitle: Minimal project rendering fixture\ndraft: false\n---\n\nOnly required fields.\n', { flag: 'wx' });
   created.push(fixtures[1]);
-  await runBuild();
+  await writeFile(fixtures[2], '---\ntitle: Missing draft flag fixture\n---\n\nMust not publish.\n', { flag: 'wx' });
+  created.push(fixtures[2]);
+  const site = 'https://release-check.example';
+  await runBuild({ SITE_URL: site });
+
+  const sitemap = await readFile(new URL('../dist/client/sitemap-0.xml', import.meta.url), 'utf8');
+  for (const route of ['', 'work/', 'projects/', 'about/', 'contact/', 'resume/', 'work/static-fixture/', 'projects/static-fixture/']) {
+    assert.ok(sitemap.includes(`<loc>${site}/${route}</loc>`), `Sitemap must include ${route}`);
+    const page = await readFile(new URL(`../dist/client/${route}index.html`, import.meta.url), 'utf8');
+    assert.ok(page.includes(`rel="canonical" href="${site}/${route}"`), `Canonical URL for ${route}`);
+    assert.match(page, /property="og:title" content="[^"]+"/);
+    assert.match(page, /property="og:description" content="[^"]+"/);
+    assert.ok(page.includes(`property="og:url" content="${site}/${route}"`));
+    assert.doesNotMatch(page, /name="robots" content="noindex/);
+  }
+  assert.doesNotMatch(sitemap, /ai-assisted-delivery|\/keel|static-unpublished|\/preview|\/admin|\/tina-island/);
 
   const html = await readFile(new URL('../dist/client/work/static-fixture/index.html', import.meta.url), 'utf8');
   assert.match(html, /metric-strip/);
@@ -31,7 +47,7 @@ try {
   assert.match(html, /Not zero human intervention/);
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(minimal, /class="(?:entry-meta|tags|entry-links)"/);
-  for (const route of ['work/ai-assisted-delivery', 'projects/keel']) {
+  for (const route of ['work/ai-assisted-delivery', 'projects/keel', 'projects/static-unpublished']) {
     await assert.rejects(access(new URL(`../dist/client/${route}/index.html`, import.meta.url)), { code: 'ENOENT' });
   }
   for (const route of ['', 'work/', 'projects/']) {
@@ -66,7 +82,7 @@ try {
     assert.ok(!response.ok, 'Production must not serve draft HTML even with a forged preview request');
     assert.doesNotMatch(await response.text(), /Delivery outcomes|explicit handoff/);
   }
-  console.log('Static publication, minimal fields, metric rendering, and production draft exclusion passed.');
+  console.log('Static publication, metadata/sitemap, minimal fields, metric rendering, and production draft exclusion passed.');
 } finally {
   if (server) { process.kill(-server.pid, 'SIGTERM'); await once(server, 'exit'); }
   await Promise.all(created.map((file) => unlink(file)));

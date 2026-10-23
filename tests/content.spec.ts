@@ -65,14 +65,20 @@ test.describe('collection rendering and publication', () => {
       try {
         await writeFile(file, original.replace('draft: false', 'draft: true'));
         await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(404);
-        await page.goto(`/${section}/`);
-        await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(0);
+        // Tina indexing and Vite's full-page HMR can finish at different times.
+        // Retry the observed navigation/listing, not just the route status.
+        await expect(async () => {
+          await page.goto(`/${section}/`);
+          await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(0);
+        }).toPass({ timeout: 10_000 });
       } finally {
         await writeFile(file, original);
       }
       await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(200);
-      await page.goto(`/${section}/`);
-      await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(1);
+      await expect(async () => {
+        await page.goto(`/${section}/`);
+        await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(1);
+      }).toPass({ timeout: 10_000 });
     }
   });
 });
