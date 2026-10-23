@@ -46,6 +46,18 @@ try {
     });
   });
 
+  for (const route of ['/', '/work/', '/projects/', '/about/', '/contact/', '/resume/']) {
+    const response = await fetch(`${origin}${route}`);
+    assert.equal(response.status, 200, `Built public route: ${route}`);
+    const html = await response.text();
+    assert.match(html, /<title>[^<]+<\/title>/, `Page title: ${route}`);
+    assert.match(html, /property="og:description" content="[^"]+"/, `Social description: ${route}`);
+  }
+  for (const route of ['/preview/work/ai-assisted-delivery/', '/preview/projects/keel/', '/work/ai-assisted-delivery/', '/projects/keel/']) {
+    const response = await fetch(`${origin}${route}?tina-edit=1`, { headers: { Cookie: '__tina_edit=1' } });
+    assert.equal(response.status, 404, `Built draft boundary: ${route}`);
+  }
+
   browser = await chromium.launch();
   const context = await browser.newContext();
   let loginUrl;
@@ -63,7 +75,7 @@ try {
   assert(loginUrl, 'Tina login navigation was not captured.');
   assert(loginUrl.searchParams.get('clientId') === clientId, 'Login client ID is missing or incorrect.');
   assert(loginUrl.searchParams.get('origin') === origin, 'Login origin is incorrect.');
-  console.log('Cloud admin smoke test passed: correct login client ID/origin; token absent from public assets.');
+  console.log('Cloud artifact smoke test passed: public routes, draft exclusion, correct login client ID/origin; token absent from public assets.');
 } finally {
   if (browser) await browser.close();
   server.kill('SIGTERM');
