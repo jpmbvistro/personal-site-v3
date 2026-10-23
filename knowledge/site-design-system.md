@@ -64,8 +64,15 @@ implementation detail—not the default treatment of every page.
 This direction is accepted. **The typography pairing has also been chosen:
 Newsreader for editorial display/headings and Inter for body/UI** (2026-10-23).
 Keep a system monospace stack for occasional technical metadata and code.
-Exact font weights, optical sizes, heading scale, spacing/density, font delivery
-and illustration treatment still need examples and validation before finalizing.
+**Layout density accepted (2026-10-23): spacious editorial composition with
+selective information density.** Give introductions and major transitions ample
+breathing room; let related metrics, decision tables, diagrams and implementation
+details sit closer together so readers can compare them. Maintain a comfortable
+prose measure and a clear mobile reading order. Apply this as a *rhythm*, not
+fixed per-section pixel values or a mandatory page template.
+
+Exact font weights, optical sizes, heading scale, font delivery, and illustration
+treatment still need examples and validation before finalizing.
 
 ## Proposed implementations — discuss before treating as final
 
@@ -131,8 +138,8 @@ and illustration treatment still need examples and validation before finalizing.
 
 1. **Typography implementation:** Newsreader + Inter accepted; evaluate weights,
    hierarchy, fallback behavior, legibility, font delivery, licensing and speed.
-2. **Density:** more expansive editorial storytelling or somewhat tighter,
-   higher-information case-study sections? Show actual mobile/desktop examples.
+2. **Density implementation:** the editorial/open-to-dense rhythm is accepted;
+   evaluate actual spacing and line lengths on mobile and desktop examples.
 3. **Technical motifs:** subtle connection lines, modular diagrams, or nearly
    invisible motifs? Make the site distinctive without generic AI imagery.
 4. **Image approach:** authentic portrait and real public-project screenshots
