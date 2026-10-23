@@ -1,13 +1,28 @@
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
 
+async function openEditor(page: import('@playwright/test').Page, route = '/') {
+  await page.goto('/admin/index.html');
+  await page.getByRole('button', { name: 'Enter Edit Mode' }).click();
+  await expect(page.locator('iframe')).toBeVisible();
+  if (route !== '/') await page.locator('iframe').evaluate((frame, path) => { (frame as HTMLIFrameElement).src = path; }, route);
+}
+
+test('selecting a draft from the collection opens its local visual preview', async ({ page }) => {
+  await openEditor(page);
+  await page.goto('/admin/index.html#/collections/work');
+  await page.getByText('Building an AI-assisted delivery workflow', { exact: true }).click();
+  await expect(page.locator('iframe')).toHaveAttribute('src', /\/preview\/work\/ai-assisted-delivery\//);
+  await expect(page.frameLocator('iframe').locator('.draft-note')).toBeVisible();
+  await expect(page.locator('input[name="title"]')).toBeVisible();
+});
+
 test('in-context edit previews before saving to the Git-backed Markdown file', async ({ page }) => {
   const path = new URL('../content/pages/home.md', import.meta.url);
   const originalFile = await readFile(path, 'utf8');
 
   try {
-    await page.goto('/admin/index.html');
-    await page.getByRole('button', { name: 'Enter Edit Mode' }).click();
+    await openEditor(page);
 
     const title = page.locator('input[name="title"]');
     await expect(title).toBeVisible();
@@ -32,5 +47,94 @@ test('in-context edit previews before saving to the Git-backed Markdown file', a
   } finally {
     await page.close();
     await writeFile(path, originalFile);
+  }
+});
+
+for (const { route, file } of [
+  { route: '/preview/work/ai-assisted-delivery/', file: '../content/work/ai-assisted-delivery.mdx' },
+  { route: '/preview/projects/keel/', file: '../content/projects/keel.mdx' },
+  { route: '/about/', file: '../content/pages/about.md' },
+  { route: '/resume/', file: '../content/pages/resume.md' },
+]) {
+  test(`visual edit and save ${route} without changing template code`, async ({ page }) => {
+    const path = new URL(file, import.meta.url);
+    const original = await readFile(path, 'utf8');
+    try {
+      await openEditor(page, route);
+      const heading = page.frameLocator('iframe').locator('main h1');
+      await expect(heading).toBeVisible();
+      await heading.click();
+      const title = page.locator('input[name="title"]');
+      await expect(title).toBeVisible();
+      const edited = `${await title.inputValue()} — editing test`;
+      await title.fill(edited);
+      await expect(heading).toHaveText(edited);
+      expect(await readFile(path, 'utf8')).toBe(original);
+      await page.getByRole('button', { name: 'Save', exact: true }).click();
+      await expect.poll(() => readFile(path, 'utf8')).toContain(edited);
+    } finally {
+      await page.close();
+      await writeFile(path, original);
+    }
+  });
+}
+
+test('insert, edit, reorder, and save a typed metric strip through the real rich-text editor', async ({ page }) => {
+  const path = new URL('../content/work/ai-assisted-delivery.mdx', import.meta.url);
+  const original = await readFile(path, 'utf8');
+  try {
+    await openEditor(page, '/preview/work/ai-assisted-delivery/');
+    await page.frameLocator('iframe').locator('main h1').click();
+    await expect(page.locator('input[name="title"]')).toBeVisible();
+    // Replace the existing block only inside this unsaved authoring trial.
+    await page.getByRole('button', { name: 'Open options', exact: true }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'Remove', exact: true }).click();
+    await page.locator('[contenteditable="true"]').click();
+    await page.keyboard.press('ControlOrMeta+End');
+    await page.keyboard.press('Enter');
+    await page.getByTestId('rich-text-editor-overflow-menu-button').click();
+    await page.getByRole('radio', { name: 'Embed', exact: true }).click();
+    await page.getByRole('menuitem', { name: 'Metric strip', exact: true }).click();
+    await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: 'Open options', exact: true }).last().click();
+    await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
+    await page.locator('input[name$=".props.caption"]').fill('Authoring trial (test only)');
+
+    for (const [value, label] of [['A', 'First trial'], ['B', 'Second trial']]) {
+      await page.locator('button[data-test^="add-item-"]').click();
+      await page.getByRole('button', { name: 'Metric', exact: true }).click();
+      await page.locator('input[name$=".value"]').fill(value);
+      await page.locator('input[name$=".label"]').fill(label);
+      await page.locator('input[name$=".qualifier"]').fill('Illustrative test data');
+      await page.getByRole('button', { name: 'Metric strip', exact: true }).click();
+    }
+
+    const second = page.getByRole('button', { name: 'Second trial', exact: true });
+    const first = page.getByRole('button', { name: 'First trial', exact: true });
+    const from = await second.locator(':scope > div').first().boundingBox();
+    const to = await first.locator(':scope > div').first().boundingBox();
+    expect(from).not.toBeNull();
+    expect(to).not.toBeNull();
+    await page.mouse.move(from!.x + from!.width / 2, from!.y + from!.height / 2);
+    await page.mouse.down();
+    // Tina's pointer sensor deliberately requires a 100ms stationary hold.
+    await page.waitForTimeout(150);
+    await page.mouse.move(to!.x + to!.width / 2, to!.y + to!.height / 2, { steps: 15 });
+    await page.mouse.up();
+    const figure = page.frameLocator('iframe').locator('figure').filter({ hasText: 'Authoring trial (test only)' });
+    await expect(figure.locator('dt')).toHaveText(['Second trial', 'First trial']);
+    expect(await readFile(path, 'utf8')).toBe(original);
+
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect.poll(() => readFile(path, 'utf8')).toContain('Authoring trial (test only)');
+    const saved = await readFile(path, 'utf8');
+    expect(saved.indexOf('Second trial')).toBeLessThan(saved.indexOf('First trial'));
+    const publicPreview = await page.context().newPage();
+    await publicPreview.goto('/preview/work/ai-assisted-delivery/');
+    await expect(publicPreview.locator('figure').filter({ hasText: 'Authoring trial (test only)' }).locator('dt')).toHaveText(['Second trial', 'First trial']);
+    await publicPreview.close();
+  } finally {
+    await page.close();
+    await writeFile(path, original);
   }
 });

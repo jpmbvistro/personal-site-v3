@@ -1,0 +1,30 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import PageContent from '../components/PageContent.astro';
+import EntryCard from '../components/EntryCard.astro';
+import { getPage, getPublishedWork, getPublishedProjects } from '../lib/tina/data';
+import { islands } from '../lib/tina/islands';
+
+export function getStaticPaths() {
+  return ['work', 'projects', 'about', 'contact', 'resume'].map((page) => ({ params: { page } }));
+}
+const name = Astro.params.page!;
+const { data } = await getPage(`${name}.md`);
+const section = name === 'work' ? 'work' : 'projects';
+const entries = name === 'work' ? await getPublishedWork() : name === 'projects' ? await getPublishedProjects() : null;
+---
+
+<BaseLayout title={`${data.page.title} — Juan Vistro`} description={data.page.summary || data.page.title}>
+  <Container class="landing-page">
+    <TinaIsland name="page" wrapper={islands.page.wrapper} params={{ page: name }} primary>
+      <PageContent data={data.page} />
+    </TinaIsland>
+    {entries && <section class="listing" aria-label={name === 'work' ? 'Published work' : 'Published projects'}>
+      {entries.length > 0 ? <div class="entry-grid">{entries.map((entry) => <EntryCard entry={entry} section={section} />)}</div>
+        : <p class="empty-state">No published entries yet. <a href="/contact/">Get in touch</a> to talk about the work.</p>}
+    </section>}
+    {name === 'about' && <div class="next-path"><a href="/work/">Explore professional work →</a><a href="/contact/">Contact & résumé →</a></div>}
+  </Container>
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+interface Props {
+  entry: { title: string; summary?: string | null; _sys: { breadcrumbs: string[] } };
+  section: 'work' | 'projects';
+}
+const { entry, section } = Astro.props;
+const href = `/${section}/${entry._sys.breadcrumbs.map(encodeURIComponent).join('/')}/`;
+---
+
+<article class="entry-card">
+  <p class="eyebrow">{section === 'work' ? 'Professional work' : 'Project'}</p>
+  <h3><a href={href}>{entry.title} <span aria-hidden="true">↗</span></a></h3>
+  {entry.summary && <p>{entry.summary}</p>}
+</article>
+
+<style>
+  article { min-width: 0; border-top: 2px solid var(--primary); padding-block: var(--space-6); }
+  h3 { margin-top: var(--space-4); font-size: var(--text-lead); overflow-wrap: anywhere; }
+  h3 a { color: var(--foreground); text-decoration: none; }
+  h3 a:hover { color: var(--primary); text-decoration: underline; }
+  h3 span { color: var(--primary); }
+  article > p:last-child:not(.eyebrow) { margin-top: var(--space-4); color: var(--muted-foreground); max-width: 48ch; }
+</style>

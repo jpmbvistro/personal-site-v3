@@ -1,97 +1,66 @@
 ---
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import HomeIntro from '../components/HomeIntro.astro';
-import { getHome } from '../lib/tina/data';
+import { getHome, getPublishedWork, getPublishedProjects } from '../lib/tina/data';
 import { islands } from '../lib/tina/islands';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
 import ButtonLink from '../components/ButtonLink.astro';
+import EntryCard from '../components/EntryCard.astro';
 
-const { data } = await getHome();
+const [{ data }, work, projects] = await Promise.all([getHome(), getPublishedWork(), getPublishedProjects()]);
 ---
 
-<BaseLayout
-  title={`${data.page.title} — Engineering & leadership`}
-  description="Juan Vistro’s personal space for engineering, leadership, and the work behind them."
->
+<BaseLayout title={`${data.page.title} — Engineering & leadership`} description={data.page.summary || data.page.title}>
   <Container>
     <div class="hero">
-      <TinaIsland name="home" wrapper={islands.home.wrapper} primary>
-        <HomeIntro data={data.page} />
-      </TinaIsland>
-      <aside class="site-note" aria-label="Site status">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A work in progress</p>
-        <p class="note-title">A considered foundation.</p>
-        <p>A new home for professional work and personal projects. Starting with the essentials.</p>
+      <TinaIsland name="home" wrapper={islands.home.wrapper} primary><HomeIntro data={data.page} /></TinaIsland>
+      <aside class="explore-note" aria-label="Explore the site">
+        <p class="eyebrow">Two ways in</p>
+        <a href="/work/"><span class="note-title">The professional work.</span><span>Engineering decisions and delivery →</span></a>
+        <a href="/projects/"><span class="note-title">The projects.</span><span>Explore Asterism →</span></a>
       </aside>
       <div class="hero-actions">
-        <ButtonLink href="#foundation">About this site <span aria-hidden="true">↘</span></ButtonLink>
-        <ButtonLink href="#editing" variant="secondary">Explore editing</ButtonLink>
+        <ButtonLink href="/work/">Explore my work <span aria-hidden="true">↗</span></ButtonLink>
+        <ButtonLink href="/contact/" variant="secondary">Contact & résumé</ButtonLink>
       </div>
     </div>
 
-    <section id="foundation" class="foundation-section" aria-labelledby="foundation-heading" tabindex="-1">
-      <div class="section-heading">
-        <p class="eyebrow">01 / Foundation</p>
-        <h2 id="foundation-heading">Room for the<br />work to come.</h2>
-      </div>
-      <div class="principles">
-        <div>
-          <h3>Content first.</h3>
-          <p>Clear typography, a quiet palette, and space to read. The work takes the lead.</p>
-        </div>
-        <div>
-          <h3>Simple by design.</h3>
-          <p>Static Astro pages, shared styles, and native browser interactions. No unnecessary layers.</p>
-        </div>
-        <div>
-          <h3>Built to evolve.</h3>
-          <p>Professional work, projects, and more about the person behind them will follow.</p>
-        </div>
-      </div>
-    </section>
+    {work.length > 0 && <section class="home-section" aria-labelledby="work-heading">
+      <div class="section-heading"><div><p class="eyebrow">01 / Professional work</p><h2 id="work-heading">Decisions into delivery.</h2></div><a href="/work/">All work →</a></div>
+      <div class="entry-grid">{work.slice(0, 3).map((entry) => <EntryCard entry={entry} section="work" />)}</div>
+    </section>}
 
-    <section id="editing" class="editing-section" aria-labelledby="editing-heading" tabindex="-1">
-      <div>
-        <p class="eyebrow">02 / Behind the page</p>
-        <h2 id="editing-heading">Words in context.<br />Layout in code.</h2>
-      </div>
-      <div class="editing-copy">
-        <p>The introduction above is editable through TinaCMS. Preview changes where they’ll appear, then save them to the content file. Astro takes care of the presentation.</p>
-        <a href="/admin/index.html">Open the content editor <span aria-hidden="true">↗</span></a>
-      </div>
+    {projects.length > 0 && <section class="home-section" aria-labelledby="projects-heading">
+      <div class="section-heading"><div><p class="eyebrow">02 / Projects</p><h2 id="projects-heading">Ideas, made tangible.</h2></div><a href="/projects/">All projects →</a></div>
+      <div class="entry-grid">{projects.slice(0, 3).map((entry) => <EntryCard entry={entry} section="projects" />)}</div>
+    </section>}
+
+    <section class="home-section closing" aria-labelledby="about-heading">
+      <div><p class="eyebrow">The person behind the work</p><h2 id="about-heading">A human perspective.</h2></div>
+      <div class="closing-links"><a href="/about/">More about Juan →</a><a href="/contact/">Let's talk →</a></div>
     </section>
   </Container>
 </BaseLayout>
 
 <style>
-  .hero {
-    display: grid;
-    gap: var(--space-12);
-    padding-block: clamp(4rem, 9vw, 8rem);
-  }
+  .hero { display: grid; gap: var(--space-12); padding-block: clamp(4rem, 9vw, 8rem); }
   .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
   .hero-actions span { margin-inline-start: var(--space-3); }
-  .site-note { border-left: 2px solid var(--accent); padding-inline-start: var(--space-6); }
-  .site-note > * + * { margin-top: var(--space-4); }
-  .site-note > p:last-child { color: var(--muted-foreground); max-width: 30ch; }
-  .note-title { font-family: var(--font-serif); font-size: var(--text-lead); line-height: 1.35; }
-  .status-dot { display: inline-block; width: 0.5rem; height: 0.5rem; margin-inline-end: var(--space-2); border-radius: 50%; background: var(--primary); }
-  .foundation-section, .editing-section {
-    display: grid;
-    gap: var(--space-12);
-    padding-block: var(--space-16);
-    border-top: 1px solid var(--border);
-  }
+  .explore-note { border-left: 2px solid var(--accent); padding-inline-start: var(--space-6); }
+  .explore-note a { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-6); padding-block: var(--space-2); text-decoration: none; }
+  .explore-note a:hover .note-title { text-decoration: underline; }
+  .explore-note a > span:last-child { font-size: var(--text-small); }
+  .note-title { font-family: var(--font-serif); font-size: var(--text-lead); color: var(--foreground); line-height: 1.35; }
+  .home-section { padding-block: var(--space-16); border-top: 1px solid var(--border); }
+  .section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: var(--space-6); margin-bottom: var(--space-12); }
   h2 { margin-top: var(--space-6); }
-  .principles { display: grid; gap: var(--space-8); }
-  .principles p { margin-top: var(--space-2); color: var(--muted-foreground); max-width: 48ch; }
-  .editing-copy { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-6); max-width: var(--reading-width); }
-  .editing-copy p { color: var(--muted-foreground); }
-  .editing-copy a { padding-block: var(--space-3); }
+  .closing { display: grid; gap: var(--space-8); }
+  .closing-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
+  .closing-links a { padding-block: var(--space-3); }
   @media (min-width: 48rem) {
     .hero { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: center; }
     .hero-actions { grid-column: 1 / -1; }
-    .foundation-section, .editing-section { grid-template-columns: 1fr 1fr; gap: var(--space-16); }
+    .closing { grid-template-columns: 1fr 1fr; }
   }
 </style>
