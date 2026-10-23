@@ -1,0 +1,26 @@
+---
+// Intentionally local-only. An edit-mode cookie is NOT authentication.
+// Hosted draft preview needs an authenticated host/Tina integration first.
+import WorkPage from '../../../layouts/WorkPage.astro';
+import ProjectPage from '../../../layouts/ProjectPage.astro';
+import { getWork, getProject, localDraftPreview } from '../../../lib/tina/data';
+
+export const prerender = false;
+const { section, slug } = Astro.params;
+if (!localDraftPreview || !['work', 'projects'].includes(section ?? '') || !slug || !/^[a-zA-Z0-9_-]+(?:\/[a-zA-Z0-9_-]+)*$/.test(slug)) {
+  return new Response('Not found', { status: 404 });
+}
+Astro.response.headers.set('Cache-Control', 'no-store');
+Astro.response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+let work;
+let project;
+try {
+  if (section === 'work') work = (await getWork(`${slug}.mdx`, true)).data.work;
+  else project = (await getProject(`${slug}.mdx`, true)).data.project;
+} catch {
+  return new Response('Not found', { status: 404 });
+}
+---
+
+{work && <WorkPage data={work} preview />}
+{project && <ProjectPage data={project} preview />}

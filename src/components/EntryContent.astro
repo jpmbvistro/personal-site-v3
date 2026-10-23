@@ -1,0 +1,41 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { WorkQuery, ProjectQuery } from '../../tina/__generated__/types';
+import RichText from './RichText.astro';
+import { safeHref } from '../lib/links';
+
+interface Props { data: WorkQuery['work'] | ProjectQuery['project'] }
+const { data } = Astro.props;
+const organization = 'organizationLabel' in data ? data.organizationLabel : undefined;
+const role = 'role' in data ? data.role : undefined;
+const status = 'status' in data ? data.status : undefined;
+const organizationField = 'organizationLabel' in data ? tinaField(data, 'organizationLabel') : undefined;
+const roleField = 'role' in data ? tinaField(data, 'role') : undefined;
+const statusField = 'status' in data ? tinaField(data, 'status') : undefined;
+const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ?? [];
+---
+
+{data.draft !== false && <p class="draft-note">Draft · Local editor preview only. Not published.</p>}
+<header class="entry-heading">
+  {organization && <p class="eyebrow" data-tina-field={organizationField}>{organization}</p>}
+  <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+  {data.summary && <p class="summary" data-tina-field={tinaField(data, 'summary')}>{data.summary}</p>}
+  {role && <p class="entry-meta" data-tina-field={roleField}>{role}</p>}
+  {status && <p class="entry-meta" data-tina-field={statusField}>{status}</p>}
+  {(data.tags?.length ?? 0) > 0 && <ul class="tags" data-tina-field={tinaField(data, 'tags')}>{data.tags?.map((tag) => tag && <li>{tag}</li>)}</ul>}
+</header>
+<div class="prose entry-body" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
+{links.length > 0 && <nav class="entry-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
+  {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
+</nav>}
+
+<style>
+  h1 { max-width: 17ch; margin-top: var(--space-4); font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem); overflow-wrap: anywhere; }
+  .summary { margin-top: var(--space-6); max-width: 48ch; color: var(--muted-foreground); font-size: var(--text-lead); }
+  .entry-meta { margin-top: var(--space-4); }
+  .entry-body { margin-top: var(--space-12); }
+  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); padding: 0; margin-top: var(--space-4); list-style: none; color: var(--muted-foreground); font-size: var(--text-small); }
+  .entry-links { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-8); }
+  .entry-links a { padding-block: var(--space-3); }
+  .draft-note { margin-bottom: var(--space-6); border-left: 3px solid var(--accent); padding: var(--space-4); background: var(--muted); }
+</style>

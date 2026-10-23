@@ -1,0 +1,31 @@
+---
+// Tina emits rich-text as an AST rather than generating template prop types.
+// This is the renderer contract for the MetricStrip template in tina/config.ts.
+interface Props {
+  caption?: string | null;
+  metrics?: ({ value: string; label: string; qualifier?: string | null } | null)[] | null;
+}
+const { caption, metrics } = Astro.props;
+const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [];
+---
+
+{entries.length > 0 && <figure class="metric-strip">
+  {caption && <figcaption>{caption}</figcaption>}
+  <dl>
+    {entries.map((metric) => metric && <div>
+      <dt>{metric.label}</dt>
+      <dd><strong>{metric.value}</strong>{metric.qualifier && <span>{metric.qualifier}</span>}</dd>
+    </div>)}
+  </dl>
+</figure>}
+
+<style>
+  figure { margin-inline: 0; padding-block: var(--space-6); border-block: 1px solid var(--border); }
+  figcaption { margin-bottom: var(--space-6); color: var(--muted-foreground); }
+  dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--space-8); margin: 0; }
+  dl > div { display: flex; flex-direction: column; }
+  dt { font-weight: 600; }
+  dd { display: contents; }
+  strong { order: -1; font-family: var(--font-serif); font-size: var(--text-heading); font-weight: 400; color: var(--primary); line-height: 1.2; overflow-wrap: anywhere; }
+  span { color: var(--muted-foreground); font-size: var(--text-small); }
+</style>

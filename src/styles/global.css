@@ -100,6 +100,19 @@
   .prose > * + * { margin-top: var(--space-4); }
   .prose :is(ul, ol) { padding-inline-start: var(--space-6); }
   .prose :is(h2, h3) { margin-top: var(--space-8); }
+  .prose img { height: auto; border-radius: var(--radius); }
+  .prose figure { margin-inline: 0; }
+  .prose blockquote { border-left: 2px solid var(--accent); padding-inline-start: var(--space-6); }
+  .prose pre { max-width: 100%; overflow-x: auto; padding: var(--space-4); background: var(--muted); }
+  .prose table { display: block; max-width: 100%; overflow-x: auto; }
+  .prose :is(th, td) { padding: var(--space-2); border-bottom: 1px solid var(--border); text-align: start; }
+  .landing-page, .detail-page { padding-block: clamp(3rem, 7vw, 6rem); }
+  .entry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: var(--space-8); }
+  .listing { margin-top: var(--space-16); }
+  .empty-state { padding-top: var(--space-8); border-top: 1px solid var(--border); color: var(--muted-foreground); }
+  .back-link { display: inline-block; margin-bottom: var(--space-8); padding-block: var(--space-2); }
+  .next-path { display: flex; flex-wrap: wrap; gap: var(--space-6); border-top: 1px solid var(--border); padding-top: var(--space-8); margin-top: var(--space-16); }
+  .next-path a { padding-block: var(--space-3); }
 
   .skip-link {
     position: absolute;

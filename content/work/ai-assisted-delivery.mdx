@@ -1,0 +1,28 @@
+---
+title: Building an AI-assisted delivery workflow
+draft: true
+summary: Extending a behavioral-analysis harness into a repeatable implementation workflow under a delivery deadline.
+organizationLabel: Moderna
+---
+
+A migration created an urgent backlog of corrective work. I extended an earlier behavioral-analysis harness into an AI-assisted implementation workflow while completing the tickets themselves.
+
+## Start sequentially, then earn concurrency
+
+Each ticket had an isolated Git worktree and test context. I began with sequential execution to establish a working path, then enabled concurrency. Required validation, including shadow-diff integration tests, had to pass before completion.
+
+<MetricStrip
+  caption="Delivery outcomes, with human oversight"
+  metrics={[
+    { value: "40", label: "Tickets reached PR/completion", qualifier: "Within the 30-day period" },
+    { value: "35/40", label: "Required no manual code-writing", qualifier: "Not zero human intervention" }
+  ]}
+/>
+
+## Make failure recoverable
+
+Bounded retries handled transient failures. Persistent failures went to human handoff, with traces, artifacts, and transcripts available for investigation. Human intervention averaged approximately two hours per ticket.
+
+## What changed my approach
+
+During delivery, I replaced prompt-based structured-output enforcement with the available deterministic interface and replaced rigid keyword scope checks with judgment about intent. Later work moved toward a thinner harness: enforce genuine hard requirements and validate outcomes, while leaving ambiguous interpretation to agents.

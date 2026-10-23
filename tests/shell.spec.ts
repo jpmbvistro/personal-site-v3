@@ -25,6 +25,7 @@ for (const width of [320, 390, 768, 1440]) {
     );
     for (const href of hrefs) {
       const url = new URL(href, page.url());
+      if (url.origin !== new URL(page.url()).origin) continue;
       const response = await page.request.get(`${url.origin}${url.pathname}`);
       expect(response.ok(), href).toBe(true);
       if (url.hash) await expect(page.locator(url.hash)).toHaveCount(1);
@@ -56,9 +57,9 @@ test('keyboard skip link and mobile disclosure navigation', async ({ page }) => 
   await page.keyboard.press('Tab');
   await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/#foundation$/);
-  await expect(navigation).toBeHidden();
-  await expect(page.locator('#foundation')).toBeFocused();
+  await expect(page).toHaveURL(/\/work\/$/);
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeHidden();
+  await expect(page.locator('main h1')).toBeVisible();
 });
 
 test.describe('without JavaScript', () => {
@@ -71,7 +72,7 @@ test.describe('without JavaScript', () => {
     await page.locator('summary').click();
     const navigation = page.getByRole('navigation', { name: 'Mobile navigation' });
     await expect(navigation).toBeVisible();
-    await navigation.getByRole('link', { name: 'Foundation' }).click();
-    await expect(page).toHaveURL(/#foundation$/);
+    await navigation.getByRole('link', { name: 'Work', exact: true }).click();
+    await expect(page).toHaveURL(/\/work\/$/);
   });
 });

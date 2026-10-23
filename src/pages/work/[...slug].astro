@@ -1,0 +1,14 @@
+---
+import WorkPage from '../../layouts/WorkPage.astro';
+import { getWork, getPublishedWork } from '../../lib/tina/data';
+
+export async function getStaticPaths() {
+  return (await getPublishedWork()).map((entry) => ({
+    params: { slug: entry._sys.breadcrumbs.join('/') },
+    props: { relativePath: entry._sys.relativePath },
+  }));
+}
+const { data } = await getWork(Astro.props.relativePath);
+---
+
+<WorkPage data={data.work} />
