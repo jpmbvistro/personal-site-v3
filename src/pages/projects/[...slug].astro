@@ -1,0 +1,14 @@
+---
+import ProjectPage from '../../layouts/ProjectPage.astro';
+import { getProject, getPublishedProjects } from '../../lib/tina/data';
+
+export async function getStaticPaths() {
+  return (await getPublishedProjects()).map((entry) => ({
+    params: { slug: entry._sys.breadcrumbs.join('/') },
+    props: { relativePath: entry._sys.relativePath },
+  }));
+}
+const { data } = await getProject(Astro.props.relativePath);
+---
+
+<ProjectPage data={data.project} />

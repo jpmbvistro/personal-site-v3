@@ -1,6 +1,6 @@
 # Juan Vistro · personal-site-v3
 
-Astro + TypeScript + Tailwind CSS, with native Astro rendering and TinaCMS visual editing. This is the foundation milestone (#3), not the finished portfolio. Work/Projects/About/Contact and résumé access belong to later milestones; navigation currently links only to existing sections. No hosting or DNS has been changed.
+Astro + TypeScript + Tailwind CSS, with native Astro rendering and Git-backed TinaCMS visual editing. Home, Work, Projects, About, and Contact share one responsive shell. Work/project detail pages are generated from published collection records. No hosting or DNS has been changed.
 
 ## Run locally
 
@@ -23,32 +23,54 @@ npm run check        # Astro/TypeScript; run dev or build first to generate Tina
 npm run preview      # built Node server, default http://localhost:4321
 ```
 
+On this 8 GB development machine, Tina's production admin bundle needs an explicit heap cap to avoid memory pressure: `NODE_OPTIONS=--max-old-space-size=3072 npm run build` (also applies to `test:static`). The local dev editor does not need that workaround.
+
 `build` is the same local build CI runs. Public pages work without a running CMS; the refresh endpoint still points to the **local** Tina API, while the built admin expects cloud login. This artifact is for build checks/public-page preview, not editor deployment. Use `dev` for local editing and `build:cloud` for deployment, below.
 
-## Edit a page
+## Edit content locally
 
 1. Run `npm run dev` and open `/admin/index.html` → **Enter Edit Mode**.
-2. The homepage opens in the preview. Click its heading, then change **Title** in the sidebar. The preview updates **before** saving. Body is also editable.
+2. The homepage opens in the preview. Click its heading, then change **Title** or **Body** in the sidebar. The preview updates **before** saving. Navigate to About/Contact or use Tina's navigation menu to select a collection record.
 3. Click **Save**. The change is written to `content/pages/home.md`; a fresh visit to `/` shows it. Commit/push that file using the normal Git workflow. Local Tina saves files, not Git commits.
+4. Create Work/Projects entries from their collections. New entries default to **Draft**. A draft opens at `/preview/work/<filename>/` or `/preview/projects/<filename>/` in local dev, using the same detail component as a published page. Filenames supply slugs; nested folders are supported.
+5. To publish deliberately, clear **Draft**, save, then commit/push the content and rebuild. Only an explicit `draft: false` generates public routes and cards; missing flags also stay hidden. Publishing never happens automatically as part of drafting.
 
-This real admin → iframe → native Astro render → Markdown save flow is covered by `tests/tina.spec.ts`, which restores the original file afterward. No mocked CMS or React page islands. The trial is deliberately one small collection; flexible collections, visual blocks, and draft behavior are #6.
+The real admin → iframe → native Astro render → file save flow is covered by `tests/tina.spec.ts`, which restores the original files afterward. No mocked CMS or React page islands. Local saves write files, **not Git commits**. Hosted TinaCloud saves commit to the configured GitHub branch. The owner reports the cloud configuration/authentication checks are already confirmed; this execution tests the local workflow, not a new cloud integration.
+
+### Flexible stories and visual blocks
+
+- Work and Projects require only title, ordered rich-text body, and draft status. Summaries, organization/role, tags, project status, and labeled links are optional. Omitted values render no placeholder sections. Cards on the homepage/indexes read the same records, ordered by filename; the homepage shows the first three in each collection.
+- Rich text supports links and images. Upload publication-safe media to `public/uploads`, insert it with Tina's image toolbar, and provide useful alt text and captions. Bespoke architecture diagrams should be static SVG/image figures with text alternatives—not a node/edge editor.
+- **Metric strip** is the single typed rich-text block: use the body toolbar's overflow menu → **Embed → Metric strip**. Open the block's options → **Edit** to change its caption, add/edit values/labels/qualifiers, and drag entries to reorder them. Values are display strings (`37+`, `35/40`), not quantities to sum. The native Astro `MetricStrip.astro` renders a responsive definition list without client JavaScript. Empty strips render nothing.
+- Tina owns text and structured data; Astro owns layout. Do not add custom blocks unless an actual story needs them. Process flows and decision matrices are not implemented speculatively.
+- `content/work/ai-assisted-delivery.mdx` is a short Moderna sample based on #20's supplied material; the referenced older prototype was not in this repository. `content/projects/keel.mdx` is a minimal project draft based on Keel's README, not a claim that its planned verification/publishing stages exist. Both remain **drafts**, pending the author's publication choice. #18–#21 are not closed by these samples. No private Career OS/Vela evidence is imported.
+- Contact links to `/resume/`, a temporary, Tina-editable HTML rendition of the résumé supplied by the owner. Its source is `content/pages/resume.md`; the attachment was available as extracted text/page images, not a copyable original PDF. The headline, experience, skills, and contact details come from that supplied résumé. To replace it later, set Contact's optional **Résumé URL** field to another page or an uploaded public-safe PDF. The link is labeled **View résumé**, not a claim of a PDF download.
+
+### Draft boundary
+
+Draft preview is intentionally **local-only**. `npm run dev` sets the public, nonsecret `TINA_PUBLIC_IS_LOCAL=true` flag so Tina's collection links open local previews for either publication state; do not set this flag for cloud builds. A production build returns 404 for `/preview/*` even with a forged edit cookie. The island endpoint also refuses to fetch saved draft records in production. An edit cookie, same-origin POST, or `noindex` tag is not authentication. The owner explicitly deferred hosted draft preview until deployment work; it is not a local-development blocker. Use **Edit in Admin** for a draft's collection form rather than its unavailable hosted visual preview.
+
+Drafts are absent from generated public routes and listings (there is currently no sitemap). They are **not confidential storage**: only publication-safe material belongs in this Git repo or Tina project. Never commit private evidence, sensitive financials, tokens, or proprietary engineering artifacts.
 
 ```sh
 npx playwright install chromium
 npm test
+npm run test:static   # stop dev first; temporary fixtures, static checks, then clean rebuild
 ```
 
-The seven browser smoke tests cover the editor save, 320/390/768/1440px layouts, link destinations, keyboard skip/menu/Escape behavior, and native navigation without JavaScript. Tests start dev automatically if needed and must not run alongside a build. They verify behavior, not prescribed copy or pixel-perfect mockups. CI stays a single build/typecheck job.
+Browser tests cover real visual saves for Home/Work/Projects/About/Résumé, résumé access from the homepage, typed-block insertion/editing/reordering, draft exclusion, automatic listings, minimal entries, 320/390/768/1440px layouts, link destinations, keyboard skip/menu/Escape behavior, and native content/navigation without JavaScript. Tests use port **4322** so an existing preview on 4321 can remain open; Tina still needs 4001/9000 free. Do not run tests alongside a build. `test:static` checks generated metric/minimal-entry HTML and production draft exclusion, including forged preview requests, then removes its temporary fixtures and rebuilds. CI stays a single build/typecheck job.
 
 ## Hosting & authentication
 
+**Current scope:** local development only. The owner has chosen **Vercel** for eventual hosting and reports TinaCloud/GitHub authorization, environment configuration, and authorized/unauthorized access checks are already set up. No Vercel deployment, adapter migration, staging URL, or new cloud authentication setup is required now. The notes below are deployment references for #14, not outstanding local setup tasks. An origin means the URL's scheme and host (plus port when applicable); a staging origin would be the future staging URL. Tina's branch setting selects which repository branch to read/save; the GitHub app authorization grants repository access, not a separate per-branch editor invitation. GitHub branch protections still apply.
+
 - Public pages are prerendered (`output: 'static'`). Native visual editing still POSTs to `/tina-island/[name]` for unsaved HTML fragments, so **static-only hosting is insufficient for the editor**. This repo uses `@astrojs/node` standalone; deploy both `dist/client` and `dist/server` through the Node entrypoint, or choose the matching Vercel/Netlify/Cloudflare adapter before deploying. The integration uses Astro's experimental container API; keep the smoke test when upgrading.
-- Recommended next step: connect this **private** GitHub repo/branch to a TinaCloud project, grant the Tina GitHub app access, allow the editor's deployed origin, and invite authorized editors. TinaCloud authenticates writers and saves via Git commits; a push must trigger a site rebuild for static pages to update. The render endpoint does not save files or grant write access.
+- TinaCloud authenticates writers and saves via Git commits; a push must trigger a site rebuild for static pages to update. When deployment work starts, confirm the deployed origin in the existing TinaCloud project. The render endpoint does not save files or grant write access.
 - Set `TINA_PUBLIC_CLIENT_ID`, `TINA_TOKEN` (read-only content token), and `TINA_PUBLIC_BRANCH` in the build environment or an ignored `.env.local`, following `.env.example`; then run `npm run build:cloud`. The cloud script loads `.env`/`.env.local` and supports the original `TINA_CLIENT_ID`/`TINA_BRANCH` names by aliasing them to their public counterparts. Client ID and branch are public configuration; Tina's browser admin requires the `TINA_PUBLIC_` prefix. Keep the **token** server-side/build-only, never in `PUBLIC_*`/`TINA_PUBLIC_*`, browser code, or Git. For this private repo, use only publication-safe content: a read token or a draft flag is not a confidentiality boundary.
 - Before the first cloud build, commit/push the foundation (including `tina/config.ts`, `tina/tina-lock.json`, and `content/`) to the configured GitHub branch. TinaCloud indexes the remote branch, not your working directory. If indexing previously failed with “No Tina config found,” use **Reindex** for that branch in TinaCloud after pushing, then retry the build.
 - After a cloud build, `npm run test:cloud` checks the actual admin login URL's client ID/origin and scans public assets for the read token. It starts/stops its own loopback preview and does not sign in or save content. A Forbidden popup with `clientId=undefined` means the public client ID was missing when the admin was built; rebuild with `build:cloud`, not the credential-free `build` command.
-- Local media goes under `public/uploads`; TinaCloud media can use its configured asset store. Images/blocks and their authoring flow are not part of this one-text-edit trial.
-- **Not yet verified:** TinaCloud login, GitHub commit/push, deployed origin settings, and hosted previews. They need the owner's TinaCloud/GitHub project access and a chosen host. Local saving/preview is proven; cloud publishing is not. Do not deploy a local-mode admin as production or expose a local Tina server. Budget/plan eligibility for a private repo and host pricing must be confirmed when choosing deployment in #14.
+- Local media goes under `public/uploads`; TinaCloud media can use its configured asset store. Hosted media upload and authenticated saves need verification against the chosen project/host.
+- **Verification boundary:** local saving/preview is covered by automated tests; existing cloud configuration/access checks are owner-confirmed, not independently rerun here. Hosted draft previews and deployed-origin checks are deferred to deployment work in #14. Do not deploy a local-mode admin as production or expose a local Tina server. Confirm plan eligibility/pricing before deployment.
 
 References: [Astro setup](https://tina.io/docs/frameworks/astro/), [native visual editing / static-site requirements](https://tina.io/docs/contextual-editing/astro/), [TinaCloud](https://tina.io/docs/tinacloud/).
 
@@ -57,4 +79,4 @@ References: [Astro setup](https://tina.io/docs/frameworks/astro/), [native visua
 - `src/styles/global.css` owns brand and semantic tokens, system-font typography, spacing, focus, and reduced motion. Ink `#192B39`, ivory `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. Copper is a restrained accent, **not** small text on ivory. Text pairs meet WCAG AA (evergreen/ivory 5.23:1; muted text/ivory 5.73:1).
 - `src/layouts/BaseLayout.astro` is the only global shell. Navigation data lives in `src/lib/navigation.ts`. Mobile navigation is a native nonmodal disclosure with progressive Escape/close behavior.
 - Reuse `Container` and `ButtonLink`; ordinary links use global styles. Add components only when actual reuse warrants them. React/shadcn is reserved for interactions that native HTML/Astro cannot reasonably handle; Tailwind semantic colors are already compatible.
-- Tina owns authored content in `content/`; Astro owns layout. `src/lib/tina/` connects the generated client to one editable region. Generated client/admin files are ignored; commit `tina/tina-lock.json` when the schema changes. Keep private career evidence and sensitive client details out of this repo, including drafts.
+- Tina owns authored content in `content/`; Astro owns layout. `src/lib/tina/` connects the generated client to native editable regions. Generated client/admin files are ignored; commit `tina/tina-lock.json` when the schema changes. Keep private career evidence and sensitive client details out of this repo, including drafts.

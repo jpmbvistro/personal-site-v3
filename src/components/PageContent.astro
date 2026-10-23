@@ -1,0 +1,28 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { PageQuery } from '../../tina/__generated__/types';
+import RichText from './RichText.astro';
+import { safeHref } from '../lib/links';
+
+interface Props { data: PageQuery['page'] }
+const { data } = Astro.props;
+const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ?? [];
+const resume = safeHref(data.resume);
+---
+
+<h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+<div class="prose page-body" data-tina-field={tinaField(data, 'body')}>
+  <RichText content={data.body} />
+</div>
+{links.length > 0 && <ul class="contact-links" data-tina-field={tinaField(data, 'links')}>
+  {links.map((link) => link && <li><a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a></li>)}
+</ul>}
+{resume && <p class="resume-link" data-tina-field={tinaField(data, 'resume')}><a href={resume}>View résumé <span aria-hidden="true">↗</span></a></p>}
+
+<style>
+  h1 { max-width: 16ch; overflow-wrap: anywhere; }
+  .page-body { margin-top: var(--space-8); color: var(--muted-foreground); font-size: var(--text-lead); }
+  .contact-links { display: flex; flex-wrap: wrap; gap: var(--space-6); list-style: none; padding: 0; margin: var(--space-8) 0 0; }
+  .contact-links a, .resume-link a { display: inline-flex; gap: var(--space-4); padding-block: var(--space-3); }
+  .resume-link { margin-top: var(--space-4); }
+</style>
