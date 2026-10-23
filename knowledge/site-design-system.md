@@ -44,7 +44,26 @@ These are current repository decisions, not new proposals:
 - TinaCMS owns narrative copy and simple structured blocks. Astro owns
   geometry, components and styling. No page builder or rigid narrative schema.
 
-## Proposed visual direction — discuss before treating as final
+## Accepted brand hierarchy — 2026-10-23
+
+**Editorial leadership is the dominant character.** The site should read first
+as the thoughtful publication of a technical leader: confident, approachable,
+human-centered, and evidence-driven. Technical systems design is a supporting
+language, revealed progressively through diagrams, project screenshots and
+implementation detail—not the default treatment of every page.
+
+- **Homepage/About:** prioritize professional positioning, leadership evidence,
+  a clear route to Work and a resume/contact action.
+- **Work case studies:** editorial narrative first; metrics and diagrams should
+  clarify decisions, tradeoffs and results, not create a dashboard aesthetic.
+- **Asterism projects:** allow more technical density and product details while
+  preserving the shared typographic and navigation system.
+- Do not present this as a claim of formal executive or people-management tenure.
+
+This direction is accepted. **Exact typefaces, spacing/density and illustration
+treatment are still open** and require examples before final selection.
+
+## Proposed implementations — discuss before treating as final
 
 ### Composition and hierarchy
 
