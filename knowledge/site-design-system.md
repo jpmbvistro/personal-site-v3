@@ -33,8 +33,9 @@ These are current repository decisions, not new proposals:
   restrained copper `#C7815D`. Semantic text/surface/interactive pairs live
   in CSS; **do not copy token hex values into one-off components**.
 - Serif display and headline roles, sans-serif UI/body roles, monospace technical
-  metadata; currently system font stacks. No font download/runtime dependency
-  is required to render the site.
+  metadata. The current implementation uses system stacks; Newsreader + Inter
+  is the accepted next visual direction, **not yet implemented**. No external
+  font download/runtime dependency exists in the current build.
 - Single [BaseLayout](../src/layouts/BaseLayout.astro) and shared header/footer.
   Native Astro + semantic HTML first; client-side islands only when justified.
 - Current sizing includes a broad content max-width, narrower reading measure,
@@ -60,8 +61,11 @@ implementation detail—not the default treatment of every page.
   preserving the shared typographic and navigation system.
 - Do not present this as a claim of formal executive or people-management tenure.
 
-This direction is accepted. **Exact typefaces, spacing/density and illustration
-treatment are still open** and require examples before final selection.
+This direction is accepted. **The typography pairing has also been chosen:
+Newsreader for editorial display/headings and Inter for body/UI** (2026-10-23).
+Keep a system monospace stack for occasional technical metadata and code.
+Exact font weights, optical sizes, heading scale, spacing/density, font delivery
+and illustration treatment still need examples and validation before finalizing.
 
 ## Proposed implementations — discuss before treating as final
 
@@ -125,8 +129,8 @@ treatment are still open** and require examples before final selection.
 
 ## Open design decisions — Juan to choose
 
-1. **Typography:** keep system stacks or select hosted/local editorial and UI
-   fonts? Evaluate legibility, personality, licensing and speed.
+1. **Typography implementation:** Newsreader + Inter accepted; evaluate weights,
+   hierarchy, fallback behavior, legibility, font delivery, licensing and speed.
 2. **Density:** more expansive editorial storytelling or somewhat tighter,
    higher-information case-study sections? Show actual mobile/desktop examples.
 3. **Technical motifs:** subtle connection lines, modular diagrams, or nearly
