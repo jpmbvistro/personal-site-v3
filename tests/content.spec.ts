@@ -98,8 +98,10 @@ test.describe('collection rendering and publication', () => {
         await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(404);
         // Tina indexing and Vite's full-page HMR can finish at different times.
         // Retry the observed navigation/listing, not just the route status.
+        // Bound each navigation so an interrupted HMR load can actually retry;
+        // the listing only needs the DOM, not every dev-server asset loaded.
         await expect(async () => {
-          await page.goto(`/${section}/`);
+          await page.goto(`/${section}/`, { waitUntil: 'domcontentloaded', timeout: 3_000 });
           await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(0);
         }).toPass({ timeout: 10_000 });
       } finally {
@@ -107,7 +109,7 @@ test.describe('collection rendering and publication', () => {
       }
       await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(200);
       await expect(async () => {
-        await page.goto(`/${section}/`);
+        await page.goto(`/${section}/`, { waitUntil: 'domcontentloaded', timeout: 3_000 });
         await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(1);
       }).toPass({ timeout: 10_000 });
     }
