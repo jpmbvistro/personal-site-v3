@@ -43,7 +43,13 @@ The real admin → iframe → native Astro render → file save flow is covered 
 - Rich text supports links and images. Upload publication-safe media to `public/uploads`, insert it with Tina's image toolbar, and provide useful alt text and captions. Bespoke architecture diagrams should be static SVG/image figures with text alternatives—not a node/edge editor.
 - **Metric strip** is the single typed rich-text block: use the body toolbar's overflow menu → **Embed → Metric strip**. Open the block's options → **Edit** to change its caption, add/edit values/labels/qualifiers, and drag entries to reorder them. Values are display strings (`37+`, `35/40`), not quantities to sum. The native Astro `MetricStrip.astro` renders a responsive definition list without client JavaScript. Empty strips render nothing.
 - Tina owns text and structured data; Astro owns layout. Do not add custom blocks unless an actual story needs them. Process flows and decision matrices are not implemented speculatively.
-- `content/work/ai-assisted-delivery.mdx` is a short Moderna sample based on #20's supplied material; the referenced older prototype was not in this repository. `content/projects/keel.mdx` is a minimal project draft based on Keel's README, not a claim that its planned verification/publishing stages exist. Both remain **drafts**, pending the author's publication choice. #18–#21 are not closed by these samples. No private Career OS/Vela evidence is imported.
+- Four Work case studies use the evidence supplied in #18–#21:
+  - `content/work/scaling-ux-capability.mdx` — UX enablement (#18).
+  - `content/work/api-migration-confidence.mdx` — API migration decisions (#19).
+  - `content/work/ai-assisted-delivery.mdx` — AI-assisted delivery (#20).
+  - `content/work/nonprofit-crm-selection.mdx` — nonprofit CRM selection (#21).
+- All four remain **drafts**, pending the author's publication choice; completing the content tasks does not publish them or gate launch. The migration story's relative sibling link opens the harness in local preview now and on its public route if both stories are later published. Publish both together or remove the cross-link if publishing only the migration story.
+- Metrics describe the supplied observations, not invented ROI or autonomous delivery. No private Career OS/Vela evidence or confidential client financial figures are imported. `content/projects/keel.mdx` remains a minimal draft based on Keel's README, not a claim that its planned verification/publishing stages exist.
 - Contact links to `/resume/`, a temporary, Tina-editable HTML rendition of the résumé supplied by the owner. Its source is `content/pages/resume.md`; the attachment was available as extracted text/page images, not a copyable original PDF. The headline, experience, skills, and contact details come from that supplied résumé. To replace it later, set Contact's optional **Résumé URL** field to another page or an uploaded public-safe PDF. The link is labeled **View résumé**, not a claim of a PDF download.
 
 ### Draft boundary
@@ -58,7 +64,7 @@ npm test
 npm run test:static   # stop dev first; temporary fixtures, static checks, then clean rebuild
 ```
 
-Browser tests cover real visual saves for Home/Work/Projects/About/Résumé, résumé access from the homepage, typed-block insertion/editing/reordering, draft exclusion, automatic listings, minimal entries, 320/390/768/1440px layouts, link destinations, keyboard skip/menu/Escape behavior, and native content/navigation without JavaScript. Tests use port **4322** so an existing preview on 4321 can remain open; Tina still needs 4001/9000 free. Do not run tests alongside a build. `test:static` checks generated metric/minimal-entry HTML and production draft exclusion, including forged preview requests, then removes its temporary fixtures and rebuilds. CI stays a single build/typecheck job.
+Browser tests cover real visual saves for Home/Work/Projects/About/Résumé (including all four Work drafts), résumé access from the homepage, typed-block insertion/editing/reordering, draft exclusion, automatic listings, minimal entries, 320/390/768/1440px layouts, link destinations, keyboard skip/menu/Escape behavior, and native content/navigation without JavaScript. Tests use port **4322** so an existing preview on 4321 can remain open; Tina still needs 4001/9000 free. Do not run tests alongside a build. `test:static` checks generated metric/minimal-entry HTML and production draft exclusion for all four stories, including sitemap omission and forged preview requests, then removes its temporary fixtures and rebuilds. CI stays a single build/typecheck job.
 
 ## Hosting & authentication
 

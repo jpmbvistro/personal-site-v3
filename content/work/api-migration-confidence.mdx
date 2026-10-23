@@ -1,0 +1,40 @@
+---
+title: Building confidence in a business-critical API migration
+draft: true
+summary: Using traffic evidence to remove unnecessary migration work, then validating the behavior that still needed to move.
+organizationLabel: Moderna
+---
+
+At Moderna, legacy API clients still depended on a critical proprietary inventory and registry service while new data moved to Benchling. Returning from parental leave, I inherited an endpoint migration backlog whose provenance was unclear and an implementation without reliable integration testing.
+
+I separated the problem into two decisions: **Should this endpoint be migrated?** And, if it should, **does its new implementation preserve required behavior?** Answering only the second question would have meant validating work we might never have needed to do.
+
+## First decision: determine what actually needed migration
+
+I built Kibana and CloudWatch traffic views, along with a reusable agent skill, to identify endpoint usage and active calling applications over a year. Traffic alone was not a retirement policy: an application's support status also mattered.
+
+I confirmed the risk criteria with technical leads, Product, and engineering leadership. Endpoints without traffic from applications still receiving support could be retired rather than maintained in the new implementation.
+
+That evidence removed **37+ unnecessary endpoint migrations** from the backlog, and endpoint-usage verification became part of migration planning. The result was a smaller, evidence-based scope: planned work we no longer needed to implement or maintain.
+
+## Second decision: test behavior, not just the apparent contract
+
+With management approval, I used agentic tooling to build an initial shadow-diff MVP in about three weeks. Shadow comparisons let us compare live responses from the legacy and replacement implementations rather than rely only on assumptions about their contracts.
+
+One early feature compared static contracts. It looked useful, but the typed legacy API client turned out to be an unreliable source of truth. That part of the MVP added little value: matching an inaccurate abstraction would not establish compatibility with the behavior callers actually encountered.
+
+Live response comparisons revealed widespread contract discrepancies across **200+ endpoints**, missing negative-path parity, and overlooked behavioral branches. Follow-on coding-agent analysis examined the actual legacy JavaScript implementation instead of the typed client abstraction and identified **75 missed behavioral branches**.
+
+## Turn findings into a repeatable validation path
+
+Shadow-diff testing was integrated into CI. Engineering leadership prioritized the corrective bugs outside negative-path parity; identifying a discrepancy did not mean it had already been corrected.
+
+A separate custom build harness handled approximately **95% of the corrective bug tickets resulting from these findings**. That percentage concerns corrective work, not the 37+ migrations removed from scope. The implementation workflow and its human oversight are covered in [Building a new engineering delivery model under deadline pressure](../ai-assisted-delivery/).
+
+The two decisions complemented one another: usage and support evidence bounded what we needed to preserve, while legacy-code-derived analysis and live comparisons tested whether the replacement preserved it. CI made that validation part of subsequent delivery rather than a one-time investigation.
+
+## What I would do differently
+
+The strongest lesson was to verify the source of truth before investing in automation around it. A typed client can be convenient without being authoritative. Keeping the MVP tighter would have reduced the effort spent on static comparison.
+
+I would also make challenging discoveries more collaborative. Giving other engineers a way to co-discover discrepancies would help build shared understanding, rather than presenting a finished set of findings for them to absorb. Better evidence matters most when the team can use it together.

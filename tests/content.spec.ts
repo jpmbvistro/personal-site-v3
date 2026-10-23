@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile, unlink } from 'node:fs/promises';
+import { workDrafts } from './fixtures/work-drafts';
 
 const workPath = new URL('../content/work/browser-fixture.mdx', import.meta.url);
 const projectPath = new URL('../content/projects/browser-fixture.mdx', import.meta.url);
@@ -38,14 +39,18 @@ test.describe('collection rendering and publication', () => {
     for (const route of ['/', '/work/']) {
       await page.goto(route);
       await expect(page.getByRole('link', { name: 'Work rendering fixture' })).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Building an AI-assisted delivery workflow' })).toHaveCount(0);
+      for (const { title } of workDrafts) {
+        await expect(page.getByRole('link', { name: title, exact: true })).toHaveCount(0);
+      }
     }
     for (const route of ['/', '/projects/']) {
       await page.goto(route);
       await expect(page.getByRole('link', { name: 'Project rendering fixture' })).toBeVisible();
       await expect(page.getByRole('link', { name: 'Keel', exact: true })).toHaveCount(0);
     }
-    expect((await request.get('/work/ai-assisted-delivery/')).status()).toBe(404);
+    for (const { slug } of workDrafts) {
+      expect((await request.get(`/work/${slug}/`)).status()).toBe(404);
+    }
     expect((await request.get('/projects/keel/')).status()).toBe(404);
   });
 
@@ -57,6 +62,32 @@ test.describe('collection rendering and publication', () => {
     await expect(page.locator('.metric-strip')).toContainText('35/40');
     await expect(page.locator('.metric-strip')).toContainText('Not zero human intervention');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  });
+
+  for (const width of [320, 390, 768, 1440]) {
+    test(`case study drafts use the shared layout and fit at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      for (const { slug, title } of workDrafts) {
+        expect((await page.goto(`/preview/work/${slug}/`))?.status()).toBe(200);
+        await expect(page.locator('main h1')).toHaveText(title);
+        await expect(page.locator('body > header')).toHaveCount(1);
+        await expect(page.locator('body > footer')).toHaveCount(1);
+        await expect(page.locator('.draft-note')).toBeVisible();
+        expect(await page.locator('.entry-body h2').count()).toBeGreaterThan(0);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), slug).toBe(true);
+      }
+      await page.goto('/preview/work/scaling-ux-capability/');
+      await expect(page.locator('.metric-strip dt')).toHaveCount(4);
+      await expect(page.locator('.metric-strip figcaption')).toContainText('may overlap');
+    });
+  }
+
+  test('migration story links to the readable harness draft', async ({ page }) => {
+    await page.goto('/preview/work/api-migration-confidence/');
+    await page.locator('.entry-body a[href="../ai-assisted-delivery/"]').click();
+    await expect(page).toHaveURL(/\/preview\/work\/ai-assisted-delivery\/$/);
+    await expect(page.locator('.draft-note')).toBeVisible();
+    await expect(page.locator('.metric-strip dt')).toHaveCount(2);
   });
 
   test('publishing and unpublishing refreshes local routes and listings without a restart', async ({ page, request }) => {
@@ -97,6 +128,14 @@ test('homepage leads to the supplied résumé through Contact', async ({ page })
 
 test.describe('rich text without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
+  for (const { slug, title } of workDrafts) {
+    test(`case study ${slug} is readable without JavaScript`, async ({ page }) => {
+      await page.goto(`/preview/work/${slug}/`);
+      await expect(page.locator('main h1')).toHaveText(title);
+      await expect(page.locator('.draft-note')).toBeVisible();
+      expect(await page.locator('.entry-body p').count()).toBeGreaterThan(0);
+    });
+  }
   test('metric labels, values, and qualifiers are native HTML', async ({ page }) => {
     await page.goto('/preview/work/ai-assisted-delivery/');
     await expect(page.locator('.metric-strip dt')).toHaveCount(2);

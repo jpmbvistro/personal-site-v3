@@ -1,15 +1,33 @@
 ---
-title: Building an AI-assisted delivery workflow
+title: Building a new engineering delivery model under deadline pressure
 draft: true
-summary: Extending a behavioral-analysis harness into a repeatable implementation workflow under a delivery deadline.
+summary: Building an AI-assisted implementation harness while delivering 40 corrective tickets to PR/completion within 30 days—with validation and human oversight.
 organizationLabel: Moderna
 ---
 
-A migration created an urgent backlog of corrective work. I extended an earlier behavioral-analysis harness into an AI-assisted implementation workflow while completing the tickets themselves.
+A major migration at Moderna created an urgent backlog of corrective tickets with a 30-day deadline. Manual engineering throughput would not have been sufficient. I chose to extend an earlier behavioral-analysis harness into a repeatable AI-assisted implementation system—and build it while completing the tickets, not before delivery began.
+
+The earlier legacy-code inference and shadow-diff work supplied partial proof of the architecture and behavioral tests. It did not prove that code generation or parallel execution would work reliably. The investment had to establish useful throughput quickly while containing those new risks.
 
 ## Start sequentially, then earn concurrency
 
-Each ticket had an isolated Git worktree and test context. I began with sequential execution to establish a working path, then enabled concurrency. Required validation, including shadow-diff integration tests, had to pass before completion.
+I designed the harness for parallel execution but began sequentially to establish a working delivery path. Each ticket received an isolated Git worktree and test context, including shadow-diff integration tests. Once that path worked, I unlocked concurrency during the 30-day period.
+
+The workflow moved from ticket intake to isolated agent implementation, required validation, and review/PR. The harness selected the relevant required validation commands and enforced passing results before completion. Isolation kept each ticket's changes and tests separate; concurrency increased throughput without removing the validation requirement.
+
+## Make failure recoverable
+
+Bounded retries handled transient failures. Persistent failures went to human handoff and ad hoc agent-assisted completion rather than an unlimited retry loop.
+
+I captured Langfuse traces, spans, artifacts, and transcripts so debugging agents could investigate recurring failures. This made unsuccessful runs useful evidence for improving the system, while leaving a human path for tickets that could not finish through the normal workflow.
+
+## Fix the architecture during delivery
+
+Two recurring mistakes changed the implementation during the deadline period. First, I stopped relying on stronger prompts to force structured outputs when Codex already provided a deterministic structured-output interface. A hard format requirement belonged in that interface, not in increasingly emphatic instructions.
+
+Second, I replaced overly rigid keyword-based scope checks with agent judgment about actual intent. A keyword match was not a reliable way to decide whether a change served the ticket. These were in-period corrections that helped the workflow function—not lessons applied only after the deadline.
+
+## Delivery outcomes, not unattended autonomy
 
 <MetricStrip
   caption="Delivery outcomes, with human oversight"
@@ -19,10 +37,12 @@ Each ticket had an isolated Git worktree and test context. I began with sequenti
   ]}
 />
 
-## Make failure recoverable
+The delivery record was **40 tickets reaching PR/completion within 30 days**, not a claim that all 40 had merged or deployed. Of those, **35/40 required no manual code-writing**. Human intervention still averaged approximately **two hours per ticket**; no manual code-writing did not mean no human oversight.
 
-Bounded retries handled transient failures. Persistent failures went to human handoff, with traces, artifacts, and transcripts available for investigation. Human intervention averaged approximately two hours per ticket.
+The result was a repeatable path for corrective work under a deadline, with required validation, recoverable failures, and a measured human contribution. The harness was a delivery system people operated, not a substitute for engineering accountability.
 
 ## What changed my approach
 
-During delivery, I replaced prompt-based structured-output enforcement with the available deterministic interface and replaced rigid keyword scope checks with judgment about intent. Later work moved toward a thinner harness: enforce genuine hard requirements and validate outcomes, while leaving ambiguous interpretation to agents.
+In that organizational context, substantial deterministic guardrails helped earn trust in a new way of delivering software. They gave the workflow explicit requirements and made it easier to see why a ticket had or had not completed.
+
+My subsequent work moved toward a thinner harness. I retained deterministic enforcement for genuine hard requirements and outcome validation, while leaving ambiguous interpretation to agents. That later philosophy grew out of the delivery experience; it should not be mistaken for the architecture we started with or a claim of complete autonomy during those 30 days.
