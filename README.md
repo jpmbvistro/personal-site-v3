@@ -75,6 +75,10 @@ Browser tests cover real visual saves for Home/Work/Projects/About/Résumé, ré
 
 References: [Astro setup](https://tina.io/docs/frameworks/astro/), [native visual editing / static-site requirements](https://tina.io/docs/contextual-editing/astro/), [TinaCloud](https://tina.io/docs/tinacloud/).
 
+## Personal brand identity reference
+
+The approved visual direction, sampled palette, logo reference assets, accessibility guidance, and proposed header/footer application are documented in [Juan Vistro brand identity](docs/brand-identity.md). The assets are visual references; current site CSS and layout are unchanged by that documentation PR.
+
 ## Small design system
 
 - `src/styles/global.css` owns brand and semantic tokens, system-font typography, spacing, focus, and reduced motion. Ink `#192B39`, ivory `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. Copper is a restrained accent, **not** small text on ivory. Text pairs meet WCAG AA (evergreen/ivory 5.23:1; muted text/ivory 5.73:1).
