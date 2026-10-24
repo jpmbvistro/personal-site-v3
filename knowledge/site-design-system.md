@@ -283,6 +283,14 @@ and mobile examples before resolving the implementation.
   document records intent, not an alternate token registry.
 - Read the existing component before proposing a new generic primitive.
 - Keep changes minimal, responsive and accessible; test in actual content.
+- **Component policy (accepted 2026-10-24):** use native Astro/HTML for static
+  editorial content, layouts, navigation links and visualization components.
+  Selectively use shadcn/ui only for a proven complex interactive requirement
+  that native or existing components do not address well. Preserve the site's
+  semantic tokens and avoid unneeded browser hydration; a React component can
+  be rendered statically in Astro when interaction isn't required. Avoid
+  blanket bans as well as preemptive library installation. No default shadcn
+  migration, Storybook or generic component framework.
 - For coding agents, use the [site design-system skill](../.agents/skills/site-design-system/SKILL.md).
 - Update this Lore note when a **durable design decision** changes, but do not
   create approval processes, visual-score validators, or extra tracking tools.
