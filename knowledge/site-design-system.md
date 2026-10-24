@@ -125,6 +125,33 @@ accessible text for the actual site name/navigation; the ornate identity mark
 does not replace an HTML heading. These are **recommended uses**, not yet a
 selection of final masters or authorization to add copyrighted assets.
 
+## Accepted portrait usage — 2026-10-23
+
+Juan approved using the supplied authentic portrait as part of the site's
+professional identity. It conveys an approachable, human presence alongside
+the editorial leadership positioning; do not replace it with generic stock
+photography or a stylized synthetic portrait.
+
+**Recommended composition (to validate in real responsive previews):**
+- Homepage hero: one restrained portrait at the **right** of left-aligned
+  headline/positioning on wider screens. In the supplied image Juan faces toward
+  the viewer's left, creating a natural visual line back to the headline.
+- On narrow screens, preserve readable copy and primary Work / résumé paths;
+  portrait can move beneath the introductory copy or be cropped more tightly.
+- About page may feature a larger portrait. Don't repeat the portrait on every
+  project/case study page where real work evidence is more useful.
+- The source is on a near-white background with a straight lower crop. Export
+  a visually clean web-optimized treatment that harmonizes with the warmer
+  ivory page background; avoid an obvious white rectangular image background.
+  Keep the subject's appearance authentic. Any background alteration/cropping
+  should be reviewed before committing a public asset.
+- Use meaningful alt text (e.g., "Portrait of Juan Vistro"), responsive image
+  sizing and stable aspect ratio. Protect subject visibility at mobile crops.
+
+**Asset state:** portrait has been supplied in the conversation, but this
+documentation PR does **not** commit or publish it. Select an approved final
+image file and optimized formats during page implementation.
+
 ## Proposed implementations — discuss before treating as final
 
 ### Composition and hierarchy
@@ -194,8 +221,9 @@ selection of final masters or authorization to add copyrighted assets.
    evaluate actual spacing and line lengths on mobile and desktop examples.
 3. **Motif implementation:** restrained functional systems visualization is
    accepted; test the amount of connecting-line ornament on real pages.
-4. **Image approach:** authentic portrait and real public-project screenshots
-   vs selective custom SVG illustrations; ensure all images are appropriate.
+4. **Image implementation:** portrait use is accepted; decide final optimized
+   export/background/crop and responsive placement, then use approved public
+   project screenshots and purpose-built diagrams on secondary pages.
 5. **Dark mode:** deliberately deferred by default unless there is a strong
    user-facing reason.
 6. **Visual review gate:** evaluate homepage + Work detail + Asterism project
