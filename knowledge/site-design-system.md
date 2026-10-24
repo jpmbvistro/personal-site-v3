@@ -132,14 +132,13 @@ professional identity. It conveys an approachable, human presence alongside
 the editorial leadership positioning; do not replace it with generic stock
 photography or a stylized synthetic portrait.
 
-**Recommended composition (to validate in real responsive previews):**
-- Homepage hero: one restrained portrait at the **right** of left-aligned
-  headline/positioning on wider screens. In the supplied image Juan faces toward
-  the viewer's left, creating a natural visual line back to the headline.
-- On narrow screens, preserve readable copy and primary Work / résumé paths;
-  portrait can move beneath the introductory copy or be cropped more tightly.
-- About page may feature a larger portrait. Don't repeat the portrait on every
-  project/case study page where real work evidence is more useful.
+**Accepted placement (superseding the earlier homepage portrait proposal):**
+- **About page:** use the supplied portrait as the primary personal image, with
+  careful responsive cropping, authentic appearance and descriptive alt text.
+- **Homepage:** do **not** show the portrait in the hero. Pair the positioning
+  headline with an illustrated People/Product/Systems systems visualization.
+- Work/Project pages should prioritize evidence, explanatory diagrams and
+  approved real project screenshots rather than repeating the portrait.
 - The source is on a near-white background with a straight lower crop. Export
   a visually clean web-optimized treatment that harmonizes with the warmer
   ivory page background; avoid an obvious white rectangular image background.
@@ -173,13 +172,22 @@ Asterism Projects should follow as a distinct section, not compete as a hero CTA
 - **Primary focal point:** large Newsreader headline. Supporting line uses
   smaller Inter text in a narrower measure and lighter visual weight
   (maintaining text contrast). Two CTAs follow.
-- **Secondary focal point:** understated **People / Product / Systems**
-  convergence diagram, leading to **Better decisions / More capable teams /
-  Stronger delivery**. No filled dark center capsule, repeated microcopy,
-  icon-heavy badges, or diagram headline competing with the page headline.
-- The diagram should feel like an editorial figure: thin stone connectors,
-  deep-green text, and at most a small copper junction. Treat connections as
-  explanatory, not decorative; expose equivalent plain-text semantics.
+- **Secondary focal point:** a **rich but subordinate People / Product /
+  Systems** interconnection/convergence illustration, with **Engineering leverage**
+  at its center and **Better decisions / More capable teams / Stronger delivery**
+  as outcomes. Each domain may include compact evidence labels (coaching,
+  enablement; user insight, prioritization; architecture, delivery design).
+- Preserve architectural character: flowing translucent ribbon elements,
+  carefully spaced circular domains, fine stone/copper connectors and a
+  readable intermediate convergence node. The complexity should reward a second
+  look, while the headline must remain the first focal point.
+- Avoid a large dark center capsule, icon-heavy decoration or microcopy that
+  duplicates the surrounding hero. Use balanced contrast and visual hierarchy
+  rather than stripping diagram content away.
+- The currently approved **high-fidelity desktop hero mockup** demonstrates
+  the intended richness and tone. It is a visual reference, not a literal
+  asset or a specification for fixed pixel geometry. Recreate with maintainable
+  native Astro/SVG and accessible text; do not embed a screenshot of the page.
 - Desktop concept: approximately 60/40 text-to-visual grid; diagram sits
   slightly lower, with noticeably lower typographic and color contrast weight
   than the headline. On mobile prioritize copy and actions, with a stacked
