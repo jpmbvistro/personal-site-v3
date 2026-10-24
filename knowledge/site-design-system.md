@@ -29,9 +29,11 @@ These are current repository decisions, not new proposals:
 
 - Public site is Astro and Tailwind CSS with semantic, shadcn-compatible tokens
   at [`src/styles/global.css`](../src/styles/global.css).
-- Core palette: ink `#192B39`, warm ivory `#F5F2EB`, evergreen `#386E67`,
-  restrained copper `#C7815D`. Semantic text/surface/interactive pairs live
-  in CSS; **do not copy token hex values into one-off components**.
+- **Currently implemented, to be superseded:** ink `#192B39`, warm ivory
+  `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. See the approved
+  replacement palette below; `src/styles/global.css` has **not** yet been
+  migrated. Semantic text/surface/interactive pairs remain in CSS; do not copy
+  hex values into one-off components.
 - Serif display and headline roles, sans-serif UI/body roles, monospace technical
   metadata. The current implementation uses system stacks; Newsreader + Inter
   is the accepted next visual direction, **not yet implemented**. No external
@@ -74,6 +76,55 @@ fixed per-section pixel values or a mandatory page template.
 Exact font weights, optical sizes, heading scale, font delivery, and illustration
 treatment still need examples and validation before finalizing.
 
+## Accepted brand palette and restrained visualizations — 2026-10-23
+
+The owner's logo exploration led to a **replacement** of the previous
+blue-ink/evergreen palette, rather than addition of a second competing theme.
+The values below are approximate raster-derived samples from the supplied
+identity board; exact source-design values may be adjusted once master assets
+are available. Before implementation, validate contrast for actual text,
+controls, hover and focus combinations (not just the main text pairing).
+
+| Role | Proposed semantic use | Approved sample |
+| --- | --- | --- |
+| Charcoal | Main body text, readable dense content | `#343432` |
+| Deep green | Headlines, strong brand surfaces, primary interaction if contrast holds | `#28332B` |
+| Copper | Decorative strokes, callouts, larger marks; not small text on ivory | `#B17750` |
+| Stone | Separators, subtle borders, restrained inset surfaces | `#D2C6B8` |
+| Warm ivory | Default page background | `#F3EDE3` |
+
+Use semantic CSS tokens to implement this; do not introduce palette-specific
+colors in individual components. Owner-reported contrast on warm ivory is
+approximately 10.7:1 for charcoal and 11.3:1 for deep green; copper is only
+approximately 3.2:1, so it is **not** suitable as ordinary small text on ivory.
+
+**Visual language approved:** restrained systems visualizations—functional
+diagrams with meaningful labels and sparse line/dot/connection motifs.
+Diagrams should explain leadership decisions, workflows and technical
+tradeoffs; motif elements must remain secondary to reading. Avoid generic
+AI imagery, busy circuits, decorative charts and unverified metrics.
+Homepage should stay predominantly editorial; Work can include decision
+diagrams, Projects can be more technically detailed.
+
+### Supplied logo exploration (usage recommendation; production assets pending)
+
+Three raster concepts were supplied: a detailed copper/green **V monogram**,
+a **horizontal monogram + JUAN VISTRO wordmark**, and a **stacked
+monogram/wordmark**. Suggested roles:
+- Horizontal lockup for spacious header/hero contexts where the full name
+  remains legible.
+- Stacked version for About/footer or other generous vertical placements.
+- Simplified, high-contrast **flat vector** monogram for favicon and compact
+  marks; fine copper strokes, textured fill and translucent ribbons are unlikely
+  to reproduce reliably at 16–32px.
+
+The current samples have white backgrounds. Do not paste that raster white
+rectangle onto a warm-ivory page. Prepare transparent SVG/appropriate raster
+exports from an owned source and check legibility at real sizes. Use ordinary
+accessible text for the actual site name/navigation; the ornate identity mark
+does not replace an HTML heading. These are **recommended uses**, not yet a
+selection of final masters or authorization to add copyrighted assets.
+
 ## Proposed implementations — discuss before treating as final
 
 ### Composition and hierarchy
@@ -92,9 +143,10 @@ treatment still need examples and validation before finalizing.
 
 ### Color and surfaces
 
-- Warm ivory is the main canvas, ink the main text/heading color.
-- Evergreen conveys navigation and action. Copper is a limited annotation or
-  emphasis color; **not a default small-text/link color on ivory**.
+- Warm ivory is the main canvas; charcoal is standard body text, deep green
+  serves display/headings and primary emphasis. Verify interactive contrast.
+- Copper is limited to decorative annotation/emphasis; **not small-text links**
+  on warm ivory. Stone supplies subtle dividing rules.
 - Use borders and subtle backgrounds to organize material; minimize raised
   card treatments, gradients, and large decorative fills.
 - Do not encode meanings only in color; preserve visible focus, readable states,
@@ -140,8 +192,8 @@ treatment still need examples and validation before finalizing.
    hierarchy, fallback behavior, legibility, font delivery, licensing and speed.
 2. **Density implementation:** the editorial/open-to-dense rhythm is accepted;
    evaluate actual spacing and line lengths on mobile and desktop examples.
-3. **Technical motifs:** subtle connection lines, modular diagrams, or nearly
-   invisible motifs? Make the site distinctive without generic AI imagery.
+3. **Motif implementation:** restrained functional systems visualization is
+   accepted; test the amount of connecting-line ornament on real pages.
 4. **Image approach:** authentic portrait and real public-project screenshots
    vs selective custom SVG illustrations; ensure all images are appropriate.
 5. **Dark mode:** deliberately deferred by default unless there is a strong
