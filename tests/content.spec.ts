@@ -1,9 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile, unlink } from 'node:fs/promises';
-import { workDrafts } from './fixtures/work-drafts';
+import { workDrafts, workStories } from './fixtures/work-drafts';
 
 const workPath = new URL('../content/work/browser-fixture.mdx', import.meta.url);
 const projectPath = new URL('../content/projects/browser-fixture.mdx', import.meta.url);
+const draftPath = new URL('../content/work/browser-unpublished.mdx', import.meta.url);
 const created: URL[] = [];
 
 test.describe('collection rendering and publication', () => {
@@ -12,6 +13,8 @@ test.describe('collection rendering and publication', () => {
     created.push(workPath);
     await writeFile(projectPath, '---\ntitle: Project rendering fixture\ndraft: false\n---\n\nA minimal published project entry.\n', { flag: 'wx' });
     created.push(projectPath);
+    await writeFile(draftPath, '---\ntitle: Unpublished work fixture\ndraft: true\n---\n\nA draft must not appear publicly.\n', { flag: 'wx' });
+    created.push(draftPath);
   });
 
   test.afterAll(async () => {
@@ -39,6 +42,7 @@ test.describe('collection rendering and publication', () => {
     for (const route of ['/', '/work/']) {
       await page.goto(route);
       await expect(page.getByRole('link', { name: 'Work rendering fixture' })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Unpublished work fixture' })).toHaveCount(0);
       for (const { title } of workDrafts) {
         await expect(page.getByRole('link', { name: title, exact: true })).toHaveCount(0);
       }
@@ -52,28 +56,28 @@ test.describe('collection rendering and publication', () => {
       expect((await request.get(`/work/${slug}/`)).status()).toBe(404);
     }
     expect((await request.get('/projects/keel/')).status()).toBe(404);
+    expect((await request.get('/work/browser-unpublished/')).status()).toBe(404);
   });
 
   test('draft block preview is readable at phone width', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 900 });
     await page.goto('/preview/work/ai-assisted-delivery/');
-    await expect(page.locator('.draft-note')).toBeVisible();
-    await expect(page.locator('.metric-strip dt')).toHaveCount(2);
+    await expect(page.locator('.metric-strip dt')).toHaveCount(3);
     await expect(page.locator('.metric-strip')).toContainText('35/40');
-    await expect(page.locator('.metric-strip')).toContainText('Not zero human intervention');
+    await expect(page.locator('.metric-strip')).toContainText('Human oversight');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 
   for (const width of [320, 390, 768, 1440]) {
     test(`case study drafts use the shared layout and fit at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
-      for (const { slug, title } of workDrafts) {
+      for (const { slug, title, published } of workStories) {
         expect((await page.goto(`/preview/work/${slug}/`))?.status()).toBe(200);
         await expect(page.locator('main h1')).toHaveText(title);
         await expect(page.locator('body > header')).toHaveCount(1);
         await expect(page.locator('body > footer')).toHaveCount(1);
-        await expect(page.locator('.draft-note')).toBeVisible();
-        expect(await page.locator('.entry-body h2').count()).toBeGreaterThan(0);
+        await expect(page.locator('.draft-note')).toHaveCount(published ? 0 : 1);
+        expect(await page.locator('.entry-story h2').count()).toBeGreaterThan(0);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), slug).toBe(true);
       }
       await page.goto('/preview/work/scaling-ux-capability/');
@@ -82,12 +86,11 @@ test.describe('collection rendering and publication', () => {
     });
   }
 
-  test('migration story links to the readable harness draft', async ({ page }) => {
-    await page.goto('/preview/work/api-migration-confidence/');
-    await page.locator('.entry-body a[href="../ai-assisted-delivery/"]').click();
-    await expect(page).toHaveURL(/\/preview\/work\/ai-assisted-delivery\/$/);
-    await expect(page.locator('.draft-note')).toBeVisible();
-    await expect(page.locator('.metric-strip dt')).toHaveCount(2);
+  test('editorial story links to related public work', async ({ page }) => {
+    await page.goto('/work/scaling-ux-capability/');
+    await page.locator('.entry-links a[href="/work/api-migration-confidence/"]').click();
+    await expect(page).toHaveURL(/\/work\/api-migration-confidence\/$/);
+    await expect(page.locator('main h1')).toHaveText(workStories.find(({ slug }) => slug === 'api-migration-confidence')!.title);
   });
 
   test('publishing and unpublishing refreshes local routes and listings without a restart', async ({ page, request }) => {
@@ -130,18 +133,18 @@ test('homepage leads to the supplied résumé through Contact', async ({ page })
 
 test.describe('rich text without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
-  for (const { slug, title } of workDrafts) {
+  for (const { slug, title, published } of workStories) {
     test(`case study ${slug} is readable without JavaScript`, async ({ page }) => {
       await page.goto(`/preview/work/${slug}/`);
       await expect(page.locator('main h1')).toHaveText(title);
-      await expect(page.locator('.draft-note')).toBeVisible();
+      await expect(page.locator('.draft-note')).toHaveCount(published ? 0 : 1);
       expect(await page.locator('.entry-body p').count()).toBeGreaterThan(0);
     });
   }
   test('metric labels, values, and qualifiers are native HTML', async ({ page }) => {
     await page.goto('/preview/work/ai-assisted-delivery/');
-    await expect(page.locator('.metric-strip dt')).toHaveCount(2);
+    await expect(page.locator('.metric-strip dt')).toHaveCount(3);
     await expect(page.locator('.metric-strip')).toContainText('35/40');
-    await expect(page.locator('.metric-strip')).toContainText('Not zero human intervention');
+    await expect(page.locator('.metric-strip')).toContainText('Human oversight');
   });
 });

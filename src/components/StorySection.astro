@@ -1,0 +1,37 @@
+---
+import type { TinaMarkdownProps } from '@tinacms/astro';
+import RichText from './RichText.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  layout?: string;
+  children?: TinaMarkdownProps['content'];
+}
+const { eyebrow, title, layout, children } = Astro.props;
+---
+
+<section class:list={['story-section', { 'story-decisions': layout === 'decisions' }]}>
+  <header>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2>{title}</h2>
+  </header>
+  <div class="section-copy prose"><RichText content={children} /></div>
+</section>
+
+<style>
+  .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 1px solid var(--border); padding-block: var(--space-12); }
+  h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
+  .section-copy { min-width: 0; max-width: none; }
+  .story-decisions .section-copy :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
+  .story-decisions .section-copy :global(> ol > li) { padding-inline-start: var(--space-1); }
+  .story-decisions .section-copy :global(> ol > li::marker) { color: var(--primary); font-weight: 600; }
+  .story-decisions .section-copy :global(li strong) { display: block; margin-bottom: var(--space-4); color: var(--primary); font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.15; font-weight: 500; }
+  @media (max-width: 65rem) {
+    .story-decisions .section-copy :global(> ol) { grid-template-columns: 1fr; gap: var(--space-6); }
+  }
+  @media (max-width: 60rem) {
+    .story-section { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8); }
+    h2 { max-width: 24ch; }
+  }
+</style>
