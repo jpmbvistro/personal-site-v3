@@ -27,9 +27,21 @@ Juan's choice**. Do not silently turn proposals into hard requirements.
   If a repeated need is genuinely missing, add a semantic token/component once.
 - Keep the Editorial Executive × Systems Architect direction: readable
   typography, calm composition, factual diagrams and purposeful emphasis.
-- Prefer static Astro and accessible HTML. Add client-side behavior only when
-  native patterns are insufficient; do not add shadcn/React, a theme engine,
-  Storybook or a visualization runtime by default.
+- **Astro first:** prefer native Astro and semantic HTML for editorial layouts,
+  static content, links, metric strips, and SVG/data visualizations.
+- **Selective shadcn/ui is allowed, not default:** consider an individual
+  shadcn/ui component for a concrete complex interaction (e.g., dialog, drawer,
+  or accessible tabs) when native HTML and existing Astro components do not
+  already meet the need. Articulate what behavior/accessibility benefit warrants
+  the dependency; don't install shadcn/React just for branding or replace
+  working components.
+- If selecting shadcn, adapt its component classes to the existing semantic
+  design tokens and editorial style. Astro can server-render React components
+  without client hydration; add a client directive only where browser
+  interactivity actually requires JavaScript. Keep interaction bundles narrow
+  and test keyboard, touch, reduced-motion and responsive behavior.
+- Do not add a theme engine, Storybook, or a general visualization runtime
+  by default.
 - Keep TinaCMS for authored content. Do not make the CMS responsible for arbitrary
   visual layout or impose editorial story templates/claim approval.
 - Treat diagrams as explanations: clear labels and text alternatives; use
