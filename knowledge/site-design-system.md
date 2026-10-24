@@ -152,6 +152,45 @@ photography or a stylized synthetic portrait.
 documentation PR does **not** commit or publish it. Select an approved final
 image file and optimized formats during page implementation.
 
+## Accepted homepage direction — 2026-10-23
+
+The homepage is a **professional portfolio with an editorial visual language**,
+not a lengthy personal essay or a product landing page.
+
+### Approved hero copy
+
+**Headline:** Designing the systems behind better product and engineering outcomes.
+
+**Supporting line:** I'm Juan Vistro, a technical leader focused on improving how
+teams decide, deliver, and evolve—through stronger systems, clearer product
+thinking, and practical enablement.
+
+**Actions:** Primary — "Explore selected work"; secondary — "View résumé".
+Asterism Projects should follow as a distinct section, not compete as a hero CTA.
+
+### Approved content and visual hierarchy
+
+- **Primary focal point:** large Newsreader headline. Supporting line uses
+  smaller Inter text in a narrower measure and lighter visual weight
+  (maintaining text contrast). Two CTAs follow.
+- **Secondary focal point:** understated **People / Product / Systems**
+  convergence diagram, leading to **Better decisions / More capable teams /
+  Stronger delivery**. No filled dark center capsule, repeated microcopy,
+  icon-heavy badges, or diagram headline competing with the page headline.
+- The diagram should feel like an editorial figure: thin stone connectors,
+  deep-green text, and at most a small copper junction. Treat connections as
+  explanatory, not decorative; expose equivalent plain-text semantics.
+- Desktop concept: approximately 60/40 text-to-visual grid; diagram sits
+  slightly lower, with noticeably lower typographic and color contrast weight
+  than the headline. On mobile prioritize copy and actions, with a stacked
+  accessible diagram below.
+- Case studies follow immediately after a concise credibility band. Portrait
+  belongs on the **About** page, not the homepage.
+
+These decisions fix the **narrative priority and content**, not exact pixel
+geometry, type weights or a particular SVG implementation. Compare real desktop
+and mobile examples before resolving the implementation.
+
 ## Proposed implementations — discuss before treating as final
 
 ### Composition and hierarchy
