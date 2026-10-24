@@ -1,40 +1,126 @@
 ---
-title: Building confidence in a business-critical API migration
-draft: true
-summary: Using traffic evidence to remove unnecessary migration work, then validating the behavior that still needed to move.
-organizationLabel: Moderna
+title: Reducing scope and risk in a business-critical API migration
+draft: false
+summary: 'I challenged the assumptions behind a critical API migration, eliminated 37+ unnecessary endpoint migrations, and developed behavioral validation tooling that uncovered 75 previously missed implementation branches.'
+organizationLabel: Global Biotechnology Company
+role: Software Engineer
+tags:
+  - Engineering Leadership
+  - Systems Architecture
+  - Technical Strategy
+  - API Migration
+  - Engineering Reliability
 ---
 
-At Moderna, legacy API clients still depended on a critical proprietary inventory and registry service while new data moved to Benchling. Returning from parental leave, I inherited an endpoint migration backlog whose provenance was unclear and an implementation without reliable integration testing.
+A major platform migration at a global biotechnology company required moving data from legacy inventory and registry systems to a new vendor platform. Numerous internal applications still depended on the legacy APIs, making compatibility essential throughout the transition.
 
-I separated the problem into two decisions: **Should this endpoint be migrated?** And, if it should, **does its new implementation preserve required behavior?** Answering only the second question would have meant validating work we might never have needed to do.
+The engineering team was building a proxy layer to translate requests and responses between the new platform and existing applications. When I returned from parental leave, development was already underway.
 
-## First decision: determine what actually needed migration
+I noticed two significant risks: the migration backlog lacked a documented basis for determining which endpoints were still necessary, and the implementation relied heavily on unit tests without sufficient integration testing to establish behavioral compatibility.
 
-I built Kibana and CloudWatch traffic views, along with a reusable agent skill, to identify endpoint usage and active calling applications over a year. Traffic alone was not a retirement policy: an application's support status also mattered.
+Rather than simply continue implementing the backlog, I separated the problem into two questions:
 
-I confirmed the risk criteria with technical leads, Product, and engineering leadership. Endpoints without traffic from applications still receiving support could be retired rather than maintained in the new implementation.
+* Should this endpoint be migrated at all?
+* If so, how do we know its replacement preserves the required behavior?
 
-That evidence removed **37+ unnecessary endpoint migrations** from the backlog, and endpoint-usage verification became part of migration planning. The result was a smaller, evidence-based scope: planned work we no longer needed to implement or maintain.
+Answering only the second question would have meant spending engineering effort validating interfaces that might no longer serve a purpose.
 
-## Second decision: test behavior, not just the apparent contract
+<MetricStrip
+  caption="Key Outcomes"
+  metrics={[
+    {
+      value: "37+",
+      label: "Migrations removed",
+      qualifier: "Unnecessary endpoints eliminated from scope"
+    },
+    {
+      value: "75",
+      label: "Missing behaviors identified",
+      qualifier: "Previously overlooked implementation branches"
+    },
+    {
+      value: "~95%",
+      label: "Corrective tickets addressed",
+      qualifier: "Through a separate AI-assisted build harness"
+    }
+  ]}
+/>
 
-With management approval, I used agentic tooling to build an initial shadow-diff MVP in about three weeks. Shadow comparisons let us compare live responses from the legacy and replacement implementations rather than rely only on assumptions about their contracts.
+## Challenge the migration scope with actual usage evidence
 
-One early feature compared static contracts. It looked useful, but the typed legacy API client turned out to be an unreliable source of truth. That part of the MVP added little value: matching an inaccurate abstraction would not establish compatibility with the behavior callers actually encountered.
+The existing migration plan included endpoints that were obsolete, unused, or no longer relevant following changes to the underlying data models.
 
-Live response comparisons revealed widespread contract discrepancies across **200+ endpoints**, missing negative-path parity, and overlooked behavioral branches. Follow-on coding-agent analysis examined the actual legacy JavaScript implementation instead of the typed client abstraction and identified **75 missed behavioral branches**.
+I built Kibana and CloudWatch dashboards to investigate endpoint usage over the preceding year, including which applications were making requests. I also developed a reusable agent skill that allowed engineers to investigate individual endpoints and retrieve supporting traffic evidence.
 
-## Turn findings into a repeatable validation path
+However, traffic data alone couldn't determine whether an endpoint should be preserved. The organization's continued support commitments also mattered.
 
-Shadow-diff testing was integrated into CI. Engineering leadership prioritized the corrective bugs outside negative-path parity; identifying a discrepancy did not mean it had already been corrected.
+I worked with technical leads, Product, and engineering leadership to establish a shared decision criterion: endpoints with no traffic from applications still receiving support did not need to be carried forward into the new proxy implementation.
 
-A separate custom build harness handled approximately **95% of the corrective bug tickets resulting from these findings**. That percentage concerns corrective work, not the 37+ migrations removed from scope. The implementation workflow and its human oversight are covered in [Building a new engineering delivery model under deadline pressure](../ai-assisted-delivery/).
+Applying that criterion identified 37+ unnecessary endpoint migrations, which were subsequently removed from the development backlog.
 
-The two decisions complemented one another: usage and support evidence bounded what we needed to preserve, while legacy-code-derived analysis and live comparisons tested whether the replacement preserved it. CI made that validation part of subsequent delivery rather than a one-time investigation.
+Based on historical ticket completion times, this represented a substantial amount of avoided development work. More importantly, it prevented the organization from introducing additional interfaces that would require maintenance and could mislead future engineers into believing obsolete behaviors remained necessary.
 
-## What I would do differently
+The investigation also changed our planning process. Engineers began verifying endpoint usage before committing additional migration work, rather than treating the inherited backlog as authoritative.
 
-The strongest lesson was to verify the source of truth before investing in automation around it. A typed client can be convenient without being authoritative. Keeping the MVP tighter would have reduced the effort spent on static comparison.
+## Establish behavioral correctness against the real system
 
-I would also make challenging discoveries more collaborative. Giving other engineers a way to co-discover discrepancies would help build shared understanding, rather than presenting a finished set of findings for them to absorb. Better evidence matters most when the team can use it together.
+Reducing the migration scope addressed unnecessary work, but it didn't resolve another critical question: whether the endpoints we did migrate behaved correctly.
+
+With management approval, I developed an initial shadow-diff MVP in approximately three weeks using agentic engineering tools.
+
+The tool compared response behavior between legacy and replacement implementations, exposing discrepancies that existing unit tests could miss.
+
+During early development, I interviewed engineers to understand where they believed the authoritative API contracts lived. The team identified a typed legacy API client, which led me to add static contract comparison functionality.
+
+That decision turned out to be a mistake.
+
+Further investigation revealed that the typed client did not accurately represent all of the legacy system's behavior. Although the static comparison feature worked technically, its results were not a trustworthy measure of compatibility.
+
+**I had built functionality around an abstraction before validating whether that abstraction was authoritative.**
+
+Rather than continue expanding that approach, I focused on direct behavioral comparison.
+
+The resulting analysis examined more than 200 endpoints and exposed widespread contract discrepancies, missing negative-path parity, and previously overlooked behavioral branches.
+
+To investigate those branches more systematically, I developed a separate coding-agent workflow that examined the actual JavaScript implementation of the legacy inventory and registry systems.
+
+Instead of inferring behavior from potentially inaccurate client definitions, the agent analyzed the implementation to identify expected contracts and conditional behavior.
+
+That investigation identified 75 missing behavioral branches in the replacement endpoints.
+
+## Turn the findings into a repeatable engineering process
+
+Finding discrepancies was valuable, but the larger opportunity was to make behavioral verification part of normal engineering delivery.
+
+Shadow-diff testing was integrated into CI, providing a repeatable way to check compatibility as implementation work progressed.
+
+Engineering leadership prioritized corrective work for the identified behavioral discrepancies, excluding negative-path parity issues from that initial prioritization.
+
+I then used a separate custom agentic build harness to address approximately 95% of the resulting corrective bug tickets.
+
+This was distinct from the 37+ endpoint migrations removed from the backlog. Those migrations represented work we avoided; the corrective tickets addressed deficiencies in implementations that still needed to exist.
+
+Together, the changes established two complementary engineering practices:
+
+* Validate necessity before implementation. Use observed behavior and support requirements to determine which interfaces warrant continued investment.
+* Validate correctness against actual behavior. Compare replacement implementations with the legacy system and retain regression checks throughout delivery.
+
+The result was a smaller migration scope, substantially better visibility into compatibility risks, and a more repeatable approach to validating the work that remained.
+
+## What I learned about technical and organizational judgment
+
+The first lesson was about the importance of validating assumptions before building automation around them.
+
+Typed interfaces and documented contracts are useful abstractions, but they are not necessarily authoritative descriptions of actual system behavior. My initial static comparison feature reinforced that distinction.
+
+If I approached the project again, I would establish the behavioral source of truth earlier and keep the first MVP more tightly focused on directly validating it.
+
+The second lesson concerned how technical discoveries are introduced to an engineering team.
+
+The findings challenged significant work that colleagues had already completed. Although the investigation was respected and the resulting corrective work was prioritized, I recognized that presenting a largely completed analysis could leave engineers feeling that their contributions were being judged rather than that they were participating in uncovering a shared problem.
+
+I would make that discovery process more collaborative, involving engineers earlier in investigating discrepancies and establishing the evidence together.
+
+> Engineering leadership isn't only about reaching the right technical conclusion. It's also about creating the shared understanding necessary for people to act on it.
+
+Ultimately, this experience reinforced a principle I've carried into subsequent engineering systems: validate the assumptions behind planned work, establish trustworthy evidence for correctness, and make those practices repeatable rather than dependent on individual judgment.

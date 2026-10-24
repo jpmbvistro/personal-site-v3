@@ -1,48 +1,103 @@
 ---
-title: Building a new engineering delivery model under deadline pressure
-draft: true
-summary: Building an AI-assisted implementation harness while delivering 40 corrective tickets to PR/completion within 30 days—with validation and human oversight.
-organizationLabel: Moderna
+title: '40 tickets in 30 days: Building an AI-assisted engineering delivery system'
+draft: false
+summary: 'Faced with an urgent backlog of 40 corrective tickets, I built and operated an AI-assisted implementation harness that brought every ticket to PR within 30 days. The system combined parallel execution, behavioral validation, and human oversight, with 35 tickets requiring no manual code-writing.'
+organizationLabel: Global Biotechnology Company
+role: Software Engineer
+tags:
+  - Engineering Leadership
+  - Agentic AI
+  - Developer Productivity
+  - Platform Engineering
+  - Engineering Reliability
 ---
 
-A major migration at Moderna created an urgent backlog of corrective tickets with a 30-day deadline. Manual engineering throughput would not have been sufficient. I chose to extend an earlier behavioral-analysis harness into a repeatable AI-assisted implementation system—and build it while completing the tickets, not before delivery began.
+A major platform migration at a global biotechnology company created an urgent backlog of corrective tickets with a 30-day deadline. Based on existing engineering throughput, completing the work manually was unlikely to meet the deadline.
 
-The earlier legacy-code inference and shadow-diff work supplied partial proof of the architecture and behavioral tests. It did not prove that code generation or parallel execution would work reliably. The investment had to establish useful throughput quickly while containing those new risks.
+Rather than simply accelerating the existing development process, I saw an opportunity to establish a different delivery model: a repeatable AI-assisted system capable of implementing, validating, and preparing fixes for review.
 
-## Start sequentially, then earn concurrency
+The challenge was that I needed to build the delivery system while simultaneously using it to complete the work. If the harness failed, the investment would consume time we could not easily recover.
 
-I designed the harness for parallel execution but began sequentially to establish a working delivery path. Each ticket received an isolated Git worktree and test context, including shadow-diff integration tests. Once that path worked, I unlocked concurrency during the 30-day period.
+I wasn't starting entirely from scratch. An earlier harness I had developed for legacy-code analysis and behavioral validation provided a foundation. But generating code reliably and coordinating multiple concurrent implementation workflows introduced new uncertainties.
 
-The workflow moved from ticket intake to isolated agent implementation, required validation, and review/PR. The harness selected the relevant required validation commands and enforced passing results before completion. Isolation kept each ticket's changes and tests separate; concurrency increased throughput without removing the validation requirement.
+## Prove the workflow before scaling it
 
-## Make failure recoverable
+I designed the harness to support parallel execution from the beginning, but deliberately started with sequential ticket processing.
 
-Bounded retries handled transient failures. Persistent failures went to human handoff and ad hoc agent-assisted completion rather than an unlimited retry loop.
+Each ticket received an isolated Git worktree and test environment. The harness interpreted the ticket, implemented the required changes, and executed its validation commands, including shadow-diff integration tests established through the earlier behavioral-analysis work.
 
-I captured Langfuse traces, spans, artifacts, and transcripts so debugging agents could investigate recurring failures. This made unsuccessful runs useful evidence for improving the system, while leaving a human path for tickets that could not finish through the normal workflow.
+Completion required those checks to pass.
 
-## Fix the architecture during delivery
+This gave me a working delivery path before introducing concurrency. Once sequential execution demonstrated sufficient throughput and reliability, I enabled parallel ticket execution within the same 30-day period.
 
-Two recurring mistakes changed the implementation during the deadline period. First, I stopped relying on stronger prompts to force structured outputs when Codex already provided a deterministic structured-output interface. A hard format requirement belonged in that interface, not in increasingly emphatic instructions.
+The architecture preserved isolation between tickets, allowing multiple implementation workflows to progress independently without relaxing their validation requirements.
 
-Second, I replaced overly rigid keyword-based scope checks with agent judgment about actual intent. A keyword match was not a reliable way to decide whether a change served the ticket. These were in-period corrections that helped the workflow function—not lessons applied only after the deadline.
+## Design for recoverable failure
 
-## Delivery outcomes, not unattended autonomy
+I did not assume agents would complete every ticket successfully.
+
+Transient failures triggered bounded retries. When a ticket repeatedly failed or became stuck, the harness handed it back to me for ad hoc agent-assisted completion rather than continuing indefinitely.
+
+I also instrumented the workflows with Langfuse, capturing traces, spans, artifacts, and agent transcripts. Debugging agents used this evidence to investigate failures, identify recurring patterns, and inform improvements to the harness.
+
+Failures therefore served two purposes: they determined when human intervention was needed, and they provided evidence for improving subsequent runs.
+
+## Correct architectural mistakes during delivery
+
+Two recurring failure modes challenged my original assumptions about where deterministic controls belonged.
+
+### Structured output required an interface contract, not stronger prompting.
+
+Initially, I tried to make agents produce required structured files through increasingly restrictive instructions. Investigation revealed that Codex already supported deterministic structured outputs. I replaced prompt-dependent formatting with the supported interface.
+
+### Scope validation required interpretation, not keyword matching.
+
+I had also implemented deterministic keyword-based checks to prevent agents from exceeding ticket scope. In practice, keyword matching could not reliably determine whether a change was relevant to a ticket's intent.
+
+I replaced those checks with agent-driven scope evaluation while retaining deterministic validation for objective requirements.
+
+Both changes occurred during the delivery period. They were practical architectural corrections informed by observed failures, not merely lessons identified afterward.
+
+## Results: Throughput without removing accountability
+
+The initiative produced three measurable outcomes:
 
 <MetricStrip
-  caption="Delivery outcomes, with human oversight"
   metrics={[
-    { value: "40", label: "Tickets reached PR/completion", qualifier: "Within the 30-day period" },
-    { value: "35/40", label: "Required no manual code-writing", qualifier: "Not zero human intervention" }
+    {
+      value: "40",
+      qualifier: "Within 30 days; not necessarily merged or deployed",
+      label: "Tickets delivered to PR"
+    },
+    {
+      value: "35/40",
+      label: "Tickets without manual code-writing",
+      qualifier: "Human oversight and intervention still required"
+    },
+    {
+      value: "~2 hrs",
+      label: "Average human intervention per ticket",
+      qualifier: "Includes oversight and assistance with failed workflows"
+    }
   ]}
 />
 
-The delivery record was **40 tickets reaching PR/completion within 30 days**, not a claim that all 40 had merged or deployed. Of those, **35/40 required no manual code-writing**. Human intervention still averaged approximately **two hours per ticket**; no manual code-writing did not mean no human oversight.
+The result was a repeatable engineering delivery workflow that combined faster implementation with isolated execution, required behavioral validation, observable failures, and human escalation.
 
-The result was a repeatable path for corrective work under a deadline, with required validation, recoverable failures, and a measured human contribution. The harness was a delivery system people operated, not a substitute for engineering accountability.
+The harness did not eliminate engineering accountability. It changed where human effort was most needed.
 
-## What changed my approach
+## What this changed about my engineering philosophy
 
-In that organizational context, substantial deterministic guardrails helped earn trust in a new way of delivering software. They gave the workflow explicit requirements and made it easier to see why a ticket had or had not completed.
+At the time, there was substantial skepticism about whether coding agents could produce trustworthy software. The deterministic architecture was partly a response to that environment.
 
-My subsequent work moved toward a thinner harness. I retained deterministic enforcement for genuine hard requirements and outcome validation, while leaving ambiguous interpretation to agents. That later philosophy grew out of the delivery experience; it should not be mistaken for the architecture we started with or a claim of complete autonomy during those 30 days.
+Explicit workflow state, validation requirements, and operational safeguards helped establish confidence in a new approach to engineering delivery.
+
+But the experience also taught me that deterministic control is valuable only when it addresses a justified requirement or demonstrated failure.
+
+Some of my initial guardrails provided necessary assurance. Others attempted to replace reasoning with increasingly complicated rules.
+
+In subsequent harnesses, I adopted a thinner architecture: preserve deterministic enforcement where correctness or operating constraints require it, while allowing increasingly capable agents to handle more of the workflow and ambiguous decisions.
+
+The larger lesson was not that determinism was wrong. It was that an engineering system should impose only as much structure as its requirements, risks, and operating environment justify.
+
+> The goal is not maximum automation or maximum control. It is dependable delivery with the least unnecessary complexity.

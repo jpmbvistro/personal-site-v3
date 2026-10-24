@@ -98,7 +98,10 @@
 
   .prose { max-width: var(--reading-width); overflow-wrap: anywhere; }
   .prose > * + * { margin-top: var(--space-4); }
-  .prose :is(ul, ol) { padding-inline-start: var(--space-6); }
+  /* Restore rich-text markers removed by Tailwind's reset, not navigation lists. */
+  .prose ul { list-style-type: disc; }
+  .prose ol { list-style-type: decimal; }
+  .prose :is(ul, ol) { list-style-position: outside; padding-inline-start: var(--space-6); }
   .prose :is(h2, h3) { margin-top: var(--space-8); }
   .prose img { height: auto; border-radius: var(--radius); }
   .prose figure { margin-inline: 0; }
