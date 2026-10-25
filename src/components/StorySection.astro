@@ -9,6 +9,20 @@ interface Props {
   children?: TinaMarkdownProps['content'];
 }
 const { eyebrow, title, layout, children } = Astro.props;
+
+// Figures escape the prose column and span the full section width below it,
+// mirroring the mockup's right-side diagram rhythm. All language remains in
+// Tina's single editable rich-text entry for the section; this is display logic.
+// Sections' generated children are loosely typed; TinaMarkdown accepts root
+// objects at runtime, so slices are re-wrapped into a root for rendering.
+type ContentBlock = { name?: string } & Record<string, unknown>;
+const blocks: ContentBlock[] = Array.isArray(children)
+  ? children as ContentBlock[]
+  : ((children as { children?: ContentBlock[] } | null)?.children ?? []);
+const figureBreak = blocks.findIndex((block) => block?.name === 'UxEnablementDiagram');
+const intro = figureBreak === -1 ? blocks : blocks.slice(0, figureBreak);
+const figure = figureBreak === -1 ? [] : blocks.slice(figureBreak);
+const wrap = (nodes: ContentBlock[]) => ({ type: 'root', children: nodes }) as unknown as TinaMarkdownProps['content'];
 ---
 
 <section class:list={['story-section', { 'story-decisions': layout === 'decisions' }]}>
@@ -16,13 +30,15 @@ const { eyebrow, title, layout, children } = Astro.props;
     {eyebrow && <p class="eyebrow">{eyebrow}</p>}
     <h2>{title}</h2>
   </header>
-  <div class="section-copy prose"><RichText content={children} /></div>
+  <div class="section-copy prose"><RichText content={wrap(intro)} /></div>
+  {figure.length > 0 && <div class="section-figure prose"><RichText content={wrap(figure)} /></div>}
 </section>
 
 <style>
   .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 1px solid var(--border); padding-block: var(--space-12); }
   h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
   .section-copy { min-width: 0; max-width: none; }
+  .section-figure { min-width: 0; max-width: none; grid-column: 1 / -1; }
   .story-decisions .section-copy :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
   .story-decisions .section-copy :global(> ol > li) { padding-inline-start: var(--space-1); }
   .story-decisions .section-copy :global(> ol > li::marker) { color: var(--primary); font-weight: 600; }

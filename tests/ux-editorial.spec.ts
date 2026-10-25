@@ -90,8 +90,14 @@ test('the editorial format also works as a local-only draft', async ({ page, req
     await expect(page.locator('.draft-note')).toBeVisible();
     await expect(page.locator('.ux-network .diagram-mobile')).toBeVisible();
     await expect(page.locator('.story-section')).toHaveCount(4);
-    const note = await page.locator('.draft-note').boundingBox();
-    const intro = await page.locator('.entry-heading').boundingBox();
+    let note: { x: number; y: number; width: number; height: number } | null = null;
+    let intro: { x: number; y: number; width: number; height: number } | null = null;
+    // Font-swap/reindex timing can briefly yield no layout box.
+    await expect.poll(async () => {
+      note = await page.locator('.draft-note').boundingBox();
+      intro = await page.locator('.entry-heading').boundingBox();
+      return note !== null && intro !== null;
+    }).toBe(true, { timeout: 10_000 });
     expect(intro!.y).toBeGreaterThanOrEqual(note!.y + note!.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await request.get('/work/editorial-preview-fixture/')).status()).toBe(404);
