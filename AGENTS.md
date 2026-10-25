@@ -2,6 +2,8 @@
 
 - Node 24; `npm ci`, `npm run dev`. Stop dev before `npm run build` (shared Tina port). Build generates Tina types; then `npm run check`. `npm test` runs browser smoke tests after `npx playwright install chromium`.
 - Read README.md for the proven local editor flow and unverified cloud/deployment requirements. Do not expose local-mode Tina publicly or change DNS as part of feature work.
+- **Design/UI changes:** Read `.agents/skills/site-design-system/SKILL.md` and `knowledge/site-design-system.md` before modifying layouts, components, tokens, typography, visual diagrams or responsive behavior. Distinguish accepted rules from proposals still awaiting owner direction.
+- **Durable project knowledge:** Read `.agents/skills/lore/SKILL.md` before creating/updating `knowledge/` notes; search first and preserve material decisions. The repository's Markdown holds rationale; CSS remains the source of truth for token values.
 - Keep one `BaseLayout`/header/footer. Reuse semantic tokens in `src/styles/global.css` and the shared navigation list. Prefer native Astro and HTML; add React/shadcn only for a concrete interactive need.
 - Tina owns text/data; Astro owns rendering. Extend collections/blocks when actual content needs them, not as a general-purpose page builder. Commit `tina/tina-lock.json`; never commit generated clients/admin bundles, `.env`, or tokens.
 - Keep keyboard focus, readable contrast, reduced motion, and small-screen layout working. Test behavior, not exact copy/mockup geometry.
