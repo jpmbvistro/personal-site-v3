@@ -2,7 +2,7 @@
 type: domain-concept
 status: proposed
 title: Personal site design system
-updated: 2026-10-23
+updated: 2026-10-25
 ---
 
 # Personal site design system
@@ -33,11 +33,17 @@ These are current repository decisions, not new proposals:
   `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. See the approved
   replacement palette below; `src/styles/global.css` has **not** yet been
   migrated. Semantic text/surface/interactive pairs remain in CSS; do not copy
-  hex values into one-off components.
+  hex values into one-off components. A first scoped application of the
+  replacement palette exists as the opt-in **editorial Work presentation**
+  (`.editorial-work` token override; PR
+  [#25](https://github.com/jpmbvistro/personal-site-v3/pull/25)); site-wide
+  migration remains pending.
 - Serif display and headline roles, sans-serif UI/body roles, monospace technical
-  metadata. The current implementation uses system stacks; Newsreader + Inter
-  is the accepted next visual direction, **not yet implemented**. No external
-  font download/runtime dependency exists in the current build.
+  metadata. The shared shell uses system stacks; **Newsreader + Inter is
+  implemented as self-hosted Latin WOFF2 (`public/fonts/`) for the opt-in
+  editorial Work presentation only**, with the rest of the site still on system
+  stacks pending site-wide rollout. No external font download/runtime
+  dependency exists.
 - Single [BaseLayout](../src/layouts/BaseLayout.astro) and shared header/footer.
   Native Astro + semantic HTML first; client-side islands only when justified.
 - Current sizing includes a broad content max-width, narrower reading measure,

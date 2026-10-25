@@ -50,7 +50,7 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
   .editorial-story { --hero-row: 1; --hero-figure-row: 1; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: var(--space-12); }
   .editorial-story.has-draft { --hero-row: 2; --hero-figure-row: 2; }
   .editorial-story .draft-note { grid-column: 1 / -1; grid-row: 1; }
-  .editorial-story .entry-heading { grid-column: 1; grid-row: var(--hero-row); padding-block: var(--space-8) var(--space-12); }
+  .editorial-story .entry-heading { grid-column: 1; grid-row: var(--hero-row); padding-block: var(--space-4) var(--space-12); }
   .editorial-story h1 { max-width: 15ch; font-size: clamp(3rem, 4.8vw, 5.5rem); letter-spacing: -0.035em; line-height: 1.02; }
   .editorial-story .summary { max-width: 38ch; font-size: clamp(1.05rem, 1.3vw, 1.25rem); }
   .editorial-story .summary::before { content: ''; display: block; width: var(--space-8); border-top: 3px solid var(--accent); margin-bottom: var(--space-6); }
