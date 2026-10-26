@@ -1,17 +1,8 @@
 ---
 title: Scaling UX impact across 12 engineering teams
 draft: false
+summary: 'I coordinated a distributed UX enablement initiative, partnering with a two-person specialist team to help engineers bring research and an existing design system into the products they owned.'
 presentation: editorial
-summary: I coordinated a distributed UX enablement initiative, partnering with a two-person specialist team to help engineers bring research and an existing design system into the products they owned.
-organizationLabel: Global biotechnology company
-role: Software Engineer · Coordination and enablement
-tags:
-  - Engineering Leadership
-  - UX Strategy
-  - Cross-Functional Collaboration
-links:
-  - label: Related work — API migration decisions
-    url: /work/api-migration-confidence/
 sections:
   - eyebrow: 01 / The challenge
     title: High ambition. Limited specialist capacity.
@@ -22,9 +13,21 @@ sections:
       <EditorialCallouts
         label="Constraints on the initiative"
         items={[
-          { icon: "teams", title: "Distributed ownership", text: "12 engineering teams across three verticals, each with its own products and priorities." },
-          { icon: "capacity", title: "Limited UX capacity", text: "Two central UX specialists could not guide every application individually." },
-          { icon: "constraints", title: "Initial skepticism", text: "Engineering leads needed to see user value without taking on a competing program of work." }
+          {
+            icon: "teams",
+            title: "Distributed ownership",
+            text: "12 engineering teams across three verticals, each with its own products and priorities."
+          },
+          {
+            icon: "capacity",
+            title: "Limited UX capacity",
+            text: "Two central UX specialists could not guide every application individually."
+          },
+          {
+            icon: "constraints",
+            title: "Initial skepticism",
+            text: "Engineering leads needed to see user value without taking on a competing program of work."
+          }
         ]}
       />
   - eyebrow: 02 / The approach
@@ -35,8 +38,7 @@ sections:
 
       Engineers brought research and manageable improvements into their own backlogs. The specialists retained ownership of their discipline and remained available for complex work; I did not author the existing design system.
     children: |
-      <UxEnablementDiagram
-        composition="approach"
+      <LocalOwnershipDiagram
         caption="Enable engineers without replacing UX expertise."
         summary="Specialists supplied methods and support; embedded engineering participants applied them with their teams. Routine research and design-system improvements stayed close to the products, while complex questions could return to the specialists."
         specialistsLabel="UX specialists"
@@ -46,8 +48,14 @@ sections:
         stages={[
           { title: "Enable", text: "Make interviews, JTBD and personas approachable." },
           { title: "Embed", text: "One engineering participant in each team." },
-          { title: "Support", text: "Keep specialist guidance available for complex needs." },
-          { title: "Apply", text: "Bring research and improvements into local backlogs." }
+          {
+            title: "Support",
+            text: "Keep specialist guidance available for complex needs."
+          },
+          {
+            title: "Apply",
+            text: "Bring research and improvements into local backlogs."
+          }
         ]}
       />
 
@@ -71,31 +79,63 @@ sections:
       All 12 teams participated and produced JTBD and persona artifacts. Every team either adopted the existing design system or established an upgrade path. Follow-through varied, rather than advancing uniformly across the network.
 
       **Organizational sponsorship and embedded ownership were both necessary.** Leadership made room for the work, specialists provided guidance, and engineers carried the practices into their teams. My role was to connect those groups and make collaboration workable.
+
+      ### Scale capability, not dependency
+
+      The lesson I carry forward is to scale capability without making every decision depend on a central team.
     children: |
       <MetricStrip
-        caption="Observed follow-through; the groups of three may overlap"
+        caption=""
+        topRule={false}
+        bottomRule={false}
         metrics={[
-          { icon: "teams", value: "12", label: "Teams participated", qualifier: "All created JTBD and persona artifacts" },
-          { icon: "system", value: "3", label: "Teams completed upgrades", qualifier: "Existing shared design system" },
-          { icon: "research", value: "3", label: "Teams continued research independently", qualifier: "Beyond the structured initiative" },
-          { icon: "learning", value: "3", label: "Teams consulted UX specialists", qualifier: "For more complex work" }
+          {
+            icon: "teams",
+            value: "12",
+            label: "Teams participated",
+            qualifier: "All created JTBD and persona artifacts"
+          },
+          {
+            icon: "system",
+            value: "3",
+            label: "Teams completed upgrades",
+            qualifier: "Existing shared design system"
+          },
+          {
+            icon: "research",
+            value: "3",
+            label: "Teams continued research independently",
+            qualifier: "Beyond the structured initiative"
+          },
+          {
+            icon: "learning",
+            value: "3",
+            label: "Teams consulted UX specialists",
+            qualifier: "For more complex work"
+          }
         ]}
       />
 
       These groups may overlap; they are not nine distinct teams or additive slices. They show participation, adoption, and continued practice—not a measured improvement in end-user satisfaction.
 
       The research also informed real planning: one team reprioritized backlog work, while another used research to inform requirements for a new application. The point was not simply to complete artifacts, but to help teams incorporate user needs into decisions they already owned.
-
-      <EditorialCallouts
+    aside: |
+      <BlockQuote
         label="Leadership reflection"
-        items={[
-          { icon: "learning", title: "Scale capability, not dependency", text: "The lesson I carry forward is to scale capability without making every decision depend on a central team. Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work." }
-        ]}
+        quote="Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work."
       />
+organizationLabel: Global biotechnology company
+role: Software Engineer · Coordination and enablement
+tags:
+  - Engineering Leadership
+  - UX Strategy
+  - Cross-Functional Collaboration
+links:
+  - label: Related work — API migration decisions
+    url: /work/api-migration-confidence/
 ---
 
-<UxEnablementDiagram
-  composition="network"
+<DistributedUxNetwork
   caption="A small specialist team. A distributed practice."
   summary="Two UX specialists and reusable research resources supported embedded engineering participants—one per team—who brought research and improvements into 12 teams across three verticals. Participation did not mean every team reached the same maturity."
   specialistsLabel="Two UX specialists"
@@ -104,8 +144,20 @@ sections:
   teamsLabel="12 participating engineering teams"
   calloutsLabel="Observed practice, not measured end-user impact"
   callouts={[
-    { icon: "research", title: "Research artifacts", text: "JTBD and personas created by all participating teams." },
-    { icon: "system", title: "Adoption or a path", text: "Every team adopted the existing design system or planned an upgrade." },
-    { icon: "learning", title: "Specialist partnership", text: "Three teams consulted UX for complex work; follow-through groups may overlap." }
+    {
+      icon: "research",
+      title: "Research artifacts",
+      text: "JTBD and personas created by all participating teams."
+    },
+    {
+      icon: "system",
+      title: "Adoption or a path",
+      text: "Every team adopted the existing design system or planned an upgrade."
+    },
+    {
+      icon: "learning",
+      title: "Specialist partnership",
+      text: "Three teams consulted UX for complex work; follow-through groups may overlap."
+    }
   ]}
 />

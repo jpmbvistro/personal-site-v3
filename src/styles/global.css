@@ -35,6 +35,8 @@
   --muted-foreground: #52616a;
   --accent: var(--copper);
   --accent-foreground: var(--ink);
+  --accent-strong: #8b5738;
+  --accent-strong-foreground: var(--background);
   --border: #cbcfc7;
   --ring: var(--evergreen);
 
@@ -102,6 +104,7 @@
     --muted-foreground: var(--foreground);
     --accent: #b17750;
     --accent-foreground: var(--foreground);
+    --accent-strong-foreground: var(--background);
     --border: var(--secondary);
     --ring: var(--primary);
     --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
@@ -111,6 +114,7 @@
     font-family: var(--font-sans);
   }
   .editorial-work :is(h1, h2, h3) { color: var(--primary); }
+  .editorial-work .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
   ::selection { background: var(--secondary); color: var(--foreground); }
   h1, h2, h3, p { margin: 0; }
   h1, h2 { font-family: var(--font-serif); font-weight: 400; line-height: 1.08; }

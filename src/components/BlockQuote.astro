@@ -1,0 +1,18 @@
+---
+interface Props { label?: string | null; quote: string; attribution?: string | null }
+const { label, quote, attribution } = Astro.props;
+---
+
+{quote && <figure class="story-quote">
+  {label && <p class="quote-label eyebrow">{label}</p>}
+  <blockquote><p>{quote}</p></blockquote>
+  {attribution && <figcaption>{attribution}</figcaption>}
+</figure>}
+
+<style>
+  .story-quote { margin: 0; padding-left: var(--space-6); border-left: 1px solid var(--accent); }
+  .quote-label { margin-bottom: var(--space-4); color: var(--accent-strong); }
+  blockquote { margin: 0; padding: 0; border: 0; }
+  blockquote p { color: var(--primary); font: 400 clamp(1.5rem, 2vw, 2rem)/1.3 var(--font-serif); }
+  figcaption { margin-top: var(--space-4); color: var(--muted-foreground); font: 400 var(--text-small)/1.6 var(--font-sans); }
+</style>

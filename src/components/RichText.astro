@@ -2,11 +2,13 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import type { TinaMarkdownProps } from '@tinacms/astro';
 import MetricStrip from './MetricStrip.astro';
-import UxEnablementDiagram from './UxEnablementDiagram.astro';
+import DistributedUxNetwork from './DistributedUxNetwork.astro';
+import LocalOwnershipDiagram from './LocalOwnershipDiagram.astro';
 import EditorialCallouts from './EditorialCallouts.astro';
+import BlockQuote from './BlockQuote.astro';
 
 interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, UxEnablementDiagram, EditorialCallouts }} />
+<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote }} />

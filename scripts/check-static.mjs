@@ -66,6 +66,8 @@ try {
   assert.match(ux, /editorial-callouts/);
   assert.match(ux, /approach-stages/);
   assert.match(ux, /hero-outcomes/);
+  assert.match(ux, /story-quote/);
+  assert.match(ux, /section-panels/);
   assert.match(ux, /Global biotechnology company/);
   assert.doesNotMatch(ux, /No component provided|Moderna/);
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');

@@ -28,6 +28,8 @@ const metricStrip: Template = {
   name: 'MetricStrip', label: 'Metric strip',
   fields: [
     { type: 'string', name: 'caption', label: 'Caption' },
+    { type: 'boolean', name: 'topRule', label: 'Show top rule', description: 'Shown by default when unset.', ui: { defaultValue: true } },
+    { type: 'boolean', name: 'bottomRule', label: 'Show bottom rule', description: 'Shown by default when unset.', ui: { defaultValue: true } },
     {
       type: 'object', name: 'metrics', label: 'Metrics', list: true,
       ui: { itemProps: (item) => ({ label: item?.label || 'Metric' }) },
@@ -41,34 +43,52 @@ const metricStrip: Template = {
   ],
 };
 
-const uxDiagram: Template = {
-  name: 'UxEnablementDiagram', label: 'UX enablement figure',
-  fields: [
-    { type: 'string', name: 'composition', label: 'Composition', options: [
-      { value: 'network', label: 'Distributed network (hero)' },
-      { value: 'approach', label: 'Guidance to local ownership (approach)' },
-    ] },
+const diagramLabels: TinaField[] = [
     { type: 'string', name: 'caption', label: 'Caption', required: true },
     { type: 'string', name: 'summary', label: 'Text explanation', required: true, ui: { component: 'textarea' } },
     { type: 'string', name: 'specialistsLabel', label: 'Specialists label', required: true },
     { type: 'string', name: 'resourcesLabel', label: 'Resources label', required: true },
     { type: 'string', name: 'participantsLabel', label: 'Participants label', required: true },
     { type: 'string', name: 'teamsLabel', label: 'Teams label', required: true },
+];
+
+const localOwnership: Template = {
+  name: 'LocalOwnershipDiagram', label: 'Guidance to local ownership',
+  fields: [
+    ...diagramLabels,
     { type: 'object', name: 'stages', label: 'Approach stages', list: true,
       ui: { itemProps: (item) => ({ label: item?.title || 'Stage' }) },
       fields: [
         { type: 'string', name: 'title', label: 'Heading', required: true },
         { type: 'string', name: 'text', label: 'Explanation' },
       ] },
+  ],
+};
+
+const distributedNetwork: Template = {
+  name: 'DistributedUxNetwork', label: 'Distributed UX network',
+  fields: [
+    ...diagramLabels,
     { type: 'string', name: 'calloutsLabel', label: 'Hero callout group label' },
     { type: 'object', name: 'callouts', label: 'Hero callouts (outside network)', list: true,
       ui: { itemProps: (item) => ({ label: item?.title || 'Callout' }) }, fields: calloutFields },
   ],
 };
 
+const blockQuote: Template = {
+  name: 'BlockQuote', label: 'Block quote',
+  fields: [
+    { type: 'string', name: 'label', label: 'Label (optional)' },
+    { type: 'string', name: 'quote', label: 'Quote', required: true, ui: { component: 'textarea' } },
+    { type: 'string', name: 'attribution', label: 'Attribution (optional)' },
+  ],
+};
+
+const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote];
+
 const storySections: TinaField = {
   type: 'object', name: 'sections', label: 'Editorial sections', list: true,
-  ui: { itemProps: (item) => ({ label: item?.title || 'Story section' }) },
+  ui: { itemProps: (item) => ({ label: item?.eyebrow || 'Story section' }) },
   fields: [
     { type: 'string', name: 'eyebrow', label: 'Section label' },
     { type: 'string', name: 'title', label: 'Section heading', required: true },
@@ -77,13 +97,14 @@ const storySections: TinaField = {
       { value: 'decisions', label: 'Decision list' },
     ] },
     { type: 'rich-text', name: 'intro', label: 'Introduction (under heading)' },
-    { type: 'rich-text', name: 'children', label: 'Section content (right column)', templates: [metricStrip, uxDiagram, editorialCallouts] },
+    { type: 'rich-text', name: 'children', label: 'Section content (right column)', templates: visualBlocks },
+    { type: 'rich-text', name: 'aside', label: 'Side content (optional third column)', description: 'Sits beside the right-column content on wide screens, below it on smaller screens.', templates: [metricStrip, blockQuote] },
   ],
 };
 
 const body: TinaField = {
   type: 'rich-text', name: 'body', label: 'Body', isBody: true, required: true,
-  templates: [metricStrip, uxDiagram, editorialCallouts],
+  templates: visualBlocks,
 };
 
 const entryFields: TinaField[] = [

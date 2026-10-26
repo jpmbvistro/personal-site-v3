@@ -31,7 +31,7 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
 </header>
 <div class="prose entry-body" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
 {sections.length > 0 && <div class="entry-sections" data-tina-field={sectionsField}>
-  {sections.map((section) => section && <StorySection eyebrow={section.eyebrow ?? undefined} title={section.title ?? ''} layout={section.layout ?? undefined} intro={section.intro} children={section.children} />)}
+  {sections.map((section) => section && <StorySection eyebrow={section.eyebrow ?? undefined} title={section.title ?? ''} layout={section.layout ?? undefined} intro={section.intro} children={section.children} aside={section.aside} />)}
 </div>}
 {links.length > 0 && <nav class="entry-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
   {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}

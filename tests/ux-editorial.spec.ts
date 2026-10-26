@@ -21,7 +21,9 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     }
     await expect(page.locator('.network-topology .team-node')).toHaveCount(12);
     await expect(page.locator('.metric-strip dt')).toHaveCount(4);
-    await expect(page.locator('.metric-strip figcaption')).toContainText('may overlap');
+    await expect(page.locator('.story-section').last()).toContainText('These groups may overlap');
+    await expect(page.locator('.story-quote blockquote')).toContainText('Lower the cost of participation');
+    await expect(page.locator('.story-quote figcaption')).toHaveCount(0);
     await expect(page.locator('.story-section').first().locator('.editorial-callouts > li')).toHaveCount(3);
     await expect(page.locator('.hero-outcomes .editorial-callouts > li')).toHaveCount(3);
     await expect(page.locator('.network-topology .editorial-callouts')).toHaveCount(0);
@@ -46,6 +48,10 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     const challenge = await page.locator('.story-section').first().boundingBox();
     expect(challenge!.y).toBeGreaterThanOrEqual(intro!.y + intro!.height);
     expect(challenge!.y).toBeGreaterThanOrEqual(heroFigure!.y + heroFigure!.height);
+    const metrics = await page.locator('.metric-strip').boundingBox();
+    const quote = await page.locator('.story-quote').boundingBox();
+    if (width > 1280) expect(quote!.x).toBeGreaterThanOrEqual(metrics!.x + metrics!.width);
+    else expect(quote!.y).toBeGreaterThanOrEqual(metrics!.y + metrics!.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
@@ -73,14 +79,63 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
     };
     return {
       fonts: [document.fonts.check('400 16px Newsreader'), document.fonts.check('400 16px Inter')],
-      ratios: [ratio(body.color), ratio(getComputedStyle(document.querySelector('h1')!).color), ratio(getComputedStyle(document.querySelector('.entry-links a')!).color)],
+      ratios: [ratio(body.color), ratio(getComputedStyle(document.querySelector('h1')!).color), ratio(getComputedStyle(document.querySelector('.entry-links a')!).color), ratio(getComputedStyle(document.querySelector('.story-section .eyebrow')!).color)],
+      subheadingFont: getComputedStyle(document.querySelector('.intro-copy h3')!).fontFamily,
+      paragraphFont: getComputedStyle(document.querySelector('.section-main > p')!).fontFamily,
+      badge: (() => {
+        const badge = getComputedStyle(document.querySelector('.story-decisions li')!, '::before');
+        return { background: badge.backgroundColor, color: badge.color, contrast: ratio(badge.backgroundColor) };
+      })(),
     };
   });
   expect(result.fonts).toEqual([true, true]);
   for (const ratio of result.ratios) expect(ratio).toBeGreaterThanOrEqual(4.5);
+  expect(result.subheadingFont).toContain('Newsreader');
+  expect(result.paragraphFont).toContain('Inter');
+  expect(result.badge.contrast).toBeGreaterThanOrEqual(4.5);
+  await expect(page.locator('.story-decisions li').first()).toHaveCSS('font-family', /Inter/);
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toHaveCSS('outline-style', 'solid');
 });
+
+for (const width of [1024, 1440]) {
+  test(`ownership diagram connectors stay in the symbol lane at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/work/scaling-ux-capability/');
+    await page.evaluate(() => document.fonts.ready);
+    const flow = page.locator('.ownership-flow');
+    await expect(flow.locator('.resources-label')).toBeVisible();
+    await expect(flow.locator('.resources-label')).toContainText('JTBD');
+    await expect(flow.locator('.flow-arrow')).toHaveCount(0);
+    const symbols = await flow.locator('.node-symbol').all();
+    const specialist = await symbols[0].boundingBox();
+    const participant = await symbols[1].boundingBox();
+    expect(Math.abs(specialist!.y - participant!.y)).toBeLessThan(1);
+    for (const node of await flow.locator('.flow-node').all()) {
+      const symbol = await node.locator('.node-symbol').boundingBox();
+      const label = await node.locator('strong').boundingBox();
+      expect(label!.y).toBeGreaterThanOrEqual(symbol!.y + symbol!.height);
+    }
+    const connector = await flow.locator('.team-connections').boundingBox();
+    const dots = await flow.locator('.team-dots').boundingBox();
+    expect(Math.abs(connector!.x + connector!.width - dots!.x)).toBeLessThan(2);
+    const stages = await page.locator('.approach-stages li').evaluateAll((items) => items.map((item, index) => {
+      if (!index) return null;
+      const box = item.getBoundingClientRect();
+      const previous = items[index - 1].getBoundingClientRect();
+      const arrow = getComputedStyle(item, '::before');
+      return { x: box.x + parseFloat(arrow.left), gapCenter: (box.left + previous.right) / 2, y: parseFloat(arrow.top), center: box.height / 2 };
+    }));
+    for (const stage of stages) if (stage) {
+      expect(Math.abs(stage.x - stage.gapCenter)).toBeLessThan(1);
+      expect(Math.abs(stage.y - stage.center)).toBeLessThan(1);
+    }
+    const calloutGap = await page.locator('.story-section .callout-icon').first().evaluate((icon) => {
+      return icon.nextElementSibling!.querySelector('h3')!.getBoundingClientRect().top - icon.getBoundingClientRect().bottom;
+    });
+    expect(Math.abs(calloutGap - 16)).toBeLessThan(1); // Previous combined gap was 48px.
+  });
+}
 
 test.describe('native editorial figures', () => {
   test.use({ javaScriptEnabled: false, reducedMotion: 'reduce' });
@@ -150,7 +205,7 @@ test('editorial prose, captions, and section order preview and save through Tina
     await expect(preview.locator('.hero-outcomes')).toContainText('Hero callout editing trial');
     // Return from the block form to the Work document's body.
     await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
-    await page.getByRole('button', { name: 'High ambition. Limited specialist capacity.', exact: true }).click();
+    await page.getByRole('button', { name: '01 / The challenge', exact: true }).click();
     await page.locator('input[name="sections.0.title"]').fill('Section heading editing trial');
     await expect(preview.locator('.story-section h2').first()).toHaveText('Section heading editing trial');
     const prose = page.locator('[contenteditable="true"]').first();
@@ -169,7 +224,7 @@ test('editorial prose, captions, and section order preview and save through Tina
     expect(await readFile(path, 'utf8')).toBe(original);
 
     await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
-    await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).click();
+    await page.getByRole('button', { name: '02 / The approach', exact: true }).click();
     await page.getByRole('button', { name: 'Open options', exact: true }).click();
     await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
     await page.getByRole('button', { name: 'Support', exact: true }).click();
@@ -177,10 +232,32 @@ test('editorial prose, captions, and section order preview and save through Tina
     await expect(preview.locator('.approach-stages')).toContainText('Stage heading editing trial');
 
     await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
-    await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).scrollIntoViewIfNeeded();
-    await page.getByRole('button', { name: 'Section heading editing trial', exact: true }).scrollIntoViewIfNeeded();
-    const from = await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).locator(':scope > div').first().boundingBox();
-    const to = await page.getByRole('button', { name: 'Section heading editing trial', exact: true }).locator(':scope > div').first().boundingBox();
+    await page.getByRole('button', { name: '04 / Results and reflection', exact: true }).click();
+    await page.getByRole('button', { name: 'Open options', exact: true }).first().click();
+    await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
+    const topRule = page.locator('input[name$=".props.topRule"]');
+    const bottomRule = page.locator('input[name$=".props.bottomRule"]');
+    for (const [top, bottom] of [[true, false], [false, true], [true, true], [false, false], [true, false]]) {
+      await topRule.setChecked(top);
+      await bottomRule.setChecked(bottom);
+      await expect(preview.locator('.metric-strip')).toHaveCSS('border-top-width', top ? '1px' : '0px');
+      await expect(preview.locator('.metric-strip')).toHaveCSS('border-bottom-width', bottom ? '1px' : '0px');
+    }
+    await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
+    await page.getByRole('button', { name: '04 / Results and reflection', exact: true }).click();
+    await page.getByRole('button', { name: 'Open options', exact: true }).last().click();
+    await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
+    await page.locator('input[name$=".props.label"]').fill('Quote label editing trial');
+    await page.locator('textarea[name$=".props.quote"]').fill('Quote text editing trial');
+    await page.locator('input[name$=".props.attribution"]').fill('Attribution editing trial');
+    await expect(preview.locator('.story-quote blockquote')).toHaveText('Quote text editing trial');
+    await expect(preview.locator('.story-quote figcaption')).toHaveText('Attribution editing trial');
+
+    await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
+    await page.getByRole('button', { name: '02 / The approach', exact: true }).scrollIntoViewIfNeeded();
+    await page.getByRole('button', { name: '01 / The challenge', exact: true }).scrollIntoViewIfNeeded();
+    const from = await page.getByRole('button', { name: '02 / The approach', exact: true }).locator(':scope > div').first().boundingBox();
+    const to = await page.getByRole('button', { name: '01 / The challenge', exact: true }).locator(':scope > div').first().boundingBox();
     expect(from).not.toBeNull();
     expect(to).not.toBeNull();
     await page.mouse.move(from!.x + from!.width / 2, from!.y + from!.height / 2);
@@ -199,6 +276,10 @@ test('editorial prose, captions, and section order preview and save through Tina
     expect(saved).toContain('Callout heading editing trial');
     expect(saved).toContain('Hero callout editing trial');
     expect(saved).toContain('Stage heading editing trial');
+    expect(saved).toContain('Quote text editing trial');
+    expect(saved).toContain('Attribution editing trial');
+    expect(saved).toContain('topRule={true}');
+    expect(saved).toContain('bottomRule={false}');
   } finally {
     await page.close();
     await writeFile(path, original);
