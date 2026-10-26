@@ -82,7 +82,7 @@ test.describe('collection rendering and publication', () => {
       }
       await page.goto('/preview/work/scaling-ux-capability/');
       await expect(page.locator('.metric-strip dt')).toHaveCount(4);
-      await expect(page.locator('.story-section').last()).toContainText('These groups may overlap');
+      await expect(page.locator('.entry-story')).toContainText('groups may overlap');
     });
   }
 

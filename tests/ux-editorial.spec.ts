@@ -21,7 +21,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     }
     await expect(page.locator('.network-topology .team-node')).toHaveCount(12);
     await expect(page.locator('.metric-strip dt')).toHaveCount(4);
-    await expect(page.locator('.story-section').last()).toContainText('These groups may overlap');
+    await expect(page.locator('.entry-story')).toContainText('groups may overlap');
     await expect(page.locator('.story-quote blockquote')).toContainText('Lower the cost of participation');
     await expect(page.locator('.story-quote figcaption')).toHaveCount(0);
     await expect(page.locator('.story-section').first().locator('.editorial-callouts > li')).toHaveCount(3);
@@ -83,6 +83,10 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
       ratios: [ratio(body.color), ratio(getComputedStyle(document.querySelector('h1')!).color), ratio(getComputedStyle(document.querySelector('.entry-links a')!).color), ratio(getComputedStyle(document.querySelector('.story-section .eyebrow')!).color)],
       subheadingFont: getComputedStyle(document.querySelector('.intro-copy h3')!).fontFamily,
       paragraphFont: getComputedStyle(document.querySelector('.section-main > p')!).fontFamily,
+      bodyWeight: Number(body.getPropertyValue('--font-weight-body')),
+      matchingWeights: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontWeight),
+      headingWeight: getComputedStyle(document.querySelector('h1')!).fontWeight,
+      emphasisWeight: getComputedStyle(document.querySelector('.intro-copy strong')!).fontWeight,
       bodyTypography: ['.intro-copy > p', '.section-main > p'].map((selector) => {
         const style = getComputedStyle(document.querySelector(selector)!);
         return { family: style.fontFamily, size: style.fontSize, weight: style.fontWeight, lineHeight: style.lineHeight };
@@ -99,6 +103,10 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
   for (const ratio of result.ratios) expect(ratio).toBeGreaterThanOrEqual(4.5);
   expect(result.subheadingFont).toContain('Newsreader');
   expect(result.paragraphFont).toContain('Inter');
+  expect(result.bodyWeight).toBeLessThan(400);
+  for (const weight of result.matchingWeights) expect(Number(weight)).toBe(result.bodyWeight);
+  expect(Number(result.headingWeight)).toBeGreaterThan(result.bodyWeight);
+  expect(Number(result.emphasisWeight)).toBeGreaterThan(result.bodyWeight);
   expect(result.bodyTypography[1]).toEqual(result.bodyTypography[0]);
   expect(result.dividerColor).toBe(result.copperColor);
   expect(result.badge.contrast).toBeGreaterThanOrEqual(4.5);

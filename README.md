@@ -92,6 +92,7 @@ The approved visual direction, sampled palette, logo reference assets, accessibi
 
 ## Small design system
 
+- `--font-weight-body` supplies the lighter default for paragraphs and matching body copy, including editorial introductions/content, descriptions, lists, metric qualifiers and attribution text. Heading, diagram-label and emphasis weights remain separate; change the shared token rather than introducing individual paragraph overrides.
 - `src/styles/global.css` owns brand and semantic tokens, system-font typography, spacing, focus, and reduced motion. Ink `#192B39`, ivory `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. Copper is a restrained accent, **not** small text on ivory. Text pairs meet WCAG AA (evergreen/ivory 5.23:1; muted text/ivory 5.73:1).
 - `src/layouts/BaseLayout.astro` is the only global shell. Navigation data lives in `src/lib/navigation.ts`. Mobile navigation is a native nonmodal disclosure with progressive Escape/close behavior.
 - Reuse `Container` and `ButtonLink`; ordinary links use global styles. Add components only when actual reuse warrants them. React/shadcn is reserved for interactions that native HTML/Astro cannot reasonably handle; Tailwind semantic colors are already compatible.
