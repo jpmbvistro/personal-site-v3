@@ -16,20 +16,25 @@ sections:
   - eyebrow: 01 / The challenge
     title: High ambition. Limited specialist capacity.
     layout: prose
+    intro: |
+      Many internal applications were maintained by individual engineers, with fragmented interfaces and limited access to dedicated UX support. Modernization was a priority, but another large redesign program would have competed with existing delivery commitments.
     children: |
-      A two-person central UX team supported an extensive portfolio of internal applications. Many products were maintained by individual engineers, with fragmented interfaces and limited access to dedicated UX support.
-
-      UX modernization was an organizational priority, but the specialists could not guide every product individually. Engineering leads also had existing delivery commitments. Another large redesign program would have competed with the work teams already owned.
-
-      With my manager's support and approximately **10% of my time**, I volunteered to coordinate participation across **12 engineering teams in three verticals**. The opportunity was to distribute practical capability, not centralize every improvement—or claim authorship of the existing design system.
+      <EditorialCallouts
+        label="Constraints on the initiative"
+        items={[
+          { icon: "teams", title: "Distributed ownership", text: "12 engineering teams across three verticals, each with its own products and priorities." },
+          { icon: "capacity", title: "Limited UX capacity", text: "Two central UX specialists could not guide every application individually." },
+          { icon: "constraints", title: "Initial skepticism", text: "Engineering leads needed to see user value without taking on a competing program of work." }
+        ]}
+      />
   - eyebrow: 02 / The approach
     title: Specialist guidance. Local ownership.
     layout: prose
+    intro: |
+      With my manager's support and approximately **10% of my time**, I volunteered to coordinate participation. I worked with leads on capacity, facilitated learning, and connected engineers with the two UX specialists.
+
+      Engineers brought research and manageable improvements into their own backlogs. The specialists retained ownership of their discipline and remained available for complex work; I did not author the existing design system.
     children: |
-      I worked with the UX specialists to make research practical for engineering participants: interviews, jobs-to-be-done (JTBD), personas, and manageable improvements in their own backlogs. A custom GPT helped translate interviews into JTBD and persona artifacts; it did not replace specialist judgment.
-
-      My responsibility was to coordinate participation, work with leads on capacity, facilitate learning, and connect engineers with expertise when needed. The UX specialists retained ownership of their discipline and remained available for complex work.
-
       <UxEnablementDiagram
         composition="approach"
         caption="Enable engineers without replacing UX expertise."
@@ -38,10 +43,20 @@ sections:
         resourcesLabel="Interviews · JTBD · personas · shared learning"
         participantsLabel="Engineering participants in each team"
         teamsLabel="12 teams applying practices locally"
+        stages={[
+          { title: "Enable", text: "Make interviews, JTBD and personas approachable." },
+          { title: "Embed", text: "One engineering participant in each team." },
+          { title: "Support", text: "Keep specialist guidance available for complex needs." },
+          { title: "Apply", text: "Bring research and improvements into local backlogs." }
+        ]}
       />
+
+      A custom GPT helped translate interviews into jobs-to-be-done (JTBD) and persona artifacts; it did not replace specialist judgment.
   - eyebrow: 03 / Key decisions
     title: Adapt the model. Make it easy to say yes.
     layout: decisions
+    intro: |
+      The original participation plan did not survive reorganization. I adapted the model around engineering ownership, addressed skepticism with concrete user needs, and kept the commitment modest enough to fit existing priorities.
     children: |
       1. **Adapt after reorganization.**
          A reorganization disrupted my original product-team participation plan. I shifted to one engineering representative per team, preserving a route into each team without relying on the former structure. The tradeoff: research needed to be approachable for engineers with limited UX experience.
@@ -52,16 +67,18 @@ sections:
   - eyebrow: 04 / Results and reflection
     title: Shared participation. Different paths forward.
     layout: prose
-    children: |
+    intro: |
       All 12 teams participated and produced JTBD and persona artifacts. Every team either adopted the existing design system or established an upgrade path. Follow-through varied, rather than advancing uniformly across the network.
 
+      **Organizational sponsorship and embedded ownership were both necessary.** Leadership made room for the work, specialists provided guidance, and engineers carried the practices into their teams. My role was to connect those groups and make collaboration workable.
+    children: |
       <MetricStrip
         caption="Observed follow-through; the groups of three may overlap"
         metrics={[
-          { value: "12", label: "Teams participated", qualifier: "All created JTBD and persona artifacts" },
-          { value: "3", label: "Teams completed upgrades", qualifier: "Existing shared design system" },
-          { value: "3", label: "Teams continued research independently", qualifier: "Beyond the structured initiative" },
-          { value: "3", label: "Teams consulted UX specialists", qualifier: "For more complex work" }
+          { icon: "teams", value: "12", label: "Teams participated", qualifier: "All created JTBD and persona artifacts" },
+          { icon: "system", value: "3", label: "Teams completed upgrades", qualifier: "Existing shared design system" },
+          { icon: "research", value: "3", label: "Teams continued research independently", qualifier: "Beyond the structured initiative" },
+          { icon: "learning", value: "3", label: "Teams consulted UX specialists", qualifier: "For more complex work" }
         ]}
       />
 
@@ -69,9 +86,12 @@ sections:
 
       The research also informed real planning: one team reprioritized backlog work, while another used research to inform requirements for a new application. The point was not simply to complete artifacts, but to help teams incorporate user needs into decisions they already owned.
 
-      **Organizational sponsorship and embedded ownership were both necessary.** Leadership made room for the work; leads made participation feasible; specialists provided guidance; engineers carried the practices into their teams. My role was to connect those groups and make collaboration workable.
-
-      The lesson I carry forward is to scale capability without making every decision depend on a central team. Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work.
+      <EditorialCallouts
+        label="Leadership reflection"
+        items={[
+          { icon: "learning", title: "Scale capability, not dependency", text: "The lesson I carry forward is to scale capability without making every decision depend on a central team. Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work." }
+        ]}
+      />
 ---
 
 <UxEnablementDiagram
@@ -82,4 +102,10 @@ sections:
   resourcesLabel="Research guidance, tools and learning"
   participantsLabel="Embedded engineering participants"
   teamsLabel="12 participating engineering teams"
+  calloutsLabel="Observed practice, not measured end-user impact"
+  callouts={[
+    { icon: "research", title: "Research artifacts", text: "JTBD and personas created by all participating teams." },
+    { icon: "system", title: "Adoption or a path", text: "Every team adopted the existing design system or planned an upgrade." },
+    { icon: "learning", title: "Specialist partnership", text: "Three teams consulted UX for complex work; follow-through groups may overlap." }
+  ]}
 />

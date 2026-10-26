@@ -6,45 +6,38 @@ interface Props {
   eyebrow?: string;
   title: string;
   layout?: string;
+  intro?: TinaMarkdownProps['content'];
   children?: TinaMarkdownProps['content'];
 }
-const { eyebrow, title, layout, children } = Astro.props;
-
-// Figures escape the prose column and span the full section width below it,
-// mirroring the mockup's right-side diagram rhythm. All language remains in
-// Tina's single editable rich-text entry for the section; this is display logic.
-// Sections' generated children are loosely typed; TinaMarkdown accepts root
-// objects at runtime, so slices are re-wrapped into a root for rendering.
-type ContentBlock = { name?: string } & Record<string, unknown>;
-const blocks: ContentBlock[] = Array.isArray(children)
-  ? children as ContentBlock[]
-  : ((children as { children?: ContentBlock[] } | null)?.children ?? []);
-const figureBreak = blocks.findIndex((block) => block?.name === 'UxEnablementDiagram');
-const intro = figureBreak === -1 ? blocks : blocks.slice(0, figureBreak);
-const figure = figureBreak === -1 ? [] : blocks.slice(figureBreak);
-const wrap = (nodes: ContentBlock[]) => ({ type: 'root', children: nodes }) as unknown as TinaMarkdownProps['content'];
+const { eyebrow, title, layout, intro, children } = Astro.props;
 ---
 
 <section class:list={['story-section', { 'story-decisions': layout === 'decisions' }]}>
-  <header>
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h2>{title}</h2>
-  </header>
-  <div class="section-copy prose"><RichText content={wrap(intro)} /></div>
-  {figure.length > 0 && <div class="section-figure prose"><RichText content={wrap(figure)} /></div>}
+  <div class="section-intro">
+    <header>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2>{title}</h2>
+    </header>
+    {intro && <div class="intro-copy prose"><RichText content={intro} /></div>}
+  </div>
+  <div class="section-copy prose"><RichText content={children} /></div>
 </section>
 
 <style>
   .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 1px solid var(--border); padding-block: var(--space-12); }
   h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
   .section-copy { min-width: 0; max-width: none; }
-  .section-figure { min-width: 0; max-width: none; grid-column: 1 / -1; }
-  .story-decisions .section-copy :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
-  .story-decisions .section-copy :global(> ol > li) { padding-inline-start: var(--space-1); }
-  .story-decisions .section-copy :global(> ol > li::marker) { color: var(--primary); font-weight: 600; }
-  .story-decisions .section-copy :global(li strong) { display: block; margin-bottom: var(--space-4); color: var(--primary); font-family: var(--font-serif); font-size: 1.6rem; line-height: 1.15; font-weight: 500; }
+  .section-intro { min-width: 0; }
+  .intro-copy { margin-top: var(--space-4); font-size: var(--text-small); }
+  .section-copy :global(> .editorial-callouts) { padding: 0; list-style: none; }
+  .story-decisions .section-copy :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); list-style: none; padding: 0; counter-reset: decision; }
+  .story-decisions .section-copy :global(> ol > li) { counter-increment: decision; font-size: var(--text-small); }
+  .story-decisions .section-copy :global(> ol > li + li) { border-left: 1px solid var(--border); padding-left: var(--space-6); }
+  .story-decisions .section-copy :global(> ol > li::before) { content: counter(decision); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; margin-bottom: var(--space-4); border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); font-family: var(--font-serif); }
+  .story-decisions .section-copy :global(li strong) { display: block; margin-bottom: var(--space-3); color: var(--primary); font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.15; font-weight: 500; }
   @media (max-width: 65rem) {
     .story-decisions .section-copy :global(> ol) { grid-template-columns: 1fr; gap: var(--space-6); }
+    .story-decisions .section-copy :global(> ol > li + li) { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-6); }
   }
   @media (max-width: 60rem) {
     .story-section { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8); }

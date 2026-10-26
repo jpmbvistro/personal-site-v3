@@ -1,9 +1,10 @@
 ---
+import StoryIcon from './StoryIcon.astro';
 // Tina emits rich-text as an AST rather than generating template prop types.
 // This is the renderer contract for the MetricStrip template in tina/config.ts.
 interface Props {
   caption?: string | null;
-  metrics?: ({ value: string; label: string; qualifier?: string | null } | null)[] | null;
+  metrics?: ({ value: string; label: string; qualifier?: string | null; icon?: string | null } | null)[] | null;
 }
 const { caption, metrics } = Astro.props;
 const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [];
@@ -14,7 +15,7 @@ const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [
   <dl>
     {entries.map((metric) => metric && <div>
       <dt>{metric.label}</dt>
-      <dd><strong>{metric.value}</strong>{metric.qualifier && <span>{metric.qualifier}</span>}</dd>
+      <dd>{metric.icon && <span class="metric-icon"><StoryIcon name={metric.icon} /></span>}<strong>{metric.value}</strong>{metric.qualifier && <span>{metric.qualifier}</span>}</dd>
     </div>)}
   </dl>
 </figure>}
@@ -28,4 +29,5 @@ const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [
   dd { display: contents; }
   strong { order: -1; font-family: var(--font-serif); font-size: var(--text-heading); font-weight: 400; color: var(--primary); line-height: 1.2; overflow-wrap: anywhere; }
   span { color: var(--muted-foreground); font-size: var(--text-small); }
+  .metric-icon { display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; order: -2; width: 3.5rem; height: 3.5rem; margin-bottom: var(--space-3); border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); }
 </style>

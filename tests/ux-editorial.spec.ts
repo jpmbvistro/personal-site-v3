@@ -19,9 +19,28 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await expect(figure.locator('.diagram-mobile .team-dots span')).toHaveCount(12);
       await expect(figure.locator('.metric-strip')).toHaveCount(0);
     }
-    await expect(page.locator('.network-topology circle')).toHaveCount(12);
+    await expect(page.locator('.network-topology .team-node')).toHaveCount(12);
     await expect(page.locator('.metric-strip dt')).toHaveCount(4);
     await expect(page.locator('.metric-strip figcaption')).toContainText('may overlap');
+    await expect(page.locator('.story-section').first().locator('.editorial-callouts > li')).toHaveCount(3);
+    await expect(page.locator('.hero-outcomes .editorial-callouts > li')).toHaveCount(3);
+    await expect(page.locator('.network-topology .editorial-callouts')).toHaveCount(0);
+    await expect(page.locator('.approach-stages > li')).toHaveCount(4);
+    await expect(page.locator('.metric-strip .metric-icon')).toHaveCount(4);
+    for (const row of await page.locator('.story-section').all()) {
+      await expect(row.locator('.intro-copy')).toBeVisible();
+      const heading = await row.locator('h2').boundingBox();
+      const prose = await row.locator('.intro-copy').boundingBox();
+      const left = await row.locator('.section-intro').boundingBox();
+      const right = await row.locator('.section-copy').boundingBox();
+      expect(prose!.y).toBeGreaterThanOrEqual(heading!.y + heading!.height);
+      if (width > 960) {
+        expect(right!.x).toBeGreaterThanOrEqual(left!.x + left!.width);
+        expect(right!.y).toBeLessThan(left!.y + left!.height);
+      } else {
+        expect(right!.y).toBeGreaterThanOrEqual(left!.y + left!.height);
+      }
+    }
     const intro = await page.locator('.entry-heading').boundingBox();
     const heroFigure = await page.locator('.ux-network').boundingBox();
     const challenge = await page.locator('.story-section').first().boundingBox();
@@ -73,6 +92,10 @@ test.describe('native editorial figures', () => {
     await expect(page.locator('.story-decisions')).toContainText('reorganization');
     await expect(page.locator('.metric-strip')).toContainText('Teams consulted UX specialists');
     await expect(page.locator('.entry-heading')).toContainText('Global biotechnology company');
+    await expect(page.locator('.hero-outcomes')).toContainText('groups may overlap');
+    await expect(page.locator('.story-section').first().locator('.intro-copy')).toContainText('fragmented interfaces');
+    await expect(page.locator('.story-section').first().locator('.editorial-callouts')).toContainText('Initial skepticism');
+    await expect(page.locator('.approach-stages')).toContainText('Support');
   });
 });
 
@@ -90,15 +113,14 @@ test('the editorial format also works as a local-only draft', async ({ page, req
     await expect(page.locator('.draft-note')).toBeVisible();
     await expect(page.locator('.ux-network .diagram-mobile')).toBeVisible();
     await expect(page.locator('.story-section')).toHaveCount(4);
-    let note: { x: number; y: number; width: number; height: number } | null = null;
-    let intro: { x: number; y: number; width: number; height: number } | null = null;
-    // Font-swap/reindex timing can briefly yield no layout box.
+    // Read both boxes in one browser turn so a dev reload cannot separate them.
     await expect.poll(async () => {
-      note = await page.locator('.draft-note').boundingBox();
-      intro = await page.locator('.entry-heading').boundingBox();
-      return note !== null && intro !== null;
-    }).toBe(true, { timeout: 10_000 });
-    expect(intro!.y).toBeGreaterThanOrEqual(note!.y + note!.height);
+      return page.evaluate(() => {
+        const note = document.querySelector('.draft-note')?.getBoundingClientRect();
+        const intro = document.querySelector('.entry-heading')?.getBoundingClientRect();
+        return !!note && !!intro && intro.y >= note.bottom;
+      });
+    }, { timeout: 10_000 }).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await request.get('/work/editorial-preview-fixture/')).status()).toBe(404);
   } finally {
@@ -123,20 +145,40 @@ test('editorial prose, captions, and section order preview and save through Tina
     await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
     await page.locator('input[name$=".props.caption"]').fill('Figure caption editing trial');
     await expect(preview.locator('.ux-network figcaption')).toHaveText('Figure caption editing trial');
+    await page.getByRole('button', { name: 'Research artifacts', exact: true }).click();
+    await page.locator('input[name$=".title"]').fill('Hero callout editing trial');
+    await expect(preview.locator('.hero-outcomes')).toContainText('Hero callout editing trial');
     // Return from the block form to the Work document's body.
     await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
     await page.getByRole('button', { name: 'High ambition. Limited specialist capacity.', exact: true }).click();
     await page.locator('input[name="sections.0.title"]').fill('Section heading editing trial');
     await expect(preview.locator('.story-section h2').first()).toHaveText('Section heading editing trial');
-    const prose = page.locator('[contenteditable="true"]');
+    const prose = page.locator('[contenteditable="true"]').first();
     await prose.click();
     await page.keyboard.press('ControlOrMeta+End');
     await page.keyboard.press('Enter');
     await page.keyboard.insertText('Section prose editing trial');
-    await expect(preview.locator('.story-section').first()).toContainText('Section prose editing trial');
+    await expect(preview.locator('.story-section .intro-copy').first()).toContainText('Section prose editing trial');
+
+    // The right-hand callouts remain editable independently of the introduction.
+    await page.getByRole('button', { name: 'Open options', exact: true }).click();
+    await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
+    await page.getByRole('button', { name: 'Distributed ownership', exact: true }).click();
+    await page.locator('input[name$=".title"]').fill('Callout heading editing trial');
+    await expect(preview.locator('.story-section .section-copy').first()).toContainText('Callout heading editing trial');
     expect(await readFile(path, 'utf8')).toBe(original);
 
     await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
+    await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).click();
+    await page.getByRole('button', { name: 'Open options', exact: true }).click();
+    await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
+    await page.getByRole('button', { name: 'Support', exact: true }).click();
+    await page.locator('input[name$=".title"]').fill('Stage heading editing trial');
+    await expect(preview.locator('.approach-stages')).toContainText('Stage heading editing trial');
+
+    await page.getByRole('button', { name: 'scaling-ux-capability', exact: true }).click();
+    await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).scrollIntoViewIfNeeded();
+    await page.getByRole('button', { name: 'Section heading editing trial', exact: true }).scrollIntoViewIfNeeded();
     const from = await page.getByRole('button', { name: 'Specialist guidance. Local ownership.', exact: true }).locator(':scope > div').first().boundingBox();
     const to = await page.getByRole('button', { name: 'Section heading editing trial', exact: true }).locator(':scope > div').first().boundingBox();
     expect(from).not.toBeNull();
@@ -154,6 +196,9 @@ test('editorial prose, captions, and section order preview and save through Tina
     expect(await readFile(path, 'utf8')).toContain('Section prose editing trial');
     const saved = await readFile(path, 'utf8');
     expect(saved.indexOf('Specialist guidance. Local ownership.')).toBeLessThan(saved.indexOf('Section heading editing trial'));
+    expect(saved).toContain('Callout heading editing trial');
+    expect(saved).toContain('Hero callout editing trial');
+    expect(saved).toContain('Stage heading editing trial');
   } finally {
     await page.close();
     await writeFile(path, original);

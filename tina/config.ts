@@ -1,5 +1,29 @@
 import type { Config, TinaField, Template } from 'tinacms';
 
+const icon: TinaField = { type: 'string', name: 'icon', label: 'Illustration', options: [
+  { value: 'teams', label: 'People / teams' },
+  { value: 'capacity', label: 'Capacity / focus' },
+  { value: 'constraints', label: 'Constraints / tradeoffs' },
+  { value: 'research', label: 'Research / evidence' },
+  { value: 'system', label: 'Design system' },
+  { value: 'learning', label: 'Learning / guidance' },
+] };
+
+const calloutFields: TinaField[] = [
+  icon,
+  { type: 'string', name: 'title', label: 'Heading', required: true },
+  { type: 'string', name: 'text', label: 'Explanation', ui: { component: 'textarea' } },
+];
+
+const editorialCallouts: Template = {
+  name: 'EditorialCallouts', label: 'Illustrated callouts',
+  fields: [
+    { type: 'string', name: 'label', label: 'Group label' },
+    { type: 'object', name: 'items', label: 'Callouts', list: true,
+      ui: { itemProps: (item) => ({ label: item?.title || 'Callout' }) }, fields: calloutFields },
+  ],
+};
+
 const metricStrip: Template = {
   name: 'MetricStrip', label: 'Metric strip',
   fields: [
@@ -8,6 +32,7 @@ const metricStrip: Template = {
       type: 'object', name: 'metrics', label: 'Metrics', list: true,
       ui: { itemProps: (item) => ({ label: item?.label || 'Metric' }) },
       fields: [
+        icon,
         { type: 'string', name: 'value', label: 'Value', required: true },
         { type: 'string', name: 'label', label: 'Label', required: true },
         { type: 'string', name: 'qualifier', label: 'Qualifier' },
@@ -29,6 +54,15 @@ const uxDiagram: Template = {
     { type: 'string', name: 'resourcesLabel', label: 'Resources label', required: true },
     { type: 'string', name: 'participantsLabel', label: 'Participants label', required: true },
     { type: 'string', name: 'teamsLabel', label: 'Teams label', required: true },
+    { type: 'object', name: 'stages', label: 'Approach stages', list: true,
+      ui: { itemProps: (item) => ({ label: item?.title || 'Stage' }) },
+      fields: [
+        { type: 'string', name: 'title', label: 'Heading', required: true },
+        { type: 'string', name: 'text', label: 'Explanation' },
+      ] },
+    { type: 'string', name: 'calloutsLabel', label: 'Hero callout group label' },
+    { type: 'object', name: 'callouts', label: 'Hero callouts (outside network)', list: true,
+      ui: { itemProps: (item) => ({ label: item?.title || 'Callout' }) }, fields: calloutFields },
   ],
 };
 
@@ -42,13 +76,14 @@ const storySections: TinaField = {
       { value: 'prose', label: 'Narrative / figure' },
       { value: 'decisions', label: 'Decision list' },
     ] },
-    { type: 'rich-text', name: 'children', label: 'Section content', templates: [metricStrip, uxDiagram] },
+    { type: 'rich-text', name: 'intro', label: 'Introduction (under heading)' },
+    { type: 'rich-text', name: 'children', label: 'Section content (right column)', templates: [metricStrip, uxDiagram, editorialCallouts] },
   ],
 };
 
 const body: TinaField = {
   type: 'rich-text', name: 'body', label: 'Body', isBody: true, required: true,
-  templates: [metricStrip, uxDiagram],
+  templates: [metricStrip, uxDiagram, editorialCallouts],
 };
 
 const entryFields: TinaField[] = [

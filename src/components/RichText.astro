@@ -3,9 +3,10 @@ import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import type { TinaMarkdownProps } from '@tinacms/astro';
 import MetricStrip from './MetricStrip.astro';
 import UxEnablementDiagram from './UxEnablementDiagram.astro';
+import EditorialCallouts from './EditorialCallouts.astro';
 
 interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, UxEnablementDiagram }} />
+<TinaMarkdown content={content} components={{ MetricStrip, UxEnablementDiagram, EditorialCallouts }} />

@@ -31,7 +31,7 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
 </header>
 <div class="prose entry-body" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
 {sections.length > 0 && <div class="entry-sections" data-tina-field={sectionsField}>
-  {sections.map((section) => section && <StorySection eyebrow={section.eyebrow ?? undefined} title={section.title ?? ''} layout={section.layout ?? undefined} children={section.children} />)}
+  {sections.map((section) => section && <StorySection eyebrow={section.eyebrow ?? undefined} title={section.title ?? ''} layout={section.layout ?? undefined} intro={section.intro} children={section.children} />)}
 </div>}
 {links.length > 0 && <nav class="entry-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
   {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
@@ -47,7 +47,7 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
   .entry-links { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-8); }
   .entry-links a { padding-block: var(--space-3); }
   .draft-note { margin-bottom: var(--space-6); border-left: 3px solid var(--accent); padding: var(--space-4); background: var(--muted); }
-  .editorial-story { --hero-row: 1; --hero-figure-row: 1; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); column-gap: var(--space-12); }
+  .editorial-story { --hero-row: 1; --hero-figure-row: 1; display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); column-gap: var(--space-12); }
   .editorial-story.has-draft { --hero-row: 2; --hero-figure-row: 2; }
   .editorial-story .draft-note { grid-column: 1 / -1; grid-row: 1; }
   .editorial-story .entry-heading { grid-column: 1; grid-row: var(--hero-row); padding-block: var(--space-4) var(--space-12); }
