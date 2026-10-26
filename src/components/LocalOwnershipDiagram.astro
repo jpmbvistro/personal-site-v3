@@ -57,7 +57,7 @@ const teams = Array.from({ length: 12 });
   .approach-stages li { position: relative; }
   .approach-stages li + li::before { content: '→'; position: absolute; left: calc(var(--arrow-leading) - var(--stage-gap)); top: 50%; width: var(--arrow-size); text-align: center; transform: translateY(-50%); color: var(--primary); }
   .approach-stages strong { font: 400 1.4rem/1.2 var(--font-serif); }
-  .approach-stages p { margin-top: var(--space-2); font-size: var(--text-small); line-height: 1.5; }
+  .approach-stages p { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.5; }
   .ownership-flow { --flow-gap: var(--space-8); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--flow-gap); margin-block: var(--space-8); }
   .flow-node { min-width: 0; text-align: center; }
   .node-symbol { position: relative; display: grid; place-items: center; height: 5rem; margin-bottom: var(--space-3); }
@@ -65,11 +65,11 @@ const teams = Array.from({ length: 12 });
   .specialist-node .node-symbol::after { content: ''; position: absolute; left: calc(50% + 2.5rem); right: calc(-50% - var(--flow-gap) + 2.5rem); top: 50%; border-top: 1px solid var(--accent); }
   .team-connections { position: absolute; top: 0; left: calc(50% + 2.5rem); width: calc(100% + var(--flow-gap) - 2.5rem - 2.05rem); max-width: none; height: 5rem; fill: none; stroke: var(--accent); stroke-width: 1.2; pointer-events: none; }
   strong { color: var(--primary); font-weight: 500; line-height: 1.35; }
-  .resources-label { margin-top: var(--space-2); font-size: var(--text-small); line-height: 1.5; }
+  .resources-label { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.5; }
   .team-dots { display: grid; grid-template-columns: repeat(4, 0.65rem); gap: var(--space-2); justify-content: center; }
   .team-dots span { width: 0.65rem; height: 0.65rem; border: 1.5px solid var(--primary); border-radius: 50%; background: var(--background); }
   figcaption { margin-top: var(--space-6); font: 400 1.4rem/1.3 var(--font-serif); color: var(--primary); }
-  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-small); line-height: 1.6; }
+  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-body); line-height: 1.6; }
   .diagram-mobile { display: none; }
   @media (max-width: 48rem) {
     .diagram-desktop { display: none; }

@@ -43,9 +43,9 @@
   --font-sans: "Avenir Next", Avenir, "Segoe UI", sans-serif;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --font-mono: "SFMono-Regular", Consolas, monospace;
-  --font-weight-body: 350;
+  --font-weight-body: 300;
   --text-small: 0.875rem;
-  --text-body: 1rem;
+  --text-body: 0.75rem;
   --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.4rem);
   --text-heading: clamp(2rem, 1.5rem + 2vw, 3.5rem);
   --text-display: clamp(3.5rem, 2.25rem + 5vw, 7rem);
@@ -119,6 +119,7 @@
   .editorial-work .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
   ::selection { background: var(--secondary); color: var(--foreground); }
   h1, h2, h3, p { margin: 0; }
+  p { font-size: var(--text-body); }
   /* Keep emphasis distinct when the inherited body weight is below 400. */
   strong, b { font-weight: 700; }
   h1, h2 { font-family: var(--font-serif); font-weight: 400; line-height: 1.08; }
@@ -143,7 +144,7 @@
     text-transform: uppercase;
   }
 
-  .prose { max-width: var(--reading-width); overflow-wrap: anywhere; }
+  .prose { max-width: var(--reading-width); font-size: var(--text-body); overflow-wrap: anywhere; }
   .prose > * + * { margin-top: var(--space-4); }
   /* Restore rich-text markers removed by Tailwind's reset, not navigation lists. */
   .prose ul { list-style-type: disc; }

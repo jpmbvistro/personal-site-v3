@@ -25,7 +25,7 @@ const entries = items?.filter((item) => item?.title) ?? [];
   /* Do not inherit the prose heading's 2rem top margin: the icon already
      supplies a 1rem gap (one third of the previous combined 3rem gap). */
   h3 { margin: 0; font: 400 1.4rem/1.15 var(--font-serif); color: var(--primary); }
-  p { margin-top: var(--space-2); font-size: var(--text-small); line-height: 1.6; }
+  p { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.6; }
   @media (max-width: 40rem) {
     .editorial-callouts { grid-template-columns: 1fr; }
     li { display: flex; align-items: flex-start; gap: var(--space-4); }

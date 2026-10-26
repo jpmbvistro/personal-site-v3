@@ -33,7 +33,7 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
   h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
   .eyebrow { color: var(--accent-strong); }
   .section-copy, .section-main, .section-aside { min-width: 0; max-width: none; font-family: var(--font-sans); }
-  .intro-copy, .section-copy { font-family: var(--font-sans); font-size: var(--text-small); font-weight: var(--font-weight-body); line-height: 1.65; }
+  .intro-copy, .section-copy { font-family: var(--font-sans); font-size: var(--text-body); font-weight: var(--font-weight-body); line-height: 1.65; }
   .section-panels { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr); gap: var(--space-6); align-items: start; }
   .section-panels :global(.metric-strip dl) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section-intro { min-width: 0; }
@@ -43,7 +43,7 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
   .section-main :global(> ol > li) { counter-increment: decision; }
   .section-main :global(> ol > li::before) { content: counter(decision); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; margin-bottom: var(--space-4); background: var(--accent-strong); border-radius: 50%; color: var(--accent-strong-foreground); font-family: var(--font-serif); }
   .story-decisions .section-main :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
-  .story-decisions .section-main :global(> ol > li) { font-size: var(--text-small); }
+  .story-decisions .section-main :global(> ol > li) { font-size: var(--text-body); }
   .story-decisions .section-main :global(> ol > li + li) { border-left: 1px solid var(--border); padding-left: var(--space-6); }
   .story-decisions .section-main :global(li strong) { display: block; margin-bottom: var(--space-3); color: var(--primary); font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.15; font-weight: 500; }
   @media (max-width: 80rem) {

@@ -11,6 +11,8 @@ draft: false
 presentation: editorial
 ---
 
+A normal body paragraph in a minimal entry.
+
 <BlockQuote quote="Quote text only" />
 <BlockQuote label="Optional label" quote="Quote with label" />
 <BlockQuote quote="Quote with attribution" attribution="Test attribution" />
@@ -34,6 +36,8 @@ for (const width of [320, 1440]) {
     await expect(async () => {
       expect((await page.goto('/work/editorial-blocks-fixture/'))?.status()).toBe(200);
     }).toPass({ timeout: 10_000 });
+    await expect(page.locator('.entry-body > p')).toHaveCSS('font-size', '12px');
+    await expect(page.locator('html')).toHaveCSS('font-size', '16px');
     const quotes = page.locator('.story-quote');
     await expect(quotes).toHaveCount(4);
     await expect(quotes.nth(0).locator('blockquote')).toHaveText('Quote text only');

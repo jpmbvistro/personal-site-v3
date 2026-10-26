@@ -85,6 +85,8 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
       paragraphFont: getComputedStyle(document.querySelector('.section-main > p')!).fontFamily,
       bodyWeight: Number(body.getPropertyValue('--font-weight-body')),
       matchingWeights: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontWeight),
+      matchingSizes: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontSize),
+      copyContrasts: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => ratio(getComputedStyle(element).color)),
       headingWeight: getComputedStyle(document.querySelector('h1')!).fontWeight,
       emphasisWeight: getComputedStyle(document.querySelector('.intro-copy strong')!).fontWeight,
       bodyTypography: ['.intro-copy > p', '.section-main > p'].map((selector) => {
@@ -105,6 +107,8 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
   expect(result.paragraphFont).toContain('Inter');
   expect(result.bodyWeight).toBeLessThan(400);
   for (const weight of result.matchingWeights) expect(Number(weight)).toBe(result.bodyWeight);
+  for (const size of result.matchingSizes) expect(size).toBe('12px');
+  for (const contrast of result.copyContrasts) expect(contrast).toBeGreaterThanOrEqual(4.5);
   expect(Number(result.headingWeight)).toBeGreaterThan(result.bodyWeight);
   expect(Number(result.emphasisWeight)).toBeGreaterThan(result.bodyWeight);
   expect(result.bodyTypography[1]).toEqual(result.bodyTypography[0]);
