@@ -53,9 +53,9 @@ const teams = Array.from({ length: 12 });
 
 <style>
   .ux-approach { min-width: 0; margin: 0; }
-  .approach-stages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-8); list-style: none; margin: 0; padding: 0; }
+  .approach-stages { --arrow-size: 1rem; --arrow-leading: var(--space-2); --arrow-trailing: var(--space-4); --stage-gap: calc(var(--arrow-size) + var(--arrow-leading) + var(--arrow-trailing)); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--stage-gap); list-style: none; margin: 0; padding: 0; }
   .approach-stages li { position: relative; }
-  .approach-stages li + li::before { content: '→'; position: absolute; left: calc(var(--space-8) / -2); top: 50%; transform: translate(-50%, -50%); color: var(--primary); }
+  .approach-stages li + li::before { content: '→'; position: absolute; left: calc(var(--arrow-leading) - var(--stage-gap)); top: 50%; width: var(--arrow-size); text-align: center; transform: translateY(-50%); color: var(--primary); }
   .approach-stages strong { font: 400 1.4rem/1.2 var(--font-serif); }
   .approach-stages p { margin-top: var(--space-2); font-size: var(--text-small); line-height: 1.5; }
   .ownership-flow { --flow-gap: var(--space-8); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--flow-gap); margin-block: var(--space-8); }
@@ -73,8 +73,8 @@ const teams = Array.from({ length: 12 });
   .diagram-mobile { display: none; }
   @media (max-width: 48rem) {
     .diagram-desktop { display: none; }
-    .approach-stages { grid-template-columns: 1fr; gap: var(--space-8); }
-    .approach-stages li + li::before { content: '↓'; left: 50%; top: calc(var(--space-8) / -2); }
+    .approach-stages { --stage-gap: var(--space-8); grid-template-columns: 1fr; }
+    .approach-stages li + li::before { content: '↓'; left: 50%; top: calc(var(--stage-gap) / -2); transform: translate(-50%, -50%); }
     .diagram-mobile { display: grid; gap: var(--space-8); margin-top: var(--space-6); }
     .mobile-node { position: relative; display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius); text-align: center; }
     .mobile-node + .mobile-node::before { content: ''; position: absolute; bottom: 100%; left: 50%; height: var(--space-8); border-left: 1px solid var(--accent); }

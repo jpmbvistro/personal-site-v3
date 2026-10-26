@@ -29,14 +29,15 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
 </section>
 
 <style>
-  .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 1px solid var(--border); padding-block: var(--space-12); }
+  .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 2px solid var(--accent); padding-block: var(--space-12); }
   h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
   .eyebrow { color: var(--accent-strong); }
   .section-copy, .section-main, .section-aside { min-width: 0; max-width: none; font-family: var(--font-sans); }
+  .intro-copy, .section-copy { font-family: var(--font-sans); font-size: var(--text-small); font-weight: 400; line-height: 1.65; }
   .section-panels { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr); gap: var(--space-6); align-items: start; }
   .section-panels :global(.metric-strip dl) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section-intro { min-width: 0; }
-  .intro-copy { margin-top: var(--space-4); font-size: var(--text-small); }
+  .intro-copy { margin-top: var(--space-4); }
   .section-main :global(> .editorial-callouts) { padding: 0; list-style: none; }
   .section-main :global(> ol) { list-style: none; padding: 0; counter-reset: decision; }
   .section-main :global(> ol > li) { counter-increment: decision; }

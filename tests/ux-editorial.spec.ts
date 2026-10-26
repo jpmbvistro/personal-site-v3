@@ -30,6 +30,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.approach-stages > li')).toHaveCount(4);
     await expect(page.locator('.metric-strip .metric-icon')).toHaveCount(4);
     for (const row of await page.locator('.story-section').all()) {
+      await expect(row).toHaveCSS('border-top-width', '2px');
       await expect(row.locator('.intro-copy')).toBeVisible();
       const heading = await row.locator('h2').boundingBox();
       const prose = await row.locator('.intro-copy').boundingBox();
@@ -82,6 +83,12 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
       ratios: [ratio(body.color), ratio(getComputedStyle(document.querySelector('h1')!).color), ratio(getComputedStyle(document.querySelector('.entry-links a')!).color), ratio(getComputedStyle(document.querySelector('.story-section .eyebrow')!).color)],
       subheadingFont: getComputedStyle(document.querySelector('.intro-copy h3')!).fontFamily,
       paragraphFont: getComputedStyle(document.querySelector('.section-main > p')!).fontFamily,
+      bodyTypography: ['.intro-copy > p', '.section-main > p'].map((selector) => {
+        const style = getComputedStyle(document.querySelector(selector)!);
+        return { family: style.fontFamily, size: style.fontSize, weight: style.fontWeight, lineHeight: style.lineHeight };
+      }),
+      dividerColor: getComputedStyle(document.querySelector('.story-section')!).borderTopColor,
+      copperColor: getComputedStyle(document.querySelector('.story-quote')!).borderLeftColor,
       badge: (() => {
         const badge = getComputedStyle(document.querySelector('.story-decisions li')!, '::before');
         return { background: badge.backgroundColor, color: badge.color, contrast: ratio(badge.backgroundColor) };
@@ -92,6 +99,8 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
   for (const ratio of result.ratios) expect(ratio).toBeGreaterThanOrEqual(4.5);
   expect(result.subheadingFont).toContain('Newsreader');
   expect(result.paragraphFont).toContain('Inter');
+  expect(result.bodyTypography[1]).toEqual(result.bodyTypography[0]);
+  expect(result.dividerColor).toBe(result.copperColor);
   expect(result.badge.contrast).toBeGreaterThanOrEqual(4.5);
   await expect(page.locator('.story-decisions li').first()).toHaveCSS('font-family', /Inter/);
   await page.keyboard.press('Tab');
@@ -124,10 +133,12 @@ for (const width of [1024, 1440]) {
       const box = item.getBoundingClientRect();
       const previous = items[index - 1].getBoundingClientRect();
       const arrow = getComputedStyle(item, '::before');
-      return { x: box.x + parseFloat(arrow.left), gapCenter: (box.left + previous.right) / 2, y: parseFloat(arrow.top), center: box.height / 2 };
+      const arrowLeft = box.x + parseFloat(arrow.left);
+      return { before: arrowLeft - previous.right, after: box.left - arrowLeft - parseFloat(arrow.width), y: parseFloat(arrow.top), center: box.height / 2 };
     }));
     for (const stage of stages) if (stage) {
-      expect(Math.abs(stage.x - stage.gapCenter)).toBeLessThan(1);
+      expect(stage.before).toBeGreaterThan(0);
+      expect(stage.after / stage.before).toBeCloseTo(2, 1);
       expect(Math.abs(stage.y - stage.center)).toBeLessThan(1);
     }
     const calloutGap = await page.locator('.story-section .callout-icon').first().evaluate((icon) => {
