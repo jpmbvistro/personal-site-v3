@@ -30,7 +30,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.approach-stages > li')).toHaveCount(4);
     await expect(page.locator('.metric-strip .metric-icon')).toHaveCount(4);
     for (const row of await page.locator('.story-section').all()) {
-      await expect(row).toHaveCSS('border-top-width', '2px');
+      await expect(row).toHaveCSS('border-top-width', '1px');
       await expect(row.locator('.intro-copy')).toBeVisible();
       const heading = await row.locator('h2').boundingBox();
       const prose = await row.locator('.intro-copy').boundingBox();
