@@ -111,11 +111,16 @@
     --ring: var(--primary);
     --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
     --font-serif: Newsreader, "Iowan Old Style", Georgia, serif;
+    /* Readable editorial copy without changing the rest of the site's scale. */
+    --text-body: 1rem;
+    --text-support: 0.875rem;
+    --text-annotation: 0.875rem;
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
   }
   .editorial-work :is(h1, h2, h3) { color: var(--primary); }
+  .editorial-work .eyebrow { font-size: 0.8125rem; }
   .editorial-work .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
   ::selection { background: var(--secondary); color: var(--foreground); }
   h1, h2, h3, p { margin: 0; }

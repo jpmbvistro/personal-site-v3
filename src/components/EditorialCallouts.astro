@@ -3,16 +3,17 @@ import StoryIcon from './StoryIcon.astro';
 
 interface Props {
   label?: string | null;
+  headingTag?: 'h3' | 'p';
   items?: ({ icon?: string | null; title: string; text?: string | null } | null)[] | null;
 }
-const { label, items } = Astro.props;
+const { label, items, headingTag: HeadingTag = 'h3' } = Astro.props;
 const entries = items?.filter((item) => item?.title) ?? [];
 ---
 
 {entries.length > 0 && <ul class="editorial-callouts" role="list" aria-label={label || undefined}>
   {entries.map((item) => item && <li>
     <span class="callout-icon"><StoryIcon name={item.icon} /></span>
-    <div><h3>{item.title}</h3>{item.text && <p>{item.text}</p>}</div>
+    <div><HeadingTag class="callout-title">{item.title}</HeadingTag>{item.text && <p>{item.text}</p>}</div>
   </li>)}
 </ul>}
 
@@ -24,8 +25,8 @@ const entries = items?.filter((item) => item?.title) ?? [];
   .callout-icon { display: inline-flex; align-items: center; justify-content: center; width: 3.5rem; height: 3.5rem; border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); margin-bottom: var(--space-4); }
   /* Do not inherit the prose heading's 2rem top margin: the icon already
      supplies a 1rem gap (one third of the previous combined 3rem gap). */
-  h3 { margin: 0; font: 400 1.4rem/1.15 var(--font-serif); color: var(--primary); }
-  p { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.6; }
+  .callout-title { margin: 0; font: 400 1.4rem/1.15 var(--font-serif); color: var(--primary); }
+  p { margin-top: var(--space-2); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   @media (max-width: 40rem) {
     .editorial-callouts { grid-template-columns: 1fr; }
     li { display: flex; align-items: flex-start; gap: var(--space-4); }

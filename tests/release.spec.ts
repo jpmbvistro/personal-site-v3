@@ -9,7 +9,11 @@ for (const width of [390, 1440]) {
     for (const route of routes) {
       expect((await page.goto(route))?.status(), route).toBe(200);
       await expect(page.locator('main h1')).toBeVisible();
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), route).toBe(true);
+      // Previous specs remove temporary content; the resulting dev HMR reload
+      // can replace this document between the heading check and evaluation.
+      await expect(async () => {
+        expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), route).toBe(true);
+      }).toPass({ timeout: 10_000 });
 
       const title = await page.title();
       expect(title.trim()).not.toBe('');

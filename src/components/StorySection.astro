@@ -43,6 +43,8 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
   .section-main :global(> ol > li) { counter-increment: decision; }
   .section-main :global(> ol > li::before) { content: counter(decision); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; margin-bottom: var(--space-4); background: var(--accent-strong); border-radius: 50%; color: var(--accent-strong-foreground); font-family: var(--font-serif); }
   .story-decisions .section-main :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  /* Give the leadership decisions room instead of shrinking their text. */
+  .story-decisions { grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr); gap: var(--space-8); }
   .story-decisions .section-main :global(> ol > li) { font-size: var(--text-body); }
   .story-decisions .section-main :global(> ol > li + li) { border-left: 1px solid var(--border); padding-left: var(--space-6); }
   .story-decisions .section-main :global(li strong) { display: block; margin-bottom: var(--space-3); color: var(--primary); font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.15; font-weight: 500; }

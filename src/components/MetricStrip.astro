@@ -26,12 +26,12 @@ const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [
   figure { margin-inline: 0; padding-block: var(--space-6); }
   .top-rule { border-top: 1px solid var(--border); }
   .bottom-rule { border-bottom: 1px solid var(--border); }
-  figcaption { margin-bottom: var(--space-6); color: var(--muted-foreground); }
+  figcaption { margin-bottom: var(--space-6); color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: var(--space-8); margin: 0; }
   dl > div { display: flex; flex-direction: column; }
-  dt { font-weight: 600; }
+  dt { font-size: var(--text-support, 1rem); font-weight: 600; line-height: 1.5; }
   dd { display: contents; }
   strong { order: -1; font-family: var(--font-serif); font-size: var(--text-heading); font-weight: 400; color: var(--primary); line-height: 1.2; overflow-wrap: anywhere; }
-  span { color: var(--muted-foreground); font-size: var(--text-body); }
+  span { color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); }
   .metric-icon { display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; order: -2; width: 3.5rem; height: 3.5rem; margin-bottom: var(--space-3); border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); }
 </style>

@@ -17,6 +17,7 @@ A normal body paragraph in a minimal entry.
 <BlockQuote label="Optional label" quote="Quote with label" />
 <BlockQuote quote="Quote with attribution" attribution="Test attribution" />
 <BlockQuote label="Full quote" quote="Quote with both optional fields" attribution="Another test attribution" />
+<BlockQuote label="Leadership principle" quote="An original thought" originalThought={true} attribution="Must not be shown" />
 
 <MetricStrip caption="Original defaults" metrics={[{ value: "A", label: "Test value" }]} />
 ${[[true, false], [false, true], [true, true], [false, false]].map(([top, bottom]) => `<MetricStrip caption="Rules ${top}/${bottom}" topRule={${top}} bottomRule={${bottom}} metrics={[{ value: "A", label: "Test value" }]} />`).join('\n')}
@@ -36,10 +37,10 @@ for (const width of [320, 1440]) {
     await expect(async () => {
       expect((await page.goto('/work/editorial-blocks-fixture/'))?.status()).toBe(200);
     }).toPass({ timeout: 10_000 });
-    await expect(page.locator('.entry-body > p')).toHaveCSS('font-size', '12px');
+    await expect(page.locator('.entry-body > p')).toHaveCSS('font-size', '16px');
     await expect(page.locator('html')).toHaveCSS('font-size', '16px');
     const quotes = page.locator('.story-quote');
-    await expect(quotes).toHaveCount(4);
+    await expect(quotes).toHaveCount(5);
     await expect(quotes.nth(0).locator('blockquote')).toHaveText('Quote text only');
     await expect(quotes.nth(0).locator('.quote-label, figcaption')).toHaveCount(0);
     await expect(quotes.nth(1).locator('.quote-label')).toHaveText('Optional label');
@@ -48,6 +49,8 @@ for (const width of [320, 1440]) {
     await expect(quotes.nth(2).locator('figcaption')).toHaveText('Test attribution');
     await expect(quotes.nth(3).locator('.quote-label')).toHaveText('Full quote');
     await expect(quotes.nth(3).locator('figcaption')).toHaveText('Another test attribution');
+    await expect(quotes.nth(4).locator('.quote-text')).toHaveText('An original thought');
+    await expect(quotes.nth(4).locator('blockquote, figcaption')).toHaveCount(0);
 
     const defaults = page.locator('.metric-strip').filter({ hasText: 'Original defaults' });
     await expect(defaults).toHaveCSS('border-top-width', '1px');

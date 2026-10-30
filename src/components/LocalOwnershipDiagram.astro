@@ -17,7 +17,15 @@ const teams = Array.from({ length: 12 });
 
 <figure class="ux-figure ux-approach">
   {steps.length > 0 && <ol class="approach-stages" role="list">
-    {steps.map((stage) => stage && <li><strong>{stage.title}</strong>{stage.text && <p>{stage.text}</p>}</li>)}
+    {steps.map((stage, index) => stage && <li>
+      <strong>{stage.title}</strong>
+      {stage.text && <p>{stage.text}</p>}
+      <!-- On narrow screens the existing symbols join the operating sequence,
+           instead of repeating a second specialist-to-team diagram below it. -->
+      {index === 0 && <div class="stage-context"><StoryIcon name="specialist" /><span>{specialistsLabel}</span><p class="resources-label">{resourcesLabel}</p></div>}
+      {index === 1 && <div class="stage-context"><StoryIcon name="teams" /><span>{participantsLabel}</span></div>}
+      {index === 3 && <div class="stage-context"><div class="team-dots" aria-hidden="true">{teams.map(() => <span />)}</div><span>{teamsLabel}</span></div>}
+    </li>)}
   </ol>}
   <div class="diagram-desktop">
     <!-- Connectors are anchored to the fixed-height symbol lane, never to labels. -->
@@ -41,23 +49,24 @@ const teams = Array.from({ length: 12 });
       </div>
     </div>
   </div>
-  <!-- Purpose-built vertical layout; no tiny desktop SVG on phones. -->
-  <div class="diagram-mobile">
+  <!-- Retain the relationship explanation when a block has no authored stages. -->
+  {steps.length === 0 && <div class="diagram-mobile">
     <div class="mobile-node"><StoryIcon name="specialist" /><strong>{specialistsLabel}</strong><p class="resources-label">{resourcesLabel}</p></div>
     <div class="mobile-node"><StoryIcon name="teams" /><strong>{participantsLabel}</strong></div>
     <div class="mobile-node"><div class="team-dots" aria-hidden="true">{teams.map(() => <span />)}</div><strong>{teamsLabel}</strong></div>
-  </div>
+  </div>}
   <figcaption>{caption}</figcaption>
   <p class="diagram-summary">{summary}</p>
 </figure>
 
 <style>
-  .ux-approach { min-width: 0; margin: 0; }
+  .ux-approach { min-width: 0; margin: 0; container-type: inline-size; }
   .approach-stages { --arrow-size: 1rem; --arrow-leading: var(--space-2); --arrow-trailing: var(--space-4); --stage-gap: calc(var(--arrow-size) + var(--arrow-leading) + var(--arrow-trailing)); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--stage-gap); list-style: none; margin: 0; padding: 0; }
   .approach-stages li { position: relative; }
   .approach-stages li + li::before { content: '→'; position: absolute; left: calc(var(--arrow-leading) - var(--stage-gap)); top: 50%; width: var(--arrow-size); text-align: center; transform: translateY(-50%); color: var(--primary); }
   .approach-stages strong { font: 400 1.4rem/1.2 var(--font-serif); }
-  .approach-stages p { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.5; }
+  .approach-stages p { margin-top: var(--space-2); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
+  .stage-context { display: none; }
   .ownership-flow { --flow-gap: var(--space-8); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--flow-gap); margin-block: var(--space-8); }
   .flow-node { min-width: 0; text-align: center; }
   .node-symbol { position: relative; display: grid; place-items: center; height: 5rem; margin-bottom: var(--space-3); }
@@ -65,16 +74,23 @@ const teams = Array.from({ length: 12 });
   .specialist-node .node-symbol::after { content: ''; position: absolute; left: calc(50% + 2.5rem); right: calc(-50% - var(--flow-gap) + 2.5rem); top: 50%; border-top: 1px solid var(--accent); }
   .team-connections { position: absolute; top: 0; left: calc(50% + 2.5rem); width: calc(100% + var(--flow-gap) - 2.5rem - 2.05rem); max-width: none; height: 5rem; fill: none; stroke: var(--accent); stroke-width: 1.2; pointer-events: none; }
   strong { color: var(--primary); font-weight: 500; line-height: 1.35; }
-  .resources-label { margin-top: var(--space-2); font-size: var(--text-body); line-height: 1.5; }
+  .flow-node > strong { font-size: var(--text-annotation, 1rem); }
+  .resources-label { margin-top: var(--space-2); font-size: var(--text-annotation, var(--text-body)); line-height: 1.6; }
   .team-dots { display: grid; grid-template-columns: repeat(4, 0.65rem); gap: var(--space-2); justify-content: center; }
   .team-dots span { width: 0.65rem; height: 0.65rem; border: 1.5px solid var(--primary); border-radius: 50%; background: var(--background); }
   figcaption { margin-top: var(--space-6); font: 400 1.4rem/1.3 var(--font-serif); color: var(--primary); }
-  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-body); line-height: 1.6; }
+  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   .diagram-mobile { display: none; }
+  @container (max-width: 36rem) {
+    .approach-stages { --stage-gap: var(--space-8); grid-template-columns: 1fr; }
+    .approach-stages li + li::before { content: '↓'; left: 50%; top: calc(var(--stage-gap) / -2); transform: translate(-50%, -50%); }
+  }
   @media (max-width: 48rem) {
     .diagram-desktop { display: none; }
     .approach-stages { --stage-gap: var(--space-8); grid-template-columns: 1fr; }
     .approach-stages li + li::before { content: '↓'; left: 50%; top: calc(var(--stage-gap) / -2); transform: translate(-50%, -50%); }
+    .stage-context { display: flex; align-items: center; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-3); font-size: var(--text-annotation, var(--text-body)); color: var(--primary); }
+    .stage-context .resources-label { flex-basis: 100%; }
     .diagram-mobile { display: grid; gap: var(--space-8); margin-top: var(--space-6); }
     .mobile-node { position: relative; display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius); text-align: center; }
     .mobile-node + .mobile-node::before { content: ''; position: absolute; bottom: 100%; left: 50%; height: var(--space-8); border-left: 1px solid var(--accent); }

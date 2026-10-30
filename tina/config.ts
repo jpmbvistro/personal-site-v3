@@ -79,6 +79,7 @@ const blockQuote: Template = {
   name: 'BlockQuote', label: 'Block quote',
   fields: [
     { type: 'string', name: 'label', label: 'Label (optional)' },
+    { type: 'boolean', name: 'originalThought', label: 'Original thought (not a quotation)', description: 'Preserves the editorial treatment without quotation semantics or attribution.' },
     { type: 'string', name: 'quote', label: 'Quote', required: true, ui: { component: 'textarea' } },
     { type: 'string', name: 'attribution', label: 'Attribution (optional)' },
   ],

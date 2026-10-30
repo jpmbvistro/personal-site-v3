@@ -69,6 +69,9 @@ try {
   assert.match(ux, /story-quote/);
   assert.match(ux, /section-panels/);
   assert.match(ux, /Global biotechnology company/);
+  assert.match(ux, /Leadership principle/);
+  assert.match(ux, /Follow-through groups may overlap; counts are not additive/);
+  assert.doesNotMatch(ux, /<blockquote|Key outcome|astro-dev-toolbar|\/astro\/toolbar/);
   assert.doesNotMatch(ux, /No component provided|Moderna/);
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(minimal, /class="(?:entry-meta|tags|entry-links)"/);

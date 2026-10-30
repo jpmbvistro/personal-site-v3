@@ -14,20 +14,25 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     for (const figure of await page.locator('.ux-figure').all()) {
       await expect(figure.locator('figcaption')).toBeVisible();
       await expect(figure.locator('.diagram-summary')).toBeVisible();
-      await expect(figure.locator('.diagram-mobile')).toBeVisible({ visible: width <= 768 });
+      const mobile = figure.locator('.diagram-mobile, .stage-context').first();
+      await expect(mobile).toBeVisible({ visible: width <= 768 });
       await expect(figure.locator('.diagram-desktop')).toBeVisible({ visible: width > 768 });
-      await expect(figure.locator('.diagram-mobile .team-dots span')).toHaveCount(12);
+      await expect(figure.locator('.diagram-mobile .team-dots span, .stage-context .team-dots span')).toHaveCount(12);
       await expect(figure.locator('.metric-strip')).toHaveCount(0);
     }
     await expect(page.locator('.network-topology .team-node')).toHaveCount(12);
     await expect(page.locator('.metric-strip dt')).toHaveCount(4);
     await expect(page.locator('.entry-story')).toContainText('groups may overlap');
-    await expect(page.locator('.story-quote blockquote')).toContainText('Lower the cost of participation');
+    await expect(page.locator('.story-quote .quote-label')).toHaveText('Leadership principle');
+    await expect(page.locator('.story-quote .quote-text')).toHaveText('Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work.');
+    await expect(page.locator('.story-quote blockquote')).toHaveCount(0);
     await expect(page.locator('.story-quote figcaption')).toHaveCount(0);
     await expect(page.locator('.story-section').first().locator('.editorial-callouts > li')).toHaveCount(3);
     await expect(page.locator('.hero-outcomes .editorial-callouts > li')).toHaveCount(3);
     await expect(page.locator('.network-topology .editorial-callouts')).toHaveCount(0);
     await expect(page.locator('.approach-stages > li')).toHaveCount(4);
+    await expect(page.locator('.approach-stages > li > strong')).toHaveText(['Enable', 'Embed', 'Support', 'Apply']);
+    await expect(page.locator('.metric-strip figcaption')).toContainText('groups may overlap');
     await expect(page.locator('.metric-strip .metric-icon')).toHaveCount(4);
     for (const row of await page.locator('.story-section').all()) {
       await expect(row).toHaveCSS('border-top-width', '1px');
@@ -44,6 +49,13 @@ for (const width of [320, 390, 768, 1024, 1440]) {
         expect(right!.y).toBeGreaterThanOrEqual(left!.y + left!.height);
       }
     }
+    const decisions = await page.locator('.story-decisions ol > li').all();
+    for (let index = 1; index < decisions.length; index++) {
+      const previous = await decisions[index - 1].boundingBox();
+      const current = await decisions[index].boundingBox();
+      if (width > 1040) expect(current!.x).toBeGreaterThanOrEqual(previous!.x + previous!.width);
+      else expect(current!.y).toBeGreaterThanOrEqual(previous!.y + previous!.height);
+    }
     const intro = await page.locator('.entry-heading').boundingBox();
     const heroFigure = await page.locator('.ux-network').boundingBox();
     const challenge = await page.locator('.story-section').first().boundingBox();
@@ -54,10 +66,49 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     if (width > 1280) expect(quote!.x).toBeGreaterThanOrEqual(metrics!.x + metrics!.width);
     else expect(quote!.y).toBeGreaterThanOrEqual(metrics!.y + metrics!.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const headings = await page.locator('main :is(h1, h2, h3, h4)').evaluateAll((items) => items.map((item) => Number(item.tagName.slice(1))));
+    for (let index = 1; index < headings.length; index++) expect(headings[index] - headings[index - 1]).toBeLessThanOrEqual(1);
+    for (const label of await page.locator('.diagram-desktop .source-specialists strong, .diagram-desktop .embedded strong').all()) {
+      if (!(await label.isVisible())) continue;
+      const box = await label.boundingBox();
+      const node = await label.locator('..').boundingBox();
+      expect(box!.y).toBeGreaterThanOrEqual(node!.y);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(node!.y + node!.height);
+    }
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(page.locator('main')).toBeFocused();
+  });
+}
+
+test('case-study links resolve and decorative SVGs do not interrupt the reading order', async ({ page, request }) => {
+  await page.goto('/work/scaling-ux-capability/');
+  const hrefs = await page.locator('a[href]').evaluateAll((links) => [...new Set(links.map((link) => link.getAttribute('href')!))]);
+  for (const href of hrefs) {
+    const url = new URL(href, page.url());
+    expect(url.origin).toBe(new URL(page.url()).origin);
+    expect((await request.get(url.pathname)).ok(), href).toBe(true);
+    if (url.hash) await expect(page.locator(url.hash)).toHaveCount(1);
+  }
+  await expect(page.locator('.ux-figure svg:not([aria-hidden="true"])')).toHaveCount(0);
+});
+
+for (const { width, scale } of [{ width: 720, scale: 2 }, { width: 320, scale: 4 }]) {
+  test(`zoom-equivalent reflow at ${scale * 100}% retains the narrative and figure labels`, async ({ browser }) => {
+    // Browser zoom reduces the CSS viewport: 1440/2 and 1280/4 respectively.
+    // Device scale preserves physical resolution; this is not pinch zoom.
+    const context = await browser.newContext({ viewport: { width, height: 900 }, deviceScaleFactor: scale });
+    try {
+      const page = await context.newPage();
+      await page.goto('/work/scaling-ux-capability/');
+      await expect(page.locator('.ux-network .diagram-mobile')).toBeVisible();
+      await expect(page.locator('.ux-approach .stage-context').first()).toBeVisible();
+      await expect(page.locator('.story-quote .quote-text')).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    } finally {
+      await context.close();
+    }
   });
 }
 
@@ -84,8 +135,9 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
       subheadingFont: getComputedStyle(document.querySelector('.intro-copy h3')!).fontFamily,
       paragraphFont: getComputedStyle(document.querySelector('.section-main > p')!).fontFamily,
       bodyWeight: Number(body.getPropertyValue('--font-weight-body')),
-      matchingWeights: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontWeight),
-      matchingSizes: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontSize),
+      matchingWeights: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p:not(.callout-title), .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontWeight),
+      narrativeSizes: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .story-decisions li, .entry-heading .summary')].map((element) => getComputedStyle(element).fontSize),
+      supportingSizes: [...document.querySelectorAll('.editorial-callouts p:not(.callout-title), .diagram-summary, .resources-label, .approach-stages p, .metric-strip dt, .metric-strip dd > span:not(.metric-icon)')].map((element) => getComputedStyle(element).fontSize),
       copyContrasts: [...document.querySelectorAll('.intro-copy > p, .section-main > p, .editorial-callouts p, .diagram-summary, .resources-label, .metric-strip dd > span:not(.metric-icon), .story-decisions li, .entry-heading .summary')].map((element) => ratio(getComputedStyle(element).color)),
       headingWeight: getComputedStyle(document.querySelector('h1')!).fontWeight,
       emphasisWeight: getComputedStyle(document.querySelector('.intro-copy strong')!).fontWeight,
@@ -107,7 +159,8 @@ test('editorial fonts are self-hosted and text/focus pairs have readable contras
   expect(result.paragraphFont).toContain('Inter');
   expect(result.bodyWeight).toBeLessThan(400);
   for (const weight of result.matchingWeights) expect(Number(weight)).toBe(result.bodyWeight);
-  for (const size of result.matchingSizes) expect(size).toBe('12px');
+  for (const size of result.narrativeSizes) expect(size).toBe('16px');
+  for (const size of result.supportingSizes) expect(size).toBe('14px');
   for (const contrast of result.copyContrasts) expect(contrast).toBeGreaterThanOrEqual(4.5);
   expect(Number(result.headingWeight)).toBeGreaterThan(result.bodyWeight);
   expect(Number(result.emphasisWeight)).toBeGreaterThan(result.bodyWeight);
@@ -146,9 +199,13 @@ for (const width of [1024, 1440]) {
       const previous = items[index - 1].getBoundingClientRect();
       const arrow = getComputedStyle(item, '::before');
       const arrowLeft = box.x + parseFloat(arrow.left);
-      return { before: arrowLeft - previous.right, after: box.left - arrowLeft - parseFloat(arrow.width), y: parseFloat(arrow.top), center: box.height / 2 };
+      return { vertical: arrow.content.includes('↓'), gap: box.top - previous.bottom, before: arrowLeft - previous.right, after: box.left - arrowLeft - parseFloat(arrow.width), y: parseFloat(arrow.top), center: box.height / 2 };
     }));
     for (const stage of stages) if (stage) {
+      if (stage.vertical) {
+        expect(stage.gap).toBeGreaterThan(0);
+        continue;
+      }
       expect(stage.before).toBeGreaterThan(0);
       expect(stage.after / stage.before).toBeCloseTo(2, 1);
       expect(Math.abs(stage.y - stage.center)).toBeLessThan(1);
@@ -166,7 +223,7 @@ test.describe('native editorial figures', () => {
     await page.setViewportSize({ width: 390, height: 900 });
     await page.goto('/work/scaling-ux-capability/');
     await expect(page.locator('.ux-network .diagram-mobile')).toBeVisible();
-    await expect(page.locator('.ux-approach .diagram-mobile')).toBeVisible();
+    await expect(page.locator('.ux-approach .stage-context').first()).toBeVisible();
     await expect(page.locator('.story-decisions')).toContainText('reorganization');
     await expect(page.locator('.metric-strip')).toContainText('Teams consulted UX specialists');
     await expect(page.locator('.entry-heading')).toContainText('Global biotechnology company');
@@ -273,6 +330,9 @@ test('editorial prose, captions, and section order preview and save through Tina
     await page.locator('input[name$=".props.label"]').fill('Quote label editing trial');
     await page.locator('textarea[name$=".props.quote"]').fill('Quote text editing trial');
     await page.locator('input[name$=".props.attribution"]').fill('Attribution editing trial');
+    await expect(preview.locator('.story-quote .quote-text')).toHaveText('Quote text editing trial');
+    await expect(preview.locator('.story-quote blockquote, .story-quote figcaption')).toHaveCount(0);
+    await page.locator('input[name$=".props.originalThought"]').uncheck();
     await expect(preview.locator('.story-quote blockquote')).toHaveText('Quote text editing trial');
     await expect(preview.locator('.story-quote figcaption')).toHaveText('Attribution editing trial');
 

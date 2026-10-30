@@ -54,7 +54,7 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
       </div>
     </div>
     {(callouts?.length ?? 0) > 0 && <div class="hero-outcomes">
-      <EditorialCallouts label={calloutsLabel} items={callouts} />
+      <EditorialCallouts label={calloutsLabel} items={callouts} headingTag="p" />
     </div>}
   </div>
   <figcaption>{caption}</figcaption>
@@ -76,17 +76,17 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
   .team-node { fill: var(--background); stroke-width: 2; }
   .source-specialists, .embedded { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); text-align: center; background: var(--background); border: 1px solid var(--accent); border-radius: 50%; padding: var(--space-3); }
   .source-specialists { width: 38%; height: 28%; top: 0; left: 31%; }
-  .source-resources { position: absolute; left: 0; top: 29%; width: 27%; display: grid; justify-items: center; gap: var(--space-2); text-align: center; font-size: var(--text-body); line-height: 1.4; }
+  .source-resources { position: absolute; left: 0; top: 29%; width: 27%; display: grid; justify-items: center; gap: var(--space-2); text-align: center; font-size: var(--text-annotation, var(--text-body)); line-height: 1.5; }
   strong { color: var(--primary); font-weight: 500; font-size: 1rem; line-height: 1.35; }
   .embedded { width: 44%; height: 27%; top: 39%; left: 28%; }
-  .teams-label { position: absolute; bottom: 0; width: 100%; text-align: center; font-size: var(--text-body); font-weight: 500; color: var(--primary); }
+  .teams-label { position: absolute; bottom: 0; width: 100%; text-align: center; font-size: var(--text-annotation, var(--text-body)); font-weight: 500; color: var(--primary); }
   .hero-outcomes :global(.editorial-callouts) { grid-template-columns: 1fr; gap: var(--space-6); }
   .hero-outcomes :global(.editorial-callouts > li) { border: 0; padding: 0; }
-  .hero-outcomes :global(h3) { font-size: 1.2rem; }
-  .hero-outcomes :global(p) { font-size: var(--text-body); }
+  .hero-outcomes :global(p:not(.callout-title)) { font-size: var(--text-support, var(--text-body)); }
+  .hero-outcomes :global(.callout-title) { font-size: 1.2rem; }
   .hero-outcomes :global(.callout-icon) { width: 2.75rem; height: 2.75rem; margin-bottom: calc(var(--space-2) / 3); }
   figcaption { margin-top: var(--space-6); font-family: var(--font-serif); color: var(--primary); font-size: 1.4rem; line-height: 1.3; }
-  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-body); line-height: 1.6; }
+  .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   .flow-arrow { color: var(--primary); font-size: 1.5rem; text-align: center; }
   .team-dots { display: grid; grid-template-columns: repeat(4, 0.65rem); gap: var(--space-2); justify-content: center; }
   .team-dots span { width: 0.65rem; height: 0.65rem; border: 1.5px solid var(--primary); border-radius: 50%; background: var(--background); }
@@ -100,7 +100,7 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
     .diagram-desktop { display: none; }
     .diagram-mobile { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding-block: var(--space-4); }
     .mobile-guidance, .mobile-participants, .mobile-teams { display: grid; justify-items: center; gap: var(--space-3); width: 100%; padding: var(--space-4); border: 1px solid var(--border); text-align: center; border-radius: var(--radius); }
-    .mobile-guidance span { font-size: var(--text-body); }
+    .mobile-guidance span { font-size: var(--text-annotation, var(--text-body)); }
     .hero-outcomes :global(.editorial-callouts) { grid-template-columns: 1fr; }
     .hero-outcomes :global(li) { display: flex; gap: var(--space-4); }
     .hero-outcomes :global(.callout-icon) { flex: none; }
