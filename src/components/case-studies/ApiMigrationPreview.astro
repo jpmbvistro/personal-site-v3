@@ -1,0 +1,64 @@
+---
+interface Props {
+  caption: string;
+  summary: string;
+  necessity: string;
+  correctness: string;
+  retained: string;
+  removed: string;
+  repeatable: string;
+}
+const { caption, summary, necessity, correctness, retained, removed, repeatable } = Astro.props;
+---
+
+<figure class="lead-figure api-preview">
+  <div class="preview-flow">
+    <svg class="preview-desktop" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+      <path class="ribbon" d="M0 40C150 0 160 230 400 180L400 205C160 250 120 55 0 65Z" />
+      <path d="M70 80C190 80 170 210 290 210M70 80C70 150 25 175 25 245M290 210C350 210 365 250 365 280" />
+      <circle cx="70" cy="80" r="4" /><circle cx="290" cy="210" r="4" />
+    </svg>
+    <svg class="preview-mobile" viewBox="0 0 280 400" preserveAspectRatio="none" aria-hidden="true">
+      <path class="ribbon" d="M0 45C120 0 150 260 280 235L280 255C130 280 100 65 0 65Z" />
+      <path d="M40 80C40 140 20 155 20 190M40 80C180 80 150 235 240 250M240 320C265 330 260 350 260 365" />
+      <circle cx="40" cy="80" r="4" />
+    </svg>
+    <div class="preview-gate first"><span aria-hidden="true">01</span><strong>{necessity}</strong></div>
+    <p class="retained">{retained}</p>
+    <p class="removed"><span aria-hidden="true">↳</span> {removed}</p>
+    <div class="preview-gate second"><span aria-hidden="true">02</span><strong>{correctness}</strong></div>
+    <p class="repeatable">{repeatable}</p>
+  </div>
+  <figcaption>{caption}</figcaption>
+  <p class="diagram-summary">{summary}</p>
+</figure>
+
+<style>
+  .api-preview { min-width: 0; margin: 0; container-type: inline-size; }
+  .preview-flow { position: relative; height: 20rem; }
+  svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: var(--background); stroke: var(--accent); stroke-width: 1; }
+  .ribbon { fill: var(--accent); fill-opacity: 0.07; stroke: none; }
+  .preview-mobile { display: none; }
+  .preview-gate { position: absolute; display: flex; align-items: center; gap: var(--space-3); max-width: 85%; background: var(--background); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); }
+  .preview-gate > span { flex: 0 0 auto; white-space: nowrap; font: 400 1.8rem/1 var(--font-serif); color: var(--accent-strong); }
+  strong { font-size: var(--text-support); font-weight: 500; line-height: 1.4; }
+  .first { top: 8%; left: 2%; }
+  .second { top: 60%; right: 0; }
+  .preview-flow p { position: absolute; font-size: var(--text-support); line-height: 1.4; max-width: 17ch; background: var(--background); }
+  .retained { top: 40%; left: 38%; }
+  .removed { top: 69%; left: 0; }
+  .repeatable { bottom: 0; right: 0; }
+  figcaption { margin-top: var(--space-4); color: var(--primary); font: 400 1.5rem/1.2 var(--font-serif); }
+  .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); }
+  @media (max-width: 60rem) { .preview-flow { max-width: 28rem; margin-inline: auto; } }
+  @container (max-width: 26rem) {
+    .preview-flow { height: 25rem; }
+    .preview-desktop { display: none; }
+    .preview-mobile { display: block; }
+    .preview-gate { max-width: 100%; }
+    .first { top: 4%; left: 0; }
+    .second { top: 64%; left: 0; right: auto; width: 100%; }
+    .retained { top: 32%; left: 40%; }
+    .removed { top: 46%; }
+  }
+</style>

@@ -1,126 +1,127 @@
 ---
-title: Reducing scope and risk in a business-critical API migration
+title: Two decisions. One safer migration.
 draft: false
-summary: 'I challenged the assumptions behind a critical API migration, eliminated 37+ unnecessary endpoint migrations, and developed behavioral validation tooling that uncovered 75 previously missed implementation branches.'
+summary: 'I challenged an inherited API migration backlog using actual usage evidence, then developed a behavioral validation approach to uncover discrepancies the documented contracts missed.'
+presentation: editorial
 organizationLabel: Global biotechnology company
-role: Software Engineer
+role: Software Engineer · API migration and behavioral validation
 tags:
-  - Engineering Leadership
-  - Systems Architecture
-  - Technical Strategy
-  - API Migration
-  - Engineering Reliability
+  - Technical judgment
+  - Cross-functional influence
+  - Engineering reliability
+sections:
+  - eyebrow: 01 / Challenge
+    title: An inherited plan. Unverified assumptions.
+    layout: prose
+    intro: |
+      A legacy inventory and registry service was being replaced by a proxy over a new platform. Internal applications still called the legacy APIs, so the work that remained necessary also needed reliable behavioral validation.
+    children: |
+      When I returned from parental leave, I inherited an endpoint backlog with unclear provenance. Development was underway, but there was no reliable integration validation to establish compatibility.
+
+      Two assumptions needed checking: that every planned endpoint still warranted migration, and that the available contracts described how the legacy system actually behaved. Continuing the backlog without testing either assumption risked unnecessary work and missed behavior.
+  - eyebrow: 02 / Approach
+    title: Reduce the scope. Validate the reality.
+    layout: wide
+    intro: |
+      I separated necessity from correctness. Historical traffic and support commitments determined which work to retain; observable responses and the legacy implementation provided evidence for validating it.
+
+      With management approval, I built an initial shadow-diff MVP in about three weeks. The typed-client comparison I initially included proved unreliable, so I shifted attention to actual behavior.
+    children: |
+      <ApiMigrationDecisionDiagram
+        caption="Two gates, connected by the work that still matters."
+        summary="Gate 1 removes unnecessary migrations using traffic and agreed support criteria. Retained work proceeds to Gate 2, where legacy responses and new proxy behavior are compared. Mismatches prompt source-level investigation, prioritized correction and a return to shadow-diff comparison. A match passes only the defined checks; CI makes those checks repeatable. These observations measure different things, not an additive funnel."
+        scope={{
+          label: "01 / Gate 1 — Migration necessity",
+          title: "Reduce unnecessary scope.",
+          backlog: "Inherited endpoint backlog · unclear provenance",
+          traffic: "Historical traffic evidence · one year of usage",
+          consumers: "Supported calling applications · not traffic alone",
+          criteria: "Support criteria agreed with Product, technical leads and engineering leadership",
+          question: "Does this endpoint still need migration?",
+          no: "No · remove from scope",
+          removedValue: "37+",
+          removedLabel: "Planned migrations removed from scope",
+          yes: "Yes · retain necessary work",
+          retained: "Continue to Gate 2 for behavioral validation →"
+        }}
+        behavior={{
+          label: "02 / Gate 2 — Behavioral correctness",
+          title: "Validate required behavior.",
+          superseded: "Superseded assumption · not a trusted input",
+          typedClient: "Typed API client → static contract comparison",
+          rejectedReason: "Unreliable for legacy behavior; static comparison added little value.",
+          legacy: "Actual legacy implementation and observable responses",
+          proxy: "New proxy behavior",
+          comparison: "Shadow-diff comparison",
+          discrepancies: "Contract discrepancies surfaced across 200+ endpoints",
+          question: "Does the new implementation preserve required behavior?",
+          mismatch: "Mismatch · investigate",
+          investigation: "Source-level behavioral investigation",
+          branches: "75 missed behavioral branches identified · legacy implementation analysis",
+          correction: "Prioritize, correct and revalidate. Findings are not a count of fixes.",
+          rerun: "Rerun shadow-diff comparison",
+          match: "Match · defined checks pass",
+          passed: "Validation passes its defined checks, not a claim of full parity.",
+          ci: "Shadow-diff validation integrated into CI",
+          ciDetail: "Repeatable behavioral checks during delivery; mismatches return to investigation."
+        }}
+      />
+  - eyebrow: 03 / Key Decisions
+    title: Challenge assumptions. Follow the evidence.
+    layout: decisions
+    intro: |
+      Each decision changed what the team treated as evidence: first for necessary scope, then for correct behavior, and finally for repeatable validation during delivery.
+    children: |
+      1. **Challenge inherited scope.**
+         The backlog was a plan, not evidence of continued need. I built historical traffic views and a reusable endpoint-usage skill to identify calling applications over a year. With Product, technical leads and engineering leadership, I agreed that endpoints without traffic from supported applications could be retired. 37+ planned migrations were removed, and usage verification became part of planning.
+      2. **Abandon the unreliable abstraction.**
+         Engineers initially pointed to the typed API client as the contract source. It did not reliably represent actual legacy behavior. I stopped relying on static comparison and focused on observable responses and source-level investigation. Response comparisons surfaced discrepancies across 200+ endpoints; subsequent analysis of the legacy implementation identified 75 missed behavioral branches.
+      3. **Bring validation into delivery.**
+         A one-off investigation was not a repeatable check. Shadow-diff validation was integrated into CI, and engineering leadership prioritized corrective bugs other than negative-path parity issues. Correction and revalidation became the path for handling mismatches—not evidence that every discrepancy or branch had been fixed.
+  - eyebrow: 04 / Results and Reflection
+    title: Less unnecessary work. Better evidence of correctness.
+    layout: prose
+    intro: |
+      The scope review removed 37+ planned migrations. Behavioral validation surfaced contract discrepancies across 200+ endpoints, and source-level analysis identified 75 missed branches. CI integration made shadow-diff checks repeatable.
+
+      I would establish the source of truth earlier and keep the MVP tighter. I would also involve engineers earlier in investigating discrepancies, so difficult findings become a shared discovery rather than a finished analysis presented to colleagues.
+    children: |
+      <MetricStrip
+        caption="Separate observations: work removed, behavior identified, and checks integrated. Not additive; identified does not mean corrected."
+        topRule={false}
+        bottomRule={false}
+        metrics={[
+          { value: "37+", label: "Planned migrations removed", qualifier: "Traffic and supported-consumer evidence" },
+          { value: "75", label: "Missed branches identified", qualifier: "Analysis of the legacy implementation" },
+          { value: "CI", label: "Shadow-diff checks integrated", qualifier: "Repeatable validation during delivery" }
+        ]}
+      />
+
+      A separate agentic harness handled corrective bug tickets arising from the findings—not the migrations removed from scope. [Explore that delivery story →](/work/ai-assisted-delivery/)
+links:
+  - label: Related work — Scaling UX capability
+    url: /work/scaling-ux-capability/
+  - label: Related work — Agentic delivery harness
+    url: /work/ai-assisted-delivery/
 ---
 
-A major platform migration at a global biotechnology company required moving data from legacy inventory and registry systems to a new vendor platform. Numerous internal applications still depended on the legacy APIs, making compatibility essential throughout the transition.
-
-The engineering team was building a proxy layer to translate requests and responses between the new platform and existing applications. When I returned from parental leave, development was already underway.
-
-I noticed two significant risks: the migration backlog lacked a documented basis for determining which endpoints were still necessary, and the implementation relied heavily on unit tests without sufficient integration testing to establish behavioral compatibility.
-
-Rather than simply continue implementing the backlog, I separated the problem into two questions:
-
-* Should this endpoint be migrated at all?
-* If so, how do we know its replacement preserves the required behavior?
-
-Answering only the second question would have meant spending engineering effort validating interfaces that might no longer serve a purpose.
-
-<MetricStrip
-  caption="Key Outcomes"
-  metrics={[
-    {
-      value: "37+",
-      label: "Migrations removed",
-      qualifier: "Unnecessary endpoints eliminated from scope"
-    },
-    {
-      value: "75",
-      label: "Missing behaviors identified",
-      qualifier: "Previously overlooked implementation branches"
-    },
-    {
-      value: "~95%",
-      label: "Corrective tickets addressed",
-      qualifier: "Through a separate AI-assisted build harness"
-    }
-  ]}
+<ApiMigrationPreview
+  caption="Necessity first. Correctness next."
+  summary="Two decisions, with repeatable validation for the migration work retained."
+  necessity="Does it need migration?"
+  correctness="Does it preserve behavior?"
+  retained="Retain necessary work"
+  removed="Remove unnecessary scope"
+  repeatable="Repeat checks in CI"
 />
 
-## Challenge the migration scope with actual usage evidence
-
-The existing migration plan included endpoints that were obsolete, unused, or no longer relevant following changes to the underlying data models.
-
-I built Kibana and CloudWatch dashboards to investigate endpoint usage over the preceding year, including which applications were making requests. I also developed a reusable agent skill that allowed engineers to investigate individual endpoints and retrieve supporting traffic evidence.
-
-However, traffic data alone couldn't determine whether an endpoint should be preserved. The organization's continued support commitments also mattered.
-
-I worked with technical leads, Product, and engineering leadership to establish a shared decision criterion: endpoints with no traffic from applications still receiving support did not need to be carried forward into the new proxy implementation.
-
-Applying that criterion identified 37+ unnecessary endpoint migrations, which were subsequently removed from the development backlog.
-
-Based on historical ticket completion times, this represented a substantial amount of avoided development work. More importantly, it prevented the organization from introducing additional interfaces that would require maintenance and could mislead future engineers into believing obsolete behaviors remained necessary.
-
-The investigation also changed our planning process. Engineers began verifying endpoint usage before committing additional migration work, rather than treating the inherited backlog as authoritative.
-
-## Establish behavioral correctness against the real system
-
-Reducing the migration scope addressed unnecessary work, but it didn't resolve another critical question: whether the endpoints we did migrate behaved correctly.
-
-With management approval, I developed an initial shadow-diff MVP in approximately three weeks using agentic engineering tools.
-
-The tool compared response behavior between legacy and replacement implementations, exposing discrepancies that existing unit tests could miss.
-
-During early development, I interviewed engineers to understand where they believed the authoritative API contracts lived. The team identified a typed legacy API client, which led me to add static contract comparison functionality.
-
-That decision turned out to be a mistake.
-
-Further investigation revealed that the typed client did not accurately represent all of the legacy system's behavior. Although the static comparison feature worked technically, its results were not a trustworthy measure of compatibility.
-
-**I had built functionality around an abstraction before validating whether that abstraction was authoritative.**
-
-Rather than continue expanding that approach, I focused on direct behavioral comparison.
-
-The resulting analysis examined more than 200 endpoints and exposed widespread contract discrepancies, missing negative-path parity, and previously overlooked behavioral branches.
-
-To investigate those branches more systematically, I developed a separate coding-agent workflow that examined the actual JavaScript implementation of the legacy inventory and registry systems.
-
-Instead of inferring behavior from potentially inaccurate client definitions, the agent analyzed the implementation to identify expected contracts and conditional behavior.
-
-That investigation identified 75 missing behavioral branches in the replacement endpoints.
-
-## Turn the findings into a repeatable engineering process
-
-Finding discrepancies was valuable, but the larger opportunity was to make behavioral verification part of normal engineering delivery.
-
-Shadow-diff testing was integrated into CI, providing a repeatable way to check compatibility as implementation work progressed.
-
-Engineering leadership prioritized corrective work for the identified behavioral discrepancies, excluding negative-path parity issues from that initial prioritization.
-
-I then used a separate custom agentic build harness to address approximately 95% of the resulting corrective bug tickets.
-
-This was distinct from the 37+ endpoint migrations removed from the backlog. Those migrations represented work we avoided; the corrective tickets addressed deficiencies in implementations that still needed to exist.
-
-Together, the changes established two complementary engineering practices:
-
-* Validate necessity before implementation. Use observed behavior and support requirements to determine which interfaces warrant continued investment.
-* Validate correctness against actual behavior. Compare replacement implementations with the legacy system and retain regression checks throughout delivery.
-
-The result was a smaller migration scope, substantially better visibility into compatibility risks, and a more repeatable approach to validating the work that remained.
-
-## What I learned about technical and organizational judgment
-
-The first lesson was about the importance of validating assumptions before building automation around them.
-
-Typed interfaces and documented contracts are useful abstractions, but they are not necessarily authoritative descriptions of actual system behavior. My initial static comparison feature reinforced that distinction.
-
-If I approached the project again, I would establish the behavioral source of truth earlier and keep the first MVP more tightly focused on directly validating it.
-
-The second lesson concerned how technical discoveries are introduced to an engineering team.
-
-The findings challenged significant work that colleagues had already completed. Although the investigation was respected and the resulting corrective work was prioritized, I recognized that presenting a largely completed analysis could leave engineers feeling that their contributions were being judged rather than that they were participating in uncovering a shared problem.
-
-I would make that discovery process more collaborative, involving engineers earlier in investigating discrepancies and establishing the evidence together.
-
-> Engineering leadership isn't only about reaching the right technical conclusion. It's also about creating the shared understanding necessary for people to act on it.
-
-Ultimately, this experience reinforced a principle I've carried into subsequent engineering systems: validate the assumptions behind planned work, establish trustworthy evidence for correctness, and make those practices repeatable rather than dependent on individual judgment.
+<MetricStrip
+  caption="Evidence from two decisions, not a single additive funnel."
+  topRule={false}
+  bottomRule={false}
+  metrics={[
+    { value: "37+", label: "Planned migrations removed", qualifier: "Scope reduced using usage evidence" },
+    { value: "75", label: "Missed behavioral branches identified", qualifier: "Legacy implementation analysis" },
+    { value: "CI", label: "Shadow-diff validation integrated", qualifier: "Repeatable behavioral checks" }
+  ]}
+/>

@@ -14,7 +14,7 @@ const { eyebrow, title, layout, intro, children, aside } = Astro.props;
 const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.length ?? 0) > 0;
 ---
 
-<section class:list={['story-section', { 'story-decisions': layout === 'decisions' }]}>
+<section class:list={['story-section', { 'story-decisions': layout === 'decisions', 'story-wide': layout === 'wide' }]}>
   <div class="section-intro">
     <header>
       {eyebrow && <p class="eyebrow">{eyebrow}</p>}
@@ -38,6 +38,9 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
   .section-panels :global(.metric-strip dl) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .section-intro { min-width: 0; }
   .intro-copy { margin-top: var(--space-4); }
+  .story-wide { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .story-wide .section-intro { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); }
+  .story-wide .intro-copy { margin-top: 0; align-self: center; }
   .section-main :global(> .editorial-callouts) { padding: 0; list-style: none; }
   .section-main :global(> ol) { list-style: none; padding: 0; counter-reset: decision; }
   .section-main :global(> ol > li) { counter-increment: decision; }
@@ -59,6 +62,7 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
     .section-panels :global(.metric-strip dl) { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 60rem) {
+    .story-wide .section-intro { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
     .story-section { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8); }
     h2 { max-width: 24ch; }
   }

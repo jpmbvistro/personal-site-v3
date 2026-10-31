@@ -1,0 +1,376 @@
+[
+  {
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "gates": [
+      {
+        "width": 544,
+        "height": 891.765625
+      },
+      {
+        "width": 544,
+        "height": 891.765625
+      }
+    ],
+    "textSizes": [
+      "13px",
+      "14px",
+      "16px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".gate-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison p": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".api-preview .retained": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".removed > span[data-astro-cid-krvxfp7f=\"\"]"
+            ],
+            [
+              "li:nth-child(1) > span"
+            ],
+            [
+              "li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".scope-gate > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".rerun > span"
+            ],
+            [
+              ".ci-outcome > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "gates": [
+      {
+        "width": 439.03125,
+        "height": 1059.90625
+      },
+      {
+        "width": 439.046875,
+        "height": 1059.90625
+      }
+    ],
+    "textSizes": [
+      "13px",
+      "14px",
+      "16px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".gate-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison p": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".api-preview .retained": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".removed > span[data-astro-cid-krvxfp7f=\"\"]"
+            ],
+            [
+              "li:nth-child(1) > span"
+            ],
+            [
+              "li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".scope-gate > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".rerun > span"
+            ],
+            [
+              ".ci-outcome > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "gates": [
+      {
+        "width": 706.546875,
+        "height": 609.703125
+      },
+      {
+        "width": 706.546875,
+        "height": 815.125
+      }
+    ],
+    "textSizes": [
+      "13px",
+      "14px",
+      "16px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".gate-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison p": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".api-preview .retained": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".removed > span[data-astro-cid-krvxfp7f=\"\"]"
+            ],
+            [
+              "li:nth-child(1) > span"
+            ],
+            [
+              "li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".scope-gate > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".retained-bridge > span"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".rerun > span"
+            ],
+            [
+              ".ci-outcome > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "gates": [
+      {
+        "width": 350,
+        "height": 820.703125
+      },
+      {
+        "width": 350,
+        "height": 1154.515625
+      }
+    ],
+    "textSizes": [
+      "13px",
+      "14px",
+      "16px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".gate-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison p": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".api-preview .retained": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".removed > span[data-astro-cid-krvxfp7f=\"\"]"
+            ],
+            [
+              "li:nth-child(1) > span"
+            ],
+            [
+              "li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".scope-gate > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".retained-bridge > span"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".rerun > span"
+            ],
+            [
+              ".ci-outcome > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  },
+  {
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "gates": [
+      {
+        "width": 280,
+        "height": 912.65625
+      },
+      {
+        "width": 280,
+        "height": 1296.859375
+      }
+    ],
+    "textSizes": [
+      "13px",
+      "14px",
+      "16px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".gate-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison p": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".api-preview .retained": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".removed > span[data-astro-cid-krvxfp7f=\"\"]"
+            ],
+            [
+              "li:nth-child(1) > span"
+            ],
+            [
+              "li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".scope-gate > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".retained-bridge > span"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".rerun > span"
+            ],
+            [
+              ".ci-outcome > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  }
+]

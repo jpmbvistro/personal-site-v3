@@ -85,7 +85,25 @@ const blockQuote: Template = {
   ],
 };
 
-const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote];
+// Fixed, story-specific labels: content is editable, geometry is not a graph editor.
+const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true }));
+const apiPreview: Template = {
+  name: 'ApiMigrationPreview', label: 'API migration — hero preview',
+  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'First decision', correctness: 'Second decision', retained: 'Retained-work label', removed: 'Scope exit label', repeatable: 'Repeatable checks label' }),
+};
+const apiDecisionDiagram: Template = {
+  name: 'ApiMigrationDecisionDiagram', label: 'API migration — two decision gates',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation' }),
+    { type: 'object', name: 'scope', label: 'Gate 1 — migration necessity', required: true, fields: labelFields({
+      label: 'Gate label', title: 'Heading', backlog: 'Inherited backlog', traffic: 'Traffic evidence', consumers: 'Supported consumers', criteria: 'Agreed support criteria', question: 'Decision question', no: 'No branch', removedValue: 'Removed count (display string)', removedLabel: 'Removed finding label', yes: 'Yes branch', retained: 'Retained-work connection',
+    }) },
+    { type: 'object', name: 'behavior', label: 'Gate 2 — behavioral correctness', required: true, fields: labelFields({
+      label: 'Gate label', title: 'Heading', superseded: 'Superseded assumption label', typedClient: 'Rejected source', rejectedReason: 'Reason for rejection', legacy: 'Legacy input', proxy: 'Proxy input', comparison: 'Comparison', discrepancies: 'Contract-discrepancy finding', question: 'Decision question', mismatch: 'Mismatch branch', investigation: 'Investigation', branches: 'Missed-branches finding', correction: 'Corrective work', rerun: 'Return to comparison', match: 'Match branch', passed: 'Defined checks pass', ci: 'CI outcome', ciDetail: 'CI explanation',
+    }) },
+  ],
+};
+const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram];
 
 const storySections: TinaField = {
   type: 'object', name: 'sections', label: 'Editorial sections', list: true,
@@ -96,6 +114,7 @@ const storySections: TinaField = {
     { type: 'string', name: 'layout', label: 'Layout', options: [
       { value: 'prose', label: 'Narrative / figure' },
       { value: 'decisions', label: 'Decision list' },
+      { value: 'wide', label: 'Full-width figure / content' },
     ] },
     { type: 'rich-text', name: 'intro', label: 'Introduction (under heading)' },
     { type: 'rich-text', name: 'children', label: 'Section content (right column)', templates: visualBlocks },
