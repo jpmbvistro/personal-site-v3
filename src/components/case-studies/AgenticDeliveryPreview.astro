@@ -1,0 +1,61 @@
+---
+import WorktreeSymbol from './WorktreeSymbol.astro';
+
+interface Props {
+  caption: string;
+  summary: string;
+  backlog: string;
+  harness: string;
+  tickets: string[];
+  review: string;
+  recovery: string;
+}
+const { caption, summary, backlog, harness, tickets = [], review, recovery } = Astro.props;
+---
+
+<figure class="lead-figure harness-preview" aria-label={caption}>
+  <div class="hero-delivery">
+    <svg class="ribbons" viewBox="0 0 500 300" preserveAspectRatio="none" aria-hidden="true">
+      {Array.from({ length: 9 }, (_, i) => <path d={`M0 ${60 + i * 3}C180 ${-40 + i * 5} 220 ${225 + i * 3} 500 ${45 + i * 4}`} />)}
+    </svg>
+    <div class="hero-backlog"><img src="/uploads/agentic-delivery/ticket-stack.webp" width="320" height="371" alt="" /><strong>{backlog}</strong></div>
+    <span class="hero-connector" aria-hidden="true">→</span>
+    <div class="hero-harness"><p>{harness}</p><ul role="list">{(tickets ?? []).map((ticket) => <li><span class="worktree-symbol"><WorktreeSymbol /></span>{ticket}<span class="validation-mark" aria-hidden="true">✓</span></li>)}</ul></div>
+    <span class="hero-connector" aria-hidden="true">→</span>
+    <div class="hero-review"><img src="/uploads/agentic-delivery/pr-cube.webp" width="320" height="357" alt="" /><strong>{review}</strong></div>
+    <p class="hero-recovery"><span aria-hidden="true">↻</span> {recovery}</p>
+  </div>
+  <figcaption>{caption}</figcaption>
+  <p class="diagram-summary">{summary}</p>
+</figure>
+
+<style>
+  .harness-preview { min-width: 0; margin: 0; container-type: inline-size; }
+  .hero-delivery { position: relative; display: grid; grid-template-columns: minmax(0, 0.7fr) 1rem minmax(0, 1.5fr) 1rem minmax(0, 0.7fr); gap: var(--space-2); align-items: center; padding-block: var(--space-8); }
+  .ribbons { position: absolute; inset: 0; width: 100%; height: 80%; fill: none; stroke: var(--accent); stroke-width: 0.6; opacity: 0.3; }
+  .hero-backlog, .hero-review { position: relative; text-align: center; }
+  img { display: block; width: 100%; height: auto; margin-bottom: var(--space-2); }
+  strong, .hero-harness > p { font-size: var(--text-support); font-weight: 500; line-height: 1.4; color: var(--primary); }
+  .hero-harness { position: relative; padding: var(--space-3); border: 1px solid var(--border); border-radius: 1rem; background: color-mix(in srgb, var(--primary) 5%, var(--background)); }
+  .hero-harness > p { text-align: center; margin-bottom: var(--space-4); }
+  ul { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+  li { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2); background: var(--background); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 0.3rem 0 color-mix(in srgb, var(--primary) 18%, var(--background)); font-size: var(--text-support); }
+  .worktree-symbol { display: block; width: 1rem; height: 1rem; flex: 0 0 1rem; }
+  li > span:first-child { color: var(--primary); }
+  .validation-mark { margin-left: auto; color: var(--primary); }
+  .hero-connector { position: relative; color: var(--accent-strong); }
+  .hero-recovery { position: relative; grid-column: 1 / -1; justify-self: center; margin-top: var(--space-6); padding: var(--space-2) var(--space-4); border: 1px dashed var(--accent); border-radius: 2rem; background: var(--background); font-size: var(--text-support); }
+  figcaption { color: var(--primary); font: 400 1.5rem/1.25 var(--font-serif); }
+  .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); }
+  @container (max-width: 24rem) {
+    .hero-delivery { grid-template-columns: minmax(0, 1fr); justify-items: center; gap: var(--space-4); padding-block: var(--space-4); }
+    .hero-backlog, .hero-review { display: flex; align-items: center; gap: var(--space-4); width: 100%; text-align: left; }
+    img { width: 5rem; margin: 0; }
+    .hero-harness { width: 100%; }
+    .hero-harness ul { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2); }
+    li { flex-wrap: wrap; justify-content: center; }
+    .validation-mark { margin: 0; }
+    .hero-connector { transform: rotate(90deg); line-height: 1; }
+    .hero-recovery { margin-top: var(--space-2); }
+  }
+</style>

@@ -8,9 +8,11 @@ import EditorialCallouts from './EditorialCallouts.astro';
 import BlockQuote from './BlockQuote.astro';
 import ApiMigrationPreview from './case-studies/ApiMigrationPreview.astro';
 import ApiMigrationDecisionDiagram from './case-studies/ApiMigrationDecisionDiagram.astro';
+import AgenticDeliveryPreview from './case-studies/AgenticDeliveryPreview.astro';
+import AgenticDeliveryHarnessDiagram from './case-studies/AgenticDeliveryHarnessDiagram.astro';
 
 interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ApiMigrationPreview, ApiMigrationDecisionDiagram }} />
+<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ApiMigrationPreview, ApiMigrationDecisionDiagram, AgenticDeliveryPreview, AgenticDeliveryHarnessDiagram }} />

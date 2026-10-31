@@ -62,9 +62,9 @@ test.describe('collection rendering and publication', () => {
   test('draft block preview is readable at phone width', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 900 });
     await page.goto('/preview/work/ai-assisted-delivery/');
-    await expect(page.locator('.metric-strip dt')).toHaveCount(3);
-    await expect(page.locator('.metric-strip')).toContainText('35/40');
-    await expect(page.locator('.metric-strip')).toContainText('Human oversight');
+    await expect(page.locator('.metric-strip dt')).toHaveCount(8);
+    await expect(page.locator('.metric-strip').first()).toContainText('35/40');
+    await expect(page.locator('.metric-strip').first()).toContainText('Human oversight');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
 
@@ -143,8 +143,8 @@ test.describe('rich text without JavaScript', () => {
   }
   test('metric labels, values, and qualifiers are native HTML', async ({ page }) => {
     await page.goto('/preview/work/ai-assisted-delivery/');
-    await expect(page.locator('.metric-strip dt')).toHaveCount(3);
-    await expect(page.locator('.metric-strip')).toContainText('35/40');
-    await expect(page.locator('.metric-strip')).toContainText('Human oversight');
+    await expect(page.locator('.metric-strip dt')).toHaveCount(8);
+    await expect(page.locator('.metric-strip').first()).toContainText('35/40');
+    await expect(page.locator('.metric-strip').first()).toContainText('Human oversight');
   });
 });
