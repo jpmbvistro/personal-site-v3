@@ -79,6 +79,9 @@ try {
     assert.match(api, /37\+/);
     assert.match(api, /75 missed behavioral branches/);
     assert.match(api, /200\+ endpoints/);
+    assert.match(api, /not a sequential pipeline/);
+    assert.match(api, /legacy JavaScript/);
+    assert.doesNotMatch(api, /retained-bridge|match-path|Gate 1|Gate 2/);
     assert.doesNotMatch(api, /No component provided|Moderna|astro-dev-toolbar|\/astro\/toolbar|<astro-island/);
   }
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');

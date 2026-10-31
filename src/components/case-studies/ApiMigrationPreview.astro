@@ -4,61 +4,37 @@ interface Props {
   summary: string;
   necessity: string;
   correctness: string;
-  retained: string;
-  removed: string;
-  repeatable: string;
 }
-const { caption, summary, necessity, correctness, retained, removed, repeatable } = Astro.props;
+const { caption, summary, necessity, correctness } = Astro.props;
 ---
 
 <figure class="lead-figure api-preview">
-  <div class="preview-flow">
-    <svg class="preview-desktop" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
-      <path class="ribbon" d="M0 40C150 0 160 230 400 180L400 205C160 250 120 55 0 65Z" />
-      <path d="M70 80C190 80 170 210 290 210M70 80C70 150 25 175 25 245M290 210C350 210 365 250 365 280" />
-      <circle cx="70" cy="80" r="4" /><circle cx="290" cy="210" r="4" />
-    </svg>
-    <svg class="preview-mobile" viewBox="0 0 280 400" preserveAspectRatio="none" aria-hidden="true">
-      <path class="ribbon" d="M0 45C120 0 150 260 280 235L280 255C130 280 100 65 0 65Z" />
-      <path d="M40 80C40 140 20 155 20 190M40 80C180 80 150 235 240 250M240 320C265 330 260 350 260 365" />
-      <circle cx="40" cy="80" r="4" />
-    </svg>
-    <div class="preview-gate first"><span aria-hidden="true">01</span><strong>{necessity}</strong></div>
-    <p class="retained">{retained}</p>
-    <p class="removed"><span aria-hidden="true">↳</span> {removed}</p>
-    <div class="preview-gate second"><span aria-hidden="true">02</span><strong>{correctness}</strong></div>
-    <p class="repeatable">{repeatable}</p>
+  <div class="preview-questions">
+    <!-- A quiet shared motif, not a connector from one inquiry to the other. -->
+    <svg class="ribbon" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"><path d="M0 25C210 -20 160 245 400 200L400 225C150 270 170 50 0 50Z" /></svg>
+    <div class="preview-question">
+      <svg class="question-symbol" viewBox="0 0 48 48" aria-hidden="true"><path d="M7 11h34L28 27v11l-8-4v-7ZM12 6h24" /><circle cx="24" cy="27" r="2" /></svg>
+      <strong>{necessity}</strong>
+    </div>
+    <div class="preview-question">
+      <svg class="question-symbol" viewBox="0 0 48 48" aria-hidden="true"><path d="M37 15A17 17 0 1 0 40 29M37 6v9H28M17 24h14M24 17v14" /><circle cx="24" cy="24" r="2" /></svg>
+      <strong>{correctness}</strong>
+    </div>
   </div>
   <figcaption>{caption}</figcaption>
   <p class="diagram-summary">{summary}</p>
 </figure>
 
 <style>
-  .api-preview { min-width: 0; margin: 0; container-type: inline-size; }
-  .preview-flow { position: relative; height: 20rem; }
-  svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; fill: var(--background); stroke: var(--accent); stroke-width: 1; }
-  .ribbon { fill: var(--accent); fill-opacity: 0.07; stroke: none; }
-  .preview-mobile { display: none; }
-  .preview-gate { position: absolute; display: flex; align-items: center; gap: var(--space-3); max-width: 85%; background: var(--background); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); }
-  .preview-gate > span { flex: 0 0 auto; white-space: nowrap; font: 400 1.8rem/1 var(--font-serif); color: var(--accent-strong); }
-  strong { font-size: var(--text-support); font-weight: 500; line-height: 1.4; }
-  .first { top: 8%; left: 2%; }
-  .second { top: 60%; right: 0; }
-  .preview-flow p { position: absolute; font-size: var(--text-support); line-height: 1.4; max-width: 17ch; background: var(--background); }
-  .retained { top: 40%; left: 38%; }
-  .removed { top: 69%; left: 0; }
-  .repeatable { bottom: 0; right: 0; }
+  .api-preview { min-width: 0; margin: 0; }
+  .preview-questions { position: relative; display: grid; gap: var(--space-12); padding-block: var(--space-8); }
+  .ribbon { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--accent); fill-opacity: 0.07; }
+  .preview-question { position: relative; display: grid; grid-template-columns: 3rem minmax(0, 1fr); align-items: center; gap: var(--space-4); padding: var(--space-3); border: 1px solid var(--border); background: var(--background); border-radius: var(--radius); }
+  .preview-question:nth-of-type(2) { margin-left: var(--space-8); }
+  .question-symbol { width: 3rem; height: 3rem; fill: var(--background); stroke: var(--accent-strong); stroke-width: 1.1; }
+  strong { font-size: var(--text-support); line-height: 1.5; font-weight: 500; }
   figcaption { margin-top: var(--space-4); color: var(--primary); font: 400 1.5rem/1.2 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); }
-  @media (max-width: 60rem) { .preview-flow { max-width: 28rem; margin-inline: auto; } }
-  @container (max-width: 26rem) {
-    .preview-flow { height: 25rem; }
-    .preview-desktop { display: none; }
-    .preview-mobile { display: block; }
-    .preview-gate { max-width: 100%; }
-    .first { top: 4%; left: 0; }
-    .second { top: 64%; left: 0; right: auto; width: 100%; }
-    .retained { top: 32%; left: 40%; }
-    .removed { top: 46%; }
-  }
+  @media (max-width: 60rem) { .preview-questions { max-width: 28rem; margin-inline: auto; } }
+  @media (max-width: 30rem) { .preview-question:nth-of-type(2) { margin-left: 0; } }
 </style>

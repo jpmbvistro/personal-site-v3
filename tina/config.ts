@@ -86,20 +86,20 @@ const blockQuote: Template = {
 };
 
 // Fixed, story-specific labels: content is editable, geometry is not a graph editor.
-const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true }));
+const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true, ...(name === 'summary' ? { ui: { component: 'textarea' } } : {}) }));
 const apiPreview: Template = {
   name: 'ApiMigrationPreview', label: 'API migration — hero preview',
-  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'First decision', correctness: 'Second decision', retained: 'Retained-work label', removed: 'Scope exit label', repeatable: 'Repeatable checks label' }),
+  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
 };
 const apiDecisionDiagram: Template = {
-  name: 'ApiMigrationDecisionDiagram', label: 'API migration — two decision gates',
+  name: 'ApiMigrationDecisionDiagram', label: 'API migration — complementary investigations',
   fields: [
     ...labelFields({ caption: 'Caption', summary: 'Text explanation' }),
-    { type: 'object', name: 'scope', label: 'Gate 1 — migration necessity', required: true, fields: labelFields({
-      label: 'Gate label', title: 'Heading', backlog: 'Inherited backlog', traffic: 'Traffic evidence', consumers: 'Supported consumers', criteria: 'Agreed support criteria', question: 'Decision question', no: 'No branch', removedValue: 'Removed count (display string)', removedLabel: 'Removed finding label', yes: 'Yes branch', retained: 'Retained-work connection',
+    { type: 'object', name: 'scope', label: 'A — scope reduction', required: true, fields: labelFields({
+      label: 'Investigation label', title: 'Heading', summary: 'Investigation narrative', backlog: 'Inherited backlog', traffic: 'Traffic evidence', consumers: 'Supported consumers', criteria: 'Agreed retirement criteria', question: 'Decision question', no: 'Remove branch', removedValue: 'Removed count (display string)', removedLabel: 'Removed finding label', yes: 'Retain branch', retained: 'Retained-work label (not a link to B)',
     }) },
-    { type: 'object', name: 'behavior', label: 'Gate 2 — behavioral correctness', required: true, fields: labelFields({
-      label: 'Gate label', title: 'Heading', superseded: 'Superseded assumption label', typedClient: 'Rejected source', rejectedReason: 'Reason for rejection', legacy: 'Legacy input', proxy: 'Proxy input', comparison: 'Comparison', discrepancies: 'Contract-discrepancy finding', question: 'Decision question', mismatch: 'Mismatch branch', investigation: 'Investigation', branches: 'Missed-branches finding', correction: 'Corrective work', rerun: 'Return to comparison', match: 'Match branch', passed: 'Defined checks pass', ci: 'CI outcome', ciDetail: 'CI explanation',
+    { type: 'object', name: 'behavior', label: 'B — behavioral correctness', required: true, fields: labelFields({
+      label: 'Investigation label', title: 'Heading', summary: 'Investigation narrative and endpoint context', superseded: 'Deprioritized assumption label', typedClient: 'Rejected abstraction', rejectedReason: 'Reason for deprioritizing', legacy: 'Legacy input', proxy: 'Proxy input', comparison: 'Live comparison', investigation: 'Discrepancy investigation', source: 'Source-level investigation', branches: 'Missed-branches finding', correction: 'Corrective prioritization', rerun: 'Revalidation loop label', ci: 'CI outcome', ciDetail: 'CI explanation',
     }) },
   ],
 };

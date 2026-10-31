@@ -1,7 +1,8 @@
 ---
-interface ScopeGate {
+interface ScopeInvestigation {
   label: string;
   title: string;
+  summary: string;
   backlog: string;
   traffic: string;
   consumers: string;
@@ -13,88 +14,86 @@ interface ScopeGate {
   yes: string;
   retained: string;
 }
-interface BehaviorGate {
+interface BehaviorInvestigation {
   label: string;
   title: string;
+  summary: string;
   superseded: string;
   typedClient: string;
   rejectedReason: string;
   legacy: string;
   proxy: string;
   comparison: string;
-  discrepancies: string;
-  question: string;
-  mismatch: string;
   investigation: string;
+  source: string;
   branches: string;
   correction: string;
   rerun: string;
-  match: string;
-  passed: string;
   ci: string;
   ciDetail: string;
 }
 interface Props {
   caption: string;
   summary: string;
-  scope?: ScopeGate | null;
-  behavior?: BehaviorGate | null;
+  scope?: ScopeInvestigation | null;
+  behavior?: BehaviorInvestigation | null;
 }
 const { caption, summary, scope, behavior } = Astro.props;
 ---
 
-<!-- One semantic composition, reflowed rather than shrinking SVG text on mobile.
-     Text and DOM order carry every relationship; all connectors are decorative. -->
+<!-- A and B are complementary inquiries, not successive endpoint populations.
+     All semantic content is native HTML; SVG supplies only local connectors. -->
 {scope && behavior && <figure class="api-decision-diagram" aria-label={caption}>
-  <div class="two-gates">
-    <section class="gate scope-gate" aria-label={scope.label}>
-      <header><p class="gate-label">{scope.label}</p><h3>{scope.title}</h3></header>
-      <ul class="evidence" role="list">
-        <li><span aria-hidden="true">≡</span>{scope.backlog}</li>
-        <li><span aria-hidden="true">↗</span>{scope.traffic}</li>
-        <li><span aria-hidden="true">◎</span>{scope.consumers}</li>
-        <li><span aria-hidden="true">✓</span>{scope.criteria}</li>
-      </ul>
-      <div class="down" aria-hidden="true">↓</div>
-      <p class="question"><span class="junction" aria-hidden="true"></span>{scope.question}</p>
-      <div class="scope-branches">
-        <div class="scope-exit">
-          <p class="branch-label"><span aria-hidden="true">↙</span> {scope.no}</p>
-          <p class="removed-result"><strong>{scope.removedValue}</strong><span>{scope.removedLabel}</span></p>
-        </div>
-        <div class="scope-retain">
-          <p class="branch-label"><span aria-hidden="true">↘</span> {scope.yes}</p>
-          <p>{scope.retained}</p>
+  <div class="investigations">
+    <section class="scope-investigation investigation-panel" aria-label={scope.label}>
+      <header><p class="investigation-label">{scope.label}</p><h3>{scope.title}</h3></header>
+      <p class="investigation-intro">{scope.summary}</p>
+      <div class="scope-filter">
+        <p class="backlog flow-node">{scope.backlog}</p>
+        <div class="down" aria-hidden="true">↓</div>
+        <ul class="evidence" role="list"><li>{scope.traffic}</li><li>{scope.consumers}</li></ul>
+        <svg class="evidence-merge" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M95 0C95 25 200 5 200 36M305 0C305 25 200 5 200 36" />
+          <circle cx="200" cy="32" r="3" />
+        </svg>
+        <p class="criteria flow-node">{scope.criteria}</p>
+        <div class="down" aria-hidden="true">↓</div>
+        <p class="question">{scope.question}</p>
+        <div class="scope-branches">
+          <div class="scope-exit">
+            <p class="branch-label"><span aria-hidden="true">↙</span> {scope.no}</p>
+            <p class="removed-result"><strong>{scope.removedValue}</strong><span>{scope.removedLabel}</span></p>
+          </div>
+          <div class="scope-retain">
+            <p class="branch-label"><span aria-hidden="true">↘</span> {scope.yes}</p>
+            <p>{scope.retained}</p>
+          </div>
         </div>
       </div>
     </section>
-    <div class="retained-bridge" aria-hidden="true">
-      <svg viewBox="0 0 80 500" preserveAspectRatio="none" aria-hidden="true"><path d="M0 450C65 450 15 25 80 25M72 21l8 4-8 4" vector-effect="non-scaling-stroke" /></svg>
-      <span>↓</span>
-    </div>
-    <section class="gate behavior-gate" aria-label={behavior.label}>
-      <header><p class="gate-label">{behavior.label}</p><h3>{behavior.title}</h3></header>
+    <section class="behavior-investigation investigation-panel" aria-label={behavior.label}>
+      <header><p class="investigation-label">{behavior.label}</p><h3>{behavior.title}</h3></header>
+      <p class="investigation-intro">{behavior.summary}</p>
       <div class="superseded">
         <p class="assumption-label"><span aria-hidden="true">×</span> {behavior.superseded}</p>
-        <p><s>{behavior.typedClient}</s></p>
-        <p>{behavior.rejectedReason}</p>
+        <p><s>{behavior.typedClient}</s> — {behavior.rejectedReason}</p>
       </div>
-      <div class="trusted-inputs"><p>{behavior.legacy}</p><span aria-hidden="true">⇄</span><p>{behavior.proxy}</p></div>
-      <div class="down" aria-hidden="true">↓</div>
-      <div class="comparison"><strong>{behavior.comparison}</strong><p>{behavior.discrepancies}</p></div>
-      <div class="down" aria-hidden="true">↓</div>
-      <p class="question"><span class="junction" aria-hidden="true"></span>{behavior.question}</p>
-      <div class="behavior-branches">
-        <div class="mismatch-path">
-          <p class="branch-label"><span aria-hidden="true">↙</span> {behavior.mismatch}</p>
-          <div class="investigation"><strong>{behavior.investigation}</strong><p class="branch-finding">{behavior.branches}</p><p>{behavior.correction}</p></div>
-          <p class="rerun"><span aria-hidden="true">↶</span> {behavior.rerun}</p>
-          <!-- This return line terminates beside the comparison, not at CI/pass. -->
-          <svg class="feedback-loop" viewBox="0 0 20 300" preserveAspectRatio="none" aria-hidden="true"><path d="M18 295H8Q2 295 2 285V15Q2 5 8 5H18M13 0l5 5-5 5" /></svg>
+      <div class="behavior-map">
+        <div class="trusted-inputs"><p>{behavior.legacy}</p><span aria-hidden="true">⇄</span><p>{behavior.proxy}</p></div>
+        <div class="down" aria-hidden="true">↓</div>
+        <!-- The return lane spans just the comparison/investigation/correction
+             cycle. It never crosses to A or ends in an automatic success state. -->
+        <div class="behavior-cycle">
+          <p class="comparison flow-node"><strong>{behavior.comparison}</strong></p>
+          <div class="down" aria-hidden="true">↓</div>
+          <div class="source-investigation flow-node"><strong>{behavior.investigation}</strong><p>{behavior.source}</p><p class="branch-finding">{behavior.branches}</p></div>
+          <div class="down" aria-hidden="true">↓</div>
+          <p class="correction flow-node">{behavior.correction}</p>
+          <svg class="feedback-loop" viewBox="0 0 32 300" preserveAspectRatio="none" aria-hidden="true"><path d="M1 275H16Q27 275 27 264V36Q27 25 16 25H1M7 21l-6 4 6 4" vector-effect="non-scaling-stroke" /></svg>
         </div>
-        <div class="match-path"><p class="branch-label"><span aria-hidden="true">↘</span> {behavior.match}</p><p>{behavior.passed}</p></div>
+        <p class="rerun"><span aria-hidden="true">↻</span> {behavior.rerun}</p>
+        <div class="ci-outcome"><strong>{behavior.ci}</strong><p>{behavior.ciDetail}</p></div>
       </div>
-      <div class="ci-outcome"><span aria-hidden="true">↻</span><div><strong>{behavior.ci}</strong><p>{behavior.ciDetail}</p></div></div>
     </section>
   </div>
   <figcaption>{caption}</figcaption>
@@ -103,68 +102,62 @@ const { caption, summary, scope, behavior } = Astro.props;
 
 <style>
   .api-decision-diagram { margin: 0; min-width: 0; }
-  .two-gates { display: grid; grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr); }
-  .gate { min-width: 0; padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius); }
-  .gate header { margin-bottom: var(--space-6); }
-  .scope-gate { display: flex; flex-direction: column; }
-  .scope-gate .evidence { flex: 1; align-content: space-evenly; }
-  .gate-label { color: var(--accent-strong); font: 400 0.8125rem/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
+  .investigations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); align-items: start; }
+  .investigation-panel { min-width: 0; }
+  .behavior-investigation { border-left: 1px solid var(--border); padding-left: var(--space-8); }
+  .investigation-label { color: var(--accent-strong); font: 400 0.8125rem/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
   h3 { margin-top: var(--space-2); font: 400 clamp(1.7rem, 2.4vw, 2.2rem)/1.12 var(--font-serif); }
-  .gate p, .gate li { font-size: var(--text-annotation); line-height: 1.5; overflow-wrap: anywhere; }
-  .gate strong { font-weight: 500; color: var(--primary); }
-  .gate .gate-label { font-size: 0.8125rem; }
-  .evidence { display: grid; gap: var(--space-3); padding: 0; margin: 0; list-style: none; }
-  .evidence li { display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3); border: 1px solid var(--border); }
-  .evidence li > span { flex: 0 0 1.5rem; text-align: center; color: var(--primary); font-size: 1.25rem; }
-  .down { text-align: center; color: var(--primary); line-height: 1; margin-block: var(--space-3); }
-  .gate .question { position: relative; border-block: 1px solid var(--accent); padding: var(--space-4) var(--space-3); text-align: center; color: var(--primary); font-size: 1rem; font-weight: 500; }
-  .junction { position: absolute; left: 50%; top: -4px; width: 7px; height: 7px; border: 1px solid var(--accent); border-radius: 50%; background: var(--background); }
-  .scope-branches, .behavior-branches { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-4); }
-  .branch-label { margin-block: var(--space-3); font-weight: 600; color: var(--primary); }
-  .removed-result { border-left: 2px solid var(--accent); padding-left: var(--space-3); }
-  .removed-result strong { display: block; font: 400 2.6rem/1.1 var(--font-serif); }
+  .investigation-intro { margin-block: var(--space-4) var(--space-6); font-size: var(--text-body); line-height: 1.65; }
+  .scope-filter p, .scope-filter li, .behavior-map p, .superseded p { font-size: var(--text-annotation); line-height: 1.5; overflow-wrap: anywhere; }
+  strong { color: var(--primary); font-weight: 500; }
+  .flow-node { border: 1px solid var(--border); padding: var(--space-3) var(--space-4); text-align: center; }
+  .backlog { max-width: 80%; margin-inline: auto; }
+  .down { color: var(--primary); text-align: center; line-height: 1; margin-block: var(--space-3); }
+  .evidence { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); padding: 0; margin: 0; list-style: none; }
+  .evidence li { padding: var(--space-3); border: 1px solid var(--border); text-align: center; }
+  .evidence-merge { display: block; width: 100%; height: 2.25rem; fill: var(--background); stroke: var(--accent); stroke-width: 1.2; }
+  .criteria { max-width: 90%; margin-inline: auto; }
+  .scope-filter .question { position: relative; border-block: 1px solid var(--accent); padding: var(--space-4); text-align: center; color: var(--primary); font-size: 1rem; font-weight: 500; }
+  .question::before { content: ''; position: absolute; left: calc(50% - 3px); top: -4px; width: 7px; height: 7px; border: 1px solid var(--accent); border-radius: 50%; background: var(--background); }
+  .scope-branches { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--space-6); margin-top: var(--space-4); }
+  .scope-filter .branch-label { font-weight: 500; color: var(--primary); }
+  .removed-result { border-left: 2px solid var(--accent); padding-left: var(--space-4); margin-top: var(--space-3); }
+  .removed-result strong { display: block; font: 400 3rem/1.1 var(--font-serif); }
   .removed-result span { display: block; margin-top: var(--space-2); }
-  .scope-retain > p:last-child { padding: var(--space-3); border: 1px solid var(--primary); }
-  /* The continuation originates at the Yes path, not the shared question or No exit.
-     Equal-height panels keep the fixed illustration lane outside editable text.
-     It enters Gate 2's heading, never the superseded input or the CI outcome. */
-  .retained-bridge { align-self: stretch; position: relative; }
-  .retained-bridge svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1.2; }
-  .retained-bridge > span { display: none; }
+  .scope-retain > p:last-child { margin-top: var(--space-3); }
   .superseded { border-left: 2px dashed var(--accent); padding-left: var(--space-3); margin-bottom: var(--space-6); }
-  .superseded p + p { margin-top: var(--space-1); }
   .assumption-label { color: var(--accent-strong); font-weight: 500; }
-  .trusted-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--space-2); align-items: center; text-align: center; }
+  .superseded p + p { margin-top: var(--space-1); }
+  .trusted-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--space-3); align-items: center; padding-right: var(--space-8); text-align: center; }
   .trusted-inputs p { padding: var(--space-3); border: 1px solid var(--border); }
-  .comparison { border: 1px solid var(--primary); padding: var(--space-3); text-align: center; }
-  .comparison p { margin-top: var(--space-2); }
-  .mismatch-path { position: relative; padding-left: var(--space-4); }
-  .investigation { border-left: 2px solid var(--accent); padding-left: var(--space-3); }
-  .investigation p { margin-top: var(--space-2); }
+  .behavior-map > .down { margin-right: var(--space-8); }
+  .behavior-cycle { display: grid; grid-template-columns: minmax(0, 1fr) 2rem; }
+  .behavior-cycle > :not(svg) { grid-column: 1; }
+  .comparison { grid-row: 1; border-color: var(--primary); }
+  .behavior-cycle > .down:nth-child(2) { grid-row: 2; }
+  .source-investigation { grid-row: 3; text-align: left; border-left: 2px solid var(--accent); }
+  .source-investigation p { margin-top: var(--space-2); }
   .branch-finding { font-weight: 500; }
-  .rerun { margin-top: var(--space-3); font-weight: 500; }
-  .feedback-loop { position: absolute; top: -10rem; left: -0.5rem; width: 1rem; height: calc(100% + 10rem); fill: none; stroke: var(--accent); stroke-width: 1.2; }
-  .match-path > p:last-child { border: 1px solid var(--border); padding: var(--space-3); }
-  .ci-outcome { display: flex; gap: var(--space-3); border-top: 1px solid var(--primary); margin-top: var(--space-6); padding-top: var(--space-4); }
-  .ci-outcome > span { font-size: 2rem; line-height: 1; color: var(--primary); }
+  .behavior-cycle > .down:nth-child(4) { grid-row: 4; }
+  .correction { grid-row: 5; }
+  .feedback-loop { grid-column: 2; grid-row: 1 / 6; width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1.2; }
+  .behavior-map .rerun { padding-right: var(--space-8); margin-top: var(--space-3); text-align: center; font-weight: 500; }
+  .ci-outcome { border-top: 1px solid var(--primary); margin-top: var(--space-6); padding-top: var(--space-4); }
   .ci-outcome p { margin-top: var(--space-2); }
-  figcaption { margin-top: var(--space-6); color: var(--primary); font: 400 1.5rem/1.3 var(--font-serif); }
+  figcaption { margin-top: var(--space-8); color: var(--primary); font: 400 1.5rem/1.3 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); max-width: 90ch; font-size: var(--text-support); }
   @media (max-width: 60rem) {
-    .two-gates { grid-template-columns: minmax(0, 1fr); }
-    .scope-gate .evidence { flex: initial; }
-    .gate { padding: var(--space-6); }
-    .retained-bridge { display: grid; place-items: center; height: var(--space-12); }
-    .retained-bridge svg { display: none; }
-    .retained-bridge > span { display: block; color: var(--primary); font-size: 1.5rem; }
+    .investigations { grid-template-columns: minmax(0, 1fr); gap: var(--space-12); }
+    .behavior-investigation { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   }
   @media (max-width: 30rem) {
-    .gate { padding: var(--space-4); }
-    .scope-branches, .behavior-branches { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
-    .scope-exit { padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
+    .backlog, .criteria { max-width: 100%; }
+    .evidence { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+    .evidence-merge { display: none; }
+    .criteria { margin-top: var(--space-4); }
+    .scope-branches { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+    .scope-retain { border-top: 1px solid var(--border); padding-top: var(--space-4); }
     .trusted-inputs { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
     .trusted-inputs > span { line-height: 1; }
-    .feedback-loop { top: -9.5rem; height: calc(100% + 9.5rem); }
-    .gate .question { text-align: left; }
   }
 </style>

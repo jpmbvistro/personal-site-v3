@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 const route = '/work/api-migration-confidence/';
 
 for (const width of [320, 390, 768, 1024, 1440]) {
-  test(`API story preserves its two decisions and reflows at ${width}px`, async ({ page }) => {
+  test(`API story separates the scope filter and behavioral investigation at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
     // A preceding real-editor save/restore may finish its full-page HMR reload
     // just after navigation. Retry setup only, never the layout assertions.
@@ -18,26 +18,38 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.story-section')).toHaveCount(4);
     await expect(page.locator('.story-decisions ol > li')).toHaveCount(3);
     const diagram = page.locator('.api-decision-diagram');
-    await expect(diagram).toHaveAccessibleName('Two gates, connected by the work that still matters.');
-    await expect(diagram.locator('.gate')).toHaveCount(2);
+    await expect(diagram).toHaveAccessibleName('Different investigations. A shared standard for evidence.');
+    await expect(diagram.locator('.investigation-panel')).toHaveCount(2);
     await expect(diagram.locator('.scope-exit')).toContainText('37+');
-    await expect(diagram.locator('.scope-retain')).toContainText('Gate 2');
-    await expect(diagram.locator('.superseded')).toContainText('not a trusted input');
+    await expect(diagram.locator('.scope-retain')).toContainText('Endpoints still requiring migration');
+    await expect(diagram.locator('.scope-retain')).not.toContainText(/Gate 2|Continue|200\+|75/);
+    await expect(diagram.locator('.superseded')).toContainText('Unreliable abstraction · deprioritized');
     await expect(diagram.locator('.trusted-inputs')).not.toContainText('Typed');
-    await expect(diagram.locator('.comparison')).toContainText('200+');
-    await expect(diagram.locator('.investigation')).toContainText('75 missed behavioral branches');
-    await expect(diagram.locator('.investigation')).toContainText('legacy implementation analysis');
-    await expect(diagram.locator('.rerun')).toContainText('Rerun shadow-diff comparison');
-    await expect(diagram.locator('.match-path')).toContainText('not a claim of full parity');
+    await expect(diagram.locator('.behavior-investigation .investigation-intro')).toContainText('200+ endpoints');
+    await expect(diagram.locator('.comparison')).not.toContainText('200+');
+    await expect(diagram.locator('.source-investigation')).toContainText('75 missed behavioral branches');
+    await expect(diagram.locator('.source-investigation')).toContainText('legacy JavaScript');
+    await expect(diagram.locator('.rerun')).toContainText('Revalidate against live responses');
+    await expect(diagram.locator('.correction')).toContainText('Prioritize corrective work');
     await expect(diagram.locator('.ci-outcome')).toContainText('integrated into CI');
+    await expect(diagram.locator('.ci-outcome')).toContainText('not evidence that every finding was corrected');
+    await expect(diagram.locator('.diagram-summary')).toContainText('not a sequential pipeline');
+    await expect(diagram.locator('.diagram-summary')).toContainText('endpoint populations are not established as identical');
+    await expect(diagram.locator('.retained-bridge, .match-path, .gate')).toHaveCount(0);
+    // Every functional connector stays inside its own investigation. No A → B arrow.
+    await expect(diagram.locator('svg')).toHaveCount(2);
+    await expect(diagram.locator('.scope-filter svg, .behavior-cycle svg')).toHaveCount(2);
+    await expect(page.locator('.entry-body .metric-strip')).toHaveCount(0);
+    await expect(page.locator('.metric-strip')).toHaveCount(1);
+    await expect(page.locator('.metric-strip dt')).toHaveCount(3);
     await expect(diagram.locator('figcaption, .diagram-summary')).toHaveCount(2);
     await expect(diagram.locator('svg:not([aria-hidden="true"])')).toHaveCount(0);
 
-    const scope = await diagram.locator('.scope-gate').boundingBox();
-    const behavior = await diagram.locator('.behavior-gate').boundingBox();
+    const scope = await diagram.locator('.scope-investigation').boundingBox();
+    const behavior = await diagram.locator('.behavior-investigation').boundingBox();
     const hero = await page.locator('.entry-heading').boundingBox();
     const preview = await page.locator('.api-preview').boundingBox();
-    const previewLabels = await page.locator('.preview-gate, .preview-flow > p').all();
+    const previewLabels = await page.locator('.preview-question').all();
     for (let i = 0; i < previewLabels.length; i++) {
       const box = await previewLabels[i].boundingBox();
       expect(await previewLabels[i].evaluate((node) => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
@@ -51,24 +63,23 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     if (width > 960) {
       expect(behavior!.x).toBeGreaterThan(scope!.x + scope!.width);
       expect(Math.abs(behavior!.width - scope!.width)).toBeLessThan(1);
-      expect(Math.abs(behavior!.height - scope!.height)).toBeLessThan(1);
-      const continuation = await diagram.locator('.retained-bridge').boundingBox();
-      const retained = await diagram.locator('.scope-retain').boundingBox();
-      const nextGateHeading = await diagram.locator('.behavior-gate header').boundingBox();
-      // The fixed curve connects the Yes lane to Gate 2's heading, not to CI
-      // or the superseded client. It stays entirely outside the text panels.
-      const startY = continuation!.y + continuation!.height * 0.9;
-      const endY = continuation!.y + continuation!.height * 0.05;
-      expect(startY).toBeGreaterThanOrEqual(retained!.y);
-      expect(startY).toBeLessThanOrEqual(retained!.y + retained!.height);
-      expect(endY).toBeGreaterThanOrEqual(nextGateHeading!.y);
-      expect(endY).toBeLessThanOrEqual(nextGateHeading!.y + nextGateHeading!.height);
       expect(preview!.x).toBeGreaterThan(hero!.x + hero!.width);
       expect(hero!.width / preview!.width).toBeCloseTo(1.5, 1);
     } else {
       expect(behavior!.y).toBeGreaterThan(scope!.y + scope!.height);
       expect(preview!.y).toBeGreaterThanOrEqual(hero!.y + hero!.height);
     }
+    const loop = await diagram.locator('.feedback-loop').boundingBox();
+    const comparison = await diagram.locator('.comparison').boundingBox();
+    const correction = await diagram.locator('.correction').boundingBox();
+    // The SVG return path's upper/lower ends align with live comparison and
+    // prioritization respectively; neither points at CI or the scope filter.
+    const returnY = loop!.y + loop!.height * 25 / 300;
+    const fromY = loop!.y + loop!.height * 275 / 300;
+    expect(returnY).toBeGreaterThanOrEqual(comparison!.y);
+    expect(returnY).toBeLessThanOrEqual(comparison!.y + comparison!.height);
+    expect(fromY).toBeGreaterThanOrEqual(correction!.y);
+    expect(fromY).toBeLessThanOrEqual(correction!.y + correction!.height);
     expect((await diagram.boundingBox())!.y).toBeGreaterThan(preview!.y + preview!.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     // Check text boxes, not just document overflow (hidden/clipped labels also fail).
@@ -103,11 +114,11 @@ test('API story links resolve without exposing implementation details', async ({
 
 test.describe('native API diagrams', () => {
   test.use({ javaScriptEnabled: false, reducedMotion: 'reduce' });
-  test('both gates, exits and loop remain understandable without JavaScript or motion', async ({ page }) => {
+  test('independent inquiries, the scope exit and local loop work without JavaScript or motion', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 900 });
     await page.goto(route);
     await expect(page.locator('.scope-exit')).toContainText('37+');
-    await expect(page.locator('.scope-retain')).toContainText('Continue to Gate 2');
+    await expect(page.locator('.scope-retain')).toContainText('Endpoints still requiring migration');
     await expect(page.locator('.superseded')).toBeVisible();
     await expect(page.locator('.rerun')).toBeVisible();
     await expect(page.locator('.ci-outcome')).toBeVisible();
@@ -115,7 +126,7 @@ test.describe('native API diagrams', () => {
   });
 });
 
-test('API preview and nested gate labels preview and save through Tina', async ({ page }) => {
+test('API questions, investigation narratives and labels preview and save through Tina', async ({ page }) => {
   const path = new URL('../content/work/api-migration-confidence.mdx', import.meta.url);
   const original = await readFile(path, 'utf8');
   try {
@@ -131,15 +142,17 @@ test('API preview and nested gate labels preview and save through Tina', async (
     await page.locator('input[name$=".props.caption"]').fill('API hero caption trial');
     await expect(preview.locator('.api-preview figcaption')).toHaveText('API hero caption trial');
     await page.getByRole('button', { name: 'api-migration-confidence', exact: true }).click();
-    await page.getByRole('button', { name: '02 / Approach', exact: true }).click();
+    await page.getByRole('button', { name: '02 / The Investigations', exact: true }).click();
     await page.getByRole('button', { name: 'Open options', exact: true }).click();
     await page.getByRole('dialog').getByText('Edit', { exact: true }).click();
     await page.locator('input[name$=".props.caption"]').fill('API full diagram caption trial');
-    await page.getByRole('button', { name: 'Gate 1 — migration necessity', exact: true }).click();
+    await page.getByRole('button', { name: 'A — scope reduction', exact: true }).click();
     await page.locator('input[name$=".scope.question"]').fill('Scope question editing trial');
-    await expect(preview.locator('.scope-gate .question')).toHaveText('Scope question editing trial');
-    await page.getByRole('button', { name: 'API migration — two decision gates', exact: true }).click();
-    await page.getByRole('button', { name: 'Gate 2 — behavioral correctness', exact: true }).click();
+    await expect(preview.locator('.scope-investigation .question')).toHaveText('Scope question editing trial');
+    await page.getByRole('button', { name: 'API migration — complementary investigations', exact: true }).click();
+    await page.getByRole('button', { name: 'B — behavioral correctness', exact: true }).click();
+    await page.locator('textarea[name$=".behavior.summary"]').fill('Behavior narrative editing trial');
+    await expect(preview.locator('.behavior-investigation .investigation-intro')).toHaveText('Behavior narrative editing trial');
     await page.locator('input[name$=".behavior.branches"]').fill('Behavior finding editing trial');
     await expect(preview.locator('.branch-finding')).toHaveText('Behavior finding editing trial');
     expect(await readFile(path, 'utf8')).toBe(original);
@@ -149,6 +162,7 @@ test('API preview and nested gate labels preview and save through Tina', async (
     expect(saved).toContain('API hero caption trial');
     expect(saved).toContain('API full diagram caption trial');
     expect(saved).toContain('Scope question editing trial');
+    expect(saved).toContain('Behavior narrative editing trial');
     const visitor = await page.context().newPage();
     await visitor.goto(route);
     await expect(visitor.locator('.branch-finding')).toHaveText('Behavior finding editing trial');

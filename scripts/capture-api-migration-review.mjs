@@ -23,7 +23,7 @@ try {
         return r * 0.2126 + g * 0.7152 + b * 0.0722;
       };
       const canvas = luminance(getComputedStyle(document.body).backgroundColor);
-      const textContrast = Object.fromEntries(['.summary', '.gate-label', '.question', '.assumption-label', '.comparison p', '.branch-finding', '.api-preview strong', '.api-preview .retained', '.api-decision-diagram figcaption'].map((selector) => {
+      const textContrast = Object.fromEntries(['.summary', '.investigation-label', '.question', '.assumption-label', '.comparison', '.branch-finding', '.api-preview strong', '.investigation-intro', '.api-decision-diagram figcaption'].map((selector) => {
         const ink = luminance(getComputedStyle(document.querySelector(selector)).color);
         return [selector, Number(((Math.max(canvas, ink) + 0.05) / (Math.min(canvas, ink) + 0.05)).toFixed(2))];
       }));
@@ -31,8 +31,9 @@ try {
         width: innerWidth,
         overflow: document.documentElement.scrollWidth > innerWidth,
         toolbar: !!document.querySelector('astro-dev-toolbar'),
-        gates: [...document.querySelectorAll('.gate')].map((node) => ({ width: node.getBoundingClientRect().width, height: node.getBoundingClientRect().height })),
-        textSizes: [...new Set([...document.querySelectorAll('.gate p, .gate li')].map((node) => getComputedStyle(node).fontSize))],
+        investigations: [...document.querySelectorAll('.investigation-panel')].map((node) => ({ width: node.getBoundingClientRect().width, height: node.getBoundingClientRect().height })),
+        crossInvestigationConnector: !!document.querySelector('.retained-bridge'),
+        textSizes: [...new Set([...document.querySelectorAll('.investigation-panel p, .investigation-panel li')].map((node) => getComputedStyle(node).fontSize))],
         textContrast,
       };
     });
