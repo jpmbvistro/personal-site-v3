@@ -41,6 +41,7 @@ sections:
         scale={{ title: "2 / Introduce parallel delivery", text: "Unlock concurrency after proving working throughput, within the same 30 days." }}
         intakeTitle="Ticket intake"
         intakeText="Scoped corrective work with explicit validation commands, selected for implementation."
+        intakeItems={["Scoped corrective work", "Required validation commands", "Ready for implementation"]}
         execution={{
           title: "Parallel isolated execution",
           note: "Three representative lanes—not a maximum concurrency claim.",
@@ -48,11 +49,11 @@ sections:
           worktree: "Independent Git worktree",
           agent: "Coding-agent implementation",
           tests: "Isolated test context",
-          checks: "Required checks per ticket"
+          checks: "Required checks"
         }}
         validation={{
           title: "Required validation",
-          commands: "Required validation commands",
+          commands: "Ticket-specific commands",
           tests: "Unit / integration tests",
           shadowDiff: "Shadow-diff integration tests where applicable",
           failure: "Failure blocks successful completion → recovery path."

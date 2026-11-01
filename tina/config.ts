@@ -118,6 +118,7 @@ const agenticDiagram: Template = {
   name: 'AgenticDeliveryHarnessDiagram', label: 'Agentic delivery — isolation, validation and recovery',
   fields: [
     ...labelFields({ caption: 'Caption', summary: 'Text explanation', intakeTitle: 'Intake heading', intakeText: 'Intake description', reviewTitle: 'PR handoff heading', reviewText: 'Review / oversight description' }),
+    { type: 'string', name: 'intakeItems', label: 'Intake requirements (optional list replaces description)', list: true },
     { type: 'object', name: 'proof', label: 'Sequential proof', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
     { type: 'object', name: 'scale', label: 'Parallel scaling', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
     { type: 'object', name: 'execution', label: 'Per-ticket isolation', required: true, fields: [

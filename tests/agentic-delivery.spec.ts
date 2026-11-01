@@ -30,9 +30,19 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await expect(lane).toContainText('Independent Git worktree');
       await expect(lane).toContainText('Coding-agent implementation');
       await expect(lane).toContainText('Isolated test context');
-      await expect(lane).toContainText('Required checks per ticket');
-      await expect(lane.locator('.ticket-validation')).toContainText('Required validation commands');
+      await expect(lane.locator('.ticket-validation')).toContainText('Required checks');
+      await expect(lane.locator('.ticket-validation')).toContainText('Ticket-specific commands');
       await expect(lane.locator('.ticket-validation')).toContainText('Shadow-diff integration tests where applicable');
+      // A label can fit its box yet still split a key word into unreadable
+      // fragments. Keep the implementation word on one line at every width.
+      expect(await lane.locator('.ticket-implementation strong').evaluate((element) => {
+        const text = element.firstChild!;
+        const start = text.textContent!.indexOf('implementation');
+        const range = document.createRange();
+        range.setStart(text, start);
+        range.setEnd(text, start + 'implementation'.length);
+        return range.getClientRects().length;
+      })).toBe(1);
       const steps = await lane.locator('.lane-steps > li').all();
       for (let i = 1; i < steps.length; i++) {
         const previous = (await steps[i - 1].boundingBox())!;
