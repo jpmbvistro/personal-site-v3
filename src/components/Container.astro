@@ -10,6 +10,8 @@ const { class: className } = Astro.props;
 <style>
   .container {
     width: min(var(--content-width), calc(100% - var(--gutter) * 2));
+    /* Keep Tailwind's .container breakpoint cap from overriding this measure. */
+    max-width: var(--content-width);
     margin-inline: auto;
   }
 </style>
