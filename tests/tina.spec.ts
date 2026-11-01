@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { writeContent } from './fixtures/write-content';
 import { workStories } from './fixtures/work-drafts';
 
 async function openEditor(page: import('@playwright/test').Page, route = '/') {
@@ -49,7 +50,7 @@ test('in-context edit previews before saving to the Git-backed Markdown file', a
     await publicPage.close();
   } finally {
     await page.close();
-    await writeFile(path, originalFile);
+    await writeContent(path, originalFile);
   }
 });
 
@@ -77,7 +78,7 @@ for (const { route, file } of [
       await expect.poll(() => readFile(path, 'utf8')).toContain(edited);
     } finally {
       await page.close();
-      await writeFile(path, original);
+      await writeContent(path, original);
     }
   });
 }
@@ -142,6 +143,6 @@ test('insert, edit, reorder, and save a typed metric strip through the real rich
     await publicPreview.close();
   } finally {
     await page.close();
-    await writeFile(path, original);
+    await writeContent(path, original);
   }
 });

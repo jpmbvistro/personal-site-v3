@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { workDrafts, workStories } from './fixtures/work-drafts';
+import { writeContent } from './fixtures/write-content';
 
 const workPath = new URL('../content/work/browser-fixture.mdx', import.meta.url);
 const projectPath = new URL('../content/projects/browser-fixture.mdx', import.meta.url);
@@ -97,7 +98,7 @@ test.describe('collection rendering and publication', () => {
     for (const [file, section] of [[workPath, 'work'], [projectPath, 'projects']] as const) {
       const original = await readFile(file, 'utf8');
       try {
-        await writeFile(file, original.replace('draft: false', 'draft: true'));
+        await writeContent(file, original.replace('draft: false', 'draft: true'));
         await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(404);
         // Tina indexing and Vite's full-page HMR can finish at different times.
         // Retry the observed navigation/listing, not just the route status.
@@ -108,7 +109,7 @@ test.describe('collection rendering and publication', () => {
           await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(0);
         }).toPass({ timeout: 10_000 });
       } finally {
-        await writeFile(file, original);
+        await writeContent(file, original);
       }
       await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(200);
       await expect(async () => {
