@@ -1,4 +1,5 @@
 ---
+import ArchitectureIcon from './ArchitectureIcon.astro';
 interface ScopeInvestigation {
   label: string;
   title: string;
@@ -50,24 +51,24 @@ const summaryId = `api-investigations-${crypto.randomUUID()}`;
       <header><p class="investigation-label">{scope.label}</p><h3>{scope.title}</h3></header>
       <p class="investigation-intro">{scope.summary}</p>
       <div class="scope-filter">
-        <p class="backlog flow-node"><img src="/uploads/architecture/ticket-stack-144.webp" srcset="/uploads/architecture/ticket-stack-144.webp 144w, /uploads/architecture/ticket-stack-288.webp 288w" sizes="64px" width="144" height="144" loading="lazy" alt="" />{scope.backlog}</p>
-        <div class="down" aria-hidden="true">↓</div>
-        <ul class="evidence" role="list"><li>{scope.traffic}</li><li>{scope.consumers}</li></ul>
-        <svg class="evidence-merge" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M95 0C95 25 200 5 200 36M305 0C305 25 200 5 200 36" />
-          <circle cx="200" cy="32" r="3" />
-        </svg>
-        <p class="criteria flow-node">{scope.criteria}</p>
-        <div class="down" aria-hidden="true">↓</div>
-        <p class="question">{scope.question}</p>
-        <svg class="scope-fork" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M200 0v10q0 10-10 10h-70q-10 0-10 10v10m-4-6 4 6 4-6M200 10q0 10 10 10h100q10 0 10 10v10m-4-6 4 6 4-6" /></svg>
+        <ul class="evidence" role="list">
+          <li class="backlog"><span class="evidence-icon"><ArchitectureIcon name="stack" /></span><span>{scope.backlog}</span></li>
+          <li><span class="evidence-icon"><ArchitectureIcon name="traffic" /></span><span>{scope.traffic}</span></li>
+          <li><span class="evidence-icon"><ArchitectureIcon name="applications" /></span><span>{scope.consumers}</span></li>
+          <li class="criteria"><span class="evidence-icon"><ArchitectureIcon name="criteria" /></span><span>{scope.criteria}</span></li>
+        </ul>
+        <div class="scope-decision">
+          <p class="question">{scope.question}</p>
+          <svg class="scope-fork" viewBox="0 0 24 300" preserveAspectRatio="none" aria-hidden="true"><path d="M0 150H6q6 0 6-6V80q0-5 5-5h7m-5-4 5 4-5 4M6 150q6 0 6 6v64q0 5 5 5h7m-5-4 5 4-5 4" vector-effect="non-scaling-stroke" /></svg>
+        </div>
         <div class="scope-branches">
           <div class="scope-exit">
             <p class="branch-label">{scope.no}</p>
-            <p class="removed-result"><strong>{scope.removedValue}</strong><span>{scope.removedLabel}</span></p>
+            <div class="removed-result"><img src="/uploads/agentic-delivery/ticket-stack.webp" width="320" height="371" sizes="64px" loading="lazy" alt="" /><strong>{scope.removedValue}</strong><p>{scope.removedLabel}</p></div>
           </div>
           <div class="scope-retain">
             <p class="branch-label">{scope.yes}</p>
+            <span class="retained-symbol"><ArchitectureIcon name="proxy" /></span>
             <p>{scope.retained}</p>
           </div>
         </div>
@@ -81,20 +82,22 @@ const summaryId = `api-investigations-${crypto.randomUUID()}`;
         <p><s>{behavior.typedClient}</s> — {behavior.rejectedReason}</p>
       </div>
       <div class="behavior-map">
-        <div class="trusted-inputs"><p>{behavior.legacy}</p><span aria-hidden="true">⇄</span><p>{behavior.proxy}</p></div>
-        <div class="down" aria-hidden="true">↓</div>
+        <div class="trusted-inputs"><p><span class="input-icon"><ArchitectureIcon name="code" /></span>{behavior.legacy}</p><p><span class="input-icon"><ArchitectureIcon name="proxy" /></span>{behavior.proxy}</p></div>
         <!-- The return lane spans just the comparison/investigation/correction
              cycle. It never crosses to A or ends in an automatic success state. -->
         <div class="behavior-cycle">
-          <p class="comparison flow-node"><strong>{behavior.comparison}</strong></p>
-          <div class="down" aria-hidden="true">↓</div>
-          <div class="source-investigation flow-node"><strong>{behavior.investigation}</strong><p>{behavior.source}</p><p class="branch-finding">{behavior.branches}</p></div>
-          <div class="down" aria-hidden="true">↓</div>
-          <p class="correction flow-node">{behavior.correction}</p>
-          <svg class="feedback-loop" viewBox="0 0 32 300" preserveAspectRatio="none" aria-hidden="true"><path d="M1 275H16Q27 275 27 264V36Q27 25 16 25H1M7 21l-6 4 6 4" vector-effect="non-scaling-stroke" /></svg>
+          <div class="cycle-stages">
+            <div class="comparison-stage"><div class="comparison flow-node"><span class="comparison-symbol"><ArchitectureIcon name="comparison" /></span><strong>{behavior.comparison}</strong></div></div>
+            <div class="corrective-work">
+              <div class="source-investigation"><strong>{behavior.investigation}</strong><p>{behavior.source}</p><p class="branch-finding"><span class="branch-icon"><ArchitectureIcon name="branches" /></span>{behavior.branches}</p></div>
+              <p class="correction">{behavior.correction}</p>
+            </div>
+            <svg class="feedback-loop feedback-horizontal" viewBox="0 0 100 32" preserveAspectRatio="none" aria-hidden="true"><path d="M100 0v20q0 10-10 10H10Q0 30 0 20V0" vector-effect="non-scaling-stroke" /></svg>
+            <svg class="feedback-loop feedback-vertical" viewBox="0 0 32 300" preserveAspectRatio="none" aria-hidden="true"><path d="M1 275H16Q27 275 27 264V36Q27 25 16 25H1M7 21l-6 4 6 4" vector-effect="non-scaling-stroke" /></svg>
+          </div>
+          <p class="rerun"><span aria-hidden="true">↻</span> {behavior.rerun}</p>
         </div>
-        <p class="rerun"><span aria-hidden="true">↻</span> {behavior.rerun}</p>
-        <div class="ci-outcome"><strong>{behavior.ci}</strong><p>{behavior.ciDetail}</p></div>
+        <div class="ci-outcome"><span class="ci-symbol"><ArchitectureIcon name="validation" /></span><div><strong>{behavior.ci}</strong><p>{behavior.ciDetail}</p></div></div>
       </div>
     </section>
   </div>
@@ -104,68 +107,82 @@ const summaryId = `api-investigations-${crypto.randomUUID()}`;
 
 <style>
   .api-decision-diagram { margin: 0; min-width: 0; }
-  .investigations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); align-items: start; }
-  .investigation-panel { min-width: 0; }
-  .behavior-investigation { border-left: 1px solid var(--border); padding-left: var(--space-8); }
+  .investigations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+  .investigation-panel { min-width: 0; padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--space-6); background: linear-gradient(145deg, var(--background), color-mix(in srgb, var(--muted) 40%, var(--background))); container-type: inline-size; }
   .investigation-label { color: var(--accent-strong); font: 400 0.8125rem/1.6 var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; }
   h3 { margin-top: var(--space-2); font: 400 clamp(1.7rem, 2.4vw, 2.2rem)/1.12 var(--font-serif); }
   .investigation-intro { margin-block: var(--space-4) var(--space-6); font-size: var(--text-body); line-height: 1.65; }
   .scope-filter p, .scope-filter li, .behavior-map p, .superseded p { font-size: var(--text-annotation); line-height: 1.5; overflow-wrap: anywhere; }
   strong { color: var(--primary); font-weight: 500; }
-  .flow-node { border: 1px solid var(--border); padding: var(--space-3) var(--space-4); text-align: center; }
-   .backlog { display: flex; align-items: center; justify-content: center; gap: var(--space-4); max-width: 80%; margin-inline: auto; border: 0; border-bottom: 1px solid var(--border); }
-   .backlog img { flex: 0 0 4rem; width: 4rem; height: 4rem; object-fit: contain; }
-  .down { color: var(--primary); text-align: center; line-height: 1; margin-block: var(--space-3); }
-  .evidence { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); padding: 0; margin: 0; list-style: none; }
-  .evidence li { padding: var(--space-3); border: 1px solid var(--border); text-align: center; }
-  .evidence-merge { display: block; width: 100%; height: 2.25rem; fill: var(--background); stroke: var(--accent); stroke-width: 1.2; }
-  .criteria { max-width: 90%; margin-inline: auto; }
-  .scope-filter .question { position: relative; border-block: 1px solid var(--accent); padding: var(--space-4); text-align: center; color: var(--primary); font-size: 1rem; font-weight: 500; }
-  .question::before { content: ''; position: absolute; left: calc(50% - 3px); top: -4px; width: 7px; height: 7px; border: 1px solid var(--accent); border-radius: 50%; background: var(--background); }
-   .scope-fork { display: block; width: 100%; height: var(--space-8); fill: none; stroke: var(--accent); stroke-width: 1.2; }
-   .scope-branches { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--space-6); }
+  .scope-filter { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1.15fr); gap: var(--space-6); align-items: stretch; margin-top: var(--space-8); }
+  .evidence { position: relative; display: grid; align-content: center; padding: var(--space-3); margin: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--space-4); background: color-mix(in srgb, var(--primary) 3%, var(--background)); }
+  .evidence li { display: flex; align-items: center; gap: var(--space-3); padding-block: var(--space-4); }
+  .evidence li + li { border-top: 1px solid var(--border); }
+  .evidence-icon { flex: 0 0 1.75rem; width: 1.75rem; height: 1.75rem; color: var(--primary); }
+  .evidence::after, .trusted-inputs::after { content: '→'; position: absolute; left: 100%; top: 50%; width: var(--space-6); text-align: center; color: var(--accent-strong); }
+  .scope-decision { display: grid; align-items: center; position: relative; }
+  .scope-filter .question { border: 1px solid var(--accent); border-radius: var(--space-6); padding: var(--space-4) var(--space-3); text-align: center; color: var(--primary); font: 500 1.25rem/1.2 var(--font-serif); background: color-mix(in srgb, var(--accent) 5%, var(--background)); }
+  .scope-fork { position: absolute; left: 100%; top: 0; width: var(--space-6); max-width: none; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1.2; }
+  .scope-branches { display: grid; align-content: center; gap: var(--space-4); }
+  .scope-exit, .scope-retain { border: 1px solid var(--border); border-radius: var(--space-4); padding: var(--space-4) var(--space-3); }
+  .scope-exit { border-color: color-mix(in srgb, var(--primary) 30%, var(--border)); background: color-mix(in srgb, var(--primary) 5%, var(--background)); }
   .scope-filter .branch-label { font-weight: 500; color: var(--primary); }
-   .scope-exit { border-top: 2px solid var(--accent); padding-top: var(--space-4); }
-   .scope-retain { border-top: 1px solid var(--border); padding-top: var(--space-4); }
-   .removed-result { padding-left: var(--space-4); border-left: 1px solid var(--border); margin-top: var(--space-4); }
-   .removed-result strong { display: block; font: 400 4rem/1 var(--font-serif); }
-  .removed-result span { display: block; margin-top: var(--space-2); }
-  .scope-retain > p:last-child { margin-top: var(--space-3); }
-   .superseded { border-left: 2px solid var(--accent); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-6); background: var(--muted); }
+  .removed-result { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); align-items: center; gap: var(--space-3); margin-top: var(--space-3); }
+  .removed-result img { width: 3.5rem; height: auto; }
+  .removed-result strong { font: 400 3.25rem/1 var(--font-serif); }
+  .removed-result p { grid-column: 1 / -1; }
+  .retained-symbol { display: block; width: 2.5rem; height: 2.5rem; color: var(--primary); margin-block: var(--space-3); }
+  .superseded { border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border)); border-radius: var(--space-4); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-6); background: color-mix(in srgb, var(--accent) 5%, var(--background)); }
   .assumption-label { color: var(--accent-strong); font-weight: 500; }
   .superseded p + p { margin-top: var(--space-1); }
-  .trusted-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--space-3); align-items: center; padding-right: var(--space-8); text-align: center; }
-  .trusted-inputs p { padding: var(--space-3); border: 1px solid var(--border); }
-  .behavior-map > .down { margin-right: var(--space-8); }
-  .behavior-cycle { display: grid; grid-template-columns: minmax(0, 1fr) 2rem; }
-  .behavior-cycle > :not(svg) { grid-column: 1; }
-   .comparison { grid-row: 1; border-color: var(--primary); box-shadow: 0 4px 0 var(--muted); }
-  .behavior-cycle > .down:nth-child(2) { grid-row: 2; }
-  .source-investigation { grid-row: 3; text-align: left; border-left: 2px solid var(--accent); }
+  .behavior-map { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: var(--space-6); align-items: center; }
+  .trusted-inputs { position: relative; display: grid; border: 1px solid var(--border); border-radius: var(--space-4); padding: var(--space-3); background: color-mix(in srgb, var(--primary) 3%, var(--background)); margin-bottom: var(--space-12); }
+  .trusted-inputs p { padding-block: var(--space-3); }
+  .trusted-inputs p + p { border-top: 1px solid var(--border); }
+  .input-icon { display: block; width: 2rem; height: 2rem; color: var(--primary); margin-bottom: var(--space-3); }
+  .behavior-cycle { min-width: 0; }
+  .cycle-stages { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: var(--space-6); }
+  .comparison-stage { position: relative; display: grid; align-items: center; }
+  .comparison-stage::after { content: ''; position: absolute; left: 50%; top: 50%; bottom: 0; border-left: 1px solid var(--accent); }
+  .comparison { position: relative; z-index: 1; border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border)); border-radius: var(--space-4); padding: var(--space-4) var(--space-3); text-align: center; background: color-mix(in srgb, var(--primary) 5%, var(--background)); }
+  .comparison::before { content: ''; position: absolute; left: calc(50% - 3px); top: calc(100% + 1px); width: 6px; height: 6px; border-left: 1px solid var(--accent); border-top: 1px solid var(--accent); transform: rotate(45deg); }
+  .comparison::after { content: '→'; position: absolute; left: 100%; top: 50%; width: var(--space-6); color: var(--accent-strong); }
+  .comparison strong { font: 500 1.25rem/1.2 var(--font-serif); }
+  .comparison-symbol { display: block; width: 2.5rem; height: 2.5rem; color: var(--primary); margin: 0 auto var(--space-3); }
+  .corrective-work { min-width: 0; border: 1px solid color-mix(in srgb, var(--accent) 65%, var(--border)); border-radius: var(--space-4); padding: var(--space-3); background: color-mix(in srgb, var(--accent) 5%, var(--background)); }
+  .source-investigation { text-align: left; }
   .source-investigation p { margin-top: var(--space-2); }
-  .branch-finding { font-weight: 500; }
-  .behavior-cycle > .down:nth-child(4) { grid-row: 4; }
-  .correction { grid-row: 5; }
-  .feedback-loop { grid-column: 2; grid-row: 1 / 6; width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1.2; }
-   .behavior-map .rerun { padding-right: var(--space-8); margin-top: var(--space-3); text-align: right; font-weight: 500; color: var(--primary); }
-  .ci-outcome { border-top: 1px solid var(--primary); margin-top: var(--space-6); padding-top: var(--space-4); }
+  .branch-finding { display: flex; align-items: center; gap: var(--space-2); font-weight: 500; color: var(--primary); }
+  .branch-icon { flex: 0 0 1.5rem; height: 1.5rem; }
+  .correction { margin-top: var(--space-3); border-top: 1px solid var(--border); padding-top: var(--space-3); }
+  .feedback-loop { position: absolute; fill: none; stroke: var(--accent); stroke-width: 1.2; }
+  /* Anchor both ends to the actual column centers, including the column gap. */
+  .feedback-horizontal { left: calc((100% - var(--space-6)) / 4.6); width: calc((100% + var(--space-6)) / 2); height: var(--space-8); top: 100%; }
+  .feedback-vertical { display: none; }
+  .behavior-map .rerun { margin-top: var(--space-12); text-align: center; font-weight: 500; color: var(--primary); }
+  .ci-outcome { grid-column: 1 / -1; display: flex; align-items: center; gap: var(--space-4); border-top: 1px solid var(--border); padding-top: var(--space-4); }
+  .ci-symbol { flex: 0 0 2.5rem; height: 2.5rem; color: var(--accent-strong); }
   .ci-outcome p { margin-top: var(--space-2); }
   figcaption { margin-top: var(--space-8); color: var(--primary); font: 400 1.5rem/1.3 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); max-width: 90ch; font-size: var(--text-support); }
-  @media (max-width: 60rem) {
+  @media (max-width: 80rem) {
     .investigations { grid-template-columns: minmax(0, 1fr); gap: var(--space-12); }
-    .behavior-investigation { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   }
-   @media (max-width: 30rem) {
-     .scope-fork { display: none; }
-     .scope-branches { margin-top: var(--space-4); }
-    .backlog, .criteria { max-width: 100%; }
-    .evidence { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
-    .evidence-merge { display: none; }
-    .criteria { margin-top: var(--space-4); }
-    .scope-branches { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
-    .scope-retain { border-top: 1px solid var(--border); padding-top: var(--space-4); }
-    .trusted-inputs { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
-    .trusted-inputs > span { line-height: 1; }
+  @container (max-width: 34rem) {
+    .scope-filter, .behavior-map, .cycle-stages { grid-template-columns: minmax(0, 1fr); }
+    .scope-fork, .feedback-horizontal, .comparison-stage::after, .comparison::before { display: none; }
+    .scope-decision { margin-block: var(--space-2); }
+    .evidence::after, .trusted-inputs::after, .comparison::after { content: '↓'; top: 100%; left: 50%; width: auto; line-height: var(--space-6); }
+    .trusted-inputs { margin-bottom: 0; }
+    .trusted-inputs p { display: flex; align-items: center; gap: var(--space-3); }
+    .input-icon { flex: 0 0 2rem; margin-bottom: 0; }
+    .cycle-stages { padding-right: var(--space-6); }
+    .comparison::after { line-height: var(--space-6); }
+    .feedback-vertical { display: block; right: 0; top: 0; height: 100%; width: var(--space-6); }
+    .behavior-map .rerun { margin-top: var(--space-4); padding-right: var(--space-6); text-align: right; }
+    .ci-outcome { align-items: start; }
+  }
+  @media (max-width: 30rem) {
+    .investigation-panel { padding: var(--space-4); border-radius: var(--space-4); }
   }
 </style>

@@ -43,8 +43,8 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(diagram.locator('.diagram-summary')).toContainText('endpoint populations are not established as identical');
     await expect(diagram.locator('.retained-bridge, .match-path, .gate')).toHaveCount(0);
     // Every functional connector stays inside its own investigation. No A → B arrow.
-    await expect(diagram.locator('svg')).toHaveCount(3);
-    await expect(diagram.locator('.scope-filter svg, .behavior-cycle svg')).toHaveCount(3);
+    await expect(diagram.locator('.scope-filter .scope-fork')).toHaveCount(1);
+    await expect(diagram.locator('.behavior-cycle .feedback-loop')).toHaveCount(2);
     await expect(page.locator('.entry-body .metric-strip')).toHaveCount(0);
     await expect(page.locator('.metric-strip')).toHaveCount(1);
     await expect(page.locator('.metric-strip dt')).toHaveCount(3);
@@ -66,26 +66,40 @@ for (const width of [320, 390, 768, 1024, 1440]) {
         expect(overlapX > 0 && overlapY > 0, 'Hero labels must not obscure one another').toBe(false);
       }
     }
-    if (width > 960) {
+    if (width > 1280) {
       expect(behavior!.x).toBeGreaterThan(scope!.x + scope!.width);
       expect(Math.abs(behavior!.width - scope!.width)).toBeLessThan(1);
+    } else {
+      expect(behavior!.y).toBeGreaterThan(scope!.y + scope!.height);
+    }
+    if (width > 960) {
       expect(preview!.x).toBeGreaterThan(hero!.x + hero!.width);
       expect(hero!.width / preview!.width).toBeCloseTo(1.5, 1);
     } else {
-      expect(behavior!.y).toBeGreaterThan(scope!.y + scope!.height);
       expect(preview!.y).toBeGreaterThanOrEqual(hero!.y + hero!.height);
     }
-    const loop = await diagram.locator('.feedback-loop').boundingBox();
+    const loop = await diagram.locator('.feedback-loop:visible').boundingBox();
     const comparison = await diagram.locator('.comparison').boundingBox();
     const correction = await diagram.locator('.correction').boundingBox();
     // The SVG return path's upper/lower ends align with live comparison and
     // prioritization respectively; neither points at CI or the scope filter.
-    const returnY = loop!.y + loop!.height * 25 / 300;
-    const fromY = loop!.y + loop!.height * 275 / 300;
-    expect(returnY).toBeGreaterThanOrEqual(comparison!.y);
-    expect(returnY).toBeLessThanOrEqual(comparison!.y + comparison!.height);
-    expect(fromY).toBeGreaterThanOrEqual(correction!.y);
-    expect(fromY).toBeLessThanOrEqual(correction!.y + correction!.height);
+    if (width <= 640) {
+      const returnY = loop!.y + loop!.height * 25 / 300;
+      const fromY = loop!.y + loop!.height * 275 / 300;
+      expect(returnY).toBeGreaterThanOrEqual(comparison!.y);
+      expect(returnY).toBeLessThanOrEqual(comparison!.y + comparison!.height);
+      expect(fromY).toBeGreaterThanOrEqual(correction!.y);
+      expect(fromY).toBeLessThanOrEqual(correction!.y + correction!.height);
+    } else {
+      const work = (await diagram.locator('.corrective-work').boundingBox())!;
+      expect(loop!.y).toBeCloseTo(work.y + work.height, 0);
+      const returnX = loop!.x;
+      const fromX = loop!.x + loop!.width;
+      expect(returnX).toBeGreaterThanOrEqual(comparison!.x);
+      expect(returnX).toBeLessThanOrEqual(comparison!.x + comparison!.width);
+      expect(fromX).toBeGreaterThanOrEqual(correction!.x);
+      expect(fromX).toBeLessThanOrEqual(correction!.x + correction!.width);
+    }
     expect((await diagram.boundingBox())!.y).toBeGreaterThan(preview!.y + preview!.height);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     // Check text boxes, not just document overflow (hidden/clipped labels also fail).
@@ -105,6 +119,18 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('main')).toBeFocused();
   });
 }
+
+test('architectural case studies have a wider canvas without widening the UX reference', async ({ page }) => {
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  for (const slug of ['api-migration-confidence', 'ai-assisted-delivery']) {
+    await page.goto(`/work/${slug}/`);
+    const width = (await page.locator('.detail-page').boundingBox())!.width;
+    expect(width).toBe(1440);
+    await expect(page.locator('body > header .container')).toHaveCSS('width', '1440px');
+  }
+  await page.goto('/work/scaling-ux-capability/');
+  expect((await page.locator('.detail-page').boundingBox())!.width).toBe(1152);
+});
 
 test('API story links resolve without exposing implementation details', async ({ page, request }) => {
   await page.goto(route);
