@@ -1,15 +1,15 @@
 [
   {
     "name": "api",
-    "width": 1440,
+    "width": 1920,
     "overflow": false,
     "toolbar": false,
     "hydratedIslands": 0,
     "images": [
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       }
     ],
     "clippedText": [],
@@ -17,9 +17,11 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".question": 11.28,
-      ".superseded p": 4.61
+      ".question": 10.74,
+      ".superseded p": 4.88
     },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -28,25 +30,113 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-investigation > header > .investigation-label"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(6)"
+              ".scope-investigation > header > h3"
             ],
             [
-              ".trusted-inputs > span"
+              ".scope-investigation > .investigation-intro"
             ],
             [
-              ".behavior-map > .down[aria-hidden=\"true\"]"
+              ".scope-retain > .branch-label"
             ],
             [
-              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-retain > p:nth-child(3)"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(4)"
+              ".behavior-investigation > header > .investigation-label"
             ],
             [
-              ".rerun > span"
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 10.74,
+      ".superseded p": 4.88
+    },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-investigation > header > .investigation-label"
+            ],
+            [
+              ".scope-investigation > header > h3"
+            ],
+            [
+              ".scope-investigation > .investigation-intro"
+            ],
+            [
+              ".scope-retain > .branch-label"
+            ],
+            [
+              ".scope-retain > p:nth-child(3)"
+            ],
+            [
+              ".behavior-investigation > header > .investigation-label"
+            ],
+            [
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
             ]
           ]
         }
@@ -63,9 +153,9 @@
     "hydratedIslands": 0,
     "images": [
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       }
     ],
     "clippedText": [],
@@ -73,9 +163,11 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".question": 11.28,
-      ".superseded p": 4.61
+      ".question": 10.74,
+      ".superseded p": 4.88
     },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -84,25 +176,40 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-investigation > header > .investigation-label"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(6)"
+              ".scope-investigation > header > h3"
             ],
             [
-              ".trusted-inputs > span"
+              ".scope-investigation > .investigation-intro"
             ],
             [
-              ".behavior-map > .down[aria-hidden=\"true\"]"
+              ".scope-retain > .branch-label"
             ],
             [
-              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-retain > p:nth-child(3)"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(4)"
+              ".behavior-investigation > header > .investigation-label"
             ],
             [
-              ".rerun > span"
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
             ]
           ]
         }
@@ -119,9 +226,9 @@
     "hydratedIslands": 0,
     "images": [
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       }
     ],
     "clippedText": [],
@@ -129,9 +236,11 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".question": 11.28,
-      ".superseded p": 4.61
+      ".question": 10.74,
+      ".superseded p": 4.88
     },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -140,25 +249,40 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-investigation > header > .investigation-label"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(6)"
+              ".scope-investigation > header > h3"
             ],
             [
-              ".trusted-inputs > span"
+              ".scope-investigation > .investigation-intro"
             ],
             [
-              ".behavior-map > .down[aria-hidden=\"true\"]"
+              ".scope-retain > .branch-label"
             ],
             [
-              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-retain > p:nth-child(3)"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(4)"
+              ".behavior-investigation > header > .investigation-label"
             ],
             [
-              ".rerun > span"
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
             ]
           ]
         }
@@ -175,9 +299,9 @@
     "hydratedIslands": 0,
     "images": [
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       }
     ],
     "clippedText": [],
@@ -185,9 +309,11 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".question": 11.28,
-      ".superseded p": 4.61
+      ".question": 10.74,
+      ".superseded p": 4.88
     },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -196,25 +322,40 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-investigation > header > .investigation-label"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(6)"
+              ".scope-investigation > header > h3"
             ],
             [
-              ".trusted-inputs > span"
+              ".scope-investigation > .investigation-intro"
             ],
             [
-              ".behavior-map > .down[aria-hidden=\"true\"]"
+              ".scope-retain > .branch-label"
             ],
             [
-              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-retain > p:nth-child(3)"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(4)"
+              ".behavior-investigation > header > .investigation-label"
             ],
             [
-              ".rerun > span"
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
             ]
           ]
         }
@@ -231,9 +372,9 @@
     "hydratedIslands": 0,
     "images": [
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       }
     ],
     "clippedText": [],
@@ -241,9 +382,11 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".question": 11.28,
-      ".superseded p": 4.61
+      ".question": 10.74,
+      ".superseded p": 4.88
     },
+    "panelGradientMinimumTextContrast": 4.91,
+    "heroRibbonMinimumTextContrast": null,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -252,25 +395,40 @@
           "id": "color-contrast",
           "targets": [
             [
-              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-investigation > header > .investigation-label"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(6)"
+              ".scope-investigation > header > h3"
             ],
             [
-              ".trusted-inputs > span"
+              ".scope-investigation > .investigation-intro"
             ],
             [
-              ".behavior-map > .down[aria-hidden=\"true\"]"
+              ".scope-retain > .branch-label"
             ],
             [
-              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+              ".scope-retain > p:nth-child(3)"
             ],
             [
-              ".down[aria-hidden=\"true\"]:nth-child(4)"
+              ".behavior-investigation > header > .investigation-label"
             ],
             [
-              ".rerun > span"
+              ".behavior-investigation > header > h3"
+            ],
+            [
+              ".behavior-investigation > .investigation-intro"
+            ],
+            [
+              ".rerun"
+            ],
+            [
+              ".rerun > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".ci-outcome > div > strong"
+            ],
+            [
+              ".ci-outcome > div > p"
             ]
           ]
         }
@@ -281,7 +439,7 @@
   },
   {
     "name": "harness",
-    "width": 1440,
+    "width": 1920,
     "overflow": false,
     "toolbar": false,
     "hydratedIslands": 0,
@@ -297,9 +455,9 @@
         "bytes": 13672
       },
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       },
       {
         "src": "/uploads/architecture/worktree-144.webp",
@@ -327,10 +485,14 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".ticket-name": 10.68,
-      ".ticket-validation li": 10.14,
-      ".recovery-path strong": 11.28
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
     },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -342,7 +504,7 @@
               ".hero-backlog > strong"
             ],
             [
-              ".hero-connector:nth-child(3)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
               ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
@@ -351,55 +513,188 @@
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".hero-connector:nth-child(5)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
             ],
             [
               ".hero-review > strong"
             ],
             [
-              ".hero-recovery > span"
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".delivery-phases > span"
+              ".delivery-phases > span[aria-hidden=\"true\"]"
             ],
             [
-              ".intake-stage > .stage-connector"
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".execution-stage > .stage-connector"
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(2) > span"
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(3) > span"
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ],
             [
-              "li:nth-child(4) > span"
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-note > span"
+              ".recovery-note > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(2) > span"
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(3) > span"
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
+    },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ]
           ]
         }
@@ -426,9 +721,9 @@
         "bytes": 13672
       },
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       },
       {
         "src": "/uploads/architecture/worktree-144.webp",
@@ -456,10 +751,14 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".ticket-name": 10.68,
-      ".ticket-validation li": 10.14,
-      ".recovery-path strong": 11.28
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
     },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -471,7 +770,7 @@
               ".hero-backlog > strong"
             ],
             [
-              ".hero-connector:nth-child(3)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
               ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
@@ -480,55 +779,55 @@
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".hero-connector:nth-child(5)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
             ],
             [
               ".hero-review > strong"
             ],
             [
-              ".hero-recovery > span"
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".delivery-phases > span"
+              ".delivery-phases > span[aria-hidden=\"true\"]"
             ],
             [
-              ".intake-stage > .stage-connector"
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".execution-stage > .stage-connector"
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(2) > span"
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(3) > span"
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ],
             [
-              "li:nth-child(4) > span"
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-note > span"
+              ".recovery-note > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(2) > span"
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(3) > span"
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ]
           ]
         }
@@ -555,9 +854,9 @@
         "bytes": 13672
       },
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       },
       {
         "src": "/uploads/architecture/worktree-144.webp",
@@ -585,10 +884,14 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".ticket-name": 10.68,
-      ".ticket-validation li": 10.14,
-      ".recovery-path strong": 11.28
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
     },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -600,7 +903,7 @@
               ".hero-backlog > strong"
             ],
             [
-              ".hero-connector:nth-child(3)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
               ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
@@ -609,55 +912,55 @@
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".hero-connector:nth-child(5)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
             ],
             [
               ".hero-review > strong"
             ],
             [
-              ".hero-recovery > span"
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".delivery-phases > span"
+              ".delivery-phases > span[aria-hidden=\"true\"]"
             ],
             [
-              ".intake-stage > .stage-connector"
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".execution-stage > .stage-connector"
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(2) > span"
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(3) > span"
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ],
             [
-              "li:nth-child(4) > span"
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-note > span"
+              ".recovery-note > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(2) > span"
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(3) > span"
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ]
           ]
         }
@@ -684,9 +987,9 @@
         "bytes": 13672
       },
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       },
       {
         "src": "/uploads/architecture/worktree-144.webp",
@@ -714,10 +1017,14 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".ticket-name": 10.68,
-      ".ticket-validation li": 10.14,
-      ".recovery-path strong": 11.28
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
     },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -729,7 +1036,7 @@
               ".hero-backlog > strong"
             ],
             [
-              ".hero-connector:nth-child(3)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
               ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
@@ -738,55 +1045,55 @@
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".hero-connector:nth-child(5)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
             ],
             [
               ".hero-review > strong"
             ],
             [
-              ".hero-recovery > span"
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".delivery-phases > span"
+              ".delivery-phases > span[aria-hidden=\"true\"]"
             ],
             [
-              ".intake-stage > .stage-connector"
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".execution-stage > .stage-connector"
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(2) > span"
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(3) > span"
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ],
             [
-              "li:nth-child(4) > span"
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-note > span"
+              ".recovery-note > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(2) > span"
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(3) > span"
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ]
           ]
         }
@@ -813,9 +1120,9 @@
         "bytes": 13672
       },
       {
-        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
         "loaded": true,
-        "bytes": 4838
+        "bytes": 14486
       },
       {
         "src": "/uploads/architecture/worktree-144.webp",
@@ -843,10 +1150,14 @@
       "h1": 11.28,
       ".summary": 10.71,
       ".story-section .eyebrow": 5.13,
-      ".ticket-name": 10.68,
-      ".ticket-validation li": 10.14,
-      ".recovery-path strong": 11.28
+      ".ticket-name": 9.8,
+      ".ticket-validation li": 10.71,
+      ".recovery-path strong": 10.37,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71
     },
+    "panelGradientMinimumTextContrast": null,
+    "heroRibbonMinimumTextContrast": 8.28,
     "accessibility": {
       "version": "4.11.0",
       "violations": [],
@@ -858,7 +1169,7 @@
               ".hero-backlog > strong"
             ],
             [
-              ".hero-connector:nth-child(3)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
               ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
@@ -867,55 +1178,55 @@
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
               "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
             ],
             [
-              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".hero-connector:nth-child(5)"
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
             ],
             [
               ".hero-review > strong"
             ],
             [
-              ".hero-recovery > span"
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
             ],
             [
-              ".delivery-phases > span"
+              ".delivery-phases > span[aria-hidden=\"true\"]"
             ],
             [
-              ".intake-stage > .stage-connector"
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".execution-stage > .stage-connector"
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(2) > span"
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-path > li:nth-child(3) > span"
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ],
             [
-              "li:nth-child(4) > span"
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".recovery-note > span"
+              ".recovery-note > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(2) > span"
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
             ],
             [
-              ".improvement-path > li:nth-child(3) > span"
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
             ]
           ]
         }

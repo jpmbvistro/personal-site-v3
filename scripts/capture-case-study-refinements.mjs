@@ -13,7 +13,7 @@ try {
     ['api', '/work/api-migration-confidence/', '.api-decision-diagram'],
     ['harness', '/work/ai-assisted-delivery/', '.harness-diagram'],
   ]) {
-    for (const width of [1440, 1024, 768, 390, 320]) {
+    for (const width of (phase === 'after' ? [1920, 1440, 1024, 768, 390, 320] : [1440, 1024, 768, 390, 320])) {
       const page = await browser.newPage({ viewport: { width, height: 1000 }, deviceScaleFactor: 1 });
       const errors = [];
       page.on('pageerror', (error) => errors.push(error.message));
@@ -40,7 +40,8 @@ try {
           return r * 0.2126 + g * 0.7152 + b * 0.0722;
         };
         const textContrast = {};
-        for (const selector of ['h1', '.summary', '.story-section .eyebrow', '.question', '.superseded p', '.ticket-name', '.ticket-validation li', '.recovery-path strong']) {
+        const ratio = (foreground, background) => (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+        for (const selector of ['h1', '.summary', '.story-section .eyebrow', '.question', '.superseded p', '.ticket-name', '.ticket-validation li', '.recovery-path strong', '.hero-harness > p', '.hero-harness li']) {
           const element = document.querySelector(selector);
           if (!element) continue;
           const foreground = luminance(rgba(getComputedStyle(element).color));
@@ -48,6 +49,27 @@ try {
           while (parent && rgba(getComputedStyle(parent).backgroundColor)[3] === 0) parent = parent.parentElement;
           const background = luminance(rgba(getComputedStyle(parent || document.body).backgroundColor));
           textContrast[selector] = Number(((Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05)).toFixed(2));
+        }
+        // Axe cannot always resolve a gradient or text near an SVG. Bound
+        // contrast against both panel stops and the ribbon's maximum rendered opacity.
+        let panelGradientMinimumTextContrast = null;
+        const panel = document.querySelector('.investigation-panel');
+        if (panel) {
+          const style = getComputedStyle(panel);
+          const base = style.getPropertyValue('--background').trim();
+          const muted = style.getPropertyValue('--muted').trim();
+          const stops = [base, `color-mix(in srgb, ${muted} 40%, ${base})`].map((color) => luminance(rgba(color)));
+          panelGradientMinimumTextContrast = Number(Math.min(...[...document.querySelectorAll('.investigation-panel :is(.investigation-label, h3, .investigation-intro), .scope-retain p, .rerun, .ci-outcome :is(strong, p)')].flatMap((node) => stops.map((background) => ratio(luminance(rgba(getComputedStyle(node).color)), background)))).toFixed(2));
+        }
+        let heroRibbonMinimumTextContrast = null;
+        const ribbon = document.querySelector('.harness-preview .ribbons');
+        if (ribbon) {
+          const style = getComputedStyle(ribbon);
+          const alpha = Number(style.opacity);
+          const base = rgba(getComputedStyle(document.body).backgroundColor);
+          const stroke = rgba(style.stroke);
+          const background = luminance(base.map((channel, i) => channel * (1 - alpha) + stroke[i] * alpha));
+          heroRibbonMinimumTextContrast = Number(Math.min(...[...document.querySelectorAll('.hero-backlog > strong, .hero-review > strong')].map((node) => ratio(luminance(rgba(getComputedStyle(node).color)), background))).toFixed(2));
         }
         return {
           width: innerWidth,
@@ -57,6 +79,8 @@ try {
           images: [...document.images].map((image) => ({ src: image.getAttribute('src'), loaded: image.complete && image.naturalWidth > 0, bytes: performance.getEntriesByName(image.currentSrc)[0]?.transferSize })),
           clippedText: [...document.querySelectorAll('main p, main h3, main li:not(:has(*)), main figcaption')].filter((node) => node.scrollWidth > node.clientWidth + 1).map((node) => node.textContent),
           textContrast,
+          panelGradientMinimumTextContrast,
+          heroRibbonMinimumTextContrast,
         };
       });
       if (axePath) {
@@ -72,7 +96,7 @@ try {
         });
       }
       results.push({ name, ...layout, errors });
-      if ([1440, 390, 320].includes(width)) await page.screenshot({ path: new URL(`${name}-${width}.png`, directory).pathname, fullPage: true });
+      if ([1920, 1440, 390, 320].includes(width)) await page.screenshot({ path: new URL(`${name}-${width}.png`, directory).pathname, fullPage: true });
       await page.locator(selector).screenshot({ path: new URL(`${name}-diagram-${width}.png`, directory).pathname });
       await page.close();
     }
@@ -82,4 +106,4 @@ try {
 }
 await writeFile(new URL('verification.json', directory), `${JSON.stringify(results, null, 2)}\n`);
 console.log(JSON.stringify(results, null, 2));
-if (results.some((result) => result.overflow || result.toolbar || result.hydratedIslands || result.clippedText.length || result.errors.length || result.images.some((image) => !image.loaded) || result.accessibility?.violations.length || Object.values(result.textContrast).some((contrast) => contrast < 4.5))) throw new Error('Review checks failed; inspect verification.json.');
+if (results.some((result) => result.overflow || result.toolbar || result.hydratedIslands || result.clippedText.length || result.errors.length || result.images.some((image) => !image.loaded) || result.accessibility?.violations.length || Object.values(result.textContrast).some((contrast) => contrast < 4.5) || (result.panelGradientMinimumTextContrast !== null && result.panelGradientMinimumTextContrast < 4.5) || (result.heroRibbonMinimumTextContrast !== null && result.heroRibbonMinimumTextContrast < 4.5))) throw new Error('Review checks failed; inspect verification.json.');
