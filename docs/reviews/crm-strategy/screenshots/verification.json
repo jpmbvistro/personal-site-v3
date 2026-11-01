@@ -1,0 +1,682 @@
+[
+  {
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "clippedText": [],
+    "minimumTextContrast": 4.54,
+    "lowContrast": [],
+    "ribbonMinimumTextContrast": 4.73,
+    "images": [
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/copper_handshake_emblem-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-256.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/three_tiered_green_and_copper_pyramid-320.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_growth_chart_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_slider_settings_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/stacked_green_coin_transaction_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/warm_ivory_calculator_badge-128.webp",
+        "loaded": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".initial-options > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".monthly-note"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".intervention > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(5)"
+            ],
+            [
+              ".negotiated-outcome > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".outcome-heading > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".continuity"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(5)"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "clippedText": [],
+    "minimumTextContrast": 4.54,
+    "lowContrast": [],
+    "ribbonMinimumTextContrast": 4.73,
+    "images": [
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/copper_handshake_emblem-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-256.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/three_tiered_green_and_copper_pyramid-320.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_growth_chart_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_slider_settings_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/stacked_green_coin_transaction_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/warm_ivory_calculator_badge-128.webp",
+        "loaded": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".initial-options > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".monthly-note"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".intervention > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(5)"
+            ],
+            [
+              ".negotiated-outcome > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".outcome-heading > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".continuity"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(5)"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "clippedText": [],
+    "minimumTextContrast": 4.54,
+    "lowContrast": [],
+    "ribbonMinimumTextContrast": 4.73,
+    "images": [
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/copper_handshake_emblem-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-256.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/three_tiered_green_and_copper_pyramid-320.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_growth_chart_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_slider_settings_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/stacked_green_coin_transaction_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/warm_ivory_calculator_badge-128.webp",
+        "loaded": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".initial-options > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".monthly-note"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".intervention > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(5)"
+            ],
+            [
+              ".negotiated-outcome > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".outcome-heading > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".continuity"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(5)"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "clippedText": [],
+    "minimumTextContrast": 4.54,
+    "lowContrast": [],
+    "ribbonMinimumTextContrast": 4.73,
+    "images": [
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/copper_handshake_emblem-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-256.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/three_tiered_green_and_copper_pyramid-320.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_growth_chart_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_slider_settings_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/stacked_green_coin_transaction_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/warm_ivory_calculator_badge-128.webp",
+        "loaded": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".initial-options > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".monthly-note"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".intervention > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(5)"
+            ],
+            [
+              ".negotiated-outcome > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".outcome-heading > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".continuity"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(5)"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 45
+    },
+    "errors": []
+  },
+  {
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "clippedText": [],
+    "minimumTextContrast": 4.54,
+    "lowContrast": [],
+    "ribbonMinimumTextContrast": 4.73,
+    "images": [
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/copper_handshake_emblem-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/layered_sage_platform_stack-256.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/three_tiered_green_and_copper_pyramid-320.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_growth_chart_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/isometric_green_slider_settings_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/stacked_green_coin_transaction_icon-128.webp",
+        "loaded": true
+      },
+      {
+        "src": "/uploads/crm-strategy/warm_ivory_calculator_badge-128.webp",
+        "loaded": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".initial-options > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".monthly-note"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(1) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > .platform-heading[data-astro-cid-xut5iyof=\"\"] > .platform-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".platform[data-astro-cid-xut5iyof=\"\"]:nth-child(2) > ul[role=\"list\"] > .constraint"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".intervention > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".intervention > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".decision-flow > .flow-arrow:nth-child(5)"
+            ],
+            [
+              ".negotiated-outcome > .stage-label[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".outcome-heading > .node-title[data-astro-cid-xut5iyof=\"\"]"
+            ],
+            [
+              ".continuity"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(1)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(2)"
+            ],
+            [
+              ".negotiated-outcome > ul[role=\"list\"] > li:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(3)"
+            ],
+            [
+              ".model-flow > .flow-arrow:nth-child(5)"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 45
+    },
+    "errors": []
+  }
+]

@@ -130,7 +130,30 @@ const agenticDiagram: Template = {
     { type: 'object', name: 'observability', label: 'Evidence and improvement', required: true, fields: labelFields({ title: 'Heading', traces: 'Diagnostic evidence', investigation: 'Debugging-agent investigation', fixes: 'Targeted improvements', note: 'Evidence / uncertainty qualifier' }) },
   ],
 };
-const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram, agenticPreview, agenticDiagram];
+const crmTransformation: Template = {
+  name: 'CrmDecisionTransformation', label: 'CRM — decision transformation',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation', initialLabel: 'Initial-choice label', monthly: 'Shared monthly-fee context' }),
+    ...['platformA', 'platformB'].map((name): TinaField => ({ type: 'object', name, label: name === 'platformA' ? 'Initial Platform A' : 'Initial Platform B', required: true,
+      fields: labelFields({ title: 'Platform label', fee: 'Fee structure', capability: 'Required functionality', constraint: 'Tradeoff' }) })),
+    { type: 'object', name: 'intervention', label: 'Modeling and engagement', required: true, fields: labelFields({ label: 'Stage label', title: 'Heading', modeling: 'Financial modeling', requirement: 'Functional requirement', partnership: 'Vendor engagement' }) },
+    { type: 'object', name: 'outcome', label: 'Negotiated Platform A', required: true, fields: labelFields({ label: 'Stage label', title: 'Heading', continuity: 'Same-vendor explanation', fee: 'Retained economics', feature: 'Feature accommodation', fit: 'Functional fit' }) },
+  ],
+};
+const donorCostModel: Template = {
+  name: 'DonorCostModelFigure', label: 'CRM — donor-pyramid financial model',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation' }),
+    { type: 'object', name: 'pyramid', label: 'Conceptual donor pyramid', required: true, fields: [
+      ...labelFields({ title: 'Heading', note: 'Configurable-shares explanation', qualifier: 'Illustrative-category qualifier' }),
+      { type: 'string', name: 'tiers', label: 'Illustrative giving levels (top to bottom)', list: true, required: true },
+    ] },
+    { type: 'object', name: 'assumptions', label: 'Growth assumptions', required: true, fields: labelFields({ title: 'Heading', volume: 'Donor-volume label', volumeText: 'Donor-volume explanation', distribution: 'Giving-distribution label', distributionText: 'Giving-distribution explanation', fees: 'Fee-structure label', feesText: 'Fee-structure explanation' }) },
+    { type: 'object', name: 'model', label: 'Scenario model', required: true, fields: labelFields({ title: 'Heading', note: 'Model explanation' }) },
+    { type: 'object', name: 'comparison', label: 'Conceptual fee comparison', required: true, fields: labelFields({ title: 'Heading', qualifier: 'Illustrative / not-to-scale qualifier', platformA: 'Platform A label', platformAText: 'Platform A fee structure', platformB: 'Platform B label', platformBText: 'Platform B fee structure', note: 'Comparison explanation' }) },
+  ],
+};
+const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram, agenticPreview, agenticDiagram, crmTransformation, donorCostModel];
 
 const storySections: TinaField = {
   type: 'object', name: 'sections', label: 'Editorial sections', list: true,

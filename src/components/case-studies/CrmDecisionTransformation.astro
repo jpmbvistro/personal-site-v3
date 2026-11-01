@@ -1,0 +1,101 @@
+---
+interface Platform { title: string; fee: string; capability: string; constraint: string }
+interface Props {
+  caption: string; summary: string; initialLabel: string; monthly: string;
+  platformA?: Platform | null; platformB?: Platform | null;
+  intervention?: { label: string; title: string; modeling: string; requirement: string; partnership: string } | null;
+  outcome?: { label: string; title: string; continuity: string; fee: string; feature: string; fit: string } | null;
+}
+const { caption, summary, initialLabel, monthly, platformA, platformB, intervention, outcome } = Astro.props;
+const stack = '/uploads/crm-strategy/layered_sage_platform_stack';
+const summaryId = `crm-decision-${crypto.randomUUID()}`;
+---
+
+{platformA && platformB && intervention && outcome && <figure class="lead-figure crm-transformation" aria-label={caption} aria-describedby={summaryId}>
+  <div class="decision-flow">
+    <svg class="decision-ribbons" viewBox="0 0 1200 350" preserveAspectRatio="none" aria-hidden="true">
+      {Array.from({ length: 7 }, (_, i) => <path d={`M0 ${60 + i * 5} C320 ${-40 + i * 7} 720 ${260 + i * 5} 1200 ${30 + i * 7}`} />)}
+    </svg>
+    <div class="initial-options">
+      <p class="stage-label">{initialLabel}</p>
+      <p class="monthly-note">{monthly}</p>
+      <div class="platforms">
+        {[platformA, platformB].map((platform) => <div class="platform">
+          <div class="platform-heading"><img src={`${stack}-128.webp`} srcset={`${stack}-128.webp 128w, ${stack}-256.webp 256w`} sizes="64px" width="128" height="128" alt="" /><p class="platform-title">{platform.title}</p></div>
+          <ul role="list"><li>{platform.fee}</li><li>{platform.capability}</li><li class="constraint">{platform.constraint}</li></ul>
+        </div>)}
+      </div>
+    </div>
+    <span class="flow-arrow" aria-hidden="true">→</span>
+    <div class="intervention">
+      <p class="stage-label">{intervention.label}</p>
+      <img src="/uploads/crm-strategy/copper_handshake_emblem-128.webp" srcset="/uploads/crm-strategy/copper_handshake_emblem-128.webp 128w, /uploads/crm-strategy/copper_handshake_emblem-256.webp 256w" sizes="64px" width="128" height="128" alt="" />
+      <p class="node-title">{intervention.title}</p>
+      <ul role="list"><li>{intervention.modeling}</li><li>{intervention.requirement}</li><li>{intervention.partnership}</li></ul>
+    </div>
+    <span class="flow-arrow" aria-hidden="true">→</span>
+    <div class="negotiated-outcome">
+      <p class="stage-label">{outcome.label}</p>
+      <div class="outcome-heading"><span class="outcome-art"><img src={`${stack}-256.webp`} width="256" height="256" alt="" /><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m8 16 5 5 11-12" /></svg></span><p class="node-title">{outcome.title}</p></div>
+      <p class="continuity">{outcome.continuity}</p>
+      <ul role="list"><li>{outcome.fee}</li><li>{outcome.feature}</li><li>{outcome.fit}</li></ul>
+    </div>
+  </div>
+  <figcaption>{caption}</figcaption>
+  <p class="diagram-summary" id={summaryId}>{summary}</p>
+</figure>}
+
+<style>
+  figure { margin: 0; min-width: 0; container-type: inline-size; }
+  .decision-flow { position: relative; display: grid; grid-template-columns: minmax(0, 1.65fr) 1.5rem minmax(0, 0.85fr) 1.5rem minmax(0, 1fr); align-items: center; gap: var(--space-3); padding-block: var(--space-8); }
+  .decision-ribbons { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 0.65; opacity: 0.08; pointer-events: none; }
+  .initial-options, .intervention, .negotiated-outcome { position: relative; min-width: 0; }
+  .stage-label { color: var(--accent-strong); font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; line-height: 1.5; }
+  .monthly-note { font-size: var(--text-support); margin-block: var(--space-2) var(--space-4); }
+  .platforms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+  .platform { border: 1px solid var(--border); border-radius: 1rem; padding: var(--space-4); background: color-mix(in srgb, var(--background) 90%, transparent); }
+  .platform-heading { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-4); }
+  .platform-heading img { width: 4rem; height: 4rem; }
+  .platform-title { font: 400 1.65rem/1.1 var(--font-serif); color: var(--primary); }
+  ul { padding: 0; margin: 0; list-style: none; display: grid; gap: var(--space-3); }
+  li { font-size: var(--text-support); line-height: 1.55; }
+  .constraint { padding-top: var(--space-3); border-top: 1px solid var(--border); }
+  .intervention { padding: var(--space-6) var(--space-4); border: 1px solid var(--accent); border-radius: 1.25rem; background: color-mix(in srgb, var(--accent) 5%, var(--background)); }
+  .intervention > img { width: 4rem; height: 4rem; margin-block: var(--space-4) var(--space-2); }
+  .node-title { color: var(--primary); font: 400 1.8rem/1.1 var(--font-serif); }
+  .intervention ul { margin-top: var(--space-4); }
+  .intervention li { border-top: 1px solid var(--border); padding-top: var(--space-3); }
+  .flow-arrow { position: relative; color: var(--accent-strong); font-size: 1.5rem; text-align: center; }
+  .negotiated-outcome { padding: var(--space-6); border: 1px solid color-mix(in srgb, var(--primary) 35%, var(--border)); border-radius: 1.25rem; background: color-mix(in srgb, var(--primary) 7%, var(--background)); }
+  .outcome-heading { display: flex; align-items: center; gap: var(--space-3); margin-top: var(--space-4); }
+  .outcome-art { position: relative; width: 5.5rem; flex: 0 0 5.5rem; }
+  .outcome-art img { display: block; width: 100%; height: auto; }
+  .outcome-art svg { position: absolute; top: 15%; left: 30%; width: 40%; fill: none; stroke: var(--background); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .continuity { font-size: var(--text-support); margin-block: var(--space-4); padding-bottom: var(--space-4); border-bottom: 1px solid var(--border); }
+  .negotiated-outcome li { padding-left: var(--space-6); position: relative; }
+  .negotiated-outcome li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); }
+  figcaption { color: var(--primary); font: 400 1.65rem/1.2 var(--font-serif); }
+  .diagram-summary { font-size: var(--text-support); max-width: 90ch; margin-top: var(--space-2); }
+  @container (max-width: 60rem) {
+    .decision-flow { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+    .flow-arrow { transform: rotate(90deg); justify-self: center; }
+    .intervention { display: grid; grid-template-columns: 4rem minmax(0, 1fr); column-gap: var(--space-4); }
+    .intervention .stage-label { grid-column: 1 / -1; }
+    .intervention > img { grid-row: 2 / 4; }
+    .intervention .node-title { margin-top: var(--space-4); }
+    .intervention ul { grid-column: 2; }
+    .outcome-heading { max-width: 30rem; }
+  }
+  @container (max-width: 30rem) {
+    .platforms { grid-template-columns: minmax(0, 1fr); }
+    .platform { padding: var(--space-4); }
+    .platform-heading { margin-bottom: var(--space-3); }
+    .intervention { display: block; }
+    .intervention > img { float: left; margin: var(--space-4) var(--space-3) var(--space-2) 0; }
+    .intervention .node-title { min-height: 4rem; display: flex; align-items: center; }
+    .intervention ul { clear: both; }
+    .negotiated-outcome { padding: var(--space-4); }
+    .outcome-art { width: 4.5rem; flex-basis: 4.5rem; }
+    .node-title { font-size: 1.6rem; }
+  }
+</style>

@@ -93,6 +93,16 @@ try {
     assert.match(delivery, /subsequent harness designs became thinner/);
     assert.doesNotMatch(delivery, /No component provided|Moderna|astro-dev-toolbar|<astro-island|<blockquote/);
   }
+  if (!workDrafts.includes('nonprofit-crm-selection')) {
+    const crm = await readFile(new URL('../dist/client/work/nonprofit-crm-selection/index.html', import.meta.url), 'utf8');
+    for (const marker of ['editorial-story', 'crm-transformation', 'donor-cost-model', 'negotiated-outcome', 'story-decisions', 'story-quote']) assert.ok(crm.includes(marker), `CRM story must render ${marker}`);
+    assert.match(crm, /amended offer from Platform A, not a third CRM/);
+    assert.match(crm, /projections, not realized savings/);
+    assert.match(crm, /Illustrative curves · Not to scale/);
+    assert.match(crm, /Actual first-year fundraising activity confirmed significant transaction-fee savings/);
+    assert.doesNotMatch(crm, /No component provided|astro-dev-toolbar|<astro-island|<blockquote|\$\d|\d+%/);
+    assert.ok(sitemap.includes(`${site}/work/nonprofit-crm-selection/`));
+  }
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(minimal, /class="(?:entry-meta|tags|entry-links)"/);
   for (const route of draftRoutes) {
