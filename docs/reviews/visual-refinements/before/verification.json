@@ -1,0 +1,227 @@
+[
+  {
+    "name": "api",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 5.13
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 5.13
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 5.13
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 5.13
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 5.13
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".recovery-path strong": 11.28
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".recovery-path strong": 11.28
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".recovery-path strong": 11.28
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".recovery-path strong": 11.28
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".recovery-path strong": 11.28
+    },
+    "errors": []
+  }
+]

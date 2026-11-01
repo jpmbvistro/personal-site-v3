@@ -1,0 +1,927 @@
+[
+  {
+    "name": "api",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 4.61
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 4.61
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 4.61
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 4.61
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 46
+    },
+    "errors": []
+  },
+  {
+    "name": "api",
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".question": 11.28,
+      ".superseded p": 4.61
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 46
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 10.68,
+      ".ticket-validation li": 10.14,
+      ".recovery-path strong": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+            ],
+            [
+              ".hero-connector:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span"
+            ],
+            [
+              ".delivery-phases > span"
+            ],
+            [
+              ".intake-stage > .stage-connector"
+            ],
+            [
+              ".execution-stage > .stage-connector"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".recovery-note > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 10.68,
+      ".ticket-validation li": 10.14,
+      ".recovery-path strong": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+            ],
+            [
+              ".hero-connector:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span"
+            ],
+            [
+              ".delivery-phases > span"
+            ],
+            [
+              ".intake-stage > .stage-connector"
+            ],
+            [
+              ".execution-stage > .stage-connector"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".recovery-note > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 10.68,
+      ".ticket-validation li": 10.14,
+      ".recovery-path strong": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+            ],
+            [
+              ".hero-connector:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span"
+            ],
+            [
+              ".delivery-phases > span"
+            ],
+            [
+              ".intake-stage > .stage-connector"
+            ],
+            [
+              ".execution-stage > .stage-connector"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".recovery-note > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 43
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 10.68,
+      ".ticket-validation li": 10.14,
+      ".recovery-path strong": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+            ],
+            [
+              ".hero-connector:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span"
+            ],
+            [
+              ".delivery-phases > span"
+            ],
+            [
+              ".intake-stage > .stage-connector"
+            ],
+            [
+              ".execution-stage > .stage-connector"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".recovery-note > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 45
+    },
+    "errors": []
+  },
+  {
+    "name": "harness",
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "hydratedIslands": 0,
+    "images": [
+      {
+        "src": "/uploads/agentic-delivery/ticket-stack.webp",
+        "loaded": true,
+        "bytes": 14486
+      },
+      {
+        "src": "/uploads/agentic-delivery/pr-cube.webp",
+        "loaded": true,
+        "bytes": 13672
+      },
+      {
+        "src": "/uploads/architecture/ticket-stack-144.webp",
+        "loaded": true,
+        "bytes": 4838
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/worktree-144.webp",
+        "loaded": true,
+        "bytes": 6376
+      },
+      {
+        "src": "/uploads/architecture/pr-cube-144.webp",
+        "loaded": true,
+        "bytes": 5004
+      }
+    ],
+    "clippedText": [],
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 10.68,
+      ".ticket-validation li": 10.14,
+      ".recovery-path strong": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p[data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark"
+            ],
+            [
+              ".hero-connector:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span"
+            ],
+            [
+              ".delivery-phases > span"
+            ],
+            [
+              ".intake-stage > .stage-connector"
+            ],
+            [
+              ".execution-stage > .stage-connector"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span"
+            ],
+            [
+              "li:nth-child(4) > span"
+            ],
+            [
+              ".recovery-note > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 45
+    },
+    "errors": []
+  }
+]
