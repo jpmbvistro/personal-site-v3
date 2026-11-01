@@ -89,7 +89,11 @@ const blockQuote: Template = {
 const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true, ...(name === 'summary' ? { ui: { component: 'textarea' } } : {}) }));
 const apiPreview: Template = {
   name: 'ApiMigrationPreview', label: 'API migration — hero preview',
-  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
+    { type: 'string', name: 'scopeSteps', label: 'Scope motif labels', list: true },
+    { type: 'string', name: 'behaviorSteps', label: 'Behavior motif labels', list: true },
+  ],
 };
 const apiDecisionDiagram: Template = {
   name: 'ApiMigrationDecisionDiagram', label: 'API migration — complementary investigations',

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { writeContent } from './fixtures/write-content';
 
 const route = '/work/api-migration-confidence/';
 
@@ -19,17 +20,22 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.story-decisions ol > li')).toHaveCount(3);
     const diagram = page.locator('.api-decision-diagram');
     await expect(diagram).toHaveAccessibleName('Different investigations. A shared standard for evidence.');
+    await expect(diagram).toHaveAccessibleDescription(/complementary, not a sequential pipeline/);
+    await expect(page.locator('.api-preview .motif-labels li')).toHaveText(['Inherited work', 'Usage evidence', 'Necessity decision', 'Actual behavior', 'Live comparison', 'Investigate · revalidate']);
     await expect(diagram.locator('.investigation-panel')).toHaveCount(2);
     await expect(diagram.locator('.scope-exit')).toContainText('37+');
+    await expect(diagram.locator('.scope-exit')).toContainText('No — remove');
+    await expect(diagram.locator('.scope-retain')).toContainText('Yes — retain');
     await expect(diagram.locator('.scope-retain')).toContainText('Endpoints still requiring migration');
     await expect(diagram.locator('.scope-retain')).not.toContainText(/Gate 2|Continue|200\+|75/);
     await expect(diagram.locator('.superseded')).toContainText('Unreliable abstraction · deprioritized');
+    await expect(diagram.locator('.superseded')).toContainText('insufficient as a reliable representation of actual behavior');
     await expect(diagram.locator('.trusted-inputs')).not.toContainText('Typed');
     await expect(diagram.locator('.behavior-investigation .investigation-intro')).toContainText('200+ endpoints');
     await expect(diagram.locator('.comparison')).not.toContainText('200+');
     await expect(diagram.locator('.source-investigation')).toContainText('75 missed behavioral branches');
     await expect(diagram.locator('.source-investigation')).toContainText('legacy JavaScript');
-    await expect(diagram.locator('.rerun')).toContainText('Revalidate against live responses');
+    await expect(diagram.locator('.rerun')).toContainText('Revalidate after correction');
     await expect(diagram.locator('.correction')).toContainText('Prioritize corrective work');
     await expect(diagram.locator('.ci-outcome')).toContainText('integrated into CI');
     await expect(diagram.locator('.ci-outcome')).toContainText('not evidence that every finding was corrected');
@@ -37,8 +43,8 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(diagram.locator('.diagram-summary')).toContainText('endpoint populations are not established as identical');
     await expect(diagram.locator('.retained-bridge, .match-path, .gate')).toHaveCount(0);
     // Every functional connector stays inside its own investigation. No A → B arrow.
-    await expect(diagram.locator('svg')).toHaveCount(2);
-    await expect(diagram.locator('.scope-filter svg, .behavior-cycle svg')).toHaveCount(2);
+    await expect(diagram.locator('svg')).toHaveCount(3);
+    await expect(diagram.locator('.scope-filter svg, .behavior-cycle svg')).toHaveCount(3);
     await expect(page.locator('.entry-body .metric-strip')).toHaveCount(0);
     await expect(page.locator('.metric-strip')).toHaveCount(1);
     await expect(page.locator('.metric-strip dt')).toHaveCount(3);
@@ -169,6 +175,6 @@ test('API questions, investigation narratives and labels preview and save throug
     await visitor.close();
   } finally {
     await page.close();
-    await writeFile(path, original);
+    await writeContent(path, original);
   }
 });

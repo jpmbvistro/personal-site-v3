@@ -39,17 +39,18 @@ interface Props {
   behavior?: BehaviorInvestigation | null;
 }
 const { caption, summary, scope, behavior } = Astro.props;
+const summaryId = `api-investigations-${crypto.randomUUID()}`;
 ---
 
 <!-- A and B are complementary inquiries, not successive endpoint populations.
      All semantic content is native HTML; SVG supplies only local connectors. -->
-{scope && behavior && <figure class="api-decision-diagram" aria-label={caption}>
+{scope && behavior && <figure class="api-decision-diagram" aria-label={caption} aria-describedby={summaryId}>
   <div class="investigations">
     <section class="scope-investigation investigation-panel" aria-label={scope.label}>
       <header><p class="investigation-label">{scope.label}</p><h3>{scope.title}</h3></header>
       <p class="investigation-intro">{scope.summary}</p>
       <div class="scope-filter">
-        <p class="backlog flow-node">{scope.backlog}</p>
+        <p class="backlog flow-node"><img src="/uploads/architecture/ticket-stack-144.webp" srcset="/uploads/architecture/ticket-stack-144.webp 144w, /uploads/architecture/ticket-stack-288.webp 288w" sizes="64px" width="144" height="144" loading="lazy" alt="" />{scope.backlog}</p>
         <div class="down" aria-hidden="true">↓</div>
         <ul class="evidence" role="list"><li>{scope.traffic}</li><li>{scope.consumers}</li></ul>
         <svg class="evidence-merge" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true">
@@ -59,13 +60,14 @@ const { caption, summary, scope, behavior } = Astro.props;
         <p class="criteria flow-node">{scope.criteria}</p>
         <div class="down" aria-hidden="true">↓</div>
         <p class="question">{scope.question}</p>
+        <svg class="scope-fork" viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M200 0v10q0 10-10 10h-70q-10 0-10 10v10m-4-6 4 6 4-6M200 10q0 10 10 10h100q10 0 10 10v10m-4-6 4 6 4-6" /></svg>
         <div class="scope-branches">
           <div class="scope-exit">
-            <p class="branch-label"><span aria-hidden="true">↙</span> {scope.no}</p>
+            <p class="branch-label">{scope.no}</p>
             <p class="removed-result"><strong>{scope.removedValue}</strong><span>{scope.removedLabel}</span></p>
           </div>
           <div class="scope-retain">
-            <p class="branch-label"><span aria-hidden="true">↘</span> {scope.yes}</p>
+            <p class="branch-label">{scope.yes}</p>
             <p>{scope.retained}</p>
           </div>
         </div>
@@ -97,7 +99,7 @@ const { caption, summary, scope, behavior } = Astro.props;
     </section>
   </div>
   <figcaption>{caption}</figcaption>
-  <p class="diagram-summary">{summary}</p>
+  <p class="diagram-summary" id={summaryId}>{summary}</p>
 </figure>}
 
 <style>
@@ -111,7 +113,8 @@ const { caption, summary, scope, behavior } = Astro.props;
   .scope-filter p, .scope-filter li, .behavior-map p, .superseded p { font-size: var(--text-annotation); line-height: 1.5; overflow-wrap: anywhere; }
   strong { color: var(--primary); font-weight: 500; }
   .flow-node { border: 1px solid var(--border); padding: var(--space-3) var(--space-4); text-align: center; }
-  .backlog { max-width: 80%; margin-inline: auto; }
+   .backlog { display: flex; align-items: center; justify-content: center; gap: var(--space-4); max-width: 80%; margin-inline: auto; border: 0; border-bottom: 1px solid var(--border); }
+   .backlog img { flex: 0 0 4rem; width: 4rem; height: 4rem; object-fit: contain; }
   .down { color: var(--primary); text-align: center; line-height: 1; margin-block: var(--space-3); }
   .evidence { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); padding: 0; margin: 0; list-style: none; }
   .evidence li { padding: var(--space-3); border: 1px solid var(--border); text-align: center; }
@@ -119,13 +122,16 @@ const { caption, summary, scope, behavior } = Astro.props;
   .criteria { max-width: 90%; margin-inline: auto; }
   .scope-filter .question { position: relative; border-block: 1px solid var(--accent); padding: var(--space-4); text-align: center; color: var(--primary); font-size: 1rem; font-weight: 500; }
   .question::before { content: ''; position: absolute; left: calc(50% - 3px); top: -4px; width: 7px; height: 7px; border: 1px solid var(--accent); border-radius: 50%; background: var(--background); }
-  .scope-branches { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--space-6); margin-top: var(--space-4); }
+   .scope-fork { display: block; width: 100%; height: var(--space-8); fill: none; stroke: var(--accent); stroke-width: 1.2; }
+   .scope-branches { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: var(--space-6); }
   .scope-filter .branch-label { font-weight: 500; color: var(--primary); }
-  .removed-result { border-left: 2px solid var(--accent); padding-left: var(--space-4); margin-top: var(--space-3); }
-  .removed-result strong { display: block; font: 400 3rem/1.1 var(--font-serif); }
+   .scope-exit { border-top: 2px solid var(--accent); padding-top: var(--space-4); }
+   .scope-retain { border-top: 1px solid var(--border); padding-top: var(--space-4); }
+   .removed-result { padding-left: var(--space-4); border-left: 1px solid var(--border); margin-top: var(--space-4); }
+   .removed-result strong { display: block; font: 400 4rem/1 var(--font-serif); }
   .removed-result span { display: block; margin-top: var(--space-2); }
   .scope-retain > p:last-child { margin-top: var(--space-3); }
-  .superseded { border-left: 2px dashed var(--accent); padding-left: var(--space-3); margin-bottom: var(--space-6); }
+   .superseded { border-left: 2px solid var(--accent); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-6); background: var(--muted); }
   .assumption-label { color: var(--accent-strong); font-weight: 500; }
   .superseded p + p { margin-top: var(--space-1); }
   .trusted-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--space-3); align-items: center; padding-right: var(--space-8); text-align: center; }
@@ -133,7 +139,7 @@ const { caption, summary, scope, behavior } = Astro.props;
   .behavior-map > .down { margin-right: var(--space-8); }
   .behavior-cycle { display: grid; grid-template-columns: minmax(0, 1fr) 2rem; }
   .behavior-cycle > :not(svg) { grid-column: 1; }
-  .comparison { grid-row: 1; border-color: var(--primary); }
+   .comparison { grid-row: 1; border-color: var(--primary); box-shadow: 0 4px 0 var(--muted); }
   .behavior-cycle > .down:nth-child(2) { grid-row: 2; }
   .source-investigation { grid-row: 3; text-align: left; border-left: 2px solid var(--accent); }
   .source-investigation p { margin-top: var(--space-2); }
@@ -141,7 +147,7 @@ const { caption, summary, scope, behavior } = Astro.props;
   .behavior-cycle > .down:nth-child(4) { grid-row: 4; }
   .correction { grid-row: 5; }
   .feedback-loop { grid-column: 2; grid-row: 1 / 6; width: 100%; height: 100%; fill: none; stroke: var(--accent); stroke-width: 1.2; }
-  .behavior-map .rerun { padding-right: var(--space-8); margin-top: var(--space-3); text-align: center; font-weight: 500; }
+   .behavior-map .rerun { padding-right: var(--space-8); margin-top: var(--space-3); text-align: right; font-weight: 500; color: var(--primary); }
   .ci-outcome { border-top: 1px solid var(--primary); margin-top: var(--space-6); padding-top: var(--space-4); }
   .ci-outcome p { margin-top: var(--space-2); }
   figcaption { margin-top: var(--space-8); color: var(--primary); font: 400 1.5rem/1.3 var(--font-serif); }
@@ -150,7 +156,9 @@ const { caption, summary, scope, behavior } = Astro.props;
     .investigations { grid-template-columns: minmax(0, 1fr); gap: var(--space-12); }
     .behavior-investigation { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-8); }
   }
-  @media (max-width: 30rem) {
+   @media (max-width: 30rem) {
+     .scope-fork { display: none; }
+     .scope-branches { margin-top: var(--space-4); }
     .backlog, .criteria { max-width: 100%; }
     .evidence { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
     .evidence-merge { display: none; }
