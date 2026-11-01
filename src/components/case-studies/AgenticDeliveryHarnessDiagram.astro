@@ -1,6 +1,4 @@
 ---
-import WorktreeSymbol from './WorktreeSymbol.astro';
-
 interface Phase { title: string; text: string }
 interface Execution { title: string; note: string; tickets: string[]; worktree: string; agent: string; tests: string; checks: string }
 interface Validation { title: string; commands: string; tests: string; shadowDiff: string; failure: string }
@@ -21,9 +19,10 @@ interface Props {
   observability?: Observability | null;
 }
 const { caption, summary, proof, scale, intakeTitle, intakeText, execution, validation, reviewTitle, reviewText, recovery, observability } = Astro.props;
+const summaryId = `delivery-harness-${crypto.randomUUID()}`;
 ---
 
-{proof && scale && execution && validation && recovery && observability && <figure class="harness-diagram" aria-label={caption}>
+{proof && scale && execution && validation && recovery && observability && <figure class="harness-diagram" aria-label={caption} aria-describedby={summaryId}>
   <div class="delivery-phases">
     <div><strong>{proof.title}</strong><p>{proof.text}</p></div>
     <span aria-hidden="true">→</span>
@@ -31,6 +30,7 @@ const { caption, summary, proof, scale, intakeTitle, intakeText, execution, vali
   </div>
   <ol class="harness-pipeline" role="list">
     <li class="intake-stage pipeline-stage">
+      <img class="stage-art" src="/uploads/architecture/ticket-stack-144.webp" srcset="/uploads/architecture/ticket-stack-144.webp 144w, /uploads/architecture/ticket-stack-288.webp 288w" sizes="80px" width="144" height="144" loading="lazy" alt="" />
       <h3>{intakeTitle}</h3><p>{intakeText}</p>
       <span class="stage-connector" aria-hidden="true">→</span>
     </li>
@@ -39,34 +39,43 @@ const { caption, summary, proof, scale, intakeTitle, intakeText, execution, vali
       <ul class="ticket-lanes" role="list">{(execution.tickets ?? []).map((ticket) => <li class="ticket-lane">
         <strong class="ticket-name">{ticket}</strong>
         <ol class="lane-steps" role="list">
-          <li><span class="lane-icon"><WorktreeSymbol /></span>{execution.worktree}</li>
-          <li>{execution.agent}</li>
-          <li>{execution.tests}<span class="required-checks">{execution.checks}</span></li>
+          <li class="ticket-context">
+            <img class="worktree-art" src="/uploads/architecture/worktree-144.webp" srcset="/uploads/architecture/worktree-144.webp 144w, /uploads/architecture/worktree-288.webp 288w" sizes="32px" width="144" height="144" loading="lazy" alt="" />
+            <strong>{execution.worktree}</strong><p>{execution.tests}</p>
+          </li>
+          <li class="ticket-implementation">
+            <svg class="lane-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="m11 8-8 8 8 8m10-16 8 8-8 8M19 4l-6 24" /></svg>
+            <strong>{execution.agent}</strong>
+          </li>
+          <li class="ticket-validation">
+            <svg class="lane-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 28 8v9q-1 8-12 13Q5 25 4 17V8ZM10 16l4 4 8-9" /></svg>
+            <strong class="required-checks">{execution.checks}</strong>
+            <ul role="list"><li>{validation.commands}</li><li>{validation.tests}</li><li>{validation.shadowDiff}</li></ul>
+          </li>
         </ol>
       </li>)}</ul>
-      <span class="stage-connector" aria-hidden="true">→</span>
-      <svg class="retry-return" viewBox="0 0 24 32" aria-hidden="true"><path d="M12 32V1M7 7l5-6 5 6" /></svg>
-    </li>
-    <li class="validation-stage pipeline-stage">
-      <h3>{validation.title}</h3>
-      <ul role="list"><li>{validation.commands}</li><li>{validation.tests}</li><li>{validation.shadowDiff}</li></ul>
-      <p class="failure-rule">{validation.failure}</p>
+      <p class="failure-rule"><strong>{validation.title}</strong> {validation.failure}</p>
       <span class="stage-connector" aria-hidden="true">→</span>
     </li>
-    <li class="review-stage pipeline-stage"><h3>{reviewTitle}</h3><p>{reviewText}</p></li>
-    <li class="recovery-stage pipeline-stage">
+    <li class="review-stage pipeline-stage"><img class="stage-art" src="/uploads/architecture/pr-cube-144.webp" srcset="/uploads/architecture/pr-cube-144.webp 144w, /uploads/architecture/pr-cube-288.webp 288w" sizes="80px" width="144" height="144" loading="lazy" alt="" /><h3>{reviewTitle}</h3><p>{reviewText}</p></li>
+  </ol>
+  <!-- These are sibling operational mechanisms, not consecutive ticket stages.
+       Separate ports originate beneath execution, never beneath PR handoff. -->
+  <div class="operational-paths">
+    <svg class="diagnostic-connections" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true"><path d="M450 0v10q0 10-10 10H250q-10 0-10 10v10m-4-6 4 6 4-6M550 0v10q0 10 10 10h190q10 0 10 10v10m-4-6 4 6 4-6" /></svg>
+    <section class="recovery-stage pipeline-stage" aria-label={recovery.title}>
       <h3>{recovery.title}</h3>
       <ol class="recovery-path" role="list">{[recovery.failure, recovery.retry, recovery.persistent, recovery.human].map((step, index) => <li>{index > 0 && <span aria-hidden="true">→</span>}<strong>{step}</strong></li>)}</ol>
       <p class="recovery-note"><span aria-hidden="true">↶</span> {recovery.note}</p>
-    </li>
-    <li class="observability-stage pipeline-stage">
+    </section>
+    <section class="observability-stage pipeline-stage" aria-label={observability.title}>
       <h3>{observability.title}</h3>
       <ol class="improvement-path" role="list">{[observability.traces, observability.investigation, observability.fixes].map((step, index) => <li>{index > 0 && <span aria-hidden="true">→</span>}<strong>{step}</strong></li>)}</ol>
       <p>{observability.note}</p>
-    </li>
-  </ol>
+    </section>
+  </div>
   <figcaption>{caption}</figcaption>
-  <p class="diagram-summary">{summary}</p>
+  <p class="diagram-summary" id={summaryId}>{summary}</p>
 </figure>}
 
 <style>
@@ -75,35 +84,35 @@ const { caption, summary, proof, scale, intakeTitle, intakeText, execution, vali
   .delivery-phases strong { font: 400 1.5rem/1.2 var(--font-serif); color: var(--primary); }
   .delivery-phases p { margin-top: var(--space-2); font-size: var(--text-support); }
   .delivery-phases > span { color: var(--accent-strong); }
-  .harness-pipeline { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2.7fr) minmax(0, 1fr) minmax(0, 0.85fr); grid-template-areas: 'intake execution validation review' 'recovery recovery observability observability'; gap: var(--space-8); margin: 0; padding: 0; list-style: none; align-items: start; }
+  .harness-pipeline { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 3.5fr) minmax(0, 0.8fr); gap: var(--space-8); margin: 0; padding: 0; list-style: none; }
   .pipeline-stage { position: relative; min-width: 0; }
-  .intake-stage { grid-area: intake; }
-  .execution-stage { grid-area: execution; border: 1px solid var(--border); border-radius: var(--space-3); padding: var(--space-4); }
-  .validation-stage { grid-area: validation; }
-  .review-stage { grid-area: review; }
-  .recovery-stage { grid-area: recovery; }
-  .observability-stage { grid-area: observability; }
+  .intake-stage, .review-stage { display: flex; flex-direction: column; justify-content: center; }
+  .stage-art { width: 5rem; height: 5rem; object-fit: contain; margin-bottom: var(--space-4); }
+  .execution-stage { border-block: 1px solid var(--border); padding-block: var(--space-4); }
   .pipeline-stage h3 { font: 400 1.35rem/1.2 var(--font-serif); margin-top: 0; margin-bottom: var(--space-4); }
   .pipeline-stage p, .pipeline-stage li { font-size: var(--text-annotation); line-height: 1.5; overflow-wrap: anywhere; }
   .pipeline-stage :is(ul, ol) { list-style: none; padding: 0; margin: 0; }
   .pipeline-stage strong { font-weight: 500; color: var(--primary); }
-  .stage-connector { position: absolute; left: calc(100% + var(--space-2)); top: 5rem; width: var(--space-4); text-align: center; color: var(--accent-strong); }
+  .stage-connector { position: absolute; left: calc(100% + var(--space-2)); top: 50%; width: var(--space-4); text-align: center; color: var(--accent-strong); }
   .ticket-lanes { display: grid; gap: var(--space-4); }
   .lane-note { margin-bottom: var(--space-4); }
-  .ticket-lane { border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3); background: color-mix(in srgb, var(--primary) 10%, var(--background)); box-shadow: 0 0.3rem 0 color-mix(in srgb, var(--primary) 18%, var(--background)); }
-  .ticket-name { display: block; margin-bottom: var(--space-2); }
-  .lane-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+  .ticket-lane { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-3); background: color-mix(in srgb, var(--primary) 3%, var(--background)); }
+  .ticket-name { align-self: center; font-family: var(--font-serif); font-size: 1.25rem; }
+  .lane-steps { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--space-6); }
   .lane-steps > li { position: relative; min-width: 0; }
-  .lane-steps > li + li::before { content: ''; position: absolute; right: calc(100% + var(--space-2)); top: 0.7rem; width: var(--space-2); border-top: 1px solid var(--accent); }
-  .lane-icon { display: block; width: 1.25rem; height: 1.25rem; margin-bottom: var(--space-2); color: var(--primary); }
-  .retry-return { position: absolute; left: 50%; top: 100%; height: var(--space-8); width: 1.5rem; fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 3 3; }
-  .required-checks { display: block; margin-top: var(--space-2); font-weight: 500; }
-  .validation-stage > ul { display: grid; gap: var(--space-3); }
-  .validation-stage > ul > li { padding-bottom: var(--space-3); border-bottom: 1px solid var(--border); }
+  .lane-steps > li + li::before { content: '→'; position: absolute; right: calc(100% + var(--space-1)); top: 1rem; color: var(--accent-strong); }
+  .lane-icon, .worktree-art { display: block; width: 2rem; height: 2rem; margin-bottom: var(--space-2); object-fit: contain; }
+  .lane-icon { padding: var(--space-1); fill: none; stroke: var(--primary); stroke-width: 1.5; }
+  .lane-steps strong { display: block; line-height: 1.4; }
+  .lane-steps p, .ticket-validation ul { margin-top: var(--space-2); }
+  .ticket-validation ul { display: grid; gap: var(--space-1); }
+  .ticket-validation ul > li { padding-left: var(--space-2); border-left: 1px solid var(--border); }
   .failure-rule { margin-top: var(--space-4); border-left: 2px solid var(--accent); padding-left: var(--space-3); }
-  .review-stage { border-top: 1px solid var(--primary); padding-top: var(--space-3); }
-  .recovery-stage, .observability-stage { padding: var(--space-4); border: 1px dashed var(--accent); border-radius: var(--radius); }
-  .observability-stage { border-color: var(--border); border-style: solid; }
+  .failure-rule strong { display: block; margin-bottom: var(--space-1); }
+  .operational-paths { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); margin-top: var(--space-12); }
+  .diagnostic-connections { position: absolute; bottom: 100%; width: 100%; height: var(--space-12); fill: none; stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 2 3; }
+  .recovery-stage, .observability-stage { padding-top: var(--space-4); border-top: 1px dashed var(--accent); }
+  .observability-stage { border-color: var(--border); border-top-style: solid; }
   .recovery-path, .improvement-path { display: flex; gap: var(--space-3); }
   .recovery-path > li, .improvement-path > li { display: flex; flex: 1; gap: var(--space-3); min-width: 0; }
   .recovery-path span, .improvement-path span { flex-shrink: 0; color: var(--accent-strong); }
@@ -111,20 +120,25 @@ const { caption, summary, proof, scale, intakeTitle, intakeText, execution, vali
   figcaption { margin-top: var(--space-8); color: var(--primary); font: 400 1.5rem/1.3 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); max-width: 90ch; font-size: var(--text-support); }
   @media (max-width: 70rem) {
-    .harness-pipeline { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'intake' 'execution' 'validation' 'review' 'recovery' 'observability'; gap: var(--space-8); }
+    .harness-pipeline { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+    .intake-stage, .review-stage { display: grid; grid-template-columns: 5rem minmax(0, 1fr); column-gap: var(--space-4); align-items: center; }
+    .stage-art { grid-row: 1 / 3; margin: 0; }
+    .intake-stage h3, .review-stage h3 { margin-bottom: var(--space-2); }
     .stage-connector { top: calc(100% + var(--space-2)); left: 50%; transform: rotate(90deg); line-height: 1; }
-    .validation-stage > ul { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
-    .execution-stage { padding-block: var(--space-4); border-block: 1px solid var(--border); }
-    .retry-return { display: none; }
+    .diagnostic-connections { display: none; }
+    .operational-paths { grid-template-columns: minmax(0, 1fr); }
   }
-  @media (max-width: 30rem) {
+  @media (max-width: 40rem) {
     .delivery-phases { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
     .delivery-phases > span { justify-self: center; transform: rotate(90deg); line-height: 1; }
-    .lane-steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-3); }
-    .lane-steps > li + li { border-top: 1px solid var(--border); padding-top: var(--space-3); }
-    .lane-steps > li + li::before { display: none; }
-    .lane-icon { display: inline-block; vertical-align: middle; margin: 0 var(--space-2) 0 0; }
-    .validation-stage > ul { grid-template-columns: minmax(0, 1fr); }
+    .ticket-lane { grid-template-columns: minmax(0, 1fr); padding: var(--space-4); border-left: 2px solid var(--accent); }
+    .ticket-name { margin-bottom: var(--space-2); }
+    .lane-steps { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+    .lane-steps > li { padding-left: 3.5rem; min-height: 3rem; }
+    .lane-steps > li + li { border-top: 1px solid var(--border); padding-top: var(--space-4); }
+    .lane-steps > li + li::before { content: '↓'; right: auto; left: 1.25rem; top: calc(-1 * var(--space-3)); line-height: 1; }
+    .lane-icon, .worktree-art { position: absolute; left: 0; top: 0; margin: 0; }
+    .lane-steps > li + li .lane-icon { top: var(--space-4); }
     .recovery-path, .improvement-path { flex-direction: column; }
     .recovery-path > li, .improvement-path > li { flex-direction: column; gap: var(--space-2); }
     .recovery-path span, .improvement-path span { transform: rotate(90deg); align-self: center; line-height: 1; }

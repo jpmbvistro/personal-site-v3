@@ -51,18 +51,20 @@ const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.len
   .story-decisions .section-main :global(> ol > li) { font-size: var(--text-body); }
   .story-decisions .section-main :global(> ol > li + li) { border-left: 1px solid var(--border); padding-left: var(--space-6); }
   .story-decisions .section-main :global(li strong) { display: block; margin-bottom: var(--space-3); color: var(--primary); font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.15; font-weight: 500; }
-  .story-decisions:has(.section-main > ol > li:nth-child(4)) { grid-template-columns: minmax(0, 0.45fr) minmax(0, 1.55fr); }
-  .story-decisions .section-main :global(> ol:has(> li:nth-child(4))) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  /* Four decisions need a reading measure, not four narrow desktop columns.
+     Keep the accepted three-decision presentation untouched. */
+  .story-decisions:has(.section-main > ol > li:nth-child(4)) { grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr); }
+  .story-decisions .section-main :global(> ol:has(> li:nth-child(4))) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8); }
+  .story-decisions .section-main :global(> ol:has(> li:nth-child(4)) > li) { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-4); }
   @media (max-width: 80rem) {
     .section-panels { grid-template-columns: minmax(0, 1fr); }
-    .story-decisions .section-main :global(> ol:has(> li:nth-child(4))) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .story-decisions .section-main :global(> ol:has(> li:nth-child(4)) > li:nth-child(odd)) { border-left: 0; padding-left: 0; }
   }
   @media (max-width: 65rem) {
-    .story-decisions .section-main :global(> ol), .story-decisions .section-main :global(> ol:has(> li:nth-child(4))) { grid-template-columns: 1fr; gap: var(--space-6); }
+    .story-decisions .section-main :global(> ol) { grid-template-columns: 1fr; gap: var(--space-6); }
     .story-decisions .section-main :global(> ol > li + li) { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-6); }
   }
   @media (max-width: 40rem) {
+    .story-decisions .section-main :global(> ol:has(> li:nth-child(4))) { grid-template-columns: minmax(0, 1fr); }
     .section-panels :global(.metric-strip dl) { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 60rem) {

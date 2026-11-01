@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { writeContent } from './fixtures/write-content';
 
 const route = '/work/ai-assisted-delivery/';
 
@@ -19,6 +20,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.editorial-callouts > li')).toHaveCount(3);
     const diagram = page.locator('.harness-diagram');
     await expect(diagram).toHaveAccessibleName('From sequential proof to parallel delivery.');
+    await expect(diagram).toHaveAccessibleDescription(/Tickets execute independently.*Failed checks lead to bounded retry.*Separately/);
     await expect(diagram.locator('.delivery-phases strong')).toHaveText(['1 / Prove sequential execution', '2 / Introduce parallel delivery']);
     await expect(diagram.locator('.delivery-phases')).toContainText('within the same 30 days');
     await expect(diagram.locator('.ticket-lane')).toHaveCount(3);
@@ -27,10 +29,19 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       await expect(lane.locator('.lane-steps > li')).toHaveCount(3);
       await expect(lane).toContainText('Independent Git worktree');
       await expect(lane).toContainText('Coding-agent implementation');
-      await expect(lane).toContainText('Isolated test execution');
+      await expect(lane).toContainText('Isolated test context');
       await expect(lane).toContainText('Required checks per ticket');
+      await expect(lane.locator('.ticket-validation')).toContainText('Required validation commands');
+      await expect(lane.locator('.ticket-validation')).toContainText('Shadow-diff integration tests where applicable');
+      const steps = await lane.locator('.lane-steps > li').all();
+      for (let i = 1; i < steps.length; i++) {
+        const previous = (await steps[i - 1].boundingBox())!;
+        const current = (await steps[i].boundingBox())!;
+        if (width > 640) expect(current.x).toBeGreaterThanOrEqual(previous.x + previous.width);
+        else expect(current.y).toBeGreaterThanOrEqual(previous.y + previous.height);
+      }
     }
-    await expect(diagram.locator('.validation-stage')).toContainText('Shadow-diff behavioral validation');
+    await expect(diagram.locator('.validation-stage')).toHaveCount(0);
     await expect(diagram.locator('.failure-rule')).toContainText('Failure blocks successful completion');
     await expect(diagram.locator('.review-stage')).toContainText('not mean merged or deployed');
     await expect(diagram.locator('.recovery-path strong')).toHaveText(['Failure', 'Bounded retry', 'Persistent failure', 'Human handoff']);
@@ -38,6 +49,10 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(diagram.locator('.observability-stage')).toContainText('Langfuse traces, spans, artifacts and transcripts');
     await expect(diagram.locator('.observability-stage')).toContainText('Debugging-agent investigation');
     await expect(diagram.locator('.observability-stage')).toContainText('Not every failure could be corrected automatically');
+    await expect(diagram.locator('.observability-stage')).toContainText('subsequent executions');
+    await expect(diagram.locator('.recovery-note')).toContainText('one ticket');
+    await expect(diagram.locator('.operational-paths > section')).toHaveCount(2);
+    await expect(diagram.locator('svg:not([aria-hidden="true"])')).toHaveCount(0);
     await expect(page.locator('.harness-preview ul > li')).toHaveCount(3);
     await expect(page.locator('.harness-preview .diagram-summary')).toContainText('not that every ticket passed on its first attempt');
     for (const image of await page.locator('.harness-preview img').all()) expect(await image.evaluate((node) => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
@@ -50,19 +65,23 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.entry-story')).not.toContainText(/Moderna|37\+|95%|zero customer incidents|engineer.months/i);
 
     const stages = await diagram.locator('.harness-pipeline > li').all();
-    expect(stages).toHaveLength(6);
+    expect(stages).toHaveLength(3);
     for (let i = 1; i < stages.length; i++) {
       const previous = await stages[i - 1].boundingBox();
       const current = await stages[i].boundingBox();
-      if (width > 1120 && i < 4) expect(current!.x).toBeGreaterThanOrEqual(previous!.x + previous!.width);
+      if (width > 1120) expect(current!.x).toBeGreaterThanOrEqual(previous!.x + previous!.width);
       else if (width <= 1120) expect(current!.y).toBeGreaterThanOrEqual(previous!.y + previous!.height);
     }
     const decisions = await page.locator('.story-decisions .section-main > ol > li').all();
-    for (let i = 1; i < decisions.length; i++) {
-      const previous = await decisions[i - 1].boundingBox();
-      const current = await decisions[i].boundingBox();
-      if (width > 1280) expect(current!.x).toBeGreaterThanOrEqual(previous!.x + previous!.width);
-      else if (width <= 1040) expect(current!.y).toBeGreaterThanOrEqual(previous!.y + previous!.height);
+    const boxes = await Promise.all(decisions.map(async (decision) => (await decision.boundingBox())!));
+    if (width > 640) {
+      expect(boxes[1].x).toBeGreaterThanOrEqual(boxes[0].x + boxes[0].width);
+      expect(boxes[2].x).toBe(boxes[0].x);
+      expect(boxes[3].x).toBe(boxes[1].x);
+      expect(boxes[2].y).toBeGreaterThanOrEqual(boxes[0].y + boxes[0].height);
+      expect(boxes[3].y).toBe(boxes[2].y);
+    } else {
+      for (let i = 1; i < boxes.length; i++) expect(boxes[i].y).toBeGreaterThanOrEqual(boxes[i - 1].y + boxes[i - 1].height);
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     for (const node of await page.locator('.harness-diagram p, .harness-diagram h3, .lane-steps > li, .hero-harness li, .metric-strip strong').all()) {
@@ -96,7 +115,8 @@ test.describe('delivery without client execution', () => {
     await page.goto(route);
     await expect(page.locator('.ticket-lane')).toHaveCount(3);
     await expect(page.locator('.recovery-path')).toContainText('Human handoff');
-    await expect(page.locator('.validation-stage')).toContainText('Failure blocks successful completion');
+    await expect(page.locator('.failure-rule')).toContainText('Failure blocks successful completion');
+    await expect(page.locator('.ticket-validation')).toHaveCount(3);
     await expect(page.locator('.metric-strip').first()).toContainText('Human oversight still required');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   });
@@ -142,6 +162,6 @@ test('delivery captions, per-ticket labels and recovery edit and save through Ti
     await visitor.close();
   } finally {
     await page.close();
-    await writeFile(path, original);
+    await writeContent(path, original);
   }
 });
