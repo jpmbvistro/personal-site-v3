@@ -84,7 +84,9 @@ for (const width of [320, 390, 768, 1024, 1440]) {
 
 test('case-study links resolve and decorative SVGs do not interrupt the reading order', async ({ page, request }) => {
   await page.goto('/work/scaling-ux-capability/');
-  const hrefs = await page.locator('a[href]').evaluateAll((links) => [...new Set(links.map((link) => link.getAttribute('href')!))]);
+  // The injected dev toolbar has external Astro links in its shadow DOM;
+  // this check covers visitor navigation, not development-tool destinations.
+  const hrefs = await page.locator('body > header a[href], main a[href], body > footer a[href]').evaluateAll((links) => [...new Set(links.map((link) => link.getAttribute('href')!))]);
   for (const href of hrefs) {
     const url = new URL(href, page.url());
     expect(url.origin).toBe(new URL(page.url()).origin);

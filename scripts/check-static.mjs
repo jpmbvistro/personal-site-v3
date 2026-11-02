@@ -73,6 +73,17 @@ try {
   assert.match(ux, /Follow-through groups may overlap; counts are not additive/);
   assert.doesNotMatch(ux, /<blockquote|Key outcome|astro-dev-toolbar|\/astro\/toolbar/);
   assert.doesNotMatch(ux, /No component provided|Moderna/);
+  if (!workDrafts.includes('api-migration-confidence')) {
+    const api = await readFile(new URL('../dist/client/work/api-migration-confidence/index.html', import.meta.url), 'utf8');
+    for (const marker of ['api-preview', 'api-decision-diagram', 'scope-exit', 'scope-retain', 'superseded', 'feedback-loop', 'ci-outcome']) assert.ok(api.includes(marker), `API story must render ${marker}`);
+    assert.match(api, /37\+/);
+    assert.match(api, /75 missed behavioral branches/);
+    assert.match(api, /200\+ endpoints/);
+    assert.match(api, /not a sequential pipeline/);
+    assert.match(api, /legacy JavaScript/);
+    assert.doesNotMatch(api, /retained-bridge|match-path|Gate 1|Gate 2/);
+    assert.doesNotMatch(api, /No component provided|Moderna|astro-dev-toolbar|\/astro\/toolbar|<astro-island/);
+  }
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(minimal, /class="(?:entry-meta|tags|entry-links)"/);
   for (const route of draftRoutes) {

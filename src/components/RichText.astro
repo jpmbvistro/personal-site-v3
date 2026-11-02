@@ -6,9 +6,11 @@ import DistributedUxNetwork from './DistributedUxNetwork.astro';
 import LocalOwnershipDiagram from './LocalOwnershipDiagram.astro';
 import EditorialCallouts from './EditorialCallouts.astro';
 import BlockQuote from './BlockQuote.astro';
+import ApiMigrationPreview from './case-studies/ApiMigrationPreview.astro';
+import ApiMigrationDecisionDiagram from './case-studies/ApiMigrationDecisionDiagram.astro';
 
 interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote }} />
+<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ApiMigrationPreview, ApiMigrationDecisionDiagram }} />

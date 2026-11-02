@@ -85,7 +85,25 @@ const blockQuote: Template = {
   ],
 };
 
-const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote];
+// Fixed, story-specific labels: content is editable, geometry is not a graph editor.
+const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true, ...(name === 'summary' ? { ui: { component: 'textarea' } } : {}) }));
+const apiPreview: Template = {
+  name: 'ApiMigrationPreview', label: 'API migration — hero preview',
+  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
+};
+const apiDecisionDiagram: Template = {
+  name: 'ApiMigrationDecisionDiagram', label: 'API migration — complementary investigations',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation' }),
+    { type: 'object', name: 'scope', label: 'A — scope reduction', required: true, fields: labelFields({
+      label: 'Investigation label', title: 'Heading', summary: 'Investigation narrative', backlog: 'Inherited backlog', traffic: 'Traffic evidence', consumers: 'Supported consumers', criteria: 'Agreed retirement criteria', question: 'Decision question', no: 'Remove branch', removedValue: 'Removed count (display string)', removedLabel: 'Removed finding label', yes: 'Retain branch', retained: 'Retained-work label (not a link to B)',
+    }) },
+    { type: 'object', name: 'behavior', label: 'B — behavioral correctness', required: true, fields: labelFields({
+      label: 'Investigation label', title: 'Heading', summary: 'Investigation narrative and endpoint context', superseded: 'Deprioritized assumption label', typedClient: 'Rejected abstraction', rejectedReason: 'Reason for deprioritizing', legacy: 'Legacy input', proxy: 'Proxy input', comparison: 'Live comparison', investigation: 'Discrepancy investigation', source: 'Source-level investigation', branches: 'Missed-branches finding', correction: 'Corrective prioritization', rerun: 'Revalidation loop label', ci: 'CI outcome', ciDetail: 'CI explanation',
+    }) },
+  ],
+};
+const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram];
 
 const storySections: TinaField = {
   type: 'object', name: 'sections', label: 'Editorial sections', list: true,
@@ -96,6 +114,7 @@ const storySections: TinaField = {
     { type: 'string', name: 'layout', label: 'Layout', options: [
       { value: 'prose', label: 'Narrative / figure' },
       { value: 'decisions', label: 'Decision list' },
+      { value: 'wide', label: 'Full-width figure / content' },
     ] },
     { type: 'rich-text', name: 'intro', label: 'Introduction (under heading)' },
     { type: 'rich-text', name: 'children', label: 'Section content (right column)', templates: visualBlocks },

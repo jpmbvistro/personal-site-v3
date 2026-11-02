@@ -1,0 +1,327 @@
+[
+  {
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "investigations": [
+      {
+        "width": 552,
+        "height": 658.859375
+      },
+      {
+        "width": 552,
+        "height": 885.546875
+      }
+    ],
+    "crossInvestigationConnector": false,
+    "textSizes": [
+      "13px",
+      "16px",
+      "14px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".investigation-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".investigation-intro": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "investigations": [
+      {
+        "width": 447.03125,
+        "height": 698
+      },
+      {
+        "width": 447.046875,
+        "height": 984.828125
+      }
+    ],
+    "crossInvestigationConnector": false,
+    "textSizes": [
+      "13px",
+      "16px",
+      "14px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".investigation-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".investigation-intro": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "investigations": [
+      {
+        "width": 706.546875,
+        "height": 650.609375
+      },
+      {
+        "width": 706.546875,
+        "height": 824.203125
+      }
+    ],
+    "crossInvestigationConnector": false,
+    "textSizes": [
+      "13px",
+      "16px",
+      "14px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".investigation-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".investigation-intro": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 40
+    }
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "investigations": [
+      {
+        "width": 350,
+        "height": 859.78125
+      },
+      {
+        "width": 350,
+        "height": 1081.21875
+      }
+    ],
+    "crossInvestigationConnector": false,
+    "textSizes": [
+      "13px",
+      "16px",
+      "14px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".investigation-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".investigation-intro": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  },
+  {
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "investigations": [
+      {
+        "width": 280,
+        "height": 967.015625
+      },
+      {
+        "width": 280,
+        "height": 1207.78125
+      }
+    ],
+    "crossInvestigationConnector": false,
+    "textSizes": [
+      "13px",
+      "16px",
+      "14px"
+    ],
+    "textContrast": {
+      ".summary": 10.71,
+      ".investigation-label": 5.13,
+      ".question": 11.28,
+      ".assumption-label": 5.13,
+      ".comparison": 10.71,
+      ".branch-finding": 10.71,
+      ".api-preview strong": 10.71,
+      ".investigation-intro": 10.71,
+      ".api-decision-diagram figcaption": 11.28
+    },
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".scope-filter > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(6)"
+            ],
+            [
+              ".trusted-inputs > span"
+            ],
+            [
+              ".behavior-map > .down[aria-hidden=\"true\"]"
+            ],
+            [
+              ".behavior-cycle > .down[aria-hidden=\"true\"]:nth-child(2)"
+            ],
+            [
+              ".down[aria-hidden=\"true\"]:nth-child(4)"
+            ],
+            [
+              ".rerun > span"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  }
+]
