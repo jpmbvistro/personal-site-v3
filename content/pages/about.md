@@ -2,8 +2,7 @@
 # Proposed editorial copy from the approved handoff (issue #35).
 # NOT final fact-checked public copy: verify role wording, 2012, EMW /
 # East Meets Words titles, DraftKings chronology, and interim management
-# responsibilities with the owner before publication. The portrait stays
-# unset until Juan supplies an authentic headshot.
+# responsibilities with the owner before publication.
 title: >-
   The work is technical. The responsibility is human.
 summary: >-
@@ -11,6 +10,7 @@ summary: >-
 
 about:
   eyebrow: ABOUT
+  portrait: /uploads/juan-vistro-portrait.webp
   portraitAlt: Portrait of Juan Vistro
   path:
     eyebrow: 01 / THE PATH HERE
