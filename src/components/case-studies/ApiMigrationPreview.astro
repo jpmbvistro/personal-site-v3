@@ -4,21 +4,30 @@ interface Props {
   summary: string;
   necessity: string;
   correctness: string;
+  scopeSteps?: string[] | null;
+  behaviorSteps?: string[] | null;
 }
-const { caption, summary, necessity, correctness } = Astro.props;
+const { caption, summary, necessity, correctness, scopeSteps = [], behaviorSteps = [] } = Astro.props;
 ---
 
 <figure class="lead-figure api-preview">
   <div class="preview-questions">
-    <!-- A quiet shared motif, not a connector from one inquiry to the other. -->
-    <svg class="ribbon" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"><path d="M0 25C210 -20 160 245 400 200L400 225C150 270 170 50 0 50Z" /></svg>
-    <div class="preview-question">
-      <svg class="question-symbol" viewBox="0 0 48 48" aria-hidden="true"><path d="M7 11h34L28 27v11l-8-4v-7ZM12 6h24" /><circle cx="24" cy="27" r="2" /></svg>
+    <div class="preview-question scope-preview">
       <strong>{necessity}</strong>
+      <svg class="scope-motif" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
+        <path class="plate" d="m8 20 26-12 26 12-26 12Z M8 27l26 12 26-12M8 34l26 12 26-12" />
+        <path d="M64 27H130M124 23l6 4-6 4M144 12h36l-12 18v15l-12-5V30ZM180 27h44q12 0 12-12V8h64M236 27v24q0 12 12 12h52" />
+        <circle cx="236" cy="27" r="3" /><path d="m294 4 6 4-6 4m0 47 6 4-6 4" />
+      </svg>
+      {(scopeSteps ?? []).length > 0 && <ol class="motif-labels" role="list">{(scopeSteps ?? []).map((step) => <li>{step}</li>)}</ol>}
     </div>
-    <div class="preview-question">
-      <svg class="question-symbol" viewBox="0 0 48 48" aria-hidden="true"><path d="M37 15A17 17 0 1 0 40 29M37 6v9H28M17 24h14M24 17v14" /><circle cx="24" cy="24" r="2" /></svg>
+    <div class="preview-question behavior-preview">
       <strong>{correctness}</strong>
+      <svg class="behavior-motif" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
+        <path class="plate" d="M8 12h38v32H8ZM18 22h18M18 30h18M53 20h38v32H53ZM63 30h18M63 38h18" />
+        <path d="M96 32h42m-6-4 6 4-6 4M150 16h38v32h-38ZM157 26h24M157 34h17M192 32h44m-6-4 6 4-6 4M250 16h48v32h-48ZM262 25l8 7-8 7M280 25v14M274 48v13q0 10-10 10H176q-8 0-8-8V48m-4 6 4-6 4 6" />
+      </svg>
+      {(behaviorSteps ?? []).length > 0 && <ol class="motif-labels" role="list">{(behaviorSteps ?? []).map((step) => <li>{step}</li>)}</ol>}
     </div>
   </div>
   <figcaption>{caption}</figcaption>
@@ -27,14 +36,16 @@ const { caption, summary, necessity, correctness } = Astro.props;
 
 <style>
   .api-preview { min-width: 0; margin: 0; }
-  .preview-questions { position: relative; display: grid; gap: var(--space-12); padding-block: var(--space-8); }
-  .ribbon { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--accent); fill-opacity: 0.07; }
-  .preview-question { position: relative; display: grid; grid-template-columns: 3rem minmax(0, 1fr); align-items: center; gap: var(--space-4); padding: var(--space-3); border: 1px solid var(--border); background: var(--background); border-radius: var(--radius); }
-  .preview-question:nth-of-type(2) { margin-left: var(--space-8); }
-  .question-symbol { width: 3rem; height: 3rem; fill: var(--background); stroke: var(--accent-strong); stroke-width: 1.1; }
-  strong { font-size: var(--text-support); line-height: 1.5; font-weight: 500; }
+  .preview-questions { display: grid; gap: var(--space-8); padding-block: var(--space-4); }
+  .preview-question { min-width: 0; padding-block: var(--space-4); border-top: 1px solid var(--border); }
+  .behavior-preview { margin-left: var(--space-6); }
+  .preview-question > svg { display: block; width: 100%; height: 5rem; margin-top: var(--space-3); fill: none; stroke: var(--accent); stroke-width: 1.2; }
+  .preview-question .plate { fill: var(--muted); stroke: var(--primary); }
+  strong { display: block; color: var(--primary); font-size: var(--text-support); line-height: 1.5; font-weight: 500; }
+  .motif-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+  .motif-labels li { font-size: var(--text-annotation); line-height: 1.5; }
   figcaption { margin-top: var(--space-4); color: var(--primary); font: 400 1.5rem/1.2 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); }
   @media (max-width: 60rem) { .preview-questions { max-width: 28rem; margin-inline: auto; } }
-  @media (max-width: 30rem) { .preview-question:nth-of-type(2) { margin-left: 0; } }
+  @media (max-width: 30rem) { .behavior-preview { margin-left: 0; } }
 </style>

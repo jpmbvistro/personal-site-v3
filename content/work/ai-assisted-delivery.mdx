@@ -36,25 +36,26 @@ sections:
     children: |
       <AgenticDeliveryHarnessDiagram
         caption="From sequential proof to parallel delivery."
-        summary="Conceptual architecture, not proprietary tooling. Each ticket has an independent worktree, implementation and test context. Required checks govern successful PR handoff; failure follows a bounded retry or human-assistance path. Diagnostic evidence supports harness improvements, not guaranteed automatic recovery."
+        summary="Conceptual architecture, not proprietary tooling. Tickets execute independently: each has its own worktree and isolated test context for implementation and required validation before PR handoff. Failed checks lead to bounded retry or human assistance, not PR. Separately, diagnostic evidence informs harness fixes for subsequent executions—not guaranteed automatic recovery."
         proof={{ title: "1 / Prove sequential execution", text: "Complete actual tickets while developing the harness." }}
         scale={{ title: "2 / Introduce parallel delivery", text: "Unlock concurrency after proving working throughput, within the same 30 days." }}
         intakeTitle="Ticket intake"
         intakeText="Scoped corrective work with explicit validation commands, selected for implementation."
+        intakeItems={["Scoped corrective work", "Required validation commands", "Ready for implementation"]}
         execution={{
           title: "Parallel isolated execution",
           note: "Three representative lanes—not a maximum concurrency claim.",
           tickets: ["Ticket A", "Ticket B", "Ticket C"],
           worktree: "Independent Git worktree",
           agent: "Coding-agent implementation",
-          tests: "Isolated test execution",
-          checks: "Required checks per ticket"
+          tests: "Isolated test context",
+          checks: "Required checks"
         }}
         validation={{
-          title: "Validation",
-          commands: "Deterministic required commands",
-          tests: "Unit / integration tests as applicable",
-          shadowDiff: "Shadow-diff behavioral validation",
+          title: "Required validation",
+          commands: "Ticket-specific commands",
+          tests: "Unit / integration tests",
+          shadowDiff: "Shadow-diff integration tests where applicable",
           failure: "Failure blocks successful completion → recovery path."
         }}
         reviewTitle="PR handoff"
@@ -65,14 +66,14 @@ sections:
           retry: "Bounded retry",
           persistent: "Persistent failure",
           human: "Human handoff",
-          note: "Retry eligible failures; persistent problems return to me for ad hoc agent-assisted completion. Retries do not guarantee success."
+          note: "Restore progress on one ticket: bounded retries distinguish transient anomalies from persistent failures. Persistent problems return to me for ad hoc agent-assisted completion. Retries do not guarantee success."
         }}
         observability={{
           title: "System improvement",
           traces: "Langfuse traces, spans, artifacts and transcripts",
           investigation: "Debugging-agent investigation",
           fixes: "Targeted harness fixes",
-          note: "Recurring failure evidence informed improvements. Not every failure could be corrected automatically."
+          note: "Improve the system across tickets: recurring failure evidence informed targeted fixes and subsequent executions. Not every failure could be corrected automatically."
         }}
       />
   - eyebrow: 03 / Key Decisions
@@ -81,14 +82,14 @@ sections:
     intro: |
       The architecture evolved during delivery. I invested in leverage, proved new capabilities incrementally and used observed failures to decide which controls actually helped.
     children: |
-      1. **Invest in the system while meeting the deadline.**
-         Building the harness consumed time that could have gone directly to tickets. I reduced that risk by reusing earlier architecture and behavioral tests, then completing actual work as I developed the new system. Automation was part of the delivery strategy, not a separate project waiting for the backlog to stop.
-      2. **Make parallel execution independent and verifiable.**
-         I designed for concurrency from the beginning but proved sequential execution first. One Git worktree and isolated test context per ticket reduced interference and allowed independent evaluation. Once sequential delivery demonstrated useful reliability and throughput, I enabled parallel execution during the same delivery window.
-      3. **Use deterministic controls where certainty is possible.**
-         Stronger prompts were a poor substitute for Codex's deterministic structured-output interface. Rigid keyword-based scope checks also struggled to interpret intent. I replaced the first with structured outputs and the second with agent judgment, retaining deterministic validation for objective requirements. Both corrections happened during the 30-day period.
-      4. **Engineer recovery instead of assuming perfect autonomy.**
-         Bounded retries distinguished potential transient failures from persistent problems. Persistent failures triggered human handoff and ad hoc agent assistance. Langfuse evidence supported debugging-agent investigations and targeted harness improvements. The objective was dependable throughput with a recovery path—not unattended autonomy.
+      1. **Invest while meeting the deadline.**
+         I built the harness while delivering real tickets, not as a separate tooling project. Reusing the prior analysis harness and behavioral tests reduced the risk of investing within a fixed 30-day window.
+      2. **Prove before scaling.**
+         I designed for parallelism but proved useful sequential throughput first. One worktree and isolated test context per ticket then supported independent execution and validation during the same delivery window.
+      3. **Enforce what can be verified.**
+         I moved strict output requirements toward deterministic interfaces, while replacing brittle keyword scope checks with contextual agent judgment. Objective validation remained mandatory; stronger prompts were not a substitute for verifiable controls.
+      4. **Engineer recovery.**
+         Bounded retries and human escalation restored progress on individual tickets. Separately, Langfuse evidence, debugging agents and targeted fixes addressed recurring harness weaknesses—not an assumption of unattended recovery.
   - eyebrow: 04 / Results and Reflection
     title: More throughput. Less manual work. Continued oversight.
     layout: wide
@@ -108,6 +109,8 @@ sections:
       />
 
       ### What changed in my engineering approach
+
+      During the 30-day period, I corrected two brittle controls. Prompting agents to produce structured files gave way to Codex's deterministic structured-output interface once its availability and suitability became clear. Rigid keyword checks could not reliably interpret scope intent, so I allowed contextual agent judgment while preserving deterministic checks for genuinely verifiable requirements.
 
       In this organizational context, explicit controls helped establish confidence in an unfamiliar delivery model. But excessive deterministic checks became brittle when the underlying decision required interpreting intent.
 

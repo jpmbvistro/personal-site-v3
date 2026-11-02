@@ -89,7 +89,11 @@ const blockQuote: Template = {
 const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true, ...(name === 'summary' ? { ui: { component: 'textarea' } } : {}) }));
 const apiPreview: Template = {
   name: 'ApiMigrationPreview', label: 'API migration — hero preview',
-  fields: labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation', necessity: 'Scope question', correctness: 'Behavior question' }),
+    { type: 'string', name: 'scopeSteps', label: 'Scope motif labels', list: true },
+    { type: 'string', name: 'behaviorSteps', label: 'Behavior motif labels', list: true },
+  ],
 };
 const apiDecisionDiagram: Template = {
   name: 'ApiMigrationDecisionDiagram', label: 'API migration — complementary investigations',
@@ -114,6 +118,7 @@ const agenticDiagram: Template = {
   name: 'AgenticDeliveryHarnessDiagram', label: 'Agentic delivery — isolation, validation and recovery',
   fields: [
     ...labelFields({ caption: 'Caption', summary: 'Text explanation', intakeTitle: 'Intake heading', intakeText: 'Intake description', reviewTitle: 'PR handoff heading', reviewText: 'Review / oversight description' }),
+    { type: 'string', name: 'intakeItems', label: 'Intake requirements (optional list replaces description)', list: true },
     { type: 'object', name: 'proof', label: 'Sequential proof', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
     { type: 'object', name: 'scale', label: 'Parallel scaling', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
     { type: 'object', name: 'execution', label: 'Per-ticket isolation', required: true, fields: [

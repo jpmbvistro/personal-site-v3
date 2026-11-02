@@ -60,6 +60,7 @@
   --space-24: 6rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --content-width: 72rem;
+  --content-width-wide: 90rem;
   --reading-width: 42rem;
   --radius: 0.25rem;
   --motion-fast: 150ms;

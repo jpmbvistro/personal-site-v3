@@ -37,10 +37,10 @@ sections:
           consumers: "Still-supported applications",
           criteria: "Agreed retirement criteria",
           question: "Does this endpoint still need migration?",
-          no: "Remove unnecessary work",
+          no: "No — remove unnecessary work",
           removedValue: "37+",
-          removedLabel: "Planned endpoint migrations removed",
-          yes: "Retain necessary work",
+          removedLabel: "Planned endpoint migrations removed from scope",
+          yes: "Yes — retain necessary work",
           retained: "Endpoints still requiring migration"
         }}
         behavior={{
@@ -48,16 +48,16 @@ sections:
           title: "Validate what the system actually does.",
           summary: "With management approval, I built an initial shadow-diff MVP in approximately three weeks. Live legacy-versus-new response comparisons revealed contract discrepancies across 200+ endpoints, including missing negative-path behavior. Follow-on coding-agent analysis examined actual legacy JavaScript logic.",
           superseded: "Unreliable abstraction · deprioritized",
-          typedClient: "Typed-client static comparison",
-          rejectedReason: "limited value as a behavioral source of truth",
+          typedClient: "Typed legacy client",
+          rejectedReason: "insufficient as a reliable representation of actual behavior",
           legacy: "Legacy implementation and responses",
-          proxy: "New proxy behavior",
+          proxy: "New proxy implementation",
           comparison: "Live shadow-diff comparison",
           investigation: "Investigate discrepancies",
           source: "Source-level analysis · legacy JavaScript",
           branches: "75 missed behavioral branches identified",
           correction: "Prioritize corrective work",
-          rerun: "Revalidate against live responses",
+          rerun: "Revalidate after correction",
           ci: "Shadow-diff checks integrated into CI",
           ciDetail: "A repeatable delivery check—not evidence that every finding was corrected."
         }}
@@ -106,4 +106,6 @@ links:
   summary="Two complementary investigations, grounded in evidence."
   necessity="Does this work need migration?"
   correctness="Does the implementation preserve behavior?"
+  scopeSteps={["Inherited work", "Usage evidence", "Necessity decision"]}
+  behaviorSteps={["Actual behavior", "Live comparison", "Investigate · revalidate"]}
 />
