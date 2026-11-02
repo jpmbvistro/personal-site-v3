@@ -243,6 +243,29 @@ regenerate derivatives with `scripts/prepare-brand-assets.mjs`. This is an
 appropriate light-surface treatment, not a new vector master or dark-mode asset.
 The optional dark footer proposal remains unimplemented.
 
+### About page implementation — 2026-11-02
+
+The About page implements the owner's approved editorial direction from
+issue #35 on the shared shell, one route further extending the global
+tokens/scope (no second palette). Its fixed composition is hero copy plus
+portrait slot, four numbered sections, a three-action links row and the shared
+deep-green closing band. Section layout follows the accepted spacious-editorial
+rhythm: heading column left, narrative plus stage icons beside it, serif
+statement for "People first. Systems second. Tools third.", and two endeavor
+cards linking only to existing routes. The supplied editable SVG illustrations
+live in `public/icons/about/`; `src/components/AboutIcon.astro` maps
+Tina-owned icon names to them, and decorative markup is paired with real HTML
+text.
+
+The About copy is **proposed, not final fact-checked public copy**; role
+wording, 2012, EMW/East Meets Words titles, DraftKings chronology and interim
+management responsibilities still require the owner's verification before
+publication. The portrait field remains unset behind an accessible placeholder
+until Juan supplies an authentic headshot; no synthetic portrait is used. The
+closing band is extracted as `src/components/ClosingBand.astro` and is shared
+by the homepage. See [About review](../docs/reviews/about/README.md) for
+captures, checks and limitations.
+
 ## Proposed implementations — discuss before treating as final
 
 ### Composition and hierarchy

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"><defs>
+<linearGradient id="face" x1="0" y1="0" x2=".95" y2="1"><stop stop-color="#fffaf1"/><stop offset=".55" stop-color="#eee8d8"/><stop offset="1" stop-color="#dedbcc"/></linearGradient>
+<linearGradient id="bottom" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#c2d1b6"/><stop offset=".4" stop-color="#8ba182"/><stop offset="1" stop-color="#42634c"/></linearGradient>
+<linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a2bf8d"/><stop offset=".4" stop-color="#56805d"/><stop offset="1" stop-color="#244c39"/></linearGradient>
+<linearGradient id="copper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5d3a8"/><stop offset=".45" stop-color="#c78350"/><stop offset="1" stop-color="#8e4e27"/></linearGradient>
+<linearGradient id="dark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3b6752"/><stop offset="1" stop-color="#17362c"/></linearGradient>
+<radialGradient id="glow"><stop stop-color="#f8eddc" stop-opacity=".5"/><stop offset="1" stop-color="#f8eddc" stop-opacity="0"/></radialGradient>
+</defs><ellipse cx="512" cy="820" rx="300" ry="48" fill="#392c21" opacity=".12"/><circle cx="512" cy="498" r="335" fill="url(#glow)"/>
+<circle cx="512" cy="556" r="304" fill="url(#bottom)" stroke="#5d7b5e" stroke-width="3"/>
+<circle cx="512" cy="514" r="304" fill="url(#face)" stroke="#ffffff" stroke-width="12"/>
+<circle cx="512" cy="514" r="277" fill="none" stroke="#cdbfa9" opacity=".28" stroke-width="2"/>
+<path d="M320 708 Q520 755 704 704" fill="none" stroke="#d7aa78" stroke-width="4" opacity=".55"/>
+<g stroke="url(#green)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="512" cy="404" r="48" fill="url(#green)" stroke="none"/><circle cx="377" cy="462" r="35" fill="url(#green)" stroke="none"/><circle cx="647" cy="462" r="35" fill="url(#green)" stroke="none"/><path d="M421 622v-26c0-62 40-96 91-96s91 34 91 96v26c0 18-14 30-30 30H451c-16 0-30-12-30-30Z" fill="url(#green)" stroke="none"/><path d="M364 541c-40 2-69 33-69 78v13c0 11 8 19 19 19h81M660 541c40 2 69 33 69 78v13c0 11-8 19-19 19h-81" stroke-width="18"/></g></svg>
