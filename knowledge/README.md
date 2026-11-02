@@ -6,6 +6,8 @@ It is not TinaCMS content and is not published as site pages.
 
 - [Site design system](site-design-system.md) — accepted baseline, proposed
   direction, accessibility expectations and unresolved visual decisions.
+- [Tina click-to-edit](tina-click-to-edit.md) — why object-list fields need
+  per-item anchors, and how the editor resolves section clicks.
 
 When changing an established decision, update the relevant document (or write
 a new decision with a supersession link where preserving historical rationale

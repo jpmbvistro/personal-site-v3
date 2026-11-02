@@ -26,8 +26,8 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
     <div class="hero-copy"><HomeIntro data={data} resume={resume} /></div>
     <EngineeringLeadershipDiagram />
   </section>
-  {content?.capabilities && content.capabilities.length > 0 && <section class="capabilities" aria-label="Professional practice" data-tina-field={tinaField(content, 'capabilities')}>
-    {content.capabilities.map((item) => item && <div><h2>{item.title}</h2><p>{item.text}</p></div>)}
+  {content?.capabilities && content.capabilities.length > 0 && <section class="capabilities" aria-label="Professional practice">
+    {content.capabilities.map((item) => item && <div data-tina-field={tinaField(item, 'text')}><h2 data-tina-field={tinaField(item, 'title')}>{item.title}</h2><p data-tina-field={tinaField(item, 'text')}>{item.text}</p></div>)}
   </section>}
 
   <section class="home-section selected-work" id="selected-work" aria-labelledby="work-heading">
