@@ -7,8 +7,7 @@ import { navigation } from '../lib/navigation';
 <header>
   <Container class="header-inner">
     <a class="wordmark" href="/" aria-label="Juan Vistro — home">
-      <span class="mark" aria-hidden="true">jv.</span>
-      <span>Juan Vistro</span>
+      <img src="/brand/juan-vistro-horizontal.webp" width="1179" height="490" alt="Juan Vistro" fetchpriority="high" />
     </a>
     <nav class="desktop-nav" aria-label="Main navigation">
       {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
@@ -25,18 +24,18 @@ import { navigation } from '../lib/navigation';
     align-items: center;
     gap: var(--space-4);
     min-height: 5.5rem;
+    padding-block: var(--space-3);
   }
   .wordmark {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-3);
     min-height: 2.75rem;
-    color: var(--foreground);
-    font-weight: 600;
     text-decoration: none;
-    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .mark { color: var(--primary); font-family: var(--font-serif); font-size: 2rem; }
+  /* The supplied artwork has a white raster canvas; multiply lets the shared
+     ivory show through without redrawing the custom letters or faint J layer. */
+  .wordmark img { display: block; width: clamp(10rem, 18vw, 13rem); height: auto; mix-blend-mode: multiply; }
   .desktop-nav { display: none; gap: var(--space-8); }
   .desktop-nav a {
     display: inline-flex;

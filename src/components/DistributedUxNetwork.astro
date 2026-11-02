@@ -37,18 +37,18 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
             {teams.map(({ x, y }) => <path d={`M310 425 C310 475 ${x} 480 ${x} ${y}`} />)}
             {teams.map(({ x, y }) => <circle class="team-node" cx={x} cy={y} r="7" />)}
           </svg>
-          <div class="source-specialists"><StoryIcon /><strong>{specialistsLabel}</strong></div>
-          <div class="source-resources"><StoryIcon name="learning" /><span>{resourcesLabel}</span></div>
-          <div class="embedded"><StoryIcon /><strong>{participantsLabel}</strong></div>
+          <div class="source-specialists"><span class="node-artwork"><StoryIcon name="ux-specialists" /></span><strong>{specialistsLabel}</strong></div>
+          <div class="source-resources"><span class="resource-artwork"><StoryIcon name="ux-research" /></span><span>{resourcesLabel}</span></div>
+          <div class="embedded"><span class="node-artwork"><StoryIcon name="ux-embedded" /></span><strong>{participantsLabel}</strong></div>
           <p class="teams-label">{teamsLabel}</p>
         </div>
       </div>
 
       <!-- Mobile is deliberately vertical, never a scaled desktop radial figure. -->
       <div class="diagram-mobile">
-        <div class="mobile-guidance"><StoryIcon /><strong>{specialistsLabel}</strong><span>{resourcesLabel}</span></div>
+        <div class="mobile-guidance"><span class="node-artwork"><StoryIcon name="ux-specialists" /></span><strong>{specialistsLabel}</strong><span>{resourcesLabel}</span></div>
         <span class="flow-arrow" aria-hidden="true">↓</span>
-        <div class="mobile-participants"><StoryIcon /><strong>{participantsLabel}</strong></div>
+        <div class="mobile-participants"><span class="node-artwork"><StoryIcon name="ux-embedded" /></span><strong>{participantsLabel}</strong></div>
         <span class="flow-arrow" aria-hidden="true">↓</span>
         <div class="mobile-teams"><div class="team-dots" aria-hidden="true">{teams.map(() => <span />)}</div><strong>{teamsLabel}</strong></div>
       </div>
@@ -77,6 +77,8 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
   .source-specialists, .embedded { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); text-align: center; background: var(--background); border: 1px solid var(--accent); border-radius: 50%; padding: var(--space-3); }
   .source-specialists { width: 38%; height: 28%; top: 0; left: 31%; }
   .source-resources { position: absolute; left: 0; top: 29%; width: 27%; display: grid; justify-items: center; gap: var(--space-2); text-align: center; font-size: var(--text-annotation, var(--text-body)); line-height: 1.5; }
+  .node-artwork { display: block; width: clamp(3rem, 10cqi, 5rem); height: clamp(3rem, 10cqi, 5rem); flex: none; }
+  .resource-artwork { display: block; width: clamp(4rem, 13cqi, 6rem); height: clamp(4rem, 13cqi, 6rem); }
   strong { color: var(--primary); font-weight: 500; font-size: 1rem; line-height: 1.35; }
   .embedded { width: 44%; height: 27%; top: 39%; left: 28%; }
   .teams-label { position: absolute; bottom: 0; width: 100%; text-align: center; font-size: var(--text-annotation, var(--text-body)); font-weight: 500; color: var(--primary); }
@@ -85,6 +87,7 @@ const teams = Array.from({ length: 12 }, (_, index) => ({
   .hero-outcomes :global(p:not(.callout-title)) { font-size: var(--text-support, var(--text-body)); }
   .hero-outcomes :global(.callout-title) { font-size: 1.2rem; }
   .hero-outcomes :global(.callout-icon) { width: 2.75rem; height: 2.75rem; margin-bottom: calc(var(--space-2) / 3); }
+  .hero-outcomes :global(.callout-icon:has(.ux-artwork)) { width: 5rem; height: 5rem; border: 0; border-radius: 0; }
   figcaption { margin-top: var(--space-6); font-family: var(--font-serif); color: var(--primary); font-size: 1.4rem; line-height: 1.3; }
   .diagram-summary { margin-top: var(--space-2); color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   .flow-arrow { color: var(--primary); font-size: 1.5rem; text-align: center; }

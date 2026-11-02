@@ -120,16 +120,14 @@ for (const width of [320, 390, 768, 1024, 1440]) {
   });
 }
 
-test('architectural case studies have a wider canvas without widening the UX reference', async ({ page }) => {
+test('all case studies share the same canvas', async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  for (const slug of ['api-migration-confidence', 'ai-assisted-delivery']) {
+  for (const slug of ['api-migration-confidence', 'ai-assisted-delivery', 'scaling-ux-capability', 'nonprofit-crm-selection']) {
     await page.goto(`/work/${slug}/`);
     const width = (await page.locator('.detail-page').boundingBox())!.width;
     expect(width).toBe(1440);
     await expect(page.locator('body > header .container')).toHaveCSS('width', '1440px');
   }
-  await page.goto('/work/scaling-ux-capability/');
-  expect((await page.locator('.detail-page').boundingBox())!.width).toBe(1152);
 });
 
 test('API story links resolve without exposing implementation details', async ({ page, request }) => {

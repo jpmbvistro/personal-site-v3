@@ -1,7 +1,7 @@
 # Juan Vistro — personal identity reference (October 2026)
 
-Status: **approved creative direction; reference assets added, implementation not yet approved**.
-Owner: Juan Vistro. This is the design reference for the personal-site-v3 site, not a declaration that its current CSS has already changed.
+Status: **approved creative direction; site-wide palette and supplied header/footer lockups implemented at the owner's request (2026-11-02)**.
+Owner: Juan Vistro. This is the design reference for the personal-site-v3 site. The original October exploration and its implementation cautions are retained below as historical context; current rollout is described in [the design system](../knowledge/site-design-system.md#site-wide-consistency-and-logo-restoration--2026-11-02).
 
 ## Identity
 - **Positioning:** thoughtful, innovative, creative, visionary; quiet confidence and maturity rather than an eager junior-developer portfolio. Communicate technical leadership and product ownership without losing the person's multidisciplinary, human-centered creative identity.
@@ -33,7 +33,7 @@ The first four came from the board's color swatches; warm ivory is a representat
 - Stone on warm ivory: **1.4:1**, decorative only, not text or essential low-contrast controls.
 - Test interactive focus and border contrast separately against their actual adjacent backgrounds. Color alone must not communicate state.
 
-The site currently uses different tokens (`--ink: #192b39`, `--ivory: #f5f2eb`, `--evergreen: #386e67`, `--copper: #c7815d`) in `src/styles/global.css`. **Do not blindly combine or overwrite.** This PR commits reference materials only. A subsequent implementation PR should consciously map the new palette to semantic tokens and validate WCAG AA, keyboard navigation, responsive rendering, and logo size.
+The original reference-only change left the prior blue-ink/evergreen palette in place. That staged rollout is now superseded: `src/styles/global.css` maps this approved palette to semantic tokens globally rather than combining two themes.
 
 ## Canonical supplied visual resources
 
@@ -45,7 +45,7 @@ The site currently uses different tokens (`--ink: #192b39`, `--ivory: #f5f2eb`, 
 
 These three files preserve **the user-supplied SVG exports**, which visually incorporate the approved reference elements; they are not regenerated substitutions. The corresponding PNG originals were also supplied to the conversation, but the repo currently includes the SVG renditions. **Important: these SVG exports contain embedded raster images, masks and filter artwork, not production-quality editable text/path outlines**. They may be large and can appear on white-backed canvases. Do not treat them as lightweight icon SVGs or assume their background is transparent. Inspect at real sizes and against dark/light surfaces before shipping; rebuild genuine editable vectors when production needs clean scaling, minimal size, or responsive recoloring.
 
-## Header/footer design direction (awaiting mockup review)
+## Header/footer design direction (original exploration)
 
 - **Header desktop:** V + leaf or horizontal wordmark on the left; link navigation on right (current pages: Home, Work, Projects, About, Contact); warm ivory background, deep green text, optional thin stone dividing rule. Prefer ordinary links, no decorative animation.
 - **Header mobile:** V + leaf, optional short name; preserve existing keyboard-operable disclosure/skip link behavior and sufficient tap targets.
@@ -53,7 +53,22 @@ These three files preserve **the user-supplied SVG exports**, which visually inc
 - Maintain generous negative space and editorial hierarchy, but site must still read quickly as a senior engineering/technology leadership portfolio (work and projects highly discoverable).
 - Responsive typography should use a clean sans for UI; an expressive high-contrast serif can be used for headings. Existing `Iowan Old Style`/Palatino is a **fallback**, not an exact match for the hand-designed wordmark. A production brand-font match is not established.
 
-## Next implementation review checklist
+### Implemented application — 2026-11-02
+
+The owner selected the **horizontal supplied lockup for the header** (including
+mobile) and **vertical/stacked lockup for the footer**. Both sit on the shared
+warm-ivory surface; the dark footer above remains an unused option. Accessible
+home links name the site independently of the image lettering. Navigation and
+the keyboard-operable mobile disclosure are retained.
+
+`scripts/prepare-brand-assets.mjs` crops empty canvas margins and produces the
+committed `public/brand/juan-vistro-{horizontal,stacked}.webp` derivatives (about
+26 KB and 46 KB). The original SVGs remain untouched. CSS multiply blends their
+white canvas into the ivory without redrawing the custom wordmark or removing
+the translucent J backlayer. These are light-surface raster derivatives, not
+editable vector masters or suitable inverse/dark-surface assets.
+
+## Original implementation review checklist
 1. Decide whether to re-author performant genuine vector logos; if using current exports, verify embedded image scaling, white backgrounds, and loading weight.
 2. Produce a purpose-built small favicon asset from V + copper accent only, with adequate optical weight at 16/32 px.
 3. Approve header and footer mockups before editing `SiteHeader.astro` / `SiteFooter.astro`.

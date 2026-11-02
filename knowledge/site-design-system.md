@@ -2,7 +2,7 @@
 type: domain-concept
 status: proposed
 title: Personal site design system
-updated: 2026-11-01
+updated: 2026-11-02
 ---
 
 # Personal site design system
@@ -29,21 +29,16 @@ These are current repository decisions, not new proposals:
 
 - Public site is Astro and Tailwind CSS with semantic, shadcn-compatible tokens
   at [`src/styles/global.css`](../src/styles/global.css).
-- **Currently implemented, to be superseded:** ink `#192B39`, warm ivory
-  `#F5F2EB`, evergreen `#386E67`, copper `#C7815D`. See the approved
-  replacement palette below; `src/styles/global.css` has **not** yet been
-  migrated. Semantic text/surface/interactive pairs remain in CSS; do not copy
-  hex values into one-off components. A first scoped application of the
-   replacement palette exists as the opt-in **editorial Work presentation**
-  (`.editorial-work` token override; PR
-  [#25](https://github.com/jpmbvistro/personal-site-v3/pull/25)); site-wide
-  migration remains pending.
+- **Site-wide palette:** the approved charcoal/deep-green/copper/stone/warm-ivory
+  replacement below is now global. The previous blue-ink/evergreen palette and
+  Work-only token override are superseded (2026-11-02). Semantic
+  text/surface/interactive pairs remain in CSS; do not copy hex values into
+  one-off components. The first scoped application was the editorial Work
+  presentation in [PR #25](https://github.com/jpmbvistro/personal-site-v3/pull/25).
 - Serif display and headline roles, sans-serif UI/body roles, monospace technical
-  metadata. The shared shell uses system stacks; **Newsreader + Inter is
-  implemented as self-hosted Latin WOFF2 (`public/fonts/`) for the opt-in
-  editorial Work presentation only**, with the rest of the site still on system
-  stacks pending site-wide rollout. No external font download/runtime
-  dependency exists.
+  metadata. **Newsreader + Inter is implemented site-wide as self-hosted Latin
+  WOFF2 (`public/fonts/`)**, with system fallbacks. No external font
+  download/runtime dependency exists.
 - Single [BaseLayout](../src/layouts/BaseLayout.astro) and shared header/footer.
   Native Astro + semantic HTML first; client-side islands only when justified.
 - Current sizing includes a broad content max-width, narrower reading measure,
@@ -225,6 +220,28 @@ a draft is a separate owner action, not a visual implementation side effect.
 This implements the owner's homepage brief, not a claim that every open #26
 brand decision or the final visual-review gate is complete. See
 [homepage review](../docs/reviews/homepage/README.md) for captures and limitations.
+
+### Site-wide consistency and logo restoration — 2026-11-02
+
+The owner requested one background, color theme and content width across all
+top-level pages and Work stories, with the supplied horizontal mark/name lockup
+in the header and vertical/stacked lockup in the footer. This supersedes the
+earlier opt-in theme and per-story wide-canvas implementation, not the ability
+to compose different story layouts.
+
+The accepted palette and Newsreader/Inter pairing now live at the root in
+`global.css`, including 16px narrative copy. All routes (including local draft
+previews and simple Work/Project entries) use one responsive container maximum
+and gutter. The implementation adopts the existing wider canvas throughout so
+complex case-study diagrams retain their space; prose keeps its narrower reading
+measure. Header/footer content aligns to that same container.
+
+Header and footer use cropped WebP derivatives of the supplied artwork, not
+CSS-recreated lettering. The original SVG exports remain unchanged. Their white
+raster canvases blend into the shared ivory via `mix-blend-mode: multiply`;
+regenerate derivatives with `scripts/prepare-brand-assets.mjs`. This is an
+appropriate light-surface treatment, not a new vector master or dark-mode asset.
+The optional dark footer proposal remains unimplemented.
 
 ## Proposed implementations — discuss before treating as final
 

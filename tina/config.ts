@@ -7,6 +7,12 @@ const icon: TinaField = { type: 'string', name: 'icon', label: 'Illustration', o
   { value: 'research', label: 'Research / evidence' },
   { value: 'system', label: 'Design system' },
   { value: 'learning', label: 'Learning / guidance' },
+  { value: 'ux-distributed', label: 'UX artwork — distributed ownership' },
+  { value: 'ux-capacity', label: 'UX artwork — limited specialist capacity' },
+  { value: 'ux-skepticism', label: 'UX artwork — skepticism / user value' },
+  { value: 'ux-research', label: 'UX artwork — research artifacts' },
+  { value: 'ux-integration', label: 'UX artwork — integration / upgrade path' },
+  { value: 'ux-partnership', label: 'UX artwork — specialist partnership' },
 ] };
 
 const calloutFields: TinaField[] = [

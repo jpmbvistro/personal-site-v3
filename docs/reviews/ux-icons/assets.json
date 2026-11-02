@@ -1,0 +1,134 @@
+[
+  {
+    "name": "specialists",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_07 AM-2.png",
+    "sha256": "b22223109f62f1622e7a9dd742259b1bbfc570e72af00737430bc05d99505424",
+    "crop": {
+      "left": 174,
+      "top": 470,
+      "width": 196,
+      "height": 148
+    },
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/specialists-128.webp",
+        "bytes": 7698
+      },
+      {
+        "file": "public/uploads/ux/specialists-256.webp",
+        "bytes": 20278
+      }
+    ]
+  },
+  {
+    "name": "embedded",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_07 AM-2.png",
+    "sha256": "b22223109f62f1622e7a9dd742259b1bbfc570e72af00737430bc05d99505424",
+    "crop": {
+      "left": 634,
+      "top": 470,
+      "width": 164,
+      "height": 172
+    },
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/embedded-128.webp",
+        "bytes": 11600
+      },
+      {
+        "file": "public/uploads/ux/embedded-256.webp",
+        "bytes": 31728
+      }
+    ]
+  },
+  {
+    "name": "distributed",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_08 AM-3.png",
+    "sha256": "0a7e41e8a8e14e49d02bb20507ea389cd987efb7d49cb0418554c6d7485b6da3",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/distributed-128.webp",
+        "bytes": 12664
+      },
+      {
+        "file": "public/uploads/ux/distributed-256.webp",
+        "bytes": 37848
+      }
+    ]
+  },
+  {
+    "name": "capacity",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_09 AM-4.png",
+    "sha256": "346bf700d9e9b27aea69b941c8323665ba55cb53b2bda0e8e4bcf2544910b750",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/capacity-128.webp",
+        "bytes": 13804
+      },
+      {
+        "file": "public/uploads/ux/capacity-256.webp",
+        "bytes": 42900
+      }
+    ]
+  },
+  {
+    "name": "skepticism",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_10 AM-5.png",
+    "sha256": "981804fd07ab2e270bbbb2f9dea3b3f5337a52d9c1851aa860c376636ba5deb0",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/skepticism-128.webp",
+        "bytes": 8666
+      },
+      {
+        "file": "public/uploads/ux/skepticism-256.webp",
+        "bytes": 27354
+      }
+    ]
+  },
+  {
+    "name": "research",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_11 AM-6.png",
+    "sha256": "fbeb16b18a6aadc805dbcbc3ceb850738943e0076ca480c5266ed3b6247f5528",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/research-128.webp",
+        "bytes": 11714
+      },
+      {
+        "file": "public/uploads/ux/research-256.webp",
+        "bytes": 34146
+      }
+    ]
+  },
+  {
+    "name": "integration",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_13 AM-7.png",
+    "sha256": "343c96d6039ed8794c818b8e4a1b1fb3fccd4bd2f09a47e4a9f6cf9e7ade05c6",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/integration-128.webp",
+        "bytes": 10080
+      },
+      {
+        "file": "public/uploads/ux/integration-256.webp",
+        "bytes": 31206
+      }
+    ]
+  },
+  {
+    "name": "partnership",
+    "suppliedFile": "ChatGPT Image Nov 2, 2026, 12_21_14 AM-8.png",
+    "sha256": "9fe6426c0f906741908feb7300ce47ab4680881ee900a207e13595bce912f158",
+    "derivatives": [
+      {
+        "file": "public/uploads/ux/partnership-128.webp",
+        "bytes": 8562
+      },
+      {
+        "file": "public/uploads/ux/partnership-256.webp",
+        "bytes": 25736
+      }
+    ]
+  }
+]

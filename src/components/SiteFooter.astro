@@ -5,7 +5,10 @@ import { navigation } from '../lib/navigation';
 
 <footer>
   <Container class="footer-inner">
-    <p>© {new Date().getFullYear()} Juan Vistro</p>
+    <div class="identity">
+      <a class="wordmark" href="/" aria-label="Juan Vistro — home"><img src="/brand/juan-vistro-stacked.webp" width="955" height="909" alt="Juan Vistro" loading="lazy" /></a>
+      <p>© {new Date().getFullYear()} Juan Vistro</p>
+    </div>
     <nav aria-label="Footer navigation">
       {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
     </nav>
@@ -25,5 +28,9 @@ import { navigation } from '../lib/navigation';
   }
   nav { display: flex; flex-wrap: wrap; gap: var(--space-6); }
   nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  .identity { display: grid; gap: var(--space-4); }
+  .identity p { font-size: var(--text-small); }
+  .wordmark { display: inline-flex; justify-self: start; }
+  .wordmark img { display: block; width: 11rem; height: auto; mix-blend-mode: multiply; }
   .colophon { color: var(--muted-foreground); }
 </style>

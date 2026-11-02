@@ -1,5 +1,52 @@
 import { expect, test } from '@playwright/test';
 
+const brandRoutes = [
+  '/', '/work/', '/projects/', '/about/', '/contact/', '/resume/',
+  '/work/scaling-ux-capability/', '/work/api-migration-confidence/',
+  '/work/ai-assisted-delivery/', '/work/nonprofit-crm-selection/',
+  '/preview/projects/keel/',
+];
+
+for (const width of [320, 390, 768, 1440, 1920]) {
+  test(`one brand palette, typography, canvas and logo pair across routes at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    for (const route of brandRoutes) {
+      expect((await page.goto(route))?.status(), route).toBe(200);
+      await expect(page.locator('html')).toHaveCSS('background-color', 'rgb(243, 237, 227)');
+      await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(243, 237, 227)');
+      await expect(page.locator('body')).toHaveCSS('color', 'rgb(52, 52, 50)');
+      await expect(page.locator('body')).toHaveCSS('font-family', /Inter/);
+      await expect(page.locator('main h1')).toHaveCSS('color', 'rgb(40, 51, 43)');
+      await expect(page.locator('main h1')).toHaveCSS('font-family', /Newsreader/);
+      await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#F3EDE3');
+      const tokens = await page.evaluate(() => {
+        const style = getComputedStyle(document.body);
+        return ['--accent', '--secondary', '--text-body'].map((token) => style.getPropertyValue(token).trim());
+      });
+      expect(tokens, route).toEqual(['#b17750', '#d2c6b8', '1rem']);
+
+      const header = (await page.locator('body > header .container').boundingBox())!;
+      const gutter = await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('body > header .container')!).marginLeft));
+      expect(header.width, route).toBeCloseTo(Math.min(1440, width - 2 * gutter), 1);
+      for (const container of await page.locator('main .container, body > footer .container').all()) {
+        const box = (await container.boundingBox())!;
+        expect(box.x, route).toBeCloseTo(header.x, 1);
+        expect(box.width, route).toBeCloseTo(header.width, 1);
+      }
+      for (const [region, variant] of [['header', 'horizontal'], ['footer', 'stacked']] as const) {
+        const logo = page.locator(`body > ${region} .wordmark img`);
+        await expect(logo).toHaveAttribute('src', `/brand/juan-vistro-${variant}.webp`);
+        await expect(logo).toHaveAttribute('alt', 'Juan Vistro');
+        await logo.scrollIntoViewIfNeeded();
+        await expect.poll(() => logo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+        await expect(logo).toHaveCSS('mix-blend-mode', 'multiply');
+        await expect(logo.locator('..')).toHaveAccessibleName('Juan Vistro — home');
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), route).toBe(true);
+    }
+  });
+}
+
 for (const width of [320, 390, 768, 1440]) {
   test(`shared shell fits at ${width}px with working destinations`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });

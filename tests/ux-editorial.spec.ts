@@ -35,6 +35,16 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     await expect(page.locator('.approach-stages > li > strong')).toHaveText(['Enable', 'Embed', 'Support', 'Apply']);
     await expect(page.locator('.metric-strip figcaption')).toContainText('groups may overlap');
     await expect(page.locator('.metric-strip .metric-icon')).toHaveCount(4);
+    for (const image of await page.locator('main .ux-artwork img').all()) {
+      await expect(image).toHaveAttribute('alt', '');
+      await expect(image.locator('..')).toHaveAttribute('aria-hidden', 'true');
+      await expect(image).toHaveAttribute('src', /\/uploads\/ux\/.*-128\.webp$/);
+      await expect(image).toHaveAttribute('srcset', /-256\.webp 256w/);
+      if (await image.isVisible()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+      }
+    }
     for (const row of await page.locator('.story-section').all()) {
       await expect(row).toHaveCSS('border-top-width', '1px');
       await expect(row.locator('.intro-copy')).toBeVisible();
@@ -76,6 +86,8 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       expect(box!.y).toBeGreaterThanOrEqual(node!.y);
       expect(box!.y + box!.height).toBeLessThanOrEqual(node!.y + node!.height);
     }
+    // Return from lazy-image checks before exercising the skip link.
+    await page.goto('/work/scaling-ux-capability/');
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
     await page.keyboard.press('Enter');

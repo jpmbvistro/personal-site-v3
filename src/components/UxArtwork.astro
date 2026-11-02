@@ -1,0 +1,11 @@
+---
+interface Props { name: string }
+const { name } = Astro.props;
+---
+
+<span class="ux-artwork" aria-hidden="true"><img src={`/uploads/ux/${name}-128.webp`} srcset={`/uploads/ux/${name}-128.webp 128w, /uploads/ux/${name}-256.webp 256w`} sizes="(max-width: 48rem) 64px, 112px" width="128" height="128" alt="" loading="lazy" decoding="async" /></span>
+
+<style>
+  .ux-artwork { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 100%; flex: none; }
+  img { display: block; width: 100%; height: 100%; object-fit: contain; }
+</style>
