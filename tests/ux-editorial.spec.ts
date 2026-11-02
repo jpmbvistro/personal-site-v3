@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { readFile, unlink, writeFile } from 'node:fs/promises';
+import { writeContent } from './fixtures/write-content';
 
 for (const width of [320, 390, 768, 1024, 1440]) {
   test(`editorial UX story has readable purpose-built figures at ${width}px`, async ({ page }) => {
@@ -273,8 +274,12 @@ test('editorial prose, captions, and section order preview and save through Tina
     await page.goto('/admin/index.html');
     await page.getByRole('button', { name: 'Enter Edit Mode' }).click();
     await expect(page.locator('iframe')).toBeVisible();
-    await page.locator('iframe').evaluate((frame) => { (frame as HTMLIFrameElement).src = '/preview/work/scaling-ux-capability/'; });
     const preview = page.frameLocator('iframe');
+    // A prior content save/restore can still be indexing when the iframe opens.
+    await expect(async () => {
+      await page.locator('iframe').evaluate((frame) => { (frame as HTMLIFrameElement).src = '/preview/work/scaling-ux-capability/'; });
+      await expect(preview.locator('main h1')).toBeVisible({ timeout: 2_000 });
+    }).toPass({ timeout: 10_000 });
     await preview.locator('main h1').click();
     await expect(page.locator('input[name="title"]')).toBeVisible();
 
@@ -367,6 +372,6 @@ test('editorial prose, captions, and section order preview and save through Tina
     expect(saved).toContain('bottomRule={false}');
   } finally {
     await page.close();
-    await writeFile(path, original);
+    await writeContent(path, original);
   }
 });

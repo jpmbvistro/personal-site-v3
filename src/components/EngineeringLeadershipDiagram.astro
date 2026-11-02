@@ -1,0 +1,66 @@
+---
+import StoryIcon from './StoryIcon.astro';
+const domains = [
+  { name: 'People', icon: 'teams', practices: ['Coaching', 'Enablement'] },
+  { name: 'Product', icon: 'capacity', practices: ['User understanding', 'Prioritization'] },
+  { name: 'Systems', icon: 'system', practices: ['Architecture', 'Delivery improvement'] },
+];
+---
+
+<figure class="leadership-diagram" aria-label="Engineering leadership philosophy" aria-describedby="leadership-explanation">
+  <p class="sr-only" id="leadership-explanation">People, product, and systems practices converge around engineering leverage to support better decisions, more capable teams, and stronger delivery. This is a leadership philosophy, not an organizational chart or a claim of ownership over every function.</p>
+  <svg class="diagram-ribbons" viewBox="0 0 500 410" fill="none" aria-hidden="true">
+    <path class="ribbon-fill" d="M22 67C115 55 160 290 265 302C335 310 409 109 490 73C430 195 353 351 263 330C153 310 100 138 22 67Z" />
+    <path class="ribbon-fill" d="M17 331C136 164 304 166 490 339C323 204 171 207 17 356Z" />
+    {[0, 9, 18, 27].map((offset) => <path class="ribbon-line" d={`M12 ${334 + offset}C123 ${134 + offset} 293 ${174 + offset} 491 ${326 + offset}`} />)}
+    <g class="copper-lines"><path d="M83 157C83 227 190 212 250 271 M250 157V271 M417 157C417 227 310 212 250 271 M250 296V342 M83 363V353Q250 319 417 353V363 M250 342V363" /></g>
+    <g class="junctions"><circle cx="250" cy="279" r="5" /><circle cx="83" cy="364" r="3" /><circle cx="250" cy="364" r="3" /><circle cx="417" cy="364" r="3" /></g>
+  </svg>
+  <div class="domains">
+    {domains.map(({ name, icon, practices }) => <div class="domain">
+      <div class="medallion"><StoryIcon name={icon} /><p class="domain-title">{name}</p></div>
+      <ul class="practices">{practices.map((practice) => <li>{practice}</li>)}</ul>
+    </div>)}
+  </div>
+  <div class="convergence"><span>Engineering leverage</span></div>
+  <ul class="outcomes"><li>Better decisions</li><li>More capable teams</li><li>Stronger delivery</li></ul>
+</figure>
+
+<style>
+  .leadership-diagram { position: relative; margin: 0; isolation: isolate; width: 100%; padding-block: var(--space-6); color: var(--primary); }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .diagram-ribbons { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .ribbon-fill { fill: color-mix(in srgb, var(--primary) 6%, transparent); }
+  .ribbon-line { stroke: var(--secondary); stroke-width: 0.8; opacity: 0.6; }
+  .copper-lines { stroke: var(--accent); stroke-width: 1; }
+  .junctions { fill: var(--accent); }
+  .domains { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); text-align: center; }
+  .medallion { display: flex; flex-direction: column; justify-content: center; align-items: center; aspect-ratio: 1.08; max-width: 8.5rem; margin-inline: auto; width: 100%; border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--background)); border-radius: 48% 48% 45% 45%; background: radial-gradient(ellipse at 35% 20%, var(--background) 10%, color-mix(in srgb, var(--primary) 15%, var(--background)) 90%); box-shadow: inset 0 2px 2px var(--background), 0 5px 0 color-mix(in srgb, var(--primary) 32%, var(--background)), 0 13px 20px -15px var(--primary); }
+  .medallion :global(svg) { width: 1.6rem; height: 1.6rem; margin-bottom: var(--space-2); }
+  .domain-title { font-family: var(--font-serif); font-size: clamp(1.25rem, 1.7vw, 1.5rem); letter-spacing: -0.02em; line-height: 1.1; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  .practices { margin-top: var(--space-4); font-size: 0.75rem; line-height: 1.7; }
+  .convergence { position: relative; display: flex; justify-content: center; margin-top: 4rem; }
+  .convergence span { font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.2; text-align: center; background: color-mix(in srgb, var(--background) 85%, transparent); padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--border); }
+  .outcomes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin-top: 4.5rem; text-align: center; font-size: 0.75rem; font-weight: 400; }
+  @media (min-width: 48rem) and (max-width: 67rem) {
+    .leadership-diagram { max-width: 34rem; margin-inline: auto; }
+  }
+  @media (max-width: 47.99rem) {
+    .leadership-diagram { padding: var(--space-4) 0 0; max-width: 26rem; margin-inline: auto; }
+    .diagram-ribbons { opacity: 0.6; }
+    .diagram-ribbons :is(.copper-lines, .junctions) { display: none; }
+    .domains { grid-template-columns: 1fr; gap: var(--space-6); position: relative; }
+    .domains::before { content: ''; position: absolute; top: 3rem; bottom: -2rem; left: 3.25rem; width: 1px; background: var(--accent); z-index: -1; }
+    .domain { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: var(--space-6); text-align: left; }
+    .medallion { aspect-ratio: 1.15; }
+    .domain-title { font-size: 1.375rem; }
+    .practices { margin: 0; font-size: var(--text-small); }
+    .convergence { margin-top: var(--space-8); padding-top: var(--space-4); }
+    .convergence::before { content: ''; position: absolute; left: 3.25rem; top: 0; right: 50%; height: var(--space-4); border-left: 1px solid var(--accent); border-bottom: 1px solid var(--accent); }
+    .convergence span { position: relative; padding: var(--space-3); font-size: 1.5rem; background: var(--background); }
+    .outcomes { margin: var(--space-6) 0 0 3.25rem; padding: 0 0 0 var(--space-6); border-left: 1px solid var(--accent); grid-template-columns: 1fr; gap: var(--space-4); text-align: left; font-size: var(--text-small); }
+    .outcomes li { position: relative; }
+    .outcomes li::before { content: ''; position: absolute; left: calc(-1 * var(--space-6) - 3px); top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  }
+</style>

@@ -1,8 +1,8 @@
 import type { IslandRegistry } from '@tinacms/astro/experimental';
-import HomeIntro from '../../components/HomeIntro.astro';
+import HomePageContent from '../../components/HomePageContent.astro';
 import PageContent from '../../components/PageContent.astro';
 import EntryContent from '../../components/EntryContent.astro';
-import { getHome, getPage, getWork, getProject } from './data';
+import { getHomepage, getPage, getWork, getProject } from './data';
 
 const pathFromParams = (params: URLSearchParams) => {
   const path = params.get('path') ?? '';
@@ -12,10 +12,13 @@ const pathFromParams = (params: URLSearchParams) => {
 
 export const islands: IslandRegistry = {
   home: {
-    fetch: () => getHome(),
-    component: HomeIntro,
-    wrapper: { tag: 'section', className: 'home-intro' },
-    propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getHome>>).data.page }),
+    fetch: () => getHomepage(),
+    component: HomePageContent,
+    wrapper: { tag: 'div', className: 'homepage' },
+    propsFromData: (result) => {
+      const { data, work, projects, resume } = result as Awaited<ReturnType<typeof getHomepage>>;
+      return { data: data.page, work, projects, resume };
+    },
   },
   page: {
     fetch: (_request, params) => {

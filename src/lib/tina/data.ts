@@ -8,6 +8,14 @@ export const getPage = (relativePath: string) =>
 
 export const getHome = () => getPage('home.md');
 
+export async function getHomepage() {
+  const [home, work, projects, contact] = await Promise.all([
+    // Contact supplies configuration, not a second editable primary document.
+    getHome(), getPublishedWork(), getPublishedProjects(), client.queries.page({ relativePath: 'contact.md' }),
+  ]);
+  return { ...home, work, projects, resume: contact.data.page.resume };
+}
+
 // Only an explicit false is published. Missing draft flags fail closed.
 export const isPublished = (entry: { draft?: boolean | null }) => entry.draft === false;
 

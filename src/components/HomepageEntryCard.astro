@@ -1,0 +1,40 @@
+---
+import { safeHref } from '../lib/links';
+interface Props {
+  entry: { title: string; summary?: string | null; cardTitle?: string | null; cardCategory?: string | null; cardImage?: string | null; cardImageAlt?: string | null; status?: string | null; _sys: { breadcrumbs: string[] } };
+  section: 'work' | 'projects';
+}
+const { entry, section } = Astro.props;
+const href = `/${section}/${entry._sys.breadcrumbs.map(encodeURIComponent).join('/')}/`;
+const image = safeHref(entry.cardImage);
+// The four optimized pack derivatives are the only images with these variants.
+const packed = image && /^\/uploads\/homepage\/(ux-scaling|agentic-delivery|api-migration|crm-strategy)\.webp$/.test(image);
+---
+
+<article class:list={['homepage-card', { 'project-card': section === 'projects' }]}>
+  {image && <div class="card-visual"><img src={image} srcset={packed ? `${image.replace('.webp', '-400.webp')} 400w, ${image} 800w` : undefined} sizes={packed ? '(min-width: 1100px) 210px, (min-width: 768px) 40vw, calc(100vw - 40px)' : undefined} alt={entry.cardImageAlt || ''} width="800" height="450" loading="lazy" decoding="async" /></div>}
+  <div class="card-copy">
+    {entry.cardCategory && <p class="eyebrow">{entry.cardCategory}</p>}
+    <h3><a href={href}>{entry.cardTitle || entry.title}</a></h3>
+    {section === 'projects' && entry.status && <p class="project-status">{entry.status}</p>}
+    {entry.summary && <p class="card-summary">{entry.summary}</p>}
+    <a class="story-link" href={href} aria-label={`${section === 'work' ? 'View case study' : 'Explore project'}: ${entry.cardTitle || entry.title}`}>{section === 'work' ? 'View case study' : 'Explore project'} <span aria-hidden="true">↗</span></a>
+  </div>
+</article>
+
+<style>
+  article { min-width: 0; display: grid; align-items: center; gap: var(--space-6); padding: var(--space-6); border: 1px solid var(--border); background: color-mix(in srgb, var(--background) 80%, white); }
+  .card-visual { min-width: 0; }
+  img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; }
+  .eyebrow { font-size: 0.625rem; font-family: var(--font-sans); font-weight: 500; line-height: 1.8; letter-spacing: 0.08em; }
+  h3 { margin-top: var(--space-3); font-family: var(--font-serif); font-size: clamp(1.625rem, 2vw, 1.875rem); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; }
+  h3 a { text-decoration: none; }
+  h3 a:hover { text-decoration: underline; }
+  .card-summary { margin-top: var(--space-4); font-size: var(--text-support); line-height: 1.75; }
+  .story-link { display: inline-flex; align-items: center; gap: var(--space-3); margin-top: var(--space-3); min-height: 2.75rem; font-size: var(--text-small); font-weight: 400; }
+  .project-status { font-size: var(--text-small); margin-top: var(--space-3); }
+  .project-card { align-items: start; background: none; border: none; border-top: 1px solid var(--border); padding-inline: 0; }
+  @media (min-width: 68rem) {
+    article:not(.project-card) { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); padding: var(--space-6) var(--space-4); gap: var(--space-4); }
+  }
+</style>

@@ -2,7 +2,7 @@
 type: domain-concept
 status: proposed
 title: Personal site design system
-updated: 2026-10-25
+updated: 2026-11-01
 ---
 
 # Personal site design system
@@ -34,7 +34,7 @@ These are current repository decisions, not new proposals:
   replacement palette below; `src/styles/global.css` has **not** yet been
   migrated. Semantic text/surface/interactive pairs remain in CSS; do not copy
   hex values into one-off components. A first scoped application of the
-  replacement palette exists as the opt-in **editorial Work presentation**
+   replacement palette exists as the opt-in **editorial Work presentation**
   (`.editorial-work` token override; PR
   [#25](https://github.com/jpmbvistro/personal-site-v3/pull/25)); site-wide
   migration remains pending.
@@ -204,6 +204,27 @@ Asterism Projects should follow as a distinct section, not compete as a hero CTA
 These decisions fix the **narrative priority and content**, not exact pixel
 geometry, type weights or a particular SVG implementation. Compare real desktop
 and mobile examples before resolving the implementation.
+
+### Homepage implementation — 2026-11-01
+
+The homepage now extends the editorial Work token/font scope rather than defining
+a second palette or shell. This supersedes the earlier *Work-only implementation*
+notes above for the homepage; other routes still await site-wide rollout.
+Native Astro/HTML/SVG provides the People/Product/Systems convergence illustration
+with readable vertical mobile markup, followed by a compact practice transition,
+curated professional Work, Asterism, an original leadership perspective, and a
+deep-green contact invitation. The portrait remains off the homepage.
+
+Tina owns the fixed section content and ordered featured slugs; Astro resolves
+those only against explicitly published entries. Missing or draft selections do
+not create links. Contact remains the source of the résumé URL. The supplied
+Work thumbnails are conceptual illustrations, not project screenshots. Project
+cards are deliberately deferred while no selected public entries exist; publishing
+a draft is a separate owner action, not a visual implementation side effect.
+
+This implements the owner's homepage brief, not a claim that every open #26
+brand decision or the final visual-review gate is complete. See
+[homepage review](../docs/reviews/homepage/README.md) for captures and limitations.
 
 ## Proposed implementations — discuss before treating as final
 

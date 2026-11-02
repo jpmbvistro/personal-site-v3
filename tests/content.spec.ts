@@ -39,8 +39,8 @@ test.describe('collection rendering and publication', () => {
     });
   }
 
-  test('published entries feed home and indexes, while draft routes do not exist', async ({ page, request }) => {
-    for (const route of ['/', '/work/']) {
+  test('published entries feed indexes, while the homepage remains curated and draft routes do not exist', async ({ page, request }) => {
+    for (const route of ['/work/']) {
       await page.goto(route);
       await expect(page.getByRole('link', { name: 'Work rendering fixture' })).toBeVisible();
       await expect(page.getByRole('link', { name: 'Unpublished work fixture' })).toHaveCount(0);
@@ -48,11 +48,16 @@ test.describe('collection rendering and publication', () => {
         await expect(page.getByRole('link', { name: title, exact: true })).toHaveCount(0);
       }
     }
-    for (const route of ['/', '/projects/']) {
+    for (const route of ['/projects/']) {
       await page.goto(route);
       await expect(page.getByRole('link', { name: 'Project rendering fixture' })).toBeVisible();
       await expect(page.getByRole('link', { name: 'Keel', exact: true })).toHaveCount(0);
     }
+    await page.goto('/');
+    await expect(page.getByRole('link', { name: 'Work rendering fixture' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Project rendering fixture' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Unpublished work fixture' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'Keel', exact: true })).toHaveCount(0);
     for (const { slug } of workDrafts) {
       expect((await request.get(`/work/${slug}/`)).status()).toBe(404);
     }
@@ -120,10 +125,8 @@ test.describe('collection rendering and publication', () => {
   });
 });
 
-test('homepage leads to the supplied résumé through Contact', async ({ page }) => {
+test('homepage leads directly to the configured résumé', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Contact & résumé', exact: true }).click();
-  await expect(page).toHaveURL(/\/contact\/$/);
   await page.getByRole('link', { name: 'View résumé' }).click();
   await expect(page).toHaveURL(/\/resume\/$/);
   await expect(page.locator('main h1')).toHaveText('Résumé');
