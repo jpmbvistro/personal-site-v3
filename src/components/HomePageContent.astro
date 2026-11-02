@@ -1,0 +1,101 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { PageQuery } from '../../tina/__generated__/types';
+import type { getHomepage } from '../lib/tina/data';
+import { selectFeatured } from '../lib/homepage';
+import { safeHref } from '../lib/links';
+import Container from './Container.astro';
+import HomeIntro from './HomeIntro.astro';
+import EngineeringLeadershipDiagram from './EngineeringLeadershipDiagram.astro';
+import HomepageEntryCard from './HomepageEntryCard.astro';
+import ButtonLink from './ButtonLink.astro';
+
+interface Props {
+  data: PageQuery['page'];
+  work: Awaited<ReturnType<typeof getHomepage>>['work'];
+  projects: Awaited<ReturnType<typeof getHomepage>>['projects'];
+  resume?: string | null;
+}
+const { data, work, projects, resume } = Astro.props;
+const content = data.homepage;
+const featuredWork = selectFeatured(work, content?.featuredWork);
+const featuredProjects = selectFeatured(projects, content?.featuredProjects);
+---
+
+<Container>
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-copy"><HomeIntro data={data} resume={resume} /></div>
+    <EngineeringLeadershipDiagram />
+  </section>
+  {content?.capabilities && content.capabilities.length > 0 && <section class="capabilities" aria-label="Professional practice" data-tina-field={tinaField(content, 'capabilities')}>
+    {content.capabilities.map((item) => item && <div><h2>{item.title}</h2><p>{item.text}</p></div>)}
+  </section>}
+
+  <section class="home-section selected-work" id="selected-work" aria-labelledby="work-heading">
+    <div class="section-intro" data-tina-field={tinaField(content, 'work')}><p class="eyebrow">{content?.work?.eyebrow}</p><h2 id="work-heading">{content?.work?.title}</h2><p>{content?.work?.text}</p></div>
+    <div class="work-grid" data-tina-field={tinaField(content, 'featuredWork')}>{featuredWork.map((entry) => <HomepageEntryCard entry={entry} section="work" />)}</div>
+    {featuredWork.length > 0 && <a class="all-work" href="/work/">Explore all work <span aria-hidden="true">→</span></a>}
+  </section>
+
+  <section class="home-section projects" aria-labelledby="projects-heading">
+    <div class="section-intro" data-tina-field={tinaField(content, 'projects')}><p class="eyebrow">{content?.projects?.eyebrow}</p><h2 id="projects-heading">{content?.projects?.title}</h2><p>{content?.projects?.text}</p></div>
+    {featuredProjects.length > 0 ? <div class="project-grid" data-tina-field={tinaField(content, 'featuredProjects')}>{featuredProjects.map((entry) => <HomepageEntryCard entry={entry} section="projects" />)}</div> : <p class="project-note" data-tina-field={tinaField(content?.projects, 'emptyText')}>{content?.projects?.emptyText}</p>}
+  </section>
+
+  {content?.perspective?.text && <section class="home-section perspective" aria-labelledby="perspective-heading">
+    <h2 class="eyebrow" id="perspective-heading" data-tina-field={tinaField(content.perspective, 'eyebrow')}>{content.perspective.eyebrow}</h2>
+    <p class="perspective-statement" data-tina-field={tinaField(content.perspective, 'text')}>{content.perspective.text}</p>
+    <div class="perspective-details"><dl data-tina-field={tinaField(content.perspective, 'principles')}>{content.perspective.principles?.map((item) => item && <div><dt>{item.title}</dt><dd>{item.text}</dd></div>)}</dl><a href="/about/" data-tina-field={tinaField(content.perspective, 'linkLabel')}>{content.perspective.linkLabel} <span aria-hidden="true">↗</span></a></div>
+    <svg class="perspective-ribbon" viewBox="0 0 1000 160" fill="none" aria-hidden="true">{[0, 10, 20, 30].map((offset) => <path d={`M0 ${130 + offset}C300 ${-140 + offset} 470 ${280 + offset} 1000 ${20 + offset}`} />)}</svg>
+  </section>}
+</Container>
+
+{content?.contact && <section class="closing" aria-labelledby="contact-heading" data-tina-field={tinaField(content, 'contact')}>
+  <Container class="closing-inner"><div><h2 id="contact-heading">{content.contact.title}</h2><p>{content.contact.text}</p></div>{safeHref(content.contact.url) && content.contact.label && <ButtonLink href={safeHref(content.contact.url)} variant="secondary">{content.contact.label} <span aria-hidden="true">↗</span></ButtonLink>}</Container>
+  <svg class="closing-ribbon" viewBox="0 0 900 300" fill="none" aria-hidden="true">{[0, 12, 24, 36, 48].map((offset) => <path d={`M0 ${260 + offset}C320 ${-180 + offset} 410 ${500 + offset} 900 ${20 + offset}`} />)}</svg>
+</section>}
+
+<style>
+  .hero { display: grid; align-items: center; gap: var(--space-12); padding-block: clamp(3rem, 7vw, 6.5rem); }
+  .hero-copy { min-width: 0; }
+  .capabilities { display: grid; gap: var(--space-6); padding-block: var(--space-8); border-block: 1px solid var(--border); }
+  .capabilities h2 { font-size: 1.5rem; }
+  .capabilities p { margin-top: var(--space-2); font-size: var(--text-support); max-width: 38ch; }
+  .home-section { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .home-section + .home-section { border-top: 1px solid var(--border); }
+  .section-intro { margin-bottom: var(--space-8); }
+  .eyebrow { font-family: var(--font-sans); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.15em; }
+  .section-intro h2 { margin-block: var(--space-4); }
+  .section-intro > p:last-child { max-width: 76ch; }
+  .work-grid, .project-grid { display: grid; gap: var(--space-6); }
+  .all-work { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: var(--space-6); gap: var(--space-4); font-size: var(--text-small); }
+  .project-note { max-width: 65ch; padding-left: var(--space-6); border-left: 2px solid var(--accent); color: var(--muted-foreground); font-size: var(--text-support); }
+  .perspective { position: relative; isolation: isolate; overflow: hidden; }
+  .perspective-statement { margin-block: var(--space-8); max-width: 41ch; padding-left: var(--space-6); border-left: 2px solid var(--accent); font-family: var(--font-serif); font-size: clamp(1.875rem, 3vw, 2.75rem); line-height: 1.25; letter-spacing: -0.02em; color: var(--primary); }
+  .perspective-details { display: grid; gap: var(--space-8); margin-left: var(--space-6); }
+  dl { display: grid; gap: var(--space-6); margin: 0; }
+  dt { font-family: var(--font-serif); font-size: 1.375rem; color: var(--primary); }
+  dd { margin: var(--space-2) 0 0; font-size: var(--text-support); }
+  .perspective-details > a { align-self: end; padding-block: var(--space-3); font-size: var(--text-small); }
+  .perspective-ribbon { position: absolute; z-index: -1; bottom: 0; right: -10%; width: 90%; stroke: var(--border); opacity: 0.45; }
+  .closing { position: relative; isolation: isolate; overflow: hidden; background: var(--primary); color: var(--primary-foreground); padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .closing :global(.closing-inner) { display: grid; align-items: center; gap: var(--space-8); }
+  .closing h2 { color: inherit; font-size: clamp(3rem, 5vw, 4.5rem); }
+  .closing p { margin-top: var(--space-6); max-width: 65ch; }
+  .closing :global(.button-link) { justify-self: start; background: var(--background); color: var(--primary); border-color: var(--background); --ring: var(--background); font-size: var(--text-small); }
+  .closing :global(.button-link:hover) { background: var(--secondary); }
+  .closing span { margin-left: var(--space-6); }
+  .closing-ribbon { position: absolute; right: -15%; bottom: -10%; width: 65%; height: 100%; z-index: -1; stroke: var(--primary-foreground); opacity: 0.08; }
+  @media (min-width: 48rem) {
+    .capabilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .capabilities > div + div { border-left: 1px solid var(--border); padding-left: var(--space-6); }
+    .work-grid, .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .closing :global(.closing-inner) { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+  @media (min-width: 60rem) {
+    .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--space-8); }
+    .hero :global(.leadership-diagram) { margin-top: var(--space-8); }
+    .perspective-details { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+</style>

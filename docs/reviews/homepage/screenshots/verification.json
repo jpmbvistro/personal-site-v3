@@ -1,0 +1,462 @@
+[
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".introduction": 10.713581831300091,
+      ".section-intro > .eyebrow": 10.713581831300091,
+      ".card-summary": 11.074445743046267,
+      ".practices": 11.280745629110825,
+      ".outcomes": 11.280745629110825,
+      ".perspective-statement": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825,
+      "domain labels / darkest gradient stop": 8.616160509707052,
+      "decorative all-work arrow": 11.280745629110825
+    },
+    "workLinks": [
+      "/work/scaling-ux-capability/",
+      "/work/ai-assisted-delivery/",
+      "/work/api-migration-confidence/",
+      "/work/nonprofit-crm-selection/"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/ux-scaling-400.webp",
+        "loaded": true,
+        "width": 230
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/agentic-delivery-400.webp",
+        "loaded": true,
+        "width": 230
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/api-migration-400.webp",
+        "loaded": true,
+        "width": 230
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/crm-strategy-400.webp",
+        "loaded": true,
+        "width": 230
+      }
+    ],
+    "ctaBottom": 738.90625,
+    "vitals": {
+      "cls": 0,
+      "lcp": 52,
+      "domContentLoadedMs": 16.200000047683716,
+      "transferredBytes": 213899
+    },
+    "scripts": [],
+    "focus": [
+      {
+        "target": "Explore selected work↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(40, 51, 43)",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 237, 227)",
+        "focused": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".domain:nth-child(1) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(2) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(3) > .medallion > .domain-title"
+            ],
+            [
+              ".all-work > span"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".introduction": 10.713581831300091,
+      ".section-intro > .eyebrow": 10.713581831300091,
+      ".card-summary": 11.074445743046267,
+      ".practices": 11.280745629110825,
+      ".outcomes": 11.280745629110825,
+      ".perspective-statement": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825,
+      "domain labels / darkest gradient stop": 8.616160509707052,
+      "decorative all-work arrow": 11.280745629110825
+    },
+    "workLinks": [
+      "/work/scaling-ux-capability/",
+      "/work/ai-assisted-delivery/",
+      "/work/api-migration-confidence/",
+      "/work/nonprofit-crm-selection/"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/ux-scaling-400.webp",
+        "loaded": true,
+        "width": 300
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/agentic-delivery-400.webp",
+        "loaded": true,
+        "width": 300
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/api-migration-400.webp",
+        "loaded": true,
+        "width": 300
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/crm-strategy-400.webp",
+        "loaded": true,
+        "width": 300
+      }
+    ],
+    "ctaBottom": 706.375,
+    "vitals": {
+      "cls": 0,
+      "lcp": 48,
+      "domContentLoadedMs": 14.199999928474426,
+      "transferredBytes": 213899
+    },
+    "scripts": [],
+    "focus": [
+      {
+        "target": "Explore selected work↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(40, 51, 43)",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 237, 227)",
+        "focused": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".domain:nth-child(1) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(2) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(3) > .medallion > .domain-title"
+            ],
+            [
+              ".all-work > span"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".introduction": 10.713581831300091,
+      ".section-intro > .eyebrow": 10.713581831300091,
+      ".card-summary": 11.074445743046267,
+      ".practices": 11.280745629110825,
+      ".outcomes": 11.280745629110825,
+      ".perspective-statement": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825,
+      "domain labels / darkest gradient stop": 8.616160509707052,
+      "decorative all-work arrow": 11.280745629110825
+    },
+    "workLinks": [
+      "/work/scaling-ux-capability/",
+      "/work/ai-assisted-delivery/",
+      "/work/api-migration-confidence/",
+      "/work/nonprofit-crm-selection/"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/ux-scaling-400.webp",
+        "loaded": true,
+        "width": 291.265625
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/agentic-delivery-400.webp",
+        "loaded": true,
+        "width": 291.28125
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/api-migration-400.webp",
+        "loaded": true,
+        "width": 291.265625
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/crm-strategy-400.webp",
+        "loaded": true,
+        "width": 291.28125
+      }
+    ],
+    "ctaBottom": 528.703125,
+    "vitals": {
+      "cls": 0,
+      "lcp": 40,
+      "domContentLoadedMs": 16.100000023841858,
+      "transferredBytes": 213899
+    },
+    "scripts": [],
+    "focus": [
+      {
+        "target": "Explore selected work↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(40, 51, 43)",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 237, 227)",
+        "focused": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".domain:nth-child(1) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(2) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(3) > .medallion > .domain-title"
+            ],
+            [
+              ".all-work > span"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".introduction": 10.713581831300091,
+      ".section-intro > .eyebrow": 10.713581831300091,
+      ".card-summary": 11.074445743046267,
+      ".practices": 11.280745629110825,
+      ".outcomes": 11.280745629110825,
+      ".perspective-statement": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825,
+      "domain labels / darkest gradient stop": 8.616160509707052,
+      "decorative all-work arrow": 11.280745629110825
+    },
+    "workLinks": [
+      "/work/scaling-ux-capability/",
+      "/work/ai-assisted-delivery/",
+      "/work/api-migration-confidence/",
+      "/work/nonprofit-crm-selection/"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/ux-scaling.webp",
+        "loaded": true,
+        "width": 409.03125
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/agentic-delivery.webp",
+        "loaded": true,
+        "width": 409.046875
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/api-migration.webp",
+        "loaded": true,
+        "width": 409.03125
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/crm-strategy.webp",
+        "loaded": true,
+        "width": 409.046875
+      }
+    ],
+    "ctaBottom": 598.8125,
+    "vitals": {
+      "cls": 0,
+      "lcp": 780,
+      "domContentLoadedMs": 14.900000095367432,
+      "transferredBytes": 240129
+    },
+    "scripts": [],
+    "focus": [
+      {
+        "target": "Explore selected work↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(40, 51, 43)",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 237, 227)",
+        "focused": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".domain:nth-child(1) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(2) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(3) > .medallion > .domain-title"
+            ],
+            [
+              ".all-work > span"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".introduction": 10.713581831300091,
+      ".section-intro > .eyebrow": 10.713581831300091,
+      ".card-summary": 11.074445743046267,
+      ".practices": 11.280745629110825,
+      ".outcomes": 11.280745629110825,
+      ".perspective-statement": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825,
+      "domain labels / darkest gradient stop": 8.616160509707052,
+      "decorative all-work arrow": 11.280745629110825
+    },
+    "workLinks": [
+      "/work/scaling-ux-capability/",
+      "/work/ai-assisted-delivery/",
+      "/work/api-migration-confidence/",
+      "/work/nonprofit-crm-selection/"
+    ],
+    "images": [
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/ux-scaling-400.webp",
+        "loaded": true,
+        "width": 205.59375
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/agentic-delivery-400.webp",
+        "loaded": true,
+        "width": 205.59375
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/api-migration-400.webp",
+        "loaded": true,
+        "width": 205.59375
+      },
+      {
+        "src": "http://127.0.0.1:4324/uploads/homepage/crm-strategy-400.webp",
+        "loaded": true,
+        "width": 205.59375
+      }
+    ],
+    "ctaBottom": 729.140625,
+    "vitals": {
+      "cls": 0,
+      "lcp": 40,
+      "domContentLoadedMs": 13.200000047683716,
+      "transferredBytes": 213899
+    },
+    "scripts": [],
+    "focus": [
+      {
+        "target": "Explore selected work↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(40, 51, 43)",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "color": "rgb(243, 237, 227)",
+        "focused": true
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".domain:nth-child(1) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(2) > .medallion > .domain-title"
+            ],
+            [
+              ".domain:nth-child(3) > .medallion > .domain-title"
+            ],
+            [
+              ".all-work > span"
+            ]
+          ]
+        }
+      ]
+    }
+  }
+]

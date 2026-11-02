@@ -1,0 +1,74 @@
+[
+  {
+    "source": "work-thumbnails/ux-scaling-thumbnail-1600x900.png",
+    "sha256": "b7bd9d53e6e08aad4d656eee265b3225c58272eace17c97f2f9c041ca63e6f4f",
+    "outputs": [
+      {
+        "path": "public/uploads/homepage/ux-scaling-400.webp",
+        "width": 400,
+        "height": 225,
+        "bytes": 3668
+      },
+      {
+        "path": "public/uploads/homepage/ux-scaling.webp",
+        "width": 800,
+        "height": 450,
+        "bytes": 9968
+      }
+    ]
+  },
+  {
+    "source": "work-thumbnails/agentic-delivery-thumbnail-1600x900.png",
+    "sha256": "1b298fea9aa698f2e8611b62599f8a392134d9fc58aceee0bfe7b6e9ca443d77",
+    "outputs": [
+      {
+        "path": "public/uploads/homepage/agentic-delivery-400.webp",
+        "width": 400,
+        "height": 225,
+        "bytes": 2906
+      },
+      {
+        "path": "public/uploads/homepage/agentic-delivery.webp",
+        "width": 800,
+        "height": 450,
+        "bytes": 8412
+      }
+    ]
+  },
+  {
+    "source": "work-thumbnails/api-migration-thumbnail-1600x900.png",
+    "sha256": "17bc85a32cf2aec573661f0949a7a9108a8a85d60dad8ed9dff89dff223e8ad1",
+    "outputs": [
+      {
+        "path": "public/uploads/homepage/api-migration-400.webp",
+        "width": 400,
+        "height": 225,
+        "bytes": 4314
+      },
+      {
+        "path": "public/uploads/homepage/api-migration.webp",
+        "width": 800,
+        "height": 450,
+        "bytes": 11060
+      }
+    ]
+  },
+  {
+    "source": "work-thumbnails/crm-strategy-thumbnail-1600x900.png",
+    "sha256": "984b76bdd84131066670e97a77944a6c6d8c9286bd31094241c29731ae47ea72",
+    "outputs": [
+      {
+        "path": "public/uploads/homepage/crm-strategy-400.webp",
+        "width": 400,
+        "height": 225,
+        "bytes": 5070
+      },
+      {
+        "path": "public/uploads/homepage/crm-strategy.webp",
+        "width": 800,
+        "height": 450,
+        "bytes": 12748
+      }
+    ]
+  }
+]

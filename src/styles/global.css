@@ -18,34 +18,37 @@
 
 :root {
   color-scheme: light;
-  --ink: #192b39;
-  --ivory: #f5f2eb;
-  --evergreen: #386e67;
-  --copper: #c7815d;
+  --charcoal: #343432;
+  --ivory: #f3ede3;
+  --deep-green: #28332b;
+  --copper: #b17750;
+  --stone: #d2c6b8;
 
   /* Semantic pairs stay compatible with shadcn without adding a UI runtime. */
   --background: var(--ivory);
-  --foreground: var(--ink);
-  --primary: var(--evergreen);
+  --foreground: var(--charcoal);
+  --primary: var(--deep-green);
   --primary-foreground: var(--ivory);
-  --primary-hover: #2b5751;
-  --secondary: #e8e5dc;
-  --secondary-foreground: var(--ink);
-  --muted: #ebe8e0;
-  --muted-foreground: #52616a;
+  --primary-hover: var(--foreground);
+  --secondary: var(--stone);
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--secondary) 30%, var(--background));
+  --muted-foreground: var(--foreground);
   --accent: var(--copper);
-  --accent-foreground: var(--ink);
+  --accent-foreground: var(--foreground);
   --accent-strong: #8b5738;
   --accent-strong-foreground: var(--background);
-  --border: #cbcfc7;
-  --ring: var(--evergreen);
+  --border: var(--stone);
+  --ring: var(--primary);
 
-  --font-sans: "Avenir Next", Avenir, "Segoe UI", sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  --font-serif: Newsreader, "Iowan Old Style", Georgia, serif;
   --font-mono: "SFMono-Regular", Consolas, monospace;
   --font-weight-body: 300;
   --text-small: 0.875rem;
-  --text-body: 0.75rem;
+  --text-body: 1rem;
+  --text-support: 0.875rem;
+  --text-annotation: 0.875rem;
   --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.4rem);
   --text-heading: clamp(2rem, 1.5rem + 2vw, 3.5rem);
   --text-display: clamp(3.5rem, 2.25rem + 5vw, 7rem);
@@ -59,8 +62,7 @@
   --space-16: 4rem;
   --space-24: 6rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --content-width: 72rem;
-  --content-width-wide: 90rem;
+  --content-width: 90rem;
   --reading-width: 42rem;
   --radius: 0.25rem;
   --motion-fast: 150ms;
@@ -92,37 +94,8 @@
     scroll-padding-top: var(--space-8);
   }
 
-  body { margin: 0; }
-  /* #26's accepted direction, first applied to the opt-in Work presentation.
-     The shared shell is retained; site-wide migration remains in #26. */
-  body.editorial-work {
-    --background: #f3ede3;
-    --foreground: #343432;
-    --primary: #28332b;
-    --primary-foreground: var(--background);
-    --primary-hover: var(--foreground);
-    --secondary: #d2c6b8;
-    --secondary-foreground: var(--foreground);
-    --muted: color-mix(in srgb, var(--secondary) 30%, var(--background));
-    --muted-foreground: var(--foreground);
-    --accent: #b17750;
-    --accent-foreground: var(--foreground);
-    --accent-strong-foreground: var(--background);
-    --border: var(--secondary);
-    --ring: var(--primary);
-    --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
-    --font-serif: Newsreader, "Iowan Old Style", Georgia, serif;
-    /* Readable editorial copy without changing the rest of the site's scale. */
-    --text-body: 1rem;
-    --text-support: 0.875rem;
-    --text-annotation: 0.875rem;
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans);
-  }
-  .editorial-work :is(h1, h2, h3) { color: var(--primary); }
-  .editorial-work .eyebrow { font-size: 0.8125rem; }
-  .editorial-work .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
+  body { margin: 0; background: var(--background); color: var(--foreground); }
+  h1, h2, h3 { color: var(--primary); }
   ::selection { background: var(--secondary); color: var(--foreground); }
   h1, h2, h3, p { margin: 0; }
   p { font-size: var(--text-body); }
@@ -145,12 +118,13 @@
   .eyebrow {
     color: var(--muted-foreground);
     font-family: var(--font-mono);
-    font-size: var(--text-small);
+    font-size: 0.8125rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
   .prose { max-width: var(--reading-width); font-size: var(--text-body); overflow-wrap: anywhere; }
+  .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
   .prose > * + * { margin-top: var(--space-4); }
   /* Restore rich-text markers removed by Tailwind's reset, not navigation lists. */
   .prose ul { list-style-type: disc; }

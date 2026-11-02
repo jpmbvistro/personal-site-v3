@@ -19,11 +19,3 @@ const { data, preview = false } = Astro.props;
     <div class="next-path"><a href="/projects/">Explore projects →</a><a href="/contact/">Get in touch →</a></div>
   </Container>
 </BaseLayout>
-
-<style>
-  /* Give these diagram-led stories room for relationships and align the shared
-     shell with their canvas. Other Work entries keep the original measure. */
-  :global(body:has(.api-decision-diagram, .harness-diagram, .crm-transformation)) {
-    --content-width: var(--content-width-wide);
-  }
-</style>

@@ -34,4 +34,5 @@ const entries = metrics?.filter((metric) => metric?.value && metric?.label) ?? [
   strong { order: -1; font-family: var(--font-serif); font-size: var(--text-heading); font-weight: 400; color: var(--primary); line-height: 1.2; overflow-wrap: anywhere; }
   span { color: var(--muted-foreground); font-size: var(--text-support, var(--text-body)); }
   .metric-icon { display: inline-flex; align-items: center; justify-content: center; align-self: flex-start; order: -2; width: 3.5rem; height: 3.5rem; margin-bottom: var(--space-3); border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); }
+  .metric-icon:has(.ux-artwork) { width: 6rem; height: 6rem; border: 0; border-radius: 0; }
 </style>

@@ -1,8 +1,12 @@
 ---
+import UxArtwork from './UxArtwork.astro';
 interface Props { name?: string | null }
 const { name = 'teams' } = Astro.props;
+const artwork = new Set(['specialists', 'embedded', 'distributed', 'capacity', 'skepticism', 'research', 'integration', 'partnership']);
+const uxName = name?.startsWith('ux-') ? name.slice(3) : undefined;
 ---
 
+{uxName && artwork.has(uxName) ? <UxArtwork name={uxName} /> :
 <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
   {name === 'specialist' ? <>
     <circle cx="12" cy="9" r="4" /><path d="M4 28v-6a8 8 0 0 1 16 0v6 M8 28v-6 M16 28v-6 M25 4l1.5 4.5H31l-3.5 3 1.3 4.5-3.8-2.7-3.8 2.7 1.3-4.5-3.5-3h4.5Z" />
@@ -19,6 +23,6 @@ const { name = 'teams' } = Astro.props;
   </> : <>
     <circle cx="16" cy="8" r="4" /><circle cx="5" cy="11" r="3" /><circle cx="27" cy="11" r="3" /><path d="M9 28v-6a7 7 0 0 1 14 0v6 M2 27v-6a5 5 0 0 1 5-5 M30 27v-6a5 5 0 0 0-5-5 M13 28v-6 M19 28v-6" />
   </>}
-</svg>
+</svg>}
 
 <style>svg { display: block; width: 2rem; height: 2rem; flex: none; }</style>

@@ -54,6 +54,29 @@ test('in-context edit previews before saving to the Git-backed Markdown file', a
   }
 });
 
+test('homepage leadership narrative previews and saves through the fixed Tina content group', async ({ page }) => {
+  const path = new URL('../content/pages/home.md', import.meta.url);
+  const original = await readFile(path, 'utf8');
+  try {
+    await openEditor(page);
+    const statement = page.frameLocator('iframe').locator('.perspective-statement');
+    await statement.click();
+    await page.getByRole('button', { name: 'Homepage content (Home only)', exact: true }).click();
+    await page.getByRole('button', { name: 'Leadership perspective', exact: true }).click();
+    const field = page.locator('textarea[name="homepage.perspective.text"]');
+    await expect(field).toBeVisible();
+    const edited = `${await field.inputValue()} Preview test.`;
+    await field.fill(edited);
+    await expect(statement).toHaveText(edited);
+    expect(await readFile(path, 'utf8')).toBe(original);
+    await page.getByRole('button', { name: 'Save', exact: true }).click();
+    await expect.poll(() => readFile(path, 'utf8')).toContain('Preview test.');
+  } finally {
+    await page.close();
+    await writeContent(path, original);
+  }
+});
+
 for (const { route, file } of [
   ...workStories.map(({ slug }) => ({ route: `/preview/work/${slug}/`, file: `../content/work/${slug}.mdx` })),
   { route: '/preview/projects/keel/', file: '../content/projects/keel.mdx' },

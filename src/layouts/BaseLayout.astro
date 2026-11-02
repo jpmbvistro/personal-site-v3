@@ -34,7 +34,9 @@ const canonical = !excludeFromIndex && Astro.site
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     {canonical && <link rel="sitemap" href="/sitemap-index.xml" />}
-    <meta name="theme-color" content={editorial ? '#F3EDE3' : '#F5F2EB'} />
+    <meta name="theme-color" content="#F3EDE3" />
+    <link rel="preload" href="/fonts/newsreader-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>

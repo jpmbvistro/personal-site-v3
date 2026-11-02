@@ -7,6 +7,12 @@ const icon: TinaField = { type: 'string', name: 'icon', label: 'Illustration', o
   { value: 'research', label: 'Research / evidence' },
   { value: 'system', label: 'Design system' },
   { value: 'learning', label: 'Learning / guidance' },
+  { value: 'ux-distributed', label: 'UX artwork — distributed ownership' },
+  { value: 'ux-capacity', label: 'UX artwork — limited specialist capacity' },
+  { value: 'ux-skepticism', label: 'UX artwork — skepticism / user value' },
+  { value: 'ux-research', label: 'UX artwork — research artifacts' },
+  { value: 'ux-integration', label: 'UX artwork — integration / upgrade path' },
+  { value: 'ux-partnership', label: 'UX artwork — specialist partnership' },
 ] };
 
 const calloutFields: TinaField[] = [
@@ -181,6 +187,10 @@ const entryFields: TinaField[] = [
   { type: 'string', name: 'title', label: 'Title', required: true, isTitle: true },
   { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
   { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
+  { type: 'string', name: 'cardTitle', label: 'Card title (optional)', description: 'Uses the story title when omitted.' },
+  { type: 'string', name: 'cardCategory', label: 'Card category (optional)' },
+  { type: 'image', name: 'cardImage', label: 'Card artwork / public project artifact (optional)' },
+  { type: 'string', name: 'cardImageAlt', label: 'Card image description', description: 'Describe genuine project artifacts. Leave empty for decorative Work artwork already explained by the card.' },
   body,
 ];
 
@@ -190,6 +200,49 @@ const links: TinaField = {
   fields: [
     { type: 'string', name: 'label', label: 'Label', required: true },
     { type: 'string', name: 'url', label: 'URL', required: true },
+  ],
+};
+
+// One fixed homepage composition, not a page builder. Slugs resolve only against
+// published records; missing, duplicate and draft selections never create links.
+const homepage: TinaField = {
+  type: 'object', name: 'homepage', label: 'Homepage content (Home only)',
+  fields: [
+    { type: 'string', name: 'eyebrow', label: 'Hero eyebrow' },
+    { type: 'object', name: 'primaryAction', label: 'Hero primary action', fields: [
+      { type: 'string', name: 'label', label: 'Label' },
+      { type: 'string', name: 'url', label: 'Destination' },
+    ] },
+    { type: 'string', name: 'resumeLabel', label: 'Résumé action label', description: 'Uses the Résumé URL on Contact; falls back to Get in touch if unset or unsafe.' },
+    { type: 'object', name: 'capabilities', label: 'Capability transition', list: true,
+      ui: { itemProps: (item) => ({ label: item?.title || 'Capability' }) },
+      fields: [
+        { type: 'string', name: 'title', label: 'Heading' },
+        { type: 'string', name: 'text', label: 'Description', ui: { component: 'textarea' } },
+      ] },
+    { type: 'string', name: 'featuredWork', label: 'Featured Work slugs (in order)', list: true, description: 'Filename without .mdx; drafts and missing entries are omitted. No automatic selection.' },
+    { type: 'string', name: 'featuredProjects', label: 'Featured Project slugs (in order)', list: true, description: 'Only explicitly published entries appear. No automatic selection.' },
+    ...['work', 'projects'].map((name): TinaField => ({ type: 'object', name, label: name === 'work' ? 'Selected Work introduction' : 'Asterism introduction', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading' },
+      { type: 'string', name: 'text', label: 'Introduction', ui: { component: 'textarea' } },
+      ...(name === 'projects' ? [{ type: 'string', name: 'emptyText', label: 'When no selected projects are published', ui: { component: 'textarea' } } satisfies TinaField] : []),
+    ] })),
+    { type: 'object', name: 'perspective', label: 'Leadership perspective', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'text', label: 'Original positioning statement', ui: { component: 'textarea' } },
+      { type: 'object', name: 'principles', label: 'Supporting descriptors', list: true, fields: [
+        { type: 'string', name: 'title', label: 'Heading' },
+        { type: 'string', name: 'text', label: 'Description' },
+      ] },
+      { type: 'string', name: 'linkLabel', label: 'About link label' },
+    ] },
+    { type: 'object', name: 'contact', label: 'Contact and closing', fields: [
+      { type: 'string', name: 'title', label: 'Heading' },
+      { type: 'string', name: 'text', label: 'Invitation', ui: { component: 'textarea' } },
+      { type: 'string', name: 'label', label: 'Action label' },
+      { type: 'string', name: 'url', label: 'Action destination' },
+    ] },
   ],
 };
 
@@ -218,6 +271,7 @@ export default {
           body,
           links,
           { type: 'string', name: 'resume', label: 'Résumé URL (optional)', description: 'A résumé page or public-safe file URL, such as /resume/ or /uploads/resume.pdf.' },
+          homepage,
         ],
       },
       {

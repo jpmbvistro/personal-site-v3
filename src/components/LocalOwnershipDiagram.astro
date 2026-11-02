@@ -22,8 +22,8 @@ const teams = Array.from({ length: 12 });
       {stage.text && <p>{stage.text}</p>}
       <!-- On narrow screens the existing symbols join the operating sequence,
            instead of repeating a second specialist-to-team diagram below it. -->
-      {index === 0 && <div class="stage-context"><StoryIcon name="specialist" /><span>{specialistsLabel}</span><p class="resources-label">{resourcesLabel}</p></div>}
-      {index === 1 && <div class="stage-context"><StoryIcon name="teams" /><span>{participantsLabel}</span></div>}
+      {index === 0 && <div class="stage-context"><span class="stage-artwork"><StoryIcon name="ux-specialists" /></span><span>{specialistsLabel}</span><p class="resources-label">{resourcesLabel}</p></div>}
+      {index === 1 && <div class="stage-context"><span class="stage-artwork"><StoryIcon name="ux-embedded" /></span><span>{participantsLabel}</span></div>}
       {index === 3 && <div class="stage-context"><div class="team-dots" aria-hidden="true">{teams.map(() => <span />)}</div><span>{teamsLabel}</span></div>}
     </li>)}
   </ol>}
@@ -31,12 +31,12 @@ const teams = Array.from({ length: 12 });
     <!-- Connectors are anchored to the fixed-height symbol lane, never to labels. -->
     <div class="ownership-flow">
       <div class="flow-node specialist-node">
-        <div class="node-symbol"><span class="round-node"><StoryIcon name="specialist" /></span></div>
+        <div class="node-symbol"><span class="round-node"><StoryIcon name="ux-specialists" /></span></div>
         <strong>{specialistsLabel}</strong><p class="resources-label">{resourcesLabel}</p>
       </div>
       <div class="flow-node participant-node">
         <div class="node-symbol">
-          <span class="round-node"><StoryIcon name="teams" /></span>
+          <span class="round-node"><StoryIcon name="ux-embedded" /></span>
           <svg class="team-connections" viewBox="0 0 100 80" preserveAspectRatio="none" aria-hidden="true">
             <path d="M0 40C35 40 65 22 100 22 M0 40C35 40 65 58 100 58" />
           </svg>
@@ -51,8 +51,8 @@ const teams = Array.from({ length: 12 });
   </div>
   <!-- Retain the relationship explanation when a block has no authored stages. -->
   {steps.length === 0 && <div class="diagram-mobile">
-    <div class="mobile-node"><StoryIcon name="specialist" /><strong>{specialistsLabel}</strong><p class="resources-label">{resourcesLabel}</p></div>
-    <div class="mobile-node"><StoryIcon name="teams" /><strong>{participantsLabel}</strong></div>
+    <div class="mobile-node"><span class="stage-artwork"><StoryIcon name="ux-specialists" /></span><strong>{specialistsLabel}</strong><p class="resources-label">{resourcesLabel}</p></div>
+    <div class="mobile-node"><span class="stage-artwork"><StoryIcon name="ux-embedded" /></span><strong>{participantsLabel}</strong></div>
     <div class="mobile-node"><div class="team-dots" aria-hidden="true">{teams.map(() => <span />)}</div><strong>{teamsLabel}</strong></div>
   </div>}
   <figcaption>{caption}</figcaption>
@@ -67,10 +67,11 @@ const teams = Array.from({ length: 12 });
   .approach-stages strong { font: 400 1.4rem/1.2 var(--font-serif); }
   .approach-stages p { margin-top: var(--space-2); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
   .stage-context { display: none; }
+  .stage-artwork { display: block; width: 4rem; height: 4rem; flex: none; }
   .ownership-flow { --flow-gap: var(--space-8); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--flow-gap); margin-block: var(--space-8); }
   .flow-node { min-width: 0; text-align: center; }
   .node-symbol { position: relative; display: grid; place-items: center; height: 5rem; margin-bottom: var(--space-3); }
-  .round-node { display: grid; place-items: center; width: 5rem; height: 5rem; border: 1px solid var(--accent); background: var(--background); border-radius: 50%; }
+  .round-node { display: grid; place-items: center; width: 5rem; height: 5rem; padding: var(--space-2); border: 1px solid var(--accent); background: var(--background); border-radius: 50%; }
   .specialist-node .node-symbol::after { content: ''; position: absolute; left: calc(50% + 2.5rem); right: calc(-50% - var(--flow-gap) + 2.5rem); top: 50%; border-top: 1px solid var(--accent); }
   .team-connections { position: absolute; top: 0; left: calc(50% + 2.5rem); width: calc(100% + var(--flow-gap) - 2.5rem - 2.05rem); max-width: none; height: 5rem; fill: none; stroke: var(--accent); stroke-width: 1.2; pointer-events: none; }
   strong { color: var(--primary); font-weight: 500; line-height: 1.35; }

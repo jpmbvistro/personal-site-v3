@@ -112,6 +112,17 @@ try {
     const listing = await readFile(new URL(`../dist/client/${route}index.html`, import.meta.url), 'utf8');
     for (const draft of draftRoutes) assert.ok(!listing.includes(`href="/${draft}/"`), `Listing must exclude ${draft}`);
   }
+  const home = await readFile(new URL('../dist/client/index.html', import.meta.url), 'utf8');
+  const featuredWork = [...new Set([...home.matchAll(/href="\/work\/([^"/]+)\/"/g)].map((match) => match[1]))];
+  assert.deepEqual(featuredWork, ['scaling-ux-capability', 'ai-assisted-delivery', 'api-migration-confidence', 'nonprofit-crm-selection'].filter((slug) => !workDrafts.includes(slug)));
+  assert.doesNotMatch(home, /static-fixture|static-unpublished|<astro-island/);
+  assert.match(home, /href="#selected-work"/);
+  assert.match(home, /href="\/resume\/"/);
+  assert.match(home, /leadership-explanation/);
+  assert.match(home, /Engineering leverage/);
+  for (const image of ['ux-scaling', 'agentic-delivery', 'api-migration', 'crm-strategy']) {
+    for (const suffix of ['', '-400']) await access(new URL(`../dist/client/uploads/homepage/${image}${suffix}.webp`, import.meta.url));
+  }
 
   // Keep a real local read API available so draft rejection cannot pass merely
   // because the production renderer failed to contact its CMS.
