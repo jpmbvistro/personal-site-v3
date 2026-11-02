@@ -1,104 +1,170 @@
 ---
-title: Changing the options in a nonprofit technology decision
+title: Choosing the right technology by changing the available options.
 draft: false
-summary: 'I combined donor-based financial modeling with vendor negotiation to help a nonprofit secure an affordable fundraising platform. The decision supported a successful migration, and actual first-year fundraising activity confirmed meaningful transaction-fee savings.'
-organizationLabel: Impact Innovations
-role: CTO & Co-Founder
+summary: |
+  A resource-constrained nonprofit needed a fundraising CRM that could support its immediate work without introducing an unaffordable recurring expense.
+
+  Two platforms appeared viable, but neither offered an acceptable balance of cost and capability. I developed a financial model to evaluate the tradeoffs, then worked through Impact Innovations to pursue an alternative that changed the decision itself.
+presentation: editorial
+organizationLabel: Impact Innovations / Nonprofit technology strategy
+role: CTO & Co-Founder · Financial modeling and technology strategy
 tags:
-  - Technology Strategy
-  - Vendor Negotiation
-  - Financial Modeling
-  - Product Ownership
-  - Nonprofit Technology
+  - Financial sustainability
+  - Technical evaluation
+  - Vendor partnership
+sections:
+  - eyebrow: 01 / The Challenge
+    title: An affordable platform wasn't necessarily an affordable decision.
+    layout: prose
+    intro: |
+      The nonprofit needed a CRM that could support fundraising operations, fit within a constrained budget, and grow with the organization.
+
+      Both shortlisted platforms offered tiers without monthly platform fees, instead charging per transaction.
+
+      The lower-transaction-fee platform lacked one required feature at its free tier. Accessing that feature through an upgrade was outside the client's budget.
+
+      The competing platform included the necessary near-term capabilities but charged higher transaction fees. It also presented limitations for the nonprofit's more mature fundraising needs over time.
+
+      The apparent choice was between compromising functionality today and accepting higher costs as fundraising activity grew.
+    children: |
+      <EditorialCallouts
+        label="Competing constraints"
+        items={[
+          { icon: "capacity", title: "Financial sustainability", text: "No monthly platform fee, without overlooking the cost of each transaction." },
+          { icon: "constraints", title: "Required functionality", text: "The essential near-term capability needed to remain part of the solution." },
+          { icon: "system", title: "Future operational needs", text: "The platform also needed to support a maturing fundraising operation." }
+        ]}
+      />
+  - eyebrow: 02 / The Approach
+    title: Model the cost of the decision, not just the price of the product.
+    layout: wide
+    intro: |
+      I built a configurable donor-pyramid financial model to evaluate how each platform's transaction fees would behave as the nonprofit grew.
+
+      The model allowed us to explore different assumptions about donor distribution across giving levels, changes in donor volume, and resulting transaction costs over time.
+
+      This made the tradeoff more concrete. The higher-fee platform addressed immediate functionality, but the model showed that its transaction costs could become significantly more expensive as the organization grew.
+
+      Rather than treating the existing feature tiers as fixed constraints, we explored whether the lower-fee platform could meet the nonprofit's needs through a different arrangement.
+    children: |
+      <DonorCostModelFigure
+        caption="Modeling the cost of growth."
+        summary="Donor mix, participation and platform fee rules fed configurable scenarios comparing cumulative transaction costs. These were projections, not realized savings. This figure explains the reasoning structure; it is not a working calculator or a reproduction of client financial records."
+        pyramid={{
+          title: "Configurable donor pyramid",
+          tiers: ["Major gifts", "Recurring donors", "General donors"],
+          note: "Vary donor shares across giving levels.",
+          qualifier: "Illustrative categories—not original client tier labels."
+        }}
+        assumptions={{
+          title: "Growth assumptions",
+          volume: "Donor volume", volumeText: "Current and projected donor participation.",
+          distribution: "Giving distribution", distributionText: "How donors are allocated across giving tiers.",
+          fees: "Transaction fee structures", feesText: "How each platform's fee rules apply to modeled fundraising activity."
+        }}
+        model={{ title: "Scenario model", note: "Vary assumptions. Compare consequences." }}
+        comparison={{
+          title: "Projected transaction-fee exposure",
+          qualifier: "Illustrative curves · Not to scale · No client scenario values",
+          platformA: "Platform A", platformAText: "Lower transaction-fee structure.",
+          platformB: "Platform B", platformBText: "Higher transaction-fee structure.",
+          note: "Compare cumulative transaction costs under different growth assumptions—not fundraising revenue."
+        }}
+      />
+
+      ### A better option through partnership
+
+      Impact Innovations developed a productive relationship with the lower-fee vendor.
+
+      The vendor was interested in supporting organizations like our client, and our firm's ongoing work with the nonprofit offered an opportunity for a longer-term relationship.
+
+      Through that engagement, the vendor enabled the one missing feature without requiring the client to purchase the otherwise unaffordable paid tier.
+
+      The nonprofit could now choose the lower-fee platform without sacrificing its required near-term functionality.
+  - eyebrow: 03 / Key Decisions
+    title: Change the decision, not the requirements.
+    layout: decisions
+    children: |
+      1. **Evaluate cost across organizational growth**
+         A comparison of current prices was insufficient. I modeled transaction costs using configurable fundraising scenarios so that we could understand how the financial difference might develop over time.
+
+         The objective was to avoid solving today's budget problem by creating a larger future expense.
+      2. **Preserve the capabilities the nonprofit needed**
+         The lower-fee platform was attractive, but its missing feature mattered. Rather than treating that requirement as negotiable, we kept it central to the evaluation.
+
+         The right solution needed to be affordable and usable.
+      3. **Treat the vendor relationship as part of the solution**
+         The original platform comparison assumed that the available tiers were fixed. Our vendor engagement revealed an alternative: align the client's needs with the vendor's interest in supporting this type of organization.
+
+         That changed which option was feasible.
+  - eyebrow: 04 / Results and Reflection
+    title: Lower costs. Required capabilities. A working platform.
+    layout: wide
+    intro: |
+      The nonprofit selected the lower-transaction-fee platform with its required feature enabled.
+
+      We completed the migration, integrated the CRM into the nonprofit's technology stack, and supported its use for subsequent fundraising events. The engagement also strengthened Impact Innovations' relationships with the client and vendor.
+
+      Once actual first-year fundraising activity was available, we could compare the selected platform's transaction costs against what the competing fee structure would have charged.
+
+      That analysis confirmed significant first-year savings without requiring the nonprofit to compromise on its immediate functional needs.
+    children: |
+      <EditorialCallouts
+        label="Delivered outcomes"
+        items={[
+          { icon: "system", title: "Full migration", text: "The CRM was successfully migrated and integrated into the nonprofit's technology stack." },
+          { icon: "teams", title: "Operational adoption", text: "The nonprofit subsequently used the platform for fundraising events." },
+          { icon: "research", title: "Verified financial savings", text: "Actual first-year fundraising activity confirmed significant transaction-fee savings relative to the competing platform." }
+        ]}
+      />
+
+      ### What the decision taught me
+
+      A technology decision is not limited to comparing the options presented at the beginning.
+
+      Financial modeling can reveal the consequences of a choice. Relationships and negotiation can sometimes change the choices available.
+
+      The strongest solution emerged from considering all three together: technical fit, economic sustainability, and the interests of the organizations involved.
+
+      <BlockQuote label="Leadership principle" originalThought={true} quote="The best technology decision isn't always choosing between existing options. Sometimes it's creating a better one." />
+links:
+  - label: Related work — API migration decisions
+    url: /work/api-migration-confidence/
+  - label: Related work — Scaling UX capability
+    url: /work/scaling-ux-capability/
 ---
 
-Through Impact Innovations, I helped a resource-constrained nonprofit select a CRM and fundraising platform that could support its immediate needs without becoming financially burdensome as its donor program grew.
-
-Two platforms were under consideration. Both offered free monthly subscription tiers, but their transaction fees and included capabilities differed.
-
-The lower-transaction-fee platform lacked one essential feature unless the organization purchased an upgrade it could not afford. The competing platform included the feature but charged higher transaction fees and offered a less attractive path for the nonprofit's longer-term development needs.
-
-**Neither option was ideal as offered.**
-
-Rather than treating the vendor offerings as fixed, I approached the decision from two directions: understand the financial implications of each platform, then explore whether the more affordable option could meet the nonprofit's actual requirements.
-
-<MetricStrip
-  caption="Key Outcomes"
-  metrics={[
-    {
-      value: "$0/mo",
-      label: "Platform subscription",
-      qualifier:
-        "Required feature secured without a paid-tier upgrade; transaction fees still apply"
-    },
-    {
-      value: "1",
-      label: "Critical feature unlocked",
-      qualifier: "Made available through vendor negotiation"
-    },
-    {
-      value: "Year 1",
-      label: "Cost savings confirmed",
-      qualifier:
-        "Actual fundraising activity validated lower fees versus the alternative; amounts confidential"
-    }
-  ]}
+<CrmDecisionTransformation
+  caption="From a constrained choice to a better option."
+  summary="Financial modeling clarified the economics; Impact Innovations' vendor engagement changed the available offer. These were complementary activities—not an automatic concession from the model. The result was an amended offer from Platform A, not a third CRM."
+  initialLabel="Initial choice · Two viable platforms"
+  monthly="Both relevant tiers: no monthly platform fee. Transaction fees still apply."
+  platformA={{ title: "Platform A", fee: "Lower transaction fees", capability: "One required feature unavailable at the free tier", constraint: "Paid upgrade outside client budget" }}
+  platformB={{ title: "Platform B", fee: "Higher transaction fees", capability: "Required near-term features included", constraint: "Less attractive economics and longer-term functional fit" }}
+  intervention={{
+    label: "Change the available offer",
+    title: "Modeling + vendor engagement",
+    modeling: "Juan: long-term transaction-fee modeling",
+    requirement: "Keep required functionality central",
+    partnership: "Impact Innovations: vendor partnership and negotiation"
+  }}
+  outcome={{
+    label: "Negotiated outcome",
+    title: "Platform A — required feature enabled",
+    continuity: "Same vendor. An amended offer—not a third product.",
+    fee: "Lower transaction fees retained",
+    feature: "Required feature available without the unaffordable paid-tier upgrade",
+    fit: "No immediate functionality compromise"
+  }}
 />
 
-## Model the economics beyond subscription pricing
-
-Comparing the platforms' monthly subscription costs would have obscured their most consequential financial difference.
-
-I developed a configurable donor-pyramid model that represented the nonprofit's fundraising activity across different giving tiers. The model accounted for the distribution of donors, anticipated growth, and transaction volume to project cumulative processing fees under each platform.
-
-This allowed us to examine how different donor mixes and growth assumptions would affect the cost of operating each system over time.
-
-The analysis demonstrated a meaningful projected cost advantage for the lower-transaction-fee platform.
-
-These were scenario-based projections, not realized savings. Their value was in making the longer-term consequences of the decision visible before the nonprofit committed to a platform and migrated its data.
-
-The analysis also reframed the question. We were no longer simply comparing two free subscription tiers. We were evaluating the financial sustainability of the nonprofit's fundraising infrastructure.
-
-## Negotiate a better option instead of accepting the tradeoff
-
-The financial model established which platform offered more favorable economics, but it did not resolve the missing-feature problem.
-
-The lower-fee vendor was interested in serving organizations with this nonprofit's profile, creating an opportunity to explore a mutually beneficial arrangement.
-
-Impact Innovations negotiated with the vendor, which agreed to make the required capability available without forcing the nonprofit onto an unaffordable paid subscription tier.
-
-**That negotiation changed the decision itself.**
-
-Instead of choosing between a platform with the necessary functionality and one with better economics, the nonprofit now had an option that met both requirements.
-
-The cost model demonstrated why the difference mattered. The vendor relationship made the financially preferable solution practical.
-
-This was not simply a matter of identifying the best existing product. It required recognizing that the commercial terms were part of the solution and could be influenced.
-
-## Follow the decision through implementation and adoption
-
-The nonprofit selected the lower-fee platform, completed its CRM migration, and integrated the system into its existing technology stack.
-
-The organization subsequently used the platform to support fundraising events, demonstrating that the solution worked beyond the initial evaluation and selection process.
-
-After the first year, we compared actual fundraising activity against the alternative platform's transaction-fee structure.
-
-**The realized activity confirmed significant transaction-fee savings relative to the competing option.**
-
-That finding was distinct from the original growth projections. It evaluated the platform decision against actual first-year fundraising transactions rather than assumed future donor behavior.
-
-The exact financial results and client identity remain confidential.
-
-The engagement also strengthened relationships between Impact Innovations, the nonprofit, and the vendor. The outcome depended on more than selecting software: it required financial analysis, commercial negotiation, technical implementation, and successful adoption.
-
-## Technology strategy includes shaping the available choices
-
-The most important lesson from this engagement was that technology decisions do not always have to be made within the options initially presented.
-
-A conventional comparison might have concluded that the nonprofit needed to accept either higher processing costs or an unaffordable subscription to obtain its required functionality.
-
-By modeling the economics and exploring the vendor's interests, we challenged that assumption and created a third possibility.
-
-The experience also reinforced the importance of carrying technology decisions through implementation and evaluating their actual results. A financially attractive platform is not a successful solution if an organization cannot adopt it or use it effectively.
-
-> Good technology strategy is not simply choosing the best available tool. It is understanding the organization's constraints, identifying what can be changed, and creating a solution that remains workable over time.
+<MetricStrip
+  caption="Decision context—not performance metrics."
+  topRule={false}
+  bottomRule={false}
+  metrics={[
+    { value: "No monthly platform fee", label: "Budget constraint", qualifier: "Transaction-based fees still apply." },
+    { value: "Required features", label: "Functional requirement", qualifier: "Immediate needs preserved." },
+    { value: "Lower transaction fees", label: "Verified first-year outcome", qualifier: "Confirmed against the competing fee structure using actual fundraising activity." }
+  ]}
+/>

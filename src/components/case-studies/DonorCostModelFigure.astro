@@ -1,0 +1,103 @@
+---
+interface Props {
+  caption: string; summary: string;
+  pyramid?: { title: string; tiers?: string[] | null; note: string; qualifier: string } | null;
+  assumptions?: { title: string; volume: string; volumeText: string; distribution: string; distributionText: string; fees: string; feesText: string } | null;
+  model?: { title: string; note: string } | null;
+  comparison?: { title: string; qualifier: string; platformA: string; platformAText: string; platformB: string; platformBText: string; note: string } | null;
+}
+const { caption, summary, pyramid, assumptions, model, comparison } = Astro.props;
+const base = '/uploads/crm-strategy/';
+const summaryId = `crm-model-${crypto.randomUUID()}`;
+const inputs = assumptions ? [
+  { image: 'isometric_green_growth_chart_icon', title: assumptions.volume, text: assumptions.volumeText },
+  { image: 'isometric_green_slider_settings_icon', title: assumptions.distribution, text: assumptions.distributionText },
+  { image: 'stacked_green_coin_transaction_icon', title: assumptions.fees, text: assumptions.feesText },
+] : [];
+---
+
+{pyramid && assumptions && model && comparison && <figure class="donor-cost-model" aria-label={caption} aria-describedby={summaryId}>
+  <div class="model-flow">
+    <div class="donor-distribution">
+      <p class="stage-label">{pyramid.title}</p>
+      <div class="pyramid-display">
+        <img src={`${base}three_tiered_green_and_copper_pyramid-320.webp`} srcset={`${base}three_tiered_green_and_copper_pyramid-320.webp 320w, ${base}three_tiered_green_and_copper_pyramid-640.webp 640w`} sizes="(max-width: 640px) 160px, 200px" width="320" height="320" loading="lazy" alt="" />
+        <ol class="tier-labels">{(pyramid.tiers ?? []).map((tier) => <li>{tier}</li>)}</ol>
+      </div>
+      <p class="pyramid-note">{pyramid.note}</p>
+      <p class="qualifier">{pyramid.qualifier}</p>
+    </div>
+    <div class="growth-assumptions">
+      <p class="stage-label">{assumptions.title}</p>
+      <ul role="list">{inputs.map((input) => <li><img src={`${base}${input.image}-128.webp`} srcset={`${base}${input.image}-128.webp 128w, ${base}${input.image}-256.webp 256w`} sizes="48px" width="128" height="128" loading="lazy" alt="" /><div><p class="input-title">{input.title}</p><p>{input.text}</p></div></li>)}</ul>
+    </div>
+    <span class="flow-arrow" aria-hidden="true">→</span>
+    <div class="scenario-model">
+      <img src={`${base}warm_ivory_calculator_badge-128.webp`} srcset={`${base}warm_ivory_calculator_badge-128.webp 128w, ${base}warm_ivory_calculator_badge-256.webp 256w`} sizes="64px" width="128" height="128" loading="lazy" alt="" />
+      <p class="node-title">{model.title}</p><p>{model.note}</p>
+    </div>
+    <span class="flow-arrow" aria-hidden="true">→</span>
+    <div class="fee-exposure">
+      <p class="stage-label">{comparison.title}</p>
+      <p class="qualifier">{comparison.qualifier}</p>
+      <div class="comparison-illustration" aria-hidden="true">
+        <svg viewBox="0 0 400 150" preserveAspectRatio="none" aria-hidden="true"><path class="baseline" d="M8 140H392" /><path class="higher" d="M8 133C140 118 260 65 392 12" /><path class="lower" d="M8 133C140 125 260 106 392 76" /></svg>
+      </div>
+      <dl><div class="platform-b"><dt>{comparison.platformB}</dt><dd>{comparison.platformBText}</dd></div><div class="platform-a"><dt>{comparison.platformA}</dt><dd>{comparison.platformAText}</dd></div></dl>
+      <p class="comparison-note">{comparison.note}</p>
+    </div>
+  </div>
+  <figcaption>{caption}</figcaption>
+  <p class="diagram-summary" id={summaryId}>{summary}</p>
+</figure>}
+
+<style>
+  figure { margin: 0; container-type: inline-size; }
+  .model-flow { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) 1rem minmax(0, 0.55fr) 1rem minmax(0, 1.5fr); gap: var(--space-3); align-items: center; padding-block: var(--space-6); }
+  .donor-distribution, .growth-assumptions, .fee-exposure { align-self: stretch; padding: var(--space-4); border: 1px solid var(--border); border-radius: 1rem; background: color-mix(in srgb, var(--secondary) 12%, var(--background)); min-width: 0; }
+  .stage-label { font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-strong); line-height: 1.5; }
+  .pyramid-display { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); align-items: stretch; gap: var(--space-2); margin-block: var(--space-6) var(--space-4); }
+  .pyramid-display img { display: block; width: 100%; height: auto; align-self: center; }
+  .tier-labels { display: flex; flex-direction: column; justify-content: space-around; padding: 0; list-style: none; margin: 0; }
+  .tier-labels li { border-bottom: 1px solid var(--border); padding-block: var(--space-2); color: var(--primary); font-size: var(--text-support); line-height: 1.4; }
+  .pyramid-note { font-size: var(--text-support); }
+  .qualifier { margin-top: var(--space-3); font-size: var(--text-support); line-height: 1.5; }
+  .growth-assumptions ul { display: grid; gap: var(--space-4); padding: 0; margin: var(--space-6) 0 0; list-style: none; }
+  .growth-assumptions li { display: flex; gap: var(--space-3); align-items: start; }
+  .growth-assumptions img { flex: none; width: 3rem; height: 3rem; }
+  .input-title { color: var(--primary); font: 400 1.35rem/1.15 var(--font-serif); margin-bottom: var(--space-2); }
+  .growth-assumptions li p + p { font-size: var(--text-support); line-height: 1.5; }
+  .flow-arrow { color: var(--accent-strong); font-size: 1.4rem; justify-self: center; }
+  .scenario-model { text-align: center; border: 1px solid var(--accent); border-radius: 1rem; padding: var(--space-4) var(--space-2); background: color-mix(in srgb, var(--accent) 6%, var(--background)); }
+  .scenario-model img { width: 4rem; height: 4rem; margin: 0 auto var(--space-3); }
+  .node-title { color: var(--primary); font: 400 1.6rem/1.1 var(--font-serif); }
+  .scenario-model p + p { font-size: var(--text-support); margin-top: var(--space-3); }
+  .comparison-illustration { margin-block: var(--space-6) var(--space-3); height: 8rem; }
+  svg { display: block; width: 100%; height: 100%; fill: none; stroke-width: 2; }
+  .baseline { stroke: var(--border); stroke-width: 1; }
+  .higher { stroke: var(--accent-strong); stroke-dasharray: 6 4; }
+  .lower { stroke: var(--primary); }
+  dl { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin: 0; }
+  dt { color: var(--primary); font: 400 1.4rem/1.2 var(--font-serif); }
+  dt::before { content: ''; display: inline-block; width: 1rem; margin-right: var(--space-2); vertical-align: middle; border-top: 2px solid var(--primary); }
+  .platform-b dt::before { border-color: var(--accent-strong); border-top-style: dashed; }
+  dd { font-size: var(--text-support); line-height: 1.5; margin: var(--space-2) 0 0; }
+  .comparison-note { font-size: var(--text-support); border-top: 1px solid var(--border); padding-top: var(--space-4); margin-top: var(--space-4); }
+  figcaption { color: var(--primary); font: 400 1.65rem/1.2 var(--font-serif); }
+  .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); max-width: 90ch; }
+  @container (max-width: 65rem) {
+    .model-flow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-6); }
+    .flow-arrow { grid-column: 1 / -1; transform: rotate(90deg); }
+    .scenario-model { grid-column: 1 / -1; padding: var(--space-4); }
+    .scenario-model img { margin-bottom: var(--space-2); }
+    .fee-exposure { grid-column: 1 / -1; }
+    .comparison-illustration { height: 10rem; }
+  }
+  @container (max-width: 36rem) {
+    .model-flow { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+    .pyramid-display { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); max-width: 22rem; margin-inline: auto; }
+    .donor-distribution, .growth-assumptions, .fee-exposure { padding: var(--space-4); }
+    .comparison-illustration { height: 7rem; }
+    dl { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

@@ -10,9 +10,11 @@ import ApiMigrationPreview from './case-studies/ApiMigrationPreview.astro';
 import ApiMigrationDecisionDiagram from './case-studies/ApiMigrationDecisionDiagram.astro';
 import AgenticDeliveryPreview from './case-studies/AgenticDeliveryPreview.astro';
 import AgenticDeliveryHarnessDiagram from './case-studies/AgenticDeliveryHarnessDiagram.astro';
+import CrmDecisionTransformation from './case-studies/CrmDecisionTransformation.astro';
+import DonorCostModelFigure from './case-studies/DonorCostModelFigure.astro';
 
 interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ApiMigrationPreview, ApiMigrationDecisionDiagram, AgenticDeliveryPreview, AgenticDeliveryHarnessDiagram }} />
+<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ApiMigrationPreview, ApiMigrationDecisionDiagram, AgenticDeliveryPreview, AgenticDeliveryHarnessDiagram, CrmDecisionTransformation, DonorCostModelFigure }} />

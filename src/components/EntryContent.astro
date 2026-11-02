@@ -70,11 +70,25 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
   .editorial-story :global(.entry-body > .lead-figure:first-child) { grid-column: 2; grid-row: var(--hero-figure-row); align-self: center; margin-block: var(--space-8) var(--space-12); }
   .editorial-story :global(.entry-body > .metric-strip) { margin-block: 0 var(--space-8); }
   .editorial-story .entry-links { grid-column: 1 / -1; margin-top: 0; }
+  /* The business-strategy story uses a broad storyboard below the headline,
+     not a dense miniature competing alongside it. No separate page template. */
+  .editorial-story:has(.crm-transformation) { grid-template-columns: minmax(0, 1fr); }
+  .editorial-story:has(.crm-transformation) .entry-heading { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: var(--space-12); padding-bottom: var(--space-6); }
+  .editorial-story:has(.crm-transformation) .entry-heading > .eyebrow { grid-column: 1 / -1; }
+  .editorial-story:has(.crm-transformation) h1 { max-width: 21ch; font-size: clamp(3rem, 5vw, 5.5rem); }
+  .editorial-story:has(.crm-transformation) .summary { grid-column: 2; grid-row: 2 / 5; max-width: 50ch; align-self: center; white-space: pre-line; }
+  .editorial-story:has(.crm-transformation) :is(.entry-meta, .tags) { grid-column: 1; }
+  .editorial-story :global(.entry-body > .crm-transformation:first-child) { grid-column: 1 / -1; grid-row: auto; margin-block: 0 var(--space-8); }
+  .editorial-story:has(.crm-transformation) :global(.story-wide .section-main > p) { max-width: var(--reading-width); }
+  .editorial-story:has(.crm-transformation) :global(.story-decisions li p + p) { margin-top: var(--space-3); }
+  .editorial-story:has(.crm-transformation) :global(.story-wide .section-main > .story-quote) { max-width: 52rem; margin-top: var(--space-8); }
   @media (max-width: 60rem) {
     .editorial-story, .editorial-story:has(.entry-body > :is(.api-preview, .harness-preview):first-child) { --hero-figure-row: 2; grid-template-columns: minmax(0, 1fr); }
     .editorial-story.has-draft { --hero-figure-row: 3; }
     .editorial-story .entry-heading { grid-column: 1; padding-bottom: var(--space-4); }
     .editorial-story :global(.entry-body > .ux-figure:first-child) { grid-column: 1; margin-block: var(--space-4) var(--space-8); }
     .editorial-story :global(.entry-body > .lead-figure:first-child) { grid-column: 1; margin-block: var(--space-4) var(--space-8); }
+    .editorial-story:has(.crm-transformation) .entry-heading { display: block; }
+    .editorial-story:has(.crm-transformation) .summary { max-width: 60ch; }
   }
 </style>
