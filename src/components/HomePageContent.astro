@@ -3,12 +3,11 @@ import { tinaField } from '@tinacms/astro';
 import type { PageQuery } from '../../tina/__generated__/types';
 import type { getHomepage } from '../lib/tina/data';
 import { selectFeatured } from '../lib/homepage';
-import { safeHref } from '../lib/links';
 import Container from './Container.astro';
 import HomeIntro from './HomeIntro.astro';
 import EngineeringLeadershipDiagram from './EngineeringLeadershipDiagram.astro';
 import HomepageEntryCard from './HomepageEntryCard.astro';
-import ButtonLink from './ButtonLink.astro';
+import ClosingBand from './ClosingBand.astro';
 
 interface Props {
   data: PageQuery['page'];
@@ -50,10 +49,14 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
   </section>}
 </Container>
 
-{content?.contact && <section class="closing" aria-labelledby="contact-heading" data-tina-field={tinaField(content, 'contact')}>
-  <Container class="closing-inner"><div><h2 id="contact-heading">{content.contact.title}</h2><p>{content.contact.text}</p></div>{safeHref(content.contact.url) && content.contact.label && <ButtonLink href={safeHref(content.contact.url)} variant="secondary">{content.contact.label} <span aria-hidden="true">↗</span></ButtonLink>}</Container>
-  <svg class="closing-ribbon" viewBox="0 0 900 300" fill="none" aria-hidden="true">{[0, 12, 24, 36, 48].map((offset) => <path d={`M0 ${260 + offset}C320 ${-180 + offset} 410 ${500 + offset} 900 ${20 + offset}`} />)}</svg>
-</section>}
+{content?.contact && <ClosingBand
+  id="contact-heading"
+  title={content?.contact?.title}
+  text={content?.contact?.text}
+  label={content?.contact?.label}
+  url={content?.contact?.url}
+  field={tinaField(content, 'contact')}
+/>}
 
 <style>
   .hero { display: grid; align-items: center; gap: var(--space-12); padding-block: clamp(3rem, 7vw, 6.5rem); }
@@ -78,20 +81,11 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
   dd { margin: var(--space-2) 0 0; font-size: var(--text-support); }
   .perspective-details > a { align-self: end; padding-block: var(--space-3); font-size: var(--text-small); }
   .perspective-ribbon { position: absolute; z-index: -1; bottom: 0; right: -10%; width: 90%; stroke: var(--border); opacity: 0.45; }
-  .closing { position: relative; isolation: isolate; overflow: hidden; background: var(--primary); color: var(--primary-foreground); padding-block: clamp(3.5rem, 6vw, 5.5rem); }
-  .closing :global(.closing-inner) { display: grid; align-items: center; gap: var(--space-8); }
-  .closing h2 { color: inherit; font-size: clamp(3rem, 5vw, 4.5rem); }
-  .closing p { margin-top: var(--space-6); max-width: 65ch; }
-  .closing :global(.button-link) { justify-self: start; background: var(--background); color: var(--primary); border-color: var(--background); --ring: var(--background); font-size: var(--text-small); }
-  .closing :global(.button-link:hover) { background: var(--secondary); }
-  .closing span { margin-left: var(--space-6); }
-  .closing-ribbon { position: absolute; right: -15%; bottom: -10%; width: 65%; height: 100%; z-index: -1; stroke: var(--primary-foreground); opacity: 0.08; }
   @media (min-width: 48rem) {
     .capabilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .capabilities > div + div { border-left: 1px solid var(--border); padding-left: var(--space-6); }
     .work-grid, .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .closing :global(.closing-inner) { grid-template-columns: minmax(0, 1fr) auto; }
   }
   @media (min-width: 60rem) {
     .hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: var(--space-8); }

@@ -1,5 +1,6 @@
 import type { IslandRegistry } from '@tinacms/astro/experimental';
 import HomePageContent from '../../components/HomePageContent.astro';
+import AboutPageContent from '../../components/AboutPageContent.astro';
 import PageContent from '../../components/PageContent.astro';
 import EntryContent from '../../components/EntryContent.astro';
 import { getHomepage, getPage, getWork, getProject } from './data';
@@ -20,10 +21,17 @@ export const islands: IslandRegistry = {
       return { data: data.page, work, projects, resume };
     },
   },
+  about: {
+    fetch: () => getPage('about.md'),
+    component: AboutPageContent,
+    wrapper: { tag: 'div', className: 'about-page' },
+    propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getPage>>).data.page }),
+  },
   page: {
     fetch: (_request, params) => {
       const name = params.get('page');
-      if (!['about', 'contact', 'work', 'projects', 'resume'].includes(name ?? '')) throw new Error('Unknown page');
+      // About has a dedicated route and island (src/pages/about.astro).
+      if (!['contact', 'work', 'projects', 'resume'].includes(name ?? '')) throw new Error('Unknown page');
       return getPage(`${name}.md`);
     },
     component: PageContent,

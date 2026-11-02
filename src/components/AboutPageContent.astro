@@ -1,0 +1,217 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { PageQuery } from '../../tina/__generated__/types';
+import RichText from './RichText.astro';
+import Container from './Container.astro';
+import AboutIcon from './AboutIcon.astro';
+import ClosingBand from './ClosingBand.astro';
+import { safeHref } from '../lib/links';
+
+interface Props {
+  data: PageQuery['page'];
+}
+const { data } = Astro.props;
+const about = data.about;
+const path = about?.path;
+const principles = about?.principles;
+const building = about?.building;
+const next = about?.next;
+const closing = about?.closing;
+const aboutLinks = (data.links ?? [])
+  .filter((link): link is NonNullable<typeof link> => Boolean(link?.label && safeHref(link.url)))
+  .map((link) => ({ label: link.label, url: safeHref(link.url)! }));
+const buildingFeatures = (building?.features ?? [])
+  .map((feature) => ({ ...feature, href: safeHref(feature?.url) }));
+---
+
+<Container>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow" data-tina-field={tinaField(about, 'eyebrow')}>{about?.eyebrow}</p>
+      <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+      <div class="hero-intro">
+        <div class="prose" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
+      </div>
+    </div>
+    <div class="hero-portrait" data-tina-field={tinaField(about, 'portrait')}>
+      {about?.portrait
+        ? <img src={about.portrait} alt={about.portraitAlt || 'Portrait of Juan Vistro'} width="768" height="768" fetchpriority="high" />
+        : <div class="portrait-pending"><svg viewBox="0 0 900 300" fill="none" aria-hidden="true"><path d="M0 260C320 -180 410 500 900 20" stroke="var(--accent)" /></svg><p>Portrait to come</p></div>}
+    </div>
+  </section>
+
+  {path && <section class="about-section" aria-labelledby="path-heading">
+    <div class="section-head">
+      <p class="eyebrow" data-tina-field={tinaField(path, 'eyebrow')}>{path.eyebrow}</p>
+      <h2 id="path-heading" data-tina-field={tinaField(path, 'title')}>{path.title}</h2>
+      {path.summary && <p class="lede" data-tina-field={tinaField(path, 'summary')}>{path.summary}</p>}
+    </div>
+    <div class="section-content">
+      <div class="section-body prose" data-tina-field={tinaField(path, 'paragraphs')}>
+        <RichText content={path.paragraphs} />
+      </div>
+      {path.stages && path.stages.length > 0 && <ol class="stages" aria-label="Career stages" data-tina-field={tinaField(path, 'stages')}>
+        {path.stages.map((stage) => stage && <li>
+          <AboutIcon name={stage.icon} size="stage" />
+          <div>
+            <h3>{stage.title}</h3>
+            <p>{stage.text}</p>
+          </div>
+        </li>)}
+      </ol>}
+    </div>
+  </section>}
+
+  {principles && <section class="about-section" aria-labelledby="principles-heading">
+    <div class="section-head">
+      <p class="eyebrow" data-tina-field={tinaField(principles, 'eyebrow')}>{principles.eyebrow}</p>
+      <h2 id="principles-heading" class="statement" data-tina-field={tinaField(principles, 'statement')}>{principles.statement}</h2>
+      {principles.intro && <p class="lede" data-tina-field={tinaField(principles, 'intro')}>{principles.intro}</p>}
+    </div>
+    <div class="section-content">
+      {principles.items && principles.items.length > 0 && <dl class="principles-list" data-tina-field={tinaField(principles, 'items')}>
+        {principles.items.map((item) => item && <div>
+          <dt><span class="badge"><AboutIcon name={item.icon} size="badge" /></span>{item.title}</dt>
+          <dd><div class="principle-text"><RichText content={item.text} /></div></dd>
+        </div>)}
+      </dl>}
+    </div>
+  </section>}
+
+  {building && <section class="about-section" aria-labelledby="building-heading">
+    <div class="section-head">
+      <p class="eyebrow" data-tina-field={tinaField(building, 'eyebrow')}>{building.eyebrow}</p>
+      <h2 id="building-heading" data-tina-field={tinaField(building, 'title')}>{building.title}</h2>
+    </div>
+    <div class="section-content">
+      {buildingFeatures.length > 0 && <div class="feature-grid" data-tina-field={tinaField(building, 'features')}>
+        {buildingFeatures.map((feature) => feature && <article class="feature">
+          <AboutIcon name={feature.icon} size="feature" />
+          <div class="feature-copy">
+            <h3 data-tina-field={tinaField(feature, 'name')}>{feature.name}</h3>
+            <div class="feature-text" data-tina-field={tinaField(feature, 'text')}><RichText content={feature.text} /></div>
+            {feature.linkLabel && feature.href && <a href={feature.href} data-tina-field={tinaField(feature, 'linkLabel')}>{feature.linkLabel} <span aria-hidden="true">↗</span></a>}
+          </div>
+        </article>)}
+      </div>}
+    </div>
+  </section>}
+
+  {next && next.title && <section class="about-section" aria-labelledby="next-heading">
+    <div class="section-head">
+      <p class="eyebrow" data-tina-field={tinaField(next, 'eyebrow')}>{next.eyebrow}</p>
+      <h2 id="next-heading" data-tina-field={tinaField(next, 'title')}>{next.title}</h2>
+    </div>
+    <div class="section-content">
+      <div class="section-body prose" data-tina-field={tinaField(next, 'paragraphs')}>
+        <RichText content={next.paragraphs} />
+      </div>
+    </div>
+  </section>}
+</Container>
+
+{aboutLinks.length > 0 && <Container>
+  <ul class="about-links" aria-label="Where to go next" data-tina-field={tinaField(data, 'links')}>
+    {aboutLinks.map((link) => link && <li><a href={link.url}>{link.label} <span aria-hidden="true">↗</span></a></li>)}
+  </ul>
+</Container>}
+
+{closing && safeHref(closing.url) && closing.title && <ClosingBand
+  id="about-closing"
+  title={closing.title}
+  text={closing.text}
+  label={closing.label}
+  url={safeHref(closing.url)}
+  field={tinaField(closing, 'title')}
+/>}
+
+<style>
+  .hero { display: grid; align-items: center; gap: var(--space-12); padding-block: clamp(3rem, 7vw, 6.5rem); }
+  .hero-copy { min-width: 0; }
+  .hero-intro { max-width: 45ch; margin-top: var(--space-8); color: var(--muted-foreground); font-size: var(--text-body); }
+  h1 { margin-block: var(--space-6); max-width: 18ch; font-size: clamp(2.625rem, 4.7vw, 4.5rem); line-height: 1.06; letter-spacing: -0.045em; text-wrap: pretty; }
+  h1::after { content: ''; display: block; width: 3rem; height: 2px; margin-top: var(--space-6); background: var(--accent); }
+  .hero-portrait { justify-self: center; width: min(100%, 26rem); }
+  .hero-portrait img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+  .portrait-pending {
+    display: grid; place-items: center; gap: var(--space-3); min-height: 24rem;
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--muted);
+    text-align: center;
+  }
+  .portrait-pending svg { width: 80%; height: 12rem; margin-bottom: var(--space-24); opacity: 0.35; }
+  .portrait-pending p { font-family: var(--font-serif); font-size: 1.25rem; color: var(--muted-foreground); }
+
+  .about-section { display: grid; gap: var(--space-6); padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .about-section + .about-section { border-top: 1px solid var(--border); }
+  .section-head h2 { margin-block: var(--space-4) 0; }
+  .section-content { display: grid; gap: var(--space-8); }
+  .about-section .eyebrow { margin-top: 0; }
+  .statement {
+    max-width: 41ch; padding-left: var(--space-6); border-left: 2px solid var(--accent);
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(1.875rem, 3vw, 2.75rem); line-height: 1.25; letter-spacing: -0.02em;
+  }
+  .lede { max-width: 65ch; margin-top: var(--space-4); color: var(--muted-foreground); }
+  .section-body { max-width: var(--reading-width); }
+  .section-body :global(strong) { color: var(--primary); }
+
+  .stages { display: grid; gap: var(--space-8); margin: var(--space-12) 0 0; padding: 0; list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .stages li { display: grid; gap: var(--space-4); }
+  .stages h3 { margin: 0; }
+  .stages p { margin-top: var(--space-2); font-size: var(--text-support); }
+  .stages :global(.about-icon.stage) { width: 4.5rem; height: 4.5rem; }
+  /* Fine copper connectors between stacked stages; horizontal when the three
+     columns have room for them below the row threshold. */
+  .stages li:not(:first-child) { position: relative; }
+  .stages li:not(:first-child)::before { content: ''; position: absolute; inset-inline-start: 4.5rem; top: -1.9rem; width: 1px; height: 1.5rem; background: var(--accent); opacity: 0.6; }
+
+  .principles-list { display: grid; gap: var(--space-8); margin: 0; }
+  .principles-list dt { font-size: 1.25rem; font-family: var(--font-serif); color: var(--primary); }
+  .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3.5rem; height: 3.5rem; margin-right: var(--space-4); flex: none;
+    border: 1px solid var(--border); border-radius: 999px; background: var(--muted);
+  }
+  .badge :global(.about-icon.badge) { width: 1.75rem; height: 1.75rem; }
+  .principles-list dd { margin: var(--space-3) 0 0 var(--space-8); }
+  .principle-text { color: var(--muted-foreground); font-size: var(--text-support); max-width: 42ch; }
+  .principle-text :global(p) { font-size: var(--text-support); margin-top: var(--space-3); }
+  .principle-text :global(p:first-child) { margin-top: 0; }
+
+  .feature-grid { display: grid; gap: var(--space-6); margin-top: var(--space-8); }
+  .feature {
+    display: grid; gap: var(--space-6); padding: var(--space-8);
+    border: 1px solid var(--border); border-radius: var(--radius); background: var(--muted);
+  }
+  .feature :global(.about-icon.feature) { width: 5rem; height: 5rem; }
+  .feature h3 { margin: 0; font-size: 1.375rem; }
+  .feature-text { color: var(--muted-foreground); font-size: var(--text-support); }
+  .feature-text :global(p) { margin-top: var(--space-3); }
+  .feature-text :global(p:last-child) { margin-bottom: 0; }
+  .feature-text :global(strong) { color: var(--primary); }
+  .feature a { display: inline-flex; gap: var(--space-3); margin-top: var(--space-4); padding-block: var(--space-2); font-size: var(--text-small); }
+
+  .about-links { display: flex; flex-wrap: wrap; gap: var(--space-6); list-style: none; margin: 0; padding: var(--space-8) 0; border-top: 1px solid var(--border); }
+  .about-links a { display: inline-flex; gap: var(--space-4); padding-block: var(--space-3); min-height: 2.75rem; align-items: center; }
+
+  @media (min-width: 60rem) {
+    .hero { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--space-8); }
+  }
+  @media (min-width: 64rem) {
+    .about-section { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-12); align-items: start; }
+    .principles-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .principles-list dd { margin-left: 0; }
+    .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .feature { grid-template-columns: auto minmax(0, 1fr); }
+  }
+  @media (min-width: 80rem) {
+    .stages { gap: var(--space-6); }
+    .stages li { grid-template-columns: auto minmax(0, 1fr); gap: var(--space-6); }
+    .stages li:not(:first-child)::before { inset-inline-start: -1.5rem; top: 2.25rem; width: 1.5rem; height: 1px; }
+  }
+  @media (max-width: 24rem) {
+    .stages li { grid-template-columns: 1fr; }
+    .stages li:not(:first-child)::before { display: none; }
+    .principles-list dd { margin-inline-start: 0; }
+    .feature { grid-template-columns: 1fr; }
+  }</style>

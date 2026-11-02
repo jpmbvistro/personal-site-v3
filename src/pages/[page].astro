@@ -8,7 +8,8 @@ import { getPage, getPublishedWork, getPublishedProjects } from '../lib/tina/dat
 import { islands } from '../lib/tina/islands';
 
 export function getStaticPaths() {
-  return ['work', 'projects', 'about', 'contact', 'resume'].map((page) => ({ params: { page } }));
+  // About has its own dedicated route (src/pages/about.astro).
+  return ['work', 'projects', 'contact', 'resume'].map((page) => ({ params: { page } }));
 }
 const name = Astro.params.page!;
 const { data } = await getPage(`${name}.md`);
@@ -25,6 +26,5 @@ const entries = name === 'work' ? await getPublishedWork() : name === 'projects'
       {entries.length > 0 ? <div class="entry-grid">{entries.map((entry) => <EntryCard entry={entry} section={section} />)}</div>
         : <p class="empty-state">No published entries yet. <a href="/contact/">Get in touch</a> to talk about the work.</p>}
     </section>}
-    {name === 'about' && <div class="next-path"><a href="/work/">Explore professional work →</a><a href="/contact/">Contact & résumé →</a></div>}
   </Container>
 </BaseLayout>

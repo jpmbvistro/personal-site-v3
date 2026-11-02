@@ -1,0 +1,762 @@
+[
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".hero-intro": 10.713581831300091,
+      ".about-section .eyebrow": 10.713581831300091,
+      ".about-section .eyebrow[1]": 10.713581831300091,
+      ".about-section .eyebrow[2]": 10.713581831300091,
+      ".about-section .eyebrow[3]": 10.713581831300091,
+      ".about-section h2": 11.280745629110825,
+      ".about-section h2[1]": 11.280745629110825,
+      ".about-section h2[2]": 11.280745629110825,
+      ".about-section h2[3]": 11.280745629110825,
+      ".stages h3": 11.280745629110825,
+      ".stages h3[1]": 11.280745629110825,
+      ".stages h3[2]": 11.280745629110825,
+      ".stages p": 10.713581831300091,
+      ".stages p[1]": 10.713581831300091,
+      ".stages p[2]": 10.713581831300091,
+      ".principles-list dt": 11.280745629110825,
+      ".principles-list dt[1]": 11.280745629110825,
+      ".principles-list dt[2]": 11.280745629110825,
+      ".principle-text p": 10.713581831300091,
+      ".principle-text p[1]": 10.713581831300091,
+      ".principle-text p[2]": 10.713581831300091,
+      ".principle-text p[3]": 10.713581831300091,
+      ".principle-text p[4]": 10.713581831300091,
+      ".principle-text p[5]": 10.713581831300091,
+      ".principle-text p[6]": 10.713581831300091,
+      ".feature h3": 10.137271068291396,
+      ".feature h3[1]": 10.137271068291396,
+      ".feature-text p": 9.62759791834535,
+      ".feature-text p[1]": 9.62759791834535,
+      ".feature-text p[2]": 9.62759791834535,
+      ".feature-text p[3]": 9.62759791834535,
+      ".feature-text p[4]": 9.62759791834535,
+      ".feature-text p[5]": 9.62759791834535,
+      ".feature a": 10.137271068291396,
+      ".feature a[1]": 10.137271068291396,
+      ".about-links a": 11.280745629110825,
+      ".about-links a[1]": 11.280745629110825,
+      ".about-links a[2]": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825
+    },
+    "icons": [
+      {
+        "src": "http://127.0.0.1:4321/icons/about/community-programs.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/product-engineering.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/engineering-systems.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/visible-tradeoffs.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/build-capability.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/intentional-automation.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/impact-innovations.svg",
+        "loaded": true,
+        "width": 80
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/asterism.svg",
+        "loaded": true,
+        "width": 80
+      }
+    ],
+    "aboutLinks": [
+      {
+        "text": "Explore selected work ↗",
+        "href": "/work/"
+      },
+      {
+        "text": "View résumé ↗",
+        "href": "/resume/"
+      },
+      {
+        "text": "Get in touch ↗",
+        "href": "/contact/"
+      }
+    ],
+    "featureLinks": [
+      "/work/nonprofit-crm-selection/",
+      "/projects/"
+    ],
+    "headingOrder": [
+      "H1: The work is technical. The responsibility is human.",
+      "H2: A career shaped by software and community.",
+      "H3: Community & Programs",
+      "H3: Product Engineering",
+      "H3: Engineering Systems & Leadership",
+      "H2: People first. Systems second. Tools third.",
+      "H2: Building at the intersection of technology and organizationa",
+      "H3: Impact Innovations",
+      "H3: Asterism",
+      "H2: Growing into broader engineering leadership.",
+      "H2: Let's connect."
+    ],
+    "vitals": {
+      "cls": 0,
+      "lcp": 56,
+      "domContentLoadedMs": 17.40000009536743,
+      "transferredBytes": 293785
+    },
+    "focus": [
+      {
+        "target": "Explore selected work ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "View résumé ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".hero-intro": 10.713581831300091,
+      ".about-section .eyebrow": 10.713581831300091,
+      ".about-section .eyebrow[1]": 10.713581831300091,
+      ".about-section .eyebrow[2]": 10.713581831300091,
+      ".about-section .eyebrow[3]": 10.713581831300091,
+      ".about-section h2": 11.280745629110825,
+      ".about-section h2[1]": 11.280745629110825,
+      ".about-section h2[2]": 11.280745629110825,
+      ".about-section h2[3]": 11.280745629110825,
+      ".stages h3": 11.280745629110825,
+      ".stages h3[1]": 11.280745629110825,
+      ".stages h3[2]": 11.280745629110825,
+      ".stages p": 10.713581831300091,
+      ".stages p[1]": 10.713581831300091,
+      ".stages p[2]": 10.713581831300091,
+      ".principles-list dt": 11.280745629110825,
+      ".principles-list dt[1]": 11.280745629110825,
+      ".principles-list dt[2]": 11.280745629110825,
+      ".principle-text p": 10.713581831300091,
+      ".principle-text p[1]": 10.713581831300091,
+      ".principle-text p[2]": 10.713581831300091,
+      ".principle-text p[3]": 10.713581831300091,
+      ".principle-text p[4]": 10.713581831300091,
+      ".principle-text p[5]": 10.713581831300091,
+      ".principle-text p[6]": 10.713581831300091,
+      ".feature h3": 10.137271068291396,
+      ".feature h3[1]": 10.137271068291396,
+      ".feature-text p": 9.62759791834535,
+      ".feature-text p[1]": 9.62759791834535,
+      ".feature-text p[2]": 9.62759791834535,
+      ".feature-text p[3]": 9.62759791834535,
+      ".feature-text p[4]": 9.62759791834535,
+      ".feature-text p[5]": 9.62759791834535,
+      ".feature a": 10.137271068291396,
+      ".feature a[1]": 10.137271068291396,
+      ".about-links a": 11.280745629110825,
+      ".about-links a[1]": 11.280745629110825,
+      ".about-links a[2]": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825
+    },
+    "icons": [
+      {
+        "src": "http://127.0.0.1:4321/icons/about/community-programs.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/product-engineering.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/engineering-systems.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/visible-tradeoffs.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/build-capability.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/intentional-automation.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/impact-innovations.svg",
+        "loaded": true,
+        "width": 80
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/asterism.svg",
+        "loaded": true,
+        "width": 80
+      }
+    ],
+    "aboutLinks": [
+      {
+        "text": "Explore selected work ↗",
+        "href": "/work/"
+      },
+      {
+        "text": "View résumé ↗",
+        "href": "/resume/"
+      },
+      {
+        "text": "Get in touch ↗",
+        "href": "/contact/"
+      }
+    ],
+    "featureLinks": [
+      "/work/nonprofit-crm-selection/",
+      "/projects/"
+    ],
+    "headingOrder": [
+      "H1: The work is technical. The responsibility is human.",
+      "H2: A career shaped by software and community.",
+      "H3: Community & Programs",
+      "H3: Product Engineering",
+      "H3: Engineering Systems & Leadership",
+      "H2: People first. Systems second. Tools third.",
+      "H2: Building at the intersection of technology and organizationa",
+      "H3: Impact Innovations",
+      "H3: Asterism",
+      "H2: Growing into broader engineering leadership.",
+      "H2: Let's connect."
+    ],
+    "vitals": {
+      "cls": 0,
+      "lcp": 44,
+      "domContentLoadedMs": 13.700000047683716,
+      "transferredBytes": 293785
+    },
+    "focus": [
+      {
+        "target": "Explore selected work ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "View résumé ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".hero-intro": 10.713581831300091,
+      ".about-section .eyebrow": 10.713581831300091,
+      ".about-section .eyebrow[1]": 10.713581831300091,
+      ".about-section .eyebrow[2]": 10.713581831300091,
+      ".about-section .eyebrow[3]": 10.713581831300091,
+      ".about-section h2": 11.280745629110825,
+      ".about-section h2[1]": 11.280745629110825,
+      ".about-section h2[2]": 11.280745629110825,
+      ".about-section h2[3]": 11.280745629110825,
+      ".stages h3": 11.280745629110825,
+      ".stages h3[1]": 11.280745629110825,
+      ".stages h3[2]": 11.280745629110825,
+      ".stages p": 10.713581831300091,
+      ".stages p[1]": 10.713581831300091,
+      ".stages p[2]": 10.713581831300091,
+      ".principles-list dt": 11.280745629110825,
+      ".principles-list dt[1]": 11.280745629110825,
+      ".principles-list dt[2]": 11.280745629110825,
+      ".principle-text p": 10.713581831300091,
+      ".principle-text p[1]": 10.713581831300091,
+      ".principle-text p[2]": 10.713581831300091,
+      ".principle-text p[3]": 10.713581831300091,
+      ".principle-text p[4]": 10.713581831300091,
+      ".principle-text p[5]": 10.713581831300091,
+      ".principle-text p[6]": 10.713581831300091,
+      ".feature h3": 10.137271068291396,
+      ".feature h3[1]": 10.137271068291396,
+      ".feature-text p": 9.62759791834535,
+      ".feature-text p[1]": 9.62759791834535,
+      ".feature-text p[2]": 9.62759791834535,
+      ".feature-text p[3]": 9.62759791834535,
+      ".feature-text p[4]": 9.62759791834535,
+      ".feature-text p[5]": 9.62759791834535,
+      ".feature a": 10.137271068291396,
+      ".feature a[1]": 10.137271068291396,
+      ".about-links a": 11.280745629110825,
+      ".about-links a[1]": 11.280745629110825,
+      ".about-links a[2]": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825
+    },
+    "icons": [
+      {
+        "src": "http://127.0.0.1:4321/icons/about/community-programs.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/product-engineering.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/engineering-systems.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/visible-tradeoffs.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/build-capability.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/intentional-automation.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/impact-innovations.svg",
+        "loaded": true,
+        "width": 80
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/asterism.svg",
+        "loaded": true,
+        "width": 80
+      }
+    ],
+    "aboutLinks": [
+      {
+        "text": "Explore selected work ↗",
+        "href": "/work/"
+      },
+      {
+        "text": "View résumé ↗",
+        "href": "/resume/"
+      },
+      {
+        "text": "Get in touch ↗",
+        "href": "/contact/"
+      }
+    ],
+    "featureLinks": [
+      "/work/nonprofit-crm-selection/",
+      "/projects/"
+    ],
+    "headingOrder": [
+      "H1: The work is technical. The responsibility is human.",
+      "H2: A career shaped by software and community.",
+      "H3: Community & Programs",
+      "H3: Product Engineering",
+      "H3: Engineering Systems & Leadership",
+      "H2: People first. Systems second. Tools third.",
+      "H2: Building at the intersection of technology and organizationa",
+      "H3: Impact Innovations",
+      "H3: Asterism",
+      "H2: Growing into broader engineering leadership.",
+      "H2: Let's connect."
+    ],
+    "vitals": {
+      "cls": 0,
+      "lcp": 52,
+      "domContentLoadedMs": 13.700000047683716,
+      "transferredBytes": 293785
+    },
+    "focus": [
+      {
+        "target": "Explore selected work ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "View résumé ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      }
+    ]
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".hero-intro": 10.713581831300091,
+      ".about-section .eyebrow": 10.713581831300091,
+      ".about-section .eyebrow[1]": 10.713581831300091,
+      ".about-section .eyebrow[2]": 10.713581831300091,
+      ".about-section .eyebrow[3]": 10.713581831300091,
+      ".about-section h2": 11.280745629110825,
+      ".about-section h2[1]": 11.280745629110825,
+      ".about-section h2[2]": 11.280745629110825,
+      ".about-section h2[3]": 11.280745629110825,
+      ".stages h3": 11.280745629110825,
+      ".stages h3[1]": 11.280745629110825,
+      ".stages h3[2]": 11.280745629110825,
+      ".stages p": 10.713581831300091,
+      ".stages p[1]": 10.713581831300091,
+      ".stages p[2]": 10.713581831300091,
+      ".principles-list dt": 11.280745629110825,
+      ".principles-list dt[1]": 11.280745629110825,
+      ".principles-list dt[2]": 11.280745629110825,
+      ".principle-text p": 10.713581831300091,
+      ".principle-text p[1]": 10.713581831300091,
+      ".principle-text p[2]": 10.713581831300091,
+      ".principle-text p[3]": 10.713581831300091,
+      ".principle-text p[4]": 10.713581831300091,
+      ".principle-text p[5]": 10.713581831300091,
+      ".principle-text p[6]": 10.713581831300091,
+      ".feature h3": 10.137271068291396,
+      ".feature h3[1]": 10.137271068291396,
+      ".feature-text p": 9.62759791834535,
+      ".feature-text p[1]": 9.62759791834535,
+      ".feature-text p[2]": 9.62759791834535,
+      ".feature-text p[3]": 9.62759791834535,
+      ".feature-text p[4]": 9.62759791834535,
+      ".feature-text p[5]": 9.62759791834535,
+      ".feature a": 10.137271068291396,
+      ".feature a[1]": 10.137271068291396,
+      ".about-links a": 11.280745629110825,
+      ".about-links a[1]": 11.280745629110825,
+      ".about-links a[2]": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825
+    },
+    "icons": [
+      {
+        "src": "http://127.0.0.1:4321/icons/about/community-programs.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/product-engineering.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/engineering-systems.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/visible-tradeoffs.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/build-capability.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/intentional-automation.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/impact-innovations.svg",
+        "loaded": true,
+        "width": 80
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/asterism.svg",
+        "loaded": true,
+        "width": 80
+      }
+    ],
+    "aboutLinks": [
+      {
+        "text": "Explore selected work ↗",
+        "href": "/work/"
+      },
+      {
+        "text": "View résumé ↗",
+        "href": "/resume/"
+      },
+      {
+        "text": "Get in touch ↗",
+        "href": "/contact/"
+      }
+    ],
+    "featureLinks": [
+      "/work/nonprofit-crm-selection/",
+      "/projects/"
+    ],
+    "headingOrder": [
+      "H1: The work is technical. The responsibility is human.",
+      "H2: A career shaped by software and community.",
+      "H3: Community & Programs",
+      "H3: Product Engineering",
+      "H3: Engineering Systems & Leadership",
+      "H2: People first. Systems second. Tools third.",
+      "H2: Building at the intersection of technology and organizationa",
+      "H3: Impact Innovations",
+      "H3: Asterism",
+      "H2: Growing into broader engineering leadership.",
+      "H2: Let's connect."
+    ],
+    "vitals": {
+      "cls": 0,
+      "lcp": 36,
+      "domContentLoadedMs": 12.399999976158142,
+      "transferredBytes": 293785
+    },
+    "focus": [
+      {
+        "target": "Explore selected work ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "View résumé ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "contrast": {
+      "h1": 11.280745629110825,
+      ".hero-intro": 10.713581831300091,
+      ".about-section .eyebrow": 10.713581831300091,
+      ".about-section .eyebrow[1]": 10.713581831300091,
+      ".about-section .eyebrow[2]": 10.713581831300091,
+      ".about-section .eyebrow[3]": 10.713581831300091,
+      ".about-section h2": 11.280745629110825,
+      ".about-section h2[1]": 11.280745629110825,
+      ".about-section h2[2]": 11.280745629110825,
+      ".about-section h2[3]": 11.280745629110825,
+      ".stages h3": 11.280745629110825,
+      ".stages h3[1]": 11.280745629110825,
+      ".stages h3[2]": 11.280745629110825,
+      ".stages p": 10.713581831300091,
+      ".stages p[1]": 10.713581831300091,
+      ".stages p[2]": 10.713581831300091,
+      ".principles-list dt": 11.280745629110825,
+      ".principles-list dt[1]": 11.280745629110825,
+      ".principles-list dt[2]": 11.280745629110825,
+      ".principle-text p": 10.713581831300091,
+      ".principle-text p[1]": 10.713581831300091,
+      ".principle-text p[2]": 10.713581831300091,
+      ".principle-text p[3]": 10.713581831300091,
+      ".principle-text p[4]": 10.713581831300091,
+      ".principle-text p[5]": 10.713581831300091,
+      ".principle-text p[6]": 10.713581831300091,
+      ".feature h3": 10.137271068291396,
+      ".feature h3[1]": 10.137271068291396,
+      ".feature-text p": 9.62759791834535,
+      ".feature-text p[1]": 9.62759791834535,
+      ".feature-text p[2]": 9.62759791834535,
+      ".feature-text p[3]": 9.62759791834535,
+      ".feature-text p[4]": 9.62759791834535,
+      ".feature-text p[5]": 9.62759791834535,
+      ".feature a": 10.137271068291396,
+      ".feature a[1]": 10.137271068291396,
+      ".about-links a": 11.280745629110825,
+      ".about-links a[1]": 11.280745629110825,
+      ".about-links a[2]": 11.280745629110825,
+      ".closing p": 11.280745629110825,
+      ".closing .button-link": 11.280745629110825
+    },
+    "icons": [
+      {
+        "src": "http://127.0.0.1:4321/icons/about/community-programs.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/product-engineering.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/engineering-systems.svg",
+        "loaded": true,
+        "width": 72
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/visible-tradeoffs.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/build-capability.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/intentional-automation.svg",
+        "loaded": true,
+        "width": 28
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/impact-innovations.svg",
+        "loaded": true,
+        "width": 80
+      },
+      {
+        "src": "http://127.0.0.1:4321/icons/about/asterism.svg",
+        "loaded": true,
+        "width": 80
+      }
+    ],
+    "aboutLinks": [
+      {
+        "text": "Explore selected work ↗",
+        "href": "/work/"
+      },
+      {
+        "text": "View résumé ↗",
+        "href": "/resume/"
+      },
+      {
+        "text": "Get in touch ↗",
+        "href": "/contact/"
+      }
+    ],
+    "featureLinks": [
+      "/work/nonprofit-crm-selection/",
+      "/projects/"
+    ],
+    "headingOrder": [
+      "H1: The work is technical. The responsibility is human.",
+      "H2: A career shaped by software and community.",
+      "H3: Community & Programs",
+      "H3: Product Engineering",
+      "H3: Engineering Systems & Leadership",
+      "H2: People first. Systems second. Tools third.",
+      "H2: Building at the intersection of technology and organizationa",
+      "H3: Impact Innovations",
+      "H3: Asterism",
+      "H2: Growing into broader engineering leadership.",
+      "H2: Let's connect."
+    ],
+    "vitals": {
+      "cls": 0,
+      "lcp": 44,
+      "domContentLoadedMs": 14.399999976158142,
+      "transferredBytes": 293785
+    },
+    "focus": [
+      {
+        "target": "Explore selected work ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "View résumé ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch ↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      },
+      {
+        "target": "Get in touch↗",
+        "outline": "solid",
+        "width": "3px",
+        "focused": true
+      }
+    ]
+  }
+]

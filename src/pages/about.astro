@@ -1,0 +1,15 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutPageContent from '../components/AboutPageContent.astro';
+import { getPage } from '../lib/tina/data';
+import { islands } from '../lib/tina/islands';
+
+const { data } = await getPage('about.md');
+---
+
+<BaseLayout title={`${data.page.title} — Juan Vistro`} description={data.page.summary || data.page.title}>
+  <TinaIsland name="about" wrapper={islands.about.wrapper} primary>
+    <AboutPageContent data={data.page} />
+  </TinaIsland>
+</BaseLayout>

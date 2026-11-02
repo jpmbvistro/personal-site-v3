@@ -1,0 +1,41 @@
+---
+import Container from './Container.astro';
+import ButtonLink from './ButtonLink.astro';
+import { safeHref } from '../lib/links';
+
+interface Props {
+  id: string;
+  title?: string | null;
+  text?: string | null;
+  label?: string | null;
+  url?: string | null;
+  /** Tina field marker from the calling component, if the content is editable. */
+  field?: string;
+}
+const { id, title, text, label, url: rawUrl, field } = Astro.props;
+const url = safeHref(rawUrl);
+const editable = field ? { 'data-tina-field': field } : {};
+const action = url && label;
+---
+
+{title && <section class="closing" aria-labelledby={id} {...editable}>
+  <Container class="closing-inner">
+    <div><h2 id={id}>{title}</h2>{text && <p>{text}</p>}</div>
+    {action && <ButtonLink href={url!} variant="secondary">{label} <span aria-hidden="true">↗</span></ButtonLink>}
+  </Container>
+  <svg class="closing-ribbon" viewBox="0 0 900 300" fill="none" aria-hidden="true">
+    {[0, 12, 24, 36, 48].map((offset) => <path d={`M0 ${260 + offset}C320 ${-180 + offset} 410 ${500 + offset} 900 ${20 + offset}`} />)}
+  </svg>
+</section>}
+
+<style>
+  .closing { position: relative; isolation: isolate; overflow: hidden; background: var(--primary); color: var(--primary-foreground); padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .closing :global(.closing-inner) { display: grid; align-items: center; gap: var(--space-8); }
+  .closing h2 { color: inherit; font-size: clamp(3rem, 5vw, 4.5rem); }
+  .closing p { margin-top: var(--space-6); max-width: 65ch; }
+  .closing :global(.button-link) { justify-self: start; background: var(--background); color: var(--primary); border-color: var(--background); --ring: var(--background); font-size: var(--text-small); }
+  .closing :global(.button-link:hover) { background: var(--secondary); }
+  .closing span { margin-left: var(--space-6); }
+  .closing-ribbon { position: absolute; right: -15%; bottom: -10%; width: 65%; height: 100%; z-index: -1; stroke: var(--primary-foreground); opacity: 0.08; }
+  @media (min-width: 48rem) { .closing :global(.closing-inner) { grid-template-columns: minmax(0, 1fr) auto; } }
+</style>

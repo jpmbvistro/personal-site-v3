@@ -1,0 +1,19 @@
+---
+interface Props { name?: string | null; size?: 'stage' | 'badge' | 'feature' }
+const { name, size = 'stage' } = Astro.props;
+// Committed, editable SVG illustrations serving the About page only.
+// PNG exports remain an optional fallback; HTML carries the real text labels.
+const files: Record<string, string> = {
+  community: '/icons/about/community-programs.svg',
+  product: '/icons/about/product-engineering.svg',
+  systems: '/icons/about/engineering-systems.svg',
+  tradeoffs: '/icons/about/visible-tradeoffs.svg',
+  capability: '/icons/about/build-capability.svg',
+  automation: '/icons/about/intentional-automation.svg',
+  impact: '/icons/about/impact-innovations.svg',
+  asterism: '/icons/about/asterism.svg',
+};
+const src = name ? files[name] : undefined;
+---
+
+{src && <img class={`about-icon ${size}`} src={src} width="1024" height="1024" alt="" aria-hidden="true" loading="lazy" />}

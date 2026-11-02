@@ -246,6 +246,82 @@ const homepage: TinaField = {
   ],
 };
 
+// Fixed About composition: the icon list maps to committed illustration SVGs
+// (Astro owns rendering); narrative copy stays editable in Tina.
+const aboutIcon: TinaField = { type: 'string', name: 'icon', label: 'Illustration', options: [
+  { value: 'community', label: 'Community & Programs' },
+  { value: 'product', label: 'Product Engineering' },
+  { value: 'systems', label: 'Engineering Systems & Leadership' },
+  { value: 'tradeoffs', label: 'Make the tradeoffs visible' },
+  { value: 'capability', label: 'Build capability, not dependency' },
+  { value: 'automation', label: 'Use automation with intention' },
+  { value: 'impact', label: 'Impact Innovations' },
+  { value: 'asterism', label: 'Asterism' },
+] };
+
+// Editable narrative with emphasis; rendered through the shared rich-text pipeline.
+const narrative: TinaField = { type: 'rich-text', name: 'paragraphs', label: 'Narrative paragraphs' };
+
+// One fixed About composition, not a page builder. The portrait stays unset
+// until an authentic owner-supplied headshot exists; a placeholder shows until then.
+const about: TinaField = {
+  type: 'object', name: 'about', label: 'About content (About only)',
+  fields: [
+    { type: 'string', name: 'eyebrow', label: 'Hero eyebrow' },
+    { type: 'image', name: 'portrait', label: 'Portrait (owner to supply)', description: 'Leave empty until an approved, authentic headshot exists. A placeholder renders while unset.' },
+    { type: 'string', name: 'portraitAlt', label: 'Portrait description (used only with a portrait)' },
+    { type: 'object', name: 'path', label: 'Section 01 — The path here', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'string', name: 'summary', label: 'Lead summary', ui: { component: 'textarea' } },
+      narrative,
+      { type: 'object', name: 'stages', label: 'Career stages', list: true,
+        ui: { itemProps: (item) => ({ label: item?.title || 'Stage' }) },
+        fields: [
+          aboutIcon,
+          { type: 'string', name: 'title', label: 'Heading', required: true },
+          { type: 'string', name: 'text', label: 'Explanation' },
+        ] },
+    ] },
+    { type: 'object', name: 'principles', label: 'Section 02 — How I work', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'statement', label: 'Prominent statement', required: true },
+      { type: 'string', name: 'intro', label: 'Introduction', ui: { component: 'textarea' } },
+      { type: 'object', name: 'items', label: 'Principles', list: true,
+        ui: { itemProps: (item) => ({ label: item?.title || 'Principle' }) },
+        fields: [
+          aboutIcon,
+          { type: 'string', name: 'title', label: 'Heading', required: true },
+          { type: 'rich-text', name: 'text', label: 'Explanation' },
+        ] },
+    ] },
+    { type: 'object', name: 'building', label: 'Section 03 — Beyond my day job', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'object', name: 'features', label: 'Endeavors', list: true,
+        ui: { itemProps: (item) => ({ label: item?.name || 'Endeavor' }) },
+        fields: [
+          aboutIcon,
+          { type: 'string', name: 'name', label: 'Name', required: true },
+          { type: 'rich-text', name: 'text', label: 'Description' },
+          { type: 'string', name: 'linkLabel', label: 'Link label' },
+          { type: 'string', name: 'url', label: 'Link destination (existing route only)' },
+        ] },
+    ] },
+    { type: 'object', name: 'next', label: 'Section 04 — What’s next', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      narrative,
+    ] },
+    { type: 'object', name: 'closing', label: 'Closing invitation', fields: [
+      { type: 'string', name: 'title', label: 'Heading' },
+      { type: 'string', name: 'text', label: 'Invitation', ui: { component: 'textarea' } },
+      { type: 'string', name: 'label', label: 'Action label' },
+      { type: 'string', name: 'url', label: 'Action destination' },
+    ] },
+  ],
+};
+
 // Type-only configuration avoids loading Tina's entire browser runtime into the
 // Node CLI. The CLI still validates the schema before indexing/building.
 export default {
@@ -272,6 +348,7 @@ export default {
           links,
           { type: 'string', name: 'resume', label: 'Résumé URL (optional)', description: 'A résumé page or public-safe file URL, such as /resume/ or /uploads/resume.pdf.' },
           homepage,
+          about,
         ],
       },
       {
