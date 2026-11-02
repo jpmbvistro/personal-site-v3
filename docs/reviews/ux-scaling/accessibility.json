@@ -1,0 +1,199 @@
+[
+  {
+    "width": 320,
+    "axeVersion": "4.11.0",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(2)"
+          ],
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(4)"
+          ]
+        ]
+      }
+    ],
+    "passedRules": 41,
+    "overflow": false,
+    "toolbar": false,
+    "fixedOverlays": [],
+    "textContrast": {
+      ".intro-copy p": 10.71,
+      "h1": 11.28,
+      ".story-section .eyebrow": 5.13,
+      ".story-quote .quote-text p": 11.28,
+      ".entry-links a": 11.28,
+      ".summary": 10.71,
+      ".source-specialists strong": 11.28,
+      ".source-resources span": 10.71,
+      ".embedded strong": 11.28,
+      ".teams-label": 11.28,
+      ".flow-arrow": 11.28
+    },
+    "manualRibbonContrastMinimum": 9.31,
+    "editorRequests": []
+  },
+  {
+    "width": 390,
+    "axeVersion": "4.11.0",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(2)"
+          ],
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(4)"
+          ]
+        ]
+      }
+    ],
+    "passedRules": 41,
+    "overflow": false,
+    "toolbar": false,
+    "fixedOverlays": [],
+    "textContrast": {
+      ".intro-copy p": 10.71,
+      "h1": 11.28,
+      ".story-section .eyebrow": 5.13,
+      ".story-quote .quote-text p": 11.28,
+      ".entry-links a": 11.28,
+      ".summary": 10.71,
+      ".source-specialists strong": 11.28,
+      ".source-resources span": 10.71,
+      ".embedded strong": 11.28,
+      ".teams-label": 11.28,
+      ".flow-arrow": 11.28
+    },
+    "manualRibbonContrastMinimum": 9.31,
+    "editorRequests": []
+  },
+  {
+    "width": 768,
+    "axeVersion": "4.11.0",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(2)"
+          ],
+          [
+            ".flow-arrow[aria-hidden=\"true\"]:nth-child(4)"
+          ]
+        ]
+      }
+    ],
+    "passedRules": 39,
+    "overflow": false,
+    "toolbar": false,
+    "fixedOverlays": [],
+    "textContrast": {
+      ".intro-copy p": 10.71,
+      "h1": 11.28,
+      ".story-section .eyebrow": 5.13,
+      ".story-quote .quote-text p": 11.28,
+      ".entry-links a": 11.28,
+      ".summary": 10.71,
+      ".source-specialists strong": 11.28,
+      ".source-resources span": 10.71,
+      ".embedded strong": 11.28,
+      ".teams-label": 11.28,
+      ".flow-arrow": 11.28
+    },
+    "manualRibbonContrastMinimum": 9.31,
+    "editorRequests": []
+  },
+  {
+    "width": 1024,
+    "axeVersion": "4.11.0",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            ".source-specialists > strong"
+          ],
+          [
+            ".source-resources > span"
+          ],
+          [
+            ".embedded > strong"
+          ],
+          [
+            ".teams-label"
+          ]
+        ]
+      }
+    ],
+    "passedRules": 39,
+    "overflow": false,
+    "toolbar": false,
+    "fixedOverlays": [],
+    "textContrast": {
+      ".intro-copy p": 10.71,
+      "h1": 11.28,
+      ".story-section .eyebrow": 5.13,
+      ".story-quote .quote-text p": 11.28,
+      ".entry-links a": 11.28,
+      ".summary": 10.71,
+      ".source-specialists strong": 11.28,
+      ".source-resources span": 10.71,
+      ".embedded strong": 11.28,
+      ".teams-label": 11.28,
+      ".flow-arrow": 11.28
+    },
+    "manualRibbonContrastMinimum": 9.31,
+    "editorRequests": []
+  },
+  {
+    "width": 1440,
+    "axeVersion": "4.11.0",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            ".source-specialists > strong"
+          ],
+          [
+            ".source-resources > span"
+          ],
+          [
+            ".embedded > strong"
+          ],
+          [
+            ".teams-label"
+          ]
+        ]
+      }
+    ],
+    "passedRules": 39,
+    "overflow": false,
+    "toolbar": false,
+    "fixedOverlays": [],
+    "textContrast": {
+      ".intro-copy p": 10.71,
+      "h1": 11.28,
+      ".story-section .eyebrow": 5.13,
+      ".story-quote .quote-text p": 11.28,
+      ".entry-links a": 11.28,
+      ".summary": 10.71,
+      ".source-specialists strong": 11.28,
+      ".source-resources span": 10.71,
+      ".embedded strong": 11.28,
+      ".teams-label": 11.28,
+      ".flow-arrow": 11.28
+    },
+    "manualRibbonContrastMinimum": 9.31,
+    "editorRequests": []
+  }
+]

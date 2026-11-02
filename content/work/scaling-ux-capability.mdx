@@ -1,0 +1,159 @@
+---
+title: Scaling UX impact across 12 engineering teams
+draft: false
+summary: 'I coordinated a distributed UX enablement initiative, partnering with a two-person specialist team to help engineers bring research and an existing design system into the products they owned.'
+presentation: editorial
+sections:
+  - eyebrow: 01 / The challenge
+    title: High ambition. Limited specialist capacity.
+    layout: prose
+    intro: |
+      Many internal applications were maintained by individual engineers, with fragmented interfaces and limited access to dedicated UX support. Modernization was a priority, but another large redesign program would have competed with existing delivery commitments.
+    children: |
+      <EditorialCallouts
+        label="Constraints on the initiative"
+        items={[
+          {
+            icon: "teams",
+            title: "Distributed ownership",
+            text: "12 engineering teams across three verticals, each with its own products and priorities."
+          },
+          {
+            icon: "capacity",
+            title: "Limited UX capacity",
+            text: "Two central UX specialists could not guide every application individually."
+          },
+          {
+            icon: "constraints",
+            title: "Initial skepticism",
+            text: "Engineering leads needed to see user value without taking on a competing program of work."
+          }
+        ]}
+      />
+    aside: ''
+  - eyebrow: 02 / The approach
+    title: Specialist guidance. Local ownership.
+    layout: prose
+    intro: |
+      With my manager's support and approximately **10% of my time**, I volunteered to coordinate participation. I worked with leads on capacity, facilitated learning, and connected engineers with the two UX specialists.
+
+      Engineers brought research and manageable improvements into their own backlogs. The specialists retained ownership of their discipline and remained available for complex work; I did not author the existing design system.
+    children: |
+      <LocalOwnershipDiagram
+        caption="Enable engineers without replacing UX expertise."
+        summary="Learning fed into local backlog work, with specialist support available when questions became more complex."
+        specialistsLabel="UX specialists"
+        resourcesLabel="Interviews · JTBD · personas · shared learning"
+        participantsLabel="Embedded engineers"
+        teamsLabel="12 teams' local backlogs"
+        stages={[
+          { title: "Enable", text: "Make interviews, JTBD and personas approachable." },
+          { title: "Embed", text: "One engineering participant in each team." },
+          {
+            title: "Support",
+            text: "Keep specialist guidance available for complex needs."
+          },
+          {
+            title: "Apply",
+            text: "Bring research and improvements into local backlogs."
+          }
+        ]}
+      />
+
+      A custom GPT helped translate interviews into jobs-to-be-done (JTBD) and persona artifacts; it did not replace specialist judgment.
+    aside: ''
+  - eyebrow: 03 / Key decisions
+    title: Adapt the model. Make it easy to say yes.
+    layout: decisions
+    intro: |
+      The original participation plan did not survive reorganization. I adapted the model around engineering ownership, addressed skepticism with concrete user needs, and kept the commitment modest enough to fit existing priorities.
+    children: |
+      1. **Adapt after reorganization.**
+         A reorganization disrupted my original product-team participation plan. I shifted to one engineering representative per team, preserving a route into each team without relying on the former structure. The tradeoff: research needed to be approachable for engineers with limited UX experience.
+      2. **Address skepticism with user value.**
+         I connected observed user pain points to organizational priorities and a commitment agreed with leads: roughly three hours per engineer per month, including learning and backlog work. Useful, prioritized improvements could fit existing roadmaps rather than compete with them.
+      3. **Build capability, not dependency.**
+         Resources and specialist partnership helped engineers conduct routine research locally, with an expert path for harder problems. Independence was a direction to support—not an assertion that all 12 teams became self-sufficient.
+    aside: ''
+  - eyebrow: 04 / Results and reflection
+    title: Shared participation. Different paths forward.
+    layout: prose
+    intro: |
+      All 12 teams participated and produced JTBD and persona artifacts. Additionally, every team either integrated the existing design system or established an upgrade path. Follow-through varied, rather than advancing uniformly across the network.
+
+      **Organizational sponsorship and embedded ownership were both necessary.** Leadership made room for the work, specialists provided guidance, and engineers carried the practices into their teams. My role was to connect those groups and make collaboration workable.
+
+      ### Scale capability, not dependency
+
+      The lesson I carry forward is to scale capability without making every decision depend on a central team.
+    children: |
+      <MetricStrip
+        caption="Follow-through groups may overlap; counts are not additive."
+        topRule={false}
+        bottomRule={false}
+        metrics={[
+          {
+            icon: "teams",
+            value: "12",
+            label: "Teams participated",
+            qualifier: "All created JTBD and persona artifacts"
+          },
+          {
+            icon: "system",
+            value: "3",
+            label: "Teams completed upgrades",
+            qualifier: "Existing shared design system"
+          },
+          {
+            icon: "research",
+            value: "3",
+            label: "Teams continued research independently",
+            qualifier: "Beyond the structured initiative"
+          },
+          {
+            icon: "learning",
+            value: "3",
+            label: "Teams consulted UX specialists",
+            qualifier: "For more complex work"
+          }
+        ]}
+      />
+    aside: |
+      <BlockQuote label="Leadership principle" originalThought={true} quote="Lower the cost of participation, maintain trust in expertise, and give people a useful next step in their own work." />
+organizationLabel: Global biotechnology company
+role: Software Engineer · Coordination and enablement
+tags:
+  - Engineering Leadership
+  - UX Strategy
+  - Cross-Functional Collaboration
+links:
+  - label: Related work — API migration decisions
+    url: /work/api-migration-confidence/
+---
+
+<DistributedUxNetwork
+  caption="A small specialist team. A distributed practice."
+  summary="Two UX specialists and reusable research resources supported embedded engineering participants—one per team—who brought research and improvements into 12 teams across three verticals. Participation did not mean every team reached the same maturity."
+  specialistsLabel="Two UX specialists"
+  resourcesLabel="Research guidance, tools and learning"
+  participantsLabel="Embedded engineering participants"
+  teamsLabel="12 participating engineering teams"
+  calloutsLabel="Observed practice, not measured end-user impact"
+  callouts={[
+    {
+      icon: "research",
+      title: "Research artifacts",
+      text: "JTBD and personas created by all participating teams."
+    },
+    {
+      icon: "system",
+      title: "Integration or a path",
+      text: "Every team integrated the design system or planned an upgrade."
+    },
+    {
+      icon: "learning",
+      title: "Specialist partnership",
+      text: "Three teams consulted UX for complex work; follow-through groups may overlap."
+    }
+  ]}
+/>

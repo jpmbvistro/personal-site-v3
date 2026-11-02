@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: Newsreader;
+  src: url('/fonts/newsreader-latin-wght-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   --ink: #192b39;
@@ -19,14 +35,17 @@
   --muted-foreground: #52616a;
   --accent: var(--copper);
   --accent-foreground: var(--ink);
+  --accent-strong: #8b5738;
+  --accent-strong-foreground: var(--background);
   --border: #cbcfc7;
   --ring: var(--evergreen);
 
   --font-sans: "Avenir Next", Avenir, "Segoe UI", sans-serif;
   --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --font-mono: "SFMono-Regular", Consolas, monospace;
+  --font-weight-body: 300;
   --text-small: 0.875rem;
-  --text-body: 1rem;
+  --text-body: 0.75rem;
   --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.4rem);
   --text-heading: clamp(2rem, 1.5rem + 2vw, 3.5rem);
   --text-display: clamp(3.5rem, 2.25rem + 5vw, 7rem);
@@ -66,14 +85,48 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    font-weight: var(--font-weight-body);
     font-size: 100%;
     line-height: 1.65;
     scroll-padding-top: var(--space-8);
   }
 
   body { margin: 0; }
+  /* #26's accepted direction, first applied to the opt-in Work presentation.
+     The shared shell is retained; site-wide migration remains in #26. */
+  body.editorial-work {
+    --background: #f3ede3;
+    --foreground: #343432;
+    --primary: #28332b;
+    --primary-foreground: var(--background);
+    --primary-hover: var(--foreground);
+    --secondary: #d2c6b8;
+    --secondary-foreground: var(--foreground);
+    --muted: color-mix(in srgb, var(--secondary) 30%, var(--background));
+    --muted-foreground: var(--foreground);
+    --accent: #b17750;
+    --accent-foreground: var(--foreground);
+    --accent-strong-foreground: var(--background);
+    --border: var(--secondary);
+    --ring: var(--primary);
+    --font-sans: Inter, "Avenir Next", "Segoe UI", sans-serif;
+    --font-serif: Newsreader, "Iowan Old Style", Georgia, serif;
+    /* Readable editorial copy without changing the rest of the site's scale. */
+    --text-body: 1rem;
+    --text-support: 0.875rem;
+    --text-annotation: 0.875rem;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+  .editorial-work :is(h1, h2, h3) { color: var(--primary); }
+  .editorial-work .eyebrow { font-size: 0.8125rem; }
+  .editorial-work .prose :is(h2, h3, h4, h5, h6) { font-family: var(--font-serif); font-weight: 400; }
   ::selection { background: var(--secondary); color: var(--foreground); }
   h1, h2, h3, p { margin: 0; }
+  p { font-size: var(--text-body); }
+  /* Keep emphasis distinct when the inherited body weight is below 400. */
+  strong, b { font-weight: 700; }
   h1, h2 { font-family: var(--font-serif); font-weight: 400; line-height: 1.08; }
   h1 { font-size: var(--text-display); letter-spacing: -0.045em; }
   h2 { font-size: var(--text-heading); letter-spacing: -0.025em; }
@@ -96,9 +149,12 @@
     text-transform: uppercase;
   }
 
-  .prose { max-width: var(--reading-width); overflow-wrap: anywhere; }
+  .prose { max-width: var(--reading-width); font-size: var(--text-body); overflow-wrap: anywhere; }
   .prose > * + * { margin-top: var(--space-4); }
-  .prose :is(ul, ol) { padding-inline-start: var(--space-6); }
+  /* Restore rich-text markers removed by Tailwind's reset, not navigation lists. */
+  .prose ul { list-style-type: disc; }
+  .prose ol { list-style-type: decimal; }
+  .prose :is(ul, ol) { list-style-position: outside; padding-inline-start: var(--space-6); }
   .prose :is(h2, h3) { margin-top: var(--space-8); }
   .prose img { height: auto; border-radius: var(--radius); }
   .prose figure { margin-inline: 0; }
@@ -107,10 +163,12 @@
   .prose table { display: block; max-width: 100%; overflow-x: auto; }
   .prose :is(th, td) { padding: var(--space-2); border-bottom: 1px solid var(--border); text-align: start; }
   .landing-page, .detail-page { padding-block: clamp(3rem, 7vw, 6rem); }
+  /* Detail pages sit closer to the shared header; back links shouldn't float far down. */
+  .detail-page { padding-block-start: clamp(1.25rem, 3vw, 2.5rem); }
   .entry-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); gap: var(--space-8); }
   .listing { margin-top: var(--space-16); }
   .empty-state { padding-top: var(--space-8); border-top: 1px solid var(--border); color: var(--muted-foreground); }
-  .back-link { display: inline-block; margin-bottom: var(--space-8); padding-block: var(--space-2); }
+  .back-link { display: inline-block; margin-bottom: var(--space-4); padding-block: var(--space-2); }
   .next-path { display: flex; flex-wrap: wrap; gap: var(--space-6); border-top: 1px solid var(--border); padding-top: var(--space-8); margin-top: var(--space-16); }
   .next-path a { padding-block: var(--space-3); }
 

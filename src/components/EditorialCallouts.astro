@@ -1,0 +1,36 @@
+---
+import StoryIcon from './StoryIcon.astro';
+
+interface Props {
+  label?: string | null;
+  headingTag?: 'h3' | 'p';
+  items?: ({ icon?: string | null; title: string; text?: string | null } | null)[] | null;
+}
+const { label, items, headingTag: HeadingTag = 'h3' } = Astro.props;
+const entries = items?.filter((item) => item?.title) ?? [];
+---
+
+{entries.length > 0 && <ul class="editorial-callouts" role="list" aria-label={label || undefined}>
+  {entries.map((item) => item && <li>
+    <span class="callout-icon"><StoryIcon name={item.icon} /></span>
+    <div><HeadingTag class="callout-title">{item.title}</HeadingTag>{item.text && <p>{item.text}</p>}</div>
+  </li>)}
+</ul>}
+
+<style>
+  .editorial-callouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); list-style: none; padding: 0; margin: 0; }
+  .editorial-callouts:has(> li:only-child) { grid-template-columns: 1fr; padding-block: var(--space-6); border-block: 1px solid var(--border); }
+  li { min-width: 0; }
+  li + li { border-left: 1px solid var(--border); padding-left: var(--space-6); }
+  .callout-icon { display: inline-flex; align-items: center; justify-content: center; width: 3.5rem; height: 3.5rem; border: 1px solid var(--accent); border-radius: 50%; color: var(--primary); margin-bottom: var(--space-4); }
+  /* Do not inherit the prose heading's 2rem top margin: the icon already
+     supplies a 1rem gap (one third of the previous combined 3rem gap). */
+  .callout-title { margin: 0; font: 400 1.4rem/1.15 var(--font-serif); color: var(--primary); }
+  p { margin-top: var(--space-2); font-size: var(--text-support, var(--text-body)); line-height: 1.6; }
+  @media (max-width: 40rem) {
+    .editorial-callouts { grid-template-columns: 1fr; }
+    li { display: flex; align-items: flex-start; gap: var(--space-4); }
+    li + li { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-6); }
+    .callout-icon { flex: none; margin-bottom: 0; }
+  }
+</style>

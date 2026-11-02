@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { readFile, writeFile } from 'node:fs/promises';
+import { workStories } from './fixtures/work-drafts';
 
 async function openEditor(page: import('@playwright/test').Page, route = '/') {
   await page.goto('/admin/index.html');
@@ -8,14 +9,16 @@ async function openEditor(page: import('@playwright/test').Page, route = '/') {
   if (route !== '/') await page.locator('iframe').evaluate((frame, path) => { (frame as HTMLIFrameElement).src = path; }, route);
 }
 
-test('selecting a draft from the collection opens its local visual preview', async ({ page }) => {
-  await openEditor(page);
-  await page.goto('/admin/index.html#/collections/work');
-  await page.getByText('Building an AI-assisted delivery workflow', { exact: true }).click();
-  await expect(page.locator('iframe')).toHaveAttribute('src', /\/preview\/work\/ai-assisted-delivery\//);
-  await expect(page.frameLocator('iframe').locator('.draft-note')).toBeVisible();
-  await expect(page.locator('input[name="title"]')).toBeVisible();
-});
+for (const { slug, title, published } of workStories) {
+  test(`selecting ${slug} from the collection opens its local visual preview`, async ({ page }) => {
+    await openEditor(page);
+    await page.goto('/admin/index.html#/collections/work');
+    await page.getByText(title, { exact: true }).click();
+    await expect(page.locator('iframe')).toHaveAttribute('src', new RegExp(`/preview/work/${slug}/$`));
+    await expect(page.frameLocator('iframe').locator('.draft-note')).toHaveCount(published ? 0 : 1);
+    await expect(page.locator('input[name="title"]')).toHaveValue(title);
+  });
+}
 
 test('in-context edit previews before saving to the Git-backed Markdown file', async ({ page }) => {
   const path = new URL('../content/pages/home.md', import.meta.url);
@@ -51,7 +54,7 @@ test('in-context edit previews before saving to the Git-backed Markdown file', a
 });
 
 for (const { route, file } of [
-  { route: '/preview/work/ai-assisted-delivery/', file: '../content/work/ai-assisted-delivery.mdx' },
+  ...workStories.map(({ slug }) => ({ route: `/preview/work/${slug}/`, file: `../content/work/${slug}.mdx` })),
   { route: '/preview/projects/keel/', file: '../content/projects/keel.mdx' },
   { route: '/about/', file: '../content/pages/about.md' },
   { route: '/resume/', file: '../content/pages/resume.md' },

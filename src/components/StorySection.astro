@@ -1,0 +1,65 @@
+---
+import type { TinaMarkdownProps } from '@tinacms/astro';
+import RichText from './RichText.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  layout?: string;
+  intro?: TinaMarkdownProps['content'];
+  children?: TinaMarkdownProps['content'];
+  aside?: TinaMarkdownProps['content'];
+}
+const { eyebrow, title, layout, intro, children, aside } = Astro.props;
+const hasAside = Array.isArray(aside) ? aside.length > 0 : (aside?.children?.length ?? 0) > 0;
+---
+
+<section class:list={['story-section', { 'story-decisions': layout === 'decisions' }]}>
+  <div class="section-intro">
+    <header>
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2>{title}</h2>
+    </header>
+    {intro && <div class="intro-copy prose"><RichText content={intro} /></div>}
+  </div>
+  <div class:list={['section-copy', { 'section-panels': hasAside }]}>
+    <div class="section-main prose"><RichText content={children} /></div>
+    {hasAside && <div class="section-aside prose"><RichText content={aside} /></div>}
+  </div>
+</section>
+
+<style>
+  .story-section { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-12); border-top: 1px solid var(--accent); padding-block: var(--space-12); }
+  h2 { margin-top: var(--space-4); max-width: 19ch; font-size: clamp(2rem, 2.8vw, 3.1rem); }
+  .eyebrow { color: var(--accent-strong); }
+  .section-copy, .section-main, .section-aside { min-width: 0; max-width: none; font-family: var(--font-sans); }
+  .intro-copy, .section-copy { font-family: var(--font-sans); font-size: var(--text-body); font-weight: var(--font-weight-body); line-height: 1.65; }
+  .section-panels { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr); gap: var(--space-6); align-items: start; }
+  .section-panels :global(.metric-strip dl) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .section-intro { min-width: 0; }
+  .intro-copy { margin-top: var(--space-4); }
+  .section-main :global(> .editorial-callouts) { padding: 0; list-style: none; }
+  .section-main :global(> ol) { list-style: none; padding: 0; counter-reset: decision; }
+  .section-main :global(> ol > li) { counter-increment: decision; }
+  .section-main :global(> ol > li::before) { content: counter(decision); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; margin-bottom: var(--space-4); background: var(--accent-strong); border-radius: 50%; color: var(--accent-strong-foreground); font-family: var(--font-serif); }
+  .story-decisions .section-main :global(> ol) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+  /* Give the leadership decisions room instead of shrinking their text. */
+  .story-decisions { grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr); gap: var(--space-8); }
+  .story-decisions .section-main :global(> ol > li) { font-size: var(--text-body); }
+  .story-decisions .section-main :global(> ol > li + li) { border-left: 1px solid var(--border); padding-left: var(--space-6); }
+  .story-decisions .section-main :global(li strong) { display: block; margin-bottom: var(--space-3); color: var(--primary); font-family: var(--font-serif); font-size: 1.4rem; line-height: 1.15; font-weight: 500; }
+  @media (max-width: 80rem) {
+    .section-panels { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 65rem) {
+    .story-decisions .section-main :global(> ol) { grid-template-columns: 1fr; gap: var(--space-6); }
+    .story-decisions .section-main :global(> ol > li + li) { border-left: 0; padding-left: 0; border-top: 1px solid var(--border); padding-top: var(--space-6); }
+  }
+  @media (max-width: 40rem) {
+    .section-panels :global(.metric-strip dl) { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 60rem) {
+    .story-section { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8); }
+    h2 { max-width: 24ch; }
+  }
+</style>
