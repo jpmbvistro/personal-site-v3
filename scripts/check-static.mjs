@@ -84,6 +84,15 @@ try {
     assert.doesNotMatch(api, /retained-bridge|match-path|Gate 1|Gate 2/);
     assert.doesNotMatch(api, /No component provided|Moderna|astro-dev-toolbar|\/astro\/toolbar|<astro-island/);
   }
+  if (!workDrafts.includes('ai-assisted-delivery')) {
+    const delivery = await readFile(new URL('../dist/client/work/ai-assisted-delivery/index.html', import.meta.url), 'utf8');
+    for (const marker of ['harness-preview', 'harness-diagram', 'ticket-lanes', 'lane-steps', 'validation-stage', 'recovery-path', 'observability-stage']) assert.ok(delivery.includes(marker), `Delivery story must render ${marker}`);
+    assert.match(delivery, /35\/40/);
+    assert.match(delivery, /not necessarily merged or deployed/);
+    assert.match(delivery, /Three representative lanes/);
+    assert.match(delivery, /subsequent harness designs became thinner/);
+    assert.doesNotMatch(delivery, /No component provided|Moderna|astro-dev-toolbar|<astro-island|<blockquote/);
+  }
   const minimal = await readFile(new URL('../dist/client/projects/static-fixture/index.html', import.meta.url), 'utf8');
   assert.doesNotMatch(minimal, /class="(?:entry-meta|tags|entry-links)"/);
   for (const route of draftRoutes) {

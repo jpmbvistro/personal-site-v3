@@ -64,11 +64,14 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
   .editorial-story:has(.entry-body > .api-preview:first-child) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
   .editorial-story:has(.api-preview) h1 { max-width: 14ch; }
   .editorial-story:has(.api-preview) .summary { max-width: 48ch; }
+  .editorial-story:has(.entry-body > .harness-preview:first-child) { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+  .editorial-story:has(.harness-preview) h1 { max-width: 20ch; font-size: clamp(2.75rem, 3.8vw, 4.5rem); }
+  .editorial-story:has(.harness-preview) .summary { max-width: 54ch; }
   .editorial-story :global(.entry-body > .lead-figure:first-child) { grid-column: 2; grid-row: var(--hero-figure-row); align-self: center; margin-block: var(--space-8) var(--space-12); }
   .editorial-story :global(.entry-body > .metric-strip) { margin-block: 0 var(--space-8); }
   .editorial-story .entry-links { grid-column: 1 / -1; margin-top: 0; }
   @media (max-width: 60rem) {
-    .editorial-story, .editorial-story:has(.entry-body > .api-preview:first-child) { --hero-figure-row: 2; grid-template-columns: minmax(0, 1fr); }
+    .editorial-story, .editorial-story:has(.entry-body > :is(.api-preview, .harness-preview):first-child) { --hero-figure-row: 2; grid-template-columns: minmax(0, 1fr); }
     .editorial-story.has-draft { --hero-figure-row: 3; }
     .editorial-story .entry-heading { grid-column: 1; padding-bottom: var(--space-4); }
     .editorial-story :global(.entry-body > .ux-figure:first-child) { grid-column: 1; margin-block: var(--space-4) var(--space-8); }

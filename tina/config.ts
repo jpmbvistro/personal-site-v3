@@ -103,7 +103,29 @@ const apiDecisionDiagram: Template = {
     }) },
   ],
 };
-const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram];
+const agenticPreview: Template = {
+  name: 'AgenticDeliveryPreview', label: 'Agentic delivery — hero preview',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation', backlog: 'Backlog label', harness: 'Harness label', review: 'PR label', recovery: 'Recovery label' }),
+    { type: 'string', name: 'tickets', label: 'Representative ticket labels', list: true, required: true },
+  ],
+};
+const agenticDiagram: Template = {
+  name: 'AgenticDeliveryHarnessDiagram', label: 'Agentic delivery — isolation, validation and recovery',
+  fields: [
+    ...labelFields({ caption: 'Caption', summary: 'Text explanation', intakeTitle: 'Intake heading', intakeText: 'Intake description', reviewTitle: 'PR handoff heading', reviewText: 'Review / oversight description' }),
+    { type: 'object', name: 'proof', label: 'Sequential proof', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
+    { type: 'object', name: 'scale', label: 'Parallel scaling', required: true, fields: labelFields({ title: 'Heading', text: 'Explanation' }) },
+    { type: 'object', name: 'execution', label: 'Per-ticket isolation', required: true, fields: [
+      ...labelFields({ title: 'Heading', note: 'Illustrative-lane qualifier', worktree: 'Worktree label', agent: 'Implementation label', tests: 'Test isolation label', checks: 'Required checks label' }),
+      { type: 'string', name: 'tickets', label: 'Representative ticket labels', list: true, required: true },
+    ] },
+    { type: 'object', name: 'validation', label: 'Required validation', required: true, fields: labelFields({ title: 'Heading', commands: 'Deterministic commands', tests: 'Test requirements', shadowDiff: 'Behavioral validation', failure: 'Failure blocks completion' }) },
+    { type: 'object', name: 'recovery', label: 'Failure and recovery', required: true, fields: labelFields({ title: 'Heading', failure: 'Failure', retry: 'Bounded retry', persistent: 'Persistent failure', human: 'Human handoff', note: 'Retry / human-assistance explanation' }) },
+    { type: 'object', name: 'observability', label: 'Evidence and improvement', required: true, fields: labelFields({ title: 'Heading', traces: 'Diagnostic evidence', investigation: 'Debugging-agent investigation', fixes: 'Targeted improvements', note: 'Evidence / uncertainty qualifier' }) },
+  ],
+};
+const visualBlocks = [metricStrip, distributedNetwork, localOwnership, editorialCallouts, blockQuote, apiPreview, apiDecisionDiagram, agenticPreview, agenticDiagram];
 
 const storySections: TinaField = {
   type: 'object', name: 'sections', label: 'Editorial sections', list: true,

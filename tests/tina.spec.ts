@@ -89,12 +89,16 @@ test('insert, edit, reorder, and save a typed metric strip through the real rich
     await openEditor(page, '/preview/work/ai-assisted-delivery/');
     await page.frameLocator('iframe').locator('main h1').click();
     await expect(page.locator('input[name="title"]')).toBeVisible();
-    // Replace the existing block only inside this unsaved authoring trial.
-    await page.getByRole('button', { name: 'Open options', exact: true }).click();
+    // Replace only the body's metric strip, retaining the story's lead figure.
+    await page.getByRole('button', { name: 'Open options', exact: true }).last().click();
     await page.getByRole('dialog').getByRole('button', { name: 'Remove', exact: true }).click();
-    await page.locator('[contenteditable="true"]').click();
-    await page.keyboard.press('ControlOrMeta+End');
-    await page.keyboard.press('Enter');
+    // Clicking the editor's center can open the remaining hero embed's form.
+    // Focus the actual rich-text surface, then create the trailing paragraph
+    // with the keyboard so insertion stays in the document editor.
+    const editor = page.locator('[contenteditable="true"]');
+    await editor.focus();
+    await editor.press('ControlOrMeta+End');
+    await editor.press('Enter');
     await page.getByTestId('rich-text-editor-overflow-menu-button').click();
     await page.getByRole('radio', { name: 'Embed', exact: true }).click();
     await page.getByRole('menuitem', { name: 'Metric strip', exact: true }).click();

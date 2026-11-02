@@ -1,103 +1,144 @@
 ---
-title: '40 tickets in 30 days: Building an AI-assisted engineering delivery system'
+title: Building a delivery system while delivering the work.
 draft: false
-summary: 'Faced with an urgent backlog of 40 corrective tickets, I built and operated an AI-assisted implementation harness that brought every ticket to PR within 30 days. The system combined parallel execution, behavioral validation, and human oversight, with 35 tickets requiring no manual code-writing.'
-organizationLabel: Global biotechnology company
-role: Software Engineer
+summary: 'Facing a 30-day deadline and a substantial backlog of corrective engineering work, I built an AI-assisted delivery harness while using it to complete the work itself. The system combined parallel execution, isolated work environments, automated validation, and human oversight to increase throughput without abandoning engineering controls.'
+presentation: editorial
+organizationLabel: Global biotechnology company · Agentic engineering
+role: Software Engineer · Harness design and delivery
 tags:
-  - Engineering Leadership
-  - Agentic AI
-  - Developer Productivity
-  - Platform Engineering
-  - Engineering Reliability
+  - Engineering judgment
+  - Systems architecture
+  - Reliable delivery
+sections:
+  - eyebrow: 01 / The Challenge
+    title: The deadline couldn't wait for the tooling.
+    layout: prose
+    intro: |
+      A major platform migration had produced an urgent corrective backlog with a fixed 30-day window. The existing manual workflow would have required more engineering capacity than was available.
+
+      Building automation consumed time needed for delivery. The challenge was to create additional capacity without allowing speed to undermine correctness.
+    children: |
+      <EditorialCallouts
+        label="Key constraints"
+        items={[
+          { icon: "capacity", title: "Time", text: "A fixed 30-day delivery window." },
+          { icon: "constraints", title: "Uncertainty", text: "No established internal pattern for parallel agent execution." },
+          { icon: "system", title: "Correctness", text: "Changes needed to preserve expected system behavior." }
+        ]}
+      />
+  - eyebrow: 02 / The Approach
+    title: Build for parallelism. Prove it incrementally.
+    layout: wide
+    intro: |
+      My previous behavioral-analysis harness provided a foundation, not proof of parallel code generation. I designed for concurrency but started with sequential tickets, establishing useful throughput before introducing parallel execution.
+
+      Each ticket received its own Git worktree and isolated test context. Required validation—including shadow-diff integration tests—had to pass before successful completion.
+    children: |
+      <AgenticDeliveryHarnessDiagram
+        caption="From sequential proof to parallel delivery."
+        summary="Conceptual architecture, not proprietary tooling. Each ticket has an independent worktree, implementation and test context. Required checks govern successful PR handoff; failure follows a bounded retry or human-assistance path. Diagnostic evidence supports harness improvements, not guaranteed automatic recovery."
+        proof={{ title: "1 / Prove sequential execution", text: "Complete actual tickets while developing the harness." }}
+        scale={{ title: "2 / Introduce parallel delivery", text: "Unlock concurrency after proving working throughput, within the same 30 days." }}
+        intakeTitle="Ticket intake"
+        intakeText="Scoped corrective work with explicit validation commands, selected for implementation."
+        execution={{
+          title: "Parallel isolated execution",
+          note: "Three representative lanes—not a maximum concurrency claim.",
+          tickets: ["Ticket A", "Ticket B", "Ticket C"],
+          worktree: "Independent Git worktree",
+          agent: "Coding-agent implementation",
+          tests: "Isolated test execution",
+          checks: "Required checks per ticket"
+        }}
+        validation={{
+          title: "Validation",
+          commands: "Deterministic required commands",
+          tests: "Unit / integration tests as applicable",
+          shadowDiff: "Shadow-diff behavioral validation",
+          failure: "Failure blocks successful completion → recovery path."
+        }}
+        reviewTitle="PR handoff"
+        reviewText="Reviewable changes with human oversight. Reached PR does not mean merged or deployed."
+        recovery={{
+          title: "Failure recovery",
+          failure: "Failure",
+          retry: "Bounded retry",
+          persistent: "Persistent failure",
+          human: "Human handoff",
+          note: "Retry eligible failures; persistent problems return to me for ad hoc agent-assisted completion. Retries do not guarantee success."
+        }}
+        observability={{
+          title: "System improvement",
+          traces: "Langfuse traces, spans, artifacts and transcripts",
+          investigation: "Debugging-agent investigation",
+          fixes: "Targeted harness fixes",
+          note: "Recurring failure evidence informed improvements. Not every failure could be corrected automatically."
+        }}
+      />
+  - eyebrow: 03 / Key Decisions
+    title: Increase throughput without losing control.
+    layout: decisions
+    intro: |
+      The architecture evolved during delivery. I invested in leverage, proved new capabilities incrementally and used observed failures to decide which controls actually helped.
+    children: |
+      1. **Invest in the system while meeting the deadline.**
+         Building the harness consumed time that could have gone directly to tickets. I reduced that risk by reusing earlier architecture and behavioral tests, then completing actual work as I developed the new system. Automation was part of the delivery strategy, not a separate project waiting for the backlog to stop.
+      2. **Make parallel execution independent and verifiable.**
+         I designed for concurrency from the beginning but proved sequential execution first. One Git worktree and isolated test context per ticket reduced interference and allowed independent evaluation. Once sequential delivery demonstrated useful reliability and throughput, I enabled parallel execution during the same delivery window.
+      3. **Use deterministic controls where certainty is possible.**
+         Stronger prompts were a poor substitute for Codex's deterministic structured-output interface. Rigid keyword-based scope checks also struggled to interpret intent. I replaced the first with structured outputs and the second with agent judgment, retaining deterministic validation for objective requirements. Both corrections happened during the 30-day period.
+      4. **Engineer recovery instead of assuming perfect autonomy.**
+         Bounded retries distinguished potential transient failures from persistent problems. Persistent failures triggered human handoff and ad hoc agent assistance. Langfuse evidence supported debugging-agent investigations and targeted harness improvements. The objective was dependable throughput with a recovery path—not unattended autonomy.
+  - eyebrow: 04 / Results and Reflection
+    title: More throughput. Less manual work. Continued oversight.
+    layout: wide
+    intro: |
+      The corrective backlog progressed through implementation and validation within the delivery window. These results did not mean agents operated without supervision or that every change was correct on its first attempt. Some tickets required intervention or rework.
+    children: |
+      <MetricStrip
+        caption="Delivery observations—not claims of unattended autonomy, merge or deployment."
+        topRule={false}
+        bottomRule={false}
+        metrics={[
+          { value: "40", label: "Tickets reached PR", qualifier: "Within 30 days; not necessarily merged or deployed" },
+          { value: "35/40", label: "Required no manual code-writing", qualifier: "Human oversight and intervention still required" },
+          { value: "~2 hours", label: "Average human intervention per ticket", qualifier: "Includes oversight and assistance" },
+          { value: "~1–1.5 days", label: "Average ticket cycle time", qualifier: "Approximate observed cycle time" }
+        ]}
+      />
+
+      ### What changed in my engineering approach
+
+      In this organizational context, explicit controls helped establish confidence in an unfamiliar delivery model. But excessive deterministic checks became brittle when the underlying decision required interpreting intent.
+
+      My subsequent harness designs became thinner: preserve strict validation for genuinely verifiable requirements, while allowing agents more flexibility in implementation and reasoning. This later philosophy was a result of the experience, not the architecture I started with.
+    aside: |
+      <BlockQuote label="Leadership principle" originalThought={true} quote="Build systems that can demonstrate correctness, expose uncertainty, and recover when automation reaches its limits." />
+links:
+  - label: Related work — API migration and behavioral validation
+    url: /work/api-migration-confidence/
+  - label: Explore selected work
+    url: /work/
 ---
 
-A major platform migration at a global biotechnology company created an urgent backlog of corrective tickets with a 30-day deadline. Based on existing engineering throughput, completing the work manually was unlikely to meet the deadline.
-
-Rather than simply accelerating the existing development process, I saw an opportunity to establish a different delivery model: a repeatable AI-assisted system capable of implementing, validating, and preparing fixes for review.
-
-The challenge was that I needed to build the delivery system while simultaneously using it to complete the work. If the harness failed, the investment would consume time we could not easily recover.
-
-I wasn't starting entirely from scratch. An earlier harness I had developed for legacy-code analysis and behavioral validation provided a foundation. But generating code reliably and coordinating multiple concurrent implementation workflows introduced new uncertainties.
-
-## Prove the workflow before scaling it
-
-I designed the harness to support parallel execution from the beginning, but deliberately started with sequential ticket processing.
-
-Each ticket received an isolated Git worktree and test environment. The harness interpreted the ticket, implemented the required changes, and executed its validation commands, including shadow-diff integration tests established through the earlier behavioral-analysis work.
-
-Completion required those checks to pass.
-
-This gave me a working delivery path before introducing concurrency. Once sequential execution demonstrated sufficient throughput and reliability, I enabled parallel ticket execution within the same 30-day period.
-
-The architecture preserved isolation between tickets, allowing multiple implementation workflows to progress independently without relaxing their validation requirements.
-
-## Design for recoverable failure
-
-I did not assume agents would complete every ticket successfully.
-
-Transient failures triggered bounded retries. When a ticket repeatedly failed or became stuck, the harness handed it back to me for ad hoc agent-assisted completion rather than continuing indefinitely.
-
-I also instrumented the workflows with Langfuse, capturing traces, spans, artifacts, and agent transcripts. Debugging agents used this evidence to investigate failures, identify recurring patterns, and inform improvements to the harness.
-
-Failures therefore served two purposes: they determined when human intervention was needed, and they provided evidence for improving subsequent runs.
-
-## Correct architectural mistakes during delivery
-
-Two recurring failure modes challenged my original assumptions about where deterministic controls belonged.
-
-### Structured output required an interface contract, not stronger prompting.
-
-Initially, I tried to make agents produce required structured files through increasingly restrictive instructions. Investigation revealed that Codex already supported deterministic structured outputs. I replaced prompt-dependent formatting with the supported interface.
-
-### Scope validation required interpretation, not keyword matching.
-
-I had also implemented deterministic keyword-based checks to prevent agents from exceeding ticket scope. In practice, keyword matching could not reliably determine whether a change was relevant to a ticket's intent.
-
-I replaced those checks with agent-driven scope evaluation while retaining deterministic validation for objective requirements.
-
-Both changes occurred during the delivery period. They were practical architectural corrections informed by observed failures, not merely lessons identified afterward.
-
-## Results: Throughput without removing accountability
-
-The initiative produced three measurable outcomes:
-
-<MetricStrip
-  metrics={[
-    {
-      value: "40",
-      qualifier: "Within 30 days; not necessarily merged or deployed",
-      label: "Tickets delivered to PR"
-    },
-    {
-      value: "35/40",
-      label: "Tickets without manual code-writing",
-      qualifier: "Human oversight and intervention still required"
-    },
-    {
-      value: "~2 hrs",
-      label: "Average human intervention per ticket",
-      qualifier: "Includes oversight and assistance with failed workflows"
-    }
-  ]}
+<AgenticDeliveryPreview
+  caption="Parallel work. Required checks. A recovery path."
+  summary="Representative tickets—not a concurrency limit. Validation indicators mean checks are required before PR handoff, not that every ticket passed on its first attempt."
+  backlog="Ticket backlog"
+  harness="Agentic delivery harness"
+  tickets={["Ticket A", "Ticket B", "Ticket C"]}
+  review="Reviewable PR"
+  recovery="Validate · Recover · Improve"
 />
 
-The result was a repeatable engineering delivery workflow that combined faster implementation with isolated execution, required behavioral validation, observable failures, and human escalation.
-
-The harness did not eliminate engineering accountability. It changed where human effort was most needed.
-
-## What this changed about my engineering philosophy
-
-At the time, there was substantial skepticism about whether coding agents could produce trustworthy software. The deterministic architecture was partly a response to that environment.
-
-Explicit workflow state, validation requirements, and operational safeguards helped establish confidence in a new approach to engineering delivery.
-
-But the experience also taught me that deterministic control is valuable only when it addresses a justified requirement or demonstrated failure.
-
-Some of my initial guardrails provided necessary assurance. Others attempted to replace reasoning with increasingly complicated rules.
-
-In subsequent harnesses, I adopted a thinner architecture: preserve deterministic enforcement where correctness or operating constraints require it, while allowing increasingly capable agents to handle more of the workflow and ambiguous decisions.
-
-The larger lesson was not that determinism was wrong. It was that an engineering system should impose only as much structure as its requirements, risks, and operating environment justify.
-
-> The goal is not maximum automation or maximum control. It is dependable delivery with the least unnecessary complexity.
+<MetricStrip
+  caption="40 corrective tickets. A 30-day window. Human oversight retained."
+  topRule={false}
+  bottomRule={false}
+  metrics={[
+    { value: "40", label: "Tickets reached PR", qualifier: "Not necessarily merged or deployed" },
+    { value: "35/40", label: "Required no manual code-writing", qualifier: "Human oversight still required" },
+    { value: "~2 hours", label: "Average human intervention per ticket", qualifier: "Oversight and assistance continued" },
+    { value: "30 days", label: "Delivery window", qualifier: "Harness built while delivering the work" }
+  ]}
+/>

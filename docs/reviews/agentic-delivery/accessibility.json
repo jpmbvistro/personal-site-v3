@@ -1,0 +1,717 @@
+[
+  {
+    "width": 1440,
+    "overflow": false,
+    "toolbar": false,
+    "representativeLanes": 3,
+    "decisions": 4,
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".lane-steps > li": 8.96,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71,
+      ".hero-backlog > strong": 11.28,
+      ".hero-review > strong": 11.28,
+      ".recovery-note": 10.71,
+      ".story-quote .quote-text p": 11.28
+    },
+    "ribbonWorstCaseTextContrast": 8.28,
+    "stages": [
+      {
+        "heading": "Ticket intake",
+        "x": 144,
+        "y": 1770.203125,
+        "width": 157.90625,
+        "height": 125.90625
+      },
+      {
+        "heading": "Parallel isolated execution",
+        "x": 333.90625,
+        "y": 1770.203125,
+        "width": 532.921875,
+        "height": 522.90625
+      },
+      {
+        "heading": "Validation",
+        "x": 898.828125,
+        "y": 1770.203125,
+        "width": 197.390625,
+        "height": 309.90625
+      },
+      {
+        "heading": "PR handoff",
+        "x": 1128.21875,
+        "y": 1770.203125,
+        "width": 167.78125,
+        "height": 159.90625
+      },
+      {
+        "heading": "Failure recovery",
+        "x": 144,
+        "y": 2325.109375,
+        "width": 722.828125,
+        "height": 154.90625
+      },
+      {
+        "heading": "System improvement",
+        "x": 898.828125,
+        "y": 2325.109375,
+        "width": 397.171875,
+        "height": 196.90625
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".validation-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  },
+  {
+    "width": 1024,
+    "overflow": false,
+    "toolbar": false,
+    "representativeLanes": 3,
+    "decisions": 4,
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".lane-steps > li": 8.96,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71,
+      ".hero-backlog > strong": 11.28,
+      ".hero-review > strong": 11.28,
+      ".recovery-note": 10.71,
+      ".story-quote .quote-text p": 11.28
+    },
+    "ribbonWorstCaseTextContrast": 8.28,
+    "stages": [
+      {
+        "heading": "Ticket intake",
+        "x": 40.953125,
+        "y": 1934.328125,
+        "width": 942.078125,
+        "height": 62.90625
+      },
+      {
+        "heading": "Parallel isolated execution",
+        "x": 40.953125,
+        "y": 2029.234375,
+        "width": 942.078125,
+        "height": 459.90625
+      },
+      {
+        "heading": "Validation",
+        "x": 40.953125,
+        "y": 2521.140625,
+        "width": 942.078125,
+        "height": 112.90625
+      },
+      {
+        "heading": "PR handoff",
+        "x": 40.953125,
+        "y": 2666.046875,
+        "width": 942.078125,
+        "height": 75.90625
+      },
+      {
+        "heading": "Failure recovery",
+        "x": 40.953125,
+        "y": 2773.953125,
+        "width": 942.078125,
+        "height": 133.90625
+      },
+      {
+        "heading": "System improvement",
+        "x": 40.953125,
+        "y": 2939.859375,
+        "width": 942.078125,
+        "height": 154.90625
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".validation-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  },
+  {
+    "width": 768,
+    "overflow": false,
+    "toolbar": false,
+    "representativeLanes": 3,
+    "decisions": 4,
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".lane-steps > li": 8.96,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71,
+      ".hero-backlog > strong": 11.28,
+      ".hero-review > strong": 11.28,
+      ".recovery-note": 10.71,
+      ".story-quote .quote-text p": 11.28
+    },
+    "ribbonWorstCaseTextContrast": 8.28,
+    "stages": [
+      {
+        "heading": "Ticket intake",
+        "x": 30.71875,
+        "y": 2500.984375,
+        "width": 706.546875,
+        "height": 62.90625
+      },
+      {
+        "heading": "Parallel isolated execution",
+        "x": 30.71875,
+        "y": 2595.890625,
+        "width": 706.546875,
+        "height": 459.90625
+      },
+      {
+        "heading": "Validation",
+        "x": 30.71875,
+        "y": 3087.796875,
+        "width": 706.546875,
+        "height": 133.90625
+      },
+      {
+        "heading": "PR handoff",
+        "x": 30.71875,
+        "y": 3253.703125,
+        "width": 706.546875,
+        "height": 75.90625
+      },
+      {
+        "heading": "Failure recovery",
+        "x": 30.71875,
+        "y": 3361.609375,
+        "width": 706.546875,
+        "height": 154.90625
+      },
+      {
+        "heading": "System improvement",
+        "x": 30.71875,
+        "y": 3548.515625,
+        "width": 706.546875,
+        "height": 154.90625
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".validation-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 42
+    }
+  },
+  {
+    "width": 390,
+    "overflow": false,
+    "toolbar": false,
+    "representativeLanes": 3,
+    "decisions": 4,
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".lane-steps > li": 8.96,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71,
+      ".hero-backlog > strong": 11.28,
+      ".hero-review > strong": 11.28,
+      ".recovery-note": 10.71,
+      ".story-quote .quote-text p": 11.28
+    },
+    "ribbonWorstCaseTextContrast": 8.28,
+    "stages": [
+      {
+        "heading": "Ticket intake",
+        "x": 20,
+        "y": 3556.90625,
+        "width": 350,
+        "height": 83.90625
+      },
+      {
+        "heading": "Parallel isolated execution",
+        "x": 20,
+        "y": 3672.8125,
+        "width": 350,
+        "height": 760.421875
+      },
+      {
+        "heading": "Validation",
+        "x": 20,
+        "y": 4465.234375,
+        "width": 350,
+        "height": 233.90625
+      },
+      {
+        "heading": "PR handoff",
+        "x": 20,
+        "y": 4731.140625,
+        "width": 350,
+        "height": 96.90625
+      },
+      {
+        "heading": "Failure recovery",
+        "x": 20,
+        "y": 4860.046875,
+        "width": 350,
+        "height": 340.90625
+      },
+      {
+        "heading": "System improvement",
+        "x": 20,
+        "y": 5232.953125,
+        "width": 350,
+        "height": 306.90625
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".validation-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    }
+  },
+  {
+    "width": 320,
+    "overflow": false,
+    "toolbar": false,
+    "representativeLanes": 3,
+    "decisions": 4,
+    "textContrast": {
+      "h1": 11.28,
+      ".summary": 10.71,
+      ".story-section .eyebrow": 5.13,
+      ".ticket-name": 9.44,
+      ".lane-steps > li": 8.96,
+      ".hero-harness > p": 10.37,
+      ".hero-harness li": 10.71,
+      ".hero-backlog > strong": 11.28,
+      ".hero-review > strong": 11.28,
+      ".recovery-note": 10.71,
+      ".story-quote .quote-text p": 11.28
+    },
+    "ribbonWorstCaseTextContrast": 8.28,
+    "stages": [
+      {
+        "heading": "Ticket intake",
+        "x": 20,
+        "y": 3948.84375,
+        "width": 280,
+        "height": 104.90625
+      },
+      {
+        "heading": "Parallel isolated execution",
+        "x": 20,
+        "y": 4085.75,
+        "width": 280,
+        "height": 760.421875
+      },
+      {
+        "heading": "Validation",
+        "x": 20,
+        "y": 4878.171875,
+        "width": 280,
+        "height": 233.90625
+      },
+      {
+        "heading": "PR handoff",
+        "x": 20,
+        "y": 5144.078125,
+        "width": 280,
+        "height": 117.90625
+      },
+      {
+        "heading": "Failure recovery",
+        "x": 20,
+        "y": 5293.984375,
+        "width": 280,
+        "height": 361.90625
+      },
+      {
+        "heading": "System improvement",
+        "x": 20,
+        "y": 5687.890625,
+        "width": 280,
+        "height": 306.90625
+      }
+    ],
+    "accessibility": {
+      "version": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "targets": [
+            [
+              ".hero-backlog > strong"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              ".hero-harness > p"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(1) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(2) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3)"
+            ],
+            [
+              "li[data-astro-cid-edpgt6hp=\"\"]:nth-child(3) > .validation-mark[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".hero-connector[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]:nth-child(5)"
+            ],
+            [
+              ".hero-review > strong"
+            ],
+            [
+              ".hero-recovery > span[aria-hidden=\"true\"][data-astro-cid-edpgt6hp=\"\"]"
+            ],
+            [
+              ".delivery-phases > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".intake-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".execution-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".validation-stage > .stage-connector[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "li:nth-child(4) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".recovery-note > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(2) > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".improvement-path > li:nth-child(3) > span[aria-hidden=\"true\"]"
+            ]
+          ]
+        }
+      ],
+      "passedRules": 44
+    }
+  }
+]
