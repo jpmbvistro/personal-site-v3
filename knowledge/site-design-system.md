@@ -160,6 +160,14 @@ lockups; the 4.7 MB source is not committed). The Tina `about.portrait` field
 now references `/uploads/juan-vistro-portrait.webp` with
 `portraitAlt: Portrait of Juan Vistro`, so the placeholder no longer renders.
 
+**Update 2026-11-02 (stages placement):** the owner asked for the career-stages
+strip (starting with Community & Programs) to span the left and right sides of
+"Section 01 — The path here" rather than live inside the narrow right column.
+It is now a full-width row below the section's two columns from 64rem (three
+cards across, copper connectors horizontal), matching the 80rem treatment
+below the wider threshold. Per-item editing anchors use the
+[Tina click-to-edit](tina-click-to-edit.md) pattern.
+
 ## Accepted homepage direction — 2026-10-23
 
 The homepage is a **professional portfolio with an editorial visual language**,

@@ -18,8 +18,7 @@ const building = about?.building;
 const next = about?.next;
 const closing = about?.closing;
 const aboutLinks = (data.links ?? [])
-  .filter((link): link is NonNullable<typeof link> => Boolean(link?.label && safeHref(link.url)))
-  .map((link) => ({ label: link.label, url: safeHref(link.url)! }));
+  .filter((link): link is NonNullable<typeof link> => Boolean(link && link.label && safeHref(link.url)));
 const buildingFeatures = (building?.features ?? [])
   .map((feature) => ({ ...feature, href: safeHref(feature?.url) }));
 ---
@@ -50,16 +49,16 @@ const buildingFeatures = (building?.features ?? [])
       <div class="section-body prose" data-tina-field={tinaField(path, 'paragraphs')}>
         <RichText content={path.paragraphs} />
       </div>
-      {path.stages && path.stages.length > 0 && <ol class="stages" aria-label="Career stages" data-tina-field={tinaField(path, 'stages')}>
-        {path.stages.map((stage) => stage && <li>
-          <AboutIcon name={stage.icon} size="stage" />
-          <div>
-            <h3>{stage.title}</h3>
-            <p>{stage.text}</p>
-          </div>
-        </li>)}
-      </ol>}
     </div>
+    {path.stages && path.stages.length > 0 && <ol class="stages" aria-label="Career stages">
+      {path.stages.map((stage) => stage && <li>
+        <AboutIcon name={stage.icon} size="stage" />
+        <div>
+          <h3 data-tina-field={tinaField(stage, 'title')}>{stage.title}</h3>
+          <p data-tina-field={tinaField(stage, 'text')}>{stage.text}</p>
+        </div>
+      </li>)}
+    </ol>}
   </section>}
 
   {principles && <section class="about-section" aria-labelledby="principles-heading">
@@ -69,10 +68,10 @@ const buildingFeatures = (building?.features ?? [])
       {principles.intro && <p class="lede" data-tina-field={tinaField(principles, 'intro')}>{principles.intro}</p>}
     </div>
     <div class="section-content">
-      {principles.items && principles.items.length > 0 && <dl class="principles-list" data-tina-field={tinaField(principles, 'items')}>
+      {principles.items && principles.items.length > 0 && <dl class="principles-list">
         {principles.items.map((item) => item && <div>
-          <dt><span class="badge"><AboutIcon name={item.icon} size="badge" /></span>{item.title}</dt>
-          <dd><div class="principle-text"><RichText content={item.text} /></div></dd>
+          <dt data-tina-field={tinaField(item, 'title')}><span class="badge"><AboutIcon name={item.icon} size="badge" /></span>{item.title}</dt>
+          <dd><div class="principle-text" data-tina-field={tinaField(item, 'text')}><RichText content={item.text} /></div></dd>
         </div>)}
       </dl>}
     </div>
@@ -84,7 +83,7 @@ const buildingFeatures = (building?.features ?? [])
       <h2 id="building-heading" data-tina-field={tinaField(building, 'title')}>{building.title}</h2>
     </div>
     <div class="section-content">
-      {buildingFeatures.length > 0 && <div class="feature-grid" data-tina-field={tinaField(building, 'features')}>
+      {buildingFeatures.length > 0 && <div class="feature-grid">
         {buildingFeatures.map((feature) => feature && <article class="feature">
           <AboutIcon name={feature.icon} size="feature" />
           <div class="feature-copy">
@@ -111,8 +110,8 @@ const buildingFeatures = (building?.features ?? [])
 </Container>
 
 {aboutLinks.length > 0 && <Container>
-  <ul class="about-links" aria-label="Where to go next" data-tina-field={tinaField(data, 'links')}>
-    {aboutLinks.map((link) => link && <li><a href={link.url}>{link.label} <span aria-hidden="true">↗</span></a></li>)}
+  <ul class="about-links" aria-label="Where to go next">
+    {aboutLinks.map((link) => link && <li><a href={safeHref(link.url)} data-tina-field={tinaField(link, 'label')}>{link.label} <span aria-hidden="true">↗</span></a></li>)}
   </ul>
 </Container>}
 
@@ -199,6 +198,8 @@ const buildingFeatures = (building?.features ?? [])
   }
   @media (min-width: 64rem) {
     .about-section { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-12); align-items: start; }
+    .stages { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .stages li:not(:first-child)::before { inset-inline-start: -1.5rem; top: 2.25rem; width: 1.5rem; height: 1px; }
     .principles-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .principles-list dd { margin-left: 0; }
     .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -207,7 +208,6 @@ const buildingFeatures = (building?.features ?? [])
   @media (min-width: 80rem) {
     .stages { gap: var(--space-6); }
     .stages li { grid-template-columns: auto minmax(0, 1fr); gap: var(--space-6); }
-    .stages li:not(:first-child)::before { inset-inline-start: -1.5rem; top: 2.25rem; width: 1.5rem; height: 1px; }
   }
   @media (max-width: 24rem) {
     .stages li { grid-template-columns: 1fr; }

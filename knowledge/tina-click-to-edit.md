@@ -31,9 +31,10 @@ also captures correctly.
 ## Rules
 
 - To make an object-list's items clickable, anchor per mapped item, not at the
-  array level. `src/components/AboutPageContent.astro` (building features) had
-  this pattern already; `src/components/HomePageContent.astro` (capabilities)
-  follows it now.
+  array level. This pattern is now applied to every content list rendered from
+  Tina data: homepage capabilities (`HomePageContent.astro`), About building
+  features, career stages, working principles and the next-step links row
+  (`AboutPageContent.astro`).
 - Keep non-clickable parents anchor-free rather than pointing them at the
   array; an array-level anchor reads as clickable but does nothing.
 - Click capture is enabled only after the editor's `quickEditEnabled`
@@ -43,6 +44,6 @@ also captures correctly.
 
 ## Related
 
-- Regressions: `tests/tina-capabilities.spec.ts`
+- Regressions: `tests/tina-capabilities.spec.ts`, `tests/tina-about.spec.ts`
 - Object-list click flows over nested groups: `tests/tina.spec.ts`
 - The homepage band this fixed: [Teaching the home page](../docs/reviews/homepage/README.md)
