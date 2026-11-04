@@ -152,6 +152,22 @@ photography or a stylized synthetic portrait.
 documentation PR does **not** commit or publish it. Select an approved final
 image file and optimized formats during page implementation.
 
+**Update 2026-11-02:** the owner supplied an authentic headshot
+(`photo_compressed.png`). It is committed as an optimized derivative,
+`public/uploads/juan-vistro-portrait.webp` (transparent margins trimmed,
+832×842 alpha WebP, ~97 KB — same sharp-trim-and-convert pattern as the brand
+lockups; the 4.7 MB source is not committed). The Tina `about.portrait` field
+now references `/uploads/juan-vistro-portrait.webp` with
+`portraitAlt: Portrait of Juan Vistro`, so the placeholder no longer renders.
+
+**Update 2026-11-02 (stages placement):** the owner asked for the career-stages
+strip (starting with Community & Programs) to span the left and right sides of
+"Section 01 — The path here" rather than live inside the narrow right column.
+It is now a full-width row below the section's two columns from 64rem (three
+cards across, copper connectors horizontal), matching the 80rem treatment
+below the wider threshold. Per-item editing anchors use the
+[Tina click-to-edit](tina-click-to-edit.md) pattern.
+
 ## Accepted homepage direction — 2026-10-23
 
 The homepage is a **professional portfolio with an editorial visual language**,
@@ -260,8 +276,9 @@ text.
 The About copy is **proposed, not final fact-checked public copy**; role
 wording, 2012, EMW/East Meets Words titles, DraftKings chronology and interim
 management responsibilities still require the owner's verification before
-publication. The portrait field remains unset behind an accessible placeholder
-until Juan supplies an authentic headshot; no synthetic portrait is used. The
+publication. The owner-supplied authentic headshot is committed as an
+optimized derivative and referenced by the portrait field (2026-11-02);
+no synthetic portrait is used. The
 closing band is extracted as `src/components/ClosingBand.astro` and is shared
 by the homepage. See [About review](../docs/reviews/about/README.md) for
 captures, checks and limitations.

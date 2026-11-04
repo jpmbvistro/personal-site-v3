@@ -74,7 +74,8 @@ for (const width of [320, 390, 768, 1024, 1440]) {
     }
     if (width > 960) {
       expect(preview!.x).toBeGreaterThan(hero!.x + hero!.width);
-      expect(hero!.width / preview!.width).toBeCloseTo(1.5, 1);
+      // Owner-directed 50/50 hero: equal columns once the two share the row.
+      expect(hero!.width).toBeCloseTo(preview!.width, 1);
     } else {
       expect(preview!.y).toBeGreaterThanOrEqual(hero!.y + hero!.height);
     }

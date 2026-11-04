@@ -1,0 +1,92 @@
+[
+  {
+    "source": "docs/reviews/visual-refinements/sources/inherited-stack.png",
+    "suppliedName": "ChatGPT Image Nov 3, 2026, 11_07_16 AM-2.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 859327,
+    "derivatives": [
+      {
+        "file": "public/uploads/architecture/inherited-stack-144.webp",
+        "bytes": 7444
+      },
+      {
+        "file": "public/uploads/architecture/inherited-stack-288.webp",
+        "bytes": 18522
+      }
+    ]
+  },
+  {
+    "source": "docs/reviews/visual-refinements/sources/usage-funnel.png",
+    "suppliedName": "ChatGPT Image Nov 3, 2026, 11_07_17 AM-3.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 432083,
+    "derivatives": [
+      {
+        "file": "public/uploads/architecture/usage-funnel-144.webp",
+        "bytes": 3800
+      },
+      {
+        "file": "public/uploads/architecture/usage-funnel-288.webp",
+        "bytes": 8314
+      }
+    ]
+  },
+  {
+    "source": "docs/reviews/visual-refinements/sources/necessity-branch.png",
+    "suppliedName": "ChatGPT Image Nov 3, 2026, 11_07_20 AM-4.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 122084,
+    "derivatives": [
+      {
+        "file": "public/uploads/architecture/necessity-branch-144.webp",
+        "bytes": 2828
+      },
+      {
+        "file": "public/uploads/architecture/necessity-branch-288.webp",
+        "bytes": 7108
+      }
+    ]
+  },
+  {
+    "source": "docs/reviews/visual-refinements/sources/behavior-cards.png",
+    "suppliedName": "ChatGPT Image Nov 3, 2026, 11_07_21 AM-5.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 507921,
+    "derivatives": [
+      {
+        "file": "public/uploads/architecture/behavior-cards-144.webp",
+        "bytes": 3896
+      },
+      {
+        "file": "public/uploads/architecture/behavior-cards-288.webp",
+        "bytes": 8744
+      }
+    ]
+  },
+  {
+    "source": "docs/reviews/visual-refinements/sources/live-comparison.png",
+    "suppliedName": "ChatGPT Image Nov 3, 2026, 11_07_22 AM-6.png",
+    "width": 1254,
+    "height": 1254,
+    "alpha": true,
+    "bytes": 112620,
+    "derivatives": [
+      {
+        "file": "public/uploads/architecture/live-comparison-144.webp",
+        "bytes": 2442
+      },
+      {
+        "file": "public/uploads/architecture/live-comparison-288.webp",
+        "bytes": 5308
+      }
+    ]
+  }
+]

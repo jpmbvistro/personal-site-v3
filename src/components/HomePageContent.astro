@@ -26,8 +26,8 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
     <div class="hero-copy"><HomeIntro data={data} resume={resume} /></div>
     <EngineeringLeadershipDiagram />
   </section>
-  {content?.capabilities && content.capabilities.length > 0 && <section class="capabilities" aria-label="Professional practice" data-tina-field={tinaField(content, 'capabilities')}>
-    {content.capabilities.map((item) => item && <div><h2>{item.title}</h2><p>{item.text}</p></div>)}
+  {content?.capabilities && content.capabilities.length > 0 && <section class="capabilities" aria-label="Professional practice">
+    {content.capabilities.map((item) => item && <div data-tina-field={tinaField(item, 'text')}><h2 data-tina-field={tinaField(item, 'title')}>{item.title}</h2><p data-tina-field={tinaField(item, 'text')}>{item.text}</p></div>)}
   </section>}
 
   <section class="home-section selected-work" id="selected-work" aria-labelledby="work-heading">
@@ -78,8 +78,8 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
   .perspective-details { display: grid; gap: var(--space-8); margin-left: var(--space-6); }
   dl { display: grid; gap: var(--space-6); margin: 0; }
   dt { font-family: var(--font-serif); font-size: 1.375rem; color: var(--primary); }
-  dd { margin: var(--space-2) 0 0; font-size: var(--text-support); }
-  .perspective-details > a { align-self: end; padding-block: var(--space-3); font-size: var(--text-small); }
+  dd { margin: 0; font-size: var(--text-support); }
+  .perspective-details > a { grid-column: 1 / -1; justify-self: start; padding-block: var(--space-3); font-size: var(--text-small); text-decoration: underline; }
   .perspective-ribbon { position: absolute; z-index: -1; bottom: 0; right: -10%; width: 90%; stroke: var(--border); opacity: 0.45; }
   @media (min-width: 48rem) {
     .capabilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -8,26 +8,72 @@ interface Props {
   behaviorSteps?: string[] | null;
 }
 const { caption, summary, necessity, correctness, scopeSteps = [], behaviorSteps = [] } = Astro.props;
+// Owner-supplied transparent WebP derivatives (144/288 square sources) recreate
+// the supplied "Two decisions. One safer migration." mockup; the revalidation
+// step is a native SVG terminal symbol following the ArchitectureIcon practice.
+const assets = {
+  inherited: '/uploads/architecture/inherited-stack',
+  evidence: '/uploads/architecture/usage-funnel',
+  decision: '/uploads/architecture/necessity-branch',
+  behavior: '/uploads/architecture/behavior-cards',
+  comparison: '/uploads/architecture/live-comparison',
+};
+const widths: Record<keyof typeof assets, string> = {
+  inherited: '84px', evidence: '72px', decision: '80px', behavior: '84px', comparison: '80px',
+};
+const icon = (key: keyof typeof assets) => ({
+  src: `${assets[key]}-144.webp`,
+  srcset: `${assets[key]}-144.webp 144w, ${assets[key]}-288.webp 288w`,
+  sizes: widths[key],
+  width: 144,
+  height: 144,
+  loading: 'lazy' as const,
+  alt: '',
+});
 ---
 
-<figure class="lead-figure api-preview">
-  <div class="preview-questions">
-    <div class="preview-question scope-preview">
+<figure class="lead-figure api-preview" aria-label={caption}>
+  <div class="preview-frame">
+    <span class="rail rail-left" aria-hidden="true"></span>
+    <span class="rail rail-right" aria-hidden="true"></span>
+    <div class="preview-question scope-panel">
       <strong>{necessity}</strong>
-      <svg class="scope-motif" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
-        <path class="plate" d="m8 20 26-12 26 12-26 12Z M8 27l26 12 26-12M8 34l26 12 26-12" />
-        <path d="M64 27H130M124 23l6 4-6 4M144 12h36l-12 18v15l-12-5V30ZM180 27h44q12 0 12-12V8h64M236 27v24q0 12 12 12h52" />
-        <circle cx="236" cy="27" r="3" /><path d="m294 4 6 4-6 4m0 47 6 4-6 4" />
-      </svg>
-      {(scopeSteps ?? []).length > 0 && <ol class="motif-labels" role="list">{(scopeSteps ?? []).map((step) => <li>{step}</li>)}</ol>}
+      <div class="motif-grid scope-grid">
+        <div class="motif-step s1"><img {...icon('inherited')} style={`width:${widths.inherited}`} /></div>
+        <div class="motif-step s2"><img {...icon('evidence')} style={`width:${widths.evidence}`} /></div>
+        <div class="motif-step s3"><img {...icon('decision')} style={`width:${widths.decision}`} /></div>
+        <div class="a1"><svg class="motif-arrow" viewBox="0 0 40 16" fill="none" aria-hidden="true"><path d="M2 8h32m-5.5-4.5L33 8l-5.5 4.5" vector-effect="non-scaling-stroke" /></svg></div>
+        <div class="a2"><svg class="motif-arrow" viewBox="0 0 40 16" fill="none" aria-hidden="true"><path d="M2 8h32m-5.5-4.5L33 8l-5.5 4.5" vector-effect="non-scaling-stroke" /></svg></div>
+        <ol class="motif-labels" role="list">
+          {(scopeSteps ?? []).map((step) => <li>{step}</li>)}
+        </ol>
+      </div>
     </div>
-    <div class="preview-question behavior-preview">
+    <div class="preview-question behavior-panel">
       <strong>{correctness}</strong>
-      <svg class="behavior-motif" viewBox="0 0 320 80" preserveAspectRatio="none" aria-hidden="true">
-        <path class="plate" d="M8 12h38v32H8ZM18 22h18M18 30h18M53 20h38v32H53ZM63 30h18M63 38h18" />
-        <path d="M96 32h42m-6-4 6 4-6 4M150 16h38v32h-38ZM157 26h24M157 34h17M192 32h44m-6-4 6 4-6 4M250 16h48v32h-48ZM262 25l8 7-8 7M280 25v14M274 48v13q0 10-10 10H176q-8 0-8-8V48m-4 6 4-6 4 6" />
-      </svg>
-      {(behaviorSteps ?? []).length > 0 && <ol class="motif-labels" role="list">{(behaviorSteps ?? []).map((step) => <li>{step}</li>)}</ol>}
+      <div class="motif-grid behavior-grid">
+        <div class="motif-step s1"><img {...icon('behavior')} style={`width:${widths.behavior}`} /></div>
+        <div class="motif-step s2"><img {...icon('comparison')} style={`width:${widths.comparison}`} /></div>
+        <div class="motif-step s3 revalidate">
+          <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="22" height="22" rx="3.5" />
+            <path d="m9 10 4 4-4 4M16.5 10.5v7" />
+          </svg>
+        </div>
+        <div class="a1"><svg class="motif-arrow" viewBox="0 0 40 16" fill="none" aria-hidden="true"><path d="M2 8h32m-5.5-4.5L33 8l-5.5 4.5" vector-effect="non-scaling-stroke" /></svg></div>
+        <div class="a2"><svg class="motif-arrow" viewBox="0 0 40 16" fill="none" aria-hidden="true"><path d="M2 8h32m-5.5-4.5L33 8l-5.5 4.5" vector-effect="non-scaling-stroke" /></svg></div>
+        {/* The revalidation return runs from the terminal back to the live
+            comparison; the arrowhead points up into the comparison step. */}
+        <svg class="behavior-return" viewBox="0 0 100 16" fill="none" aria-hidden="true">
+          <path class="thin" d="M98.8 0.3V8H2.2" vector-effect="non-scaling-stroke" />
+          <path d="M0 10 2.2 6.7 4.4 10" vector-effect="non-scaling-stroke" />
+        </svg>
+        <svg class="behavior-return-stacked" viewBox="0 0 100 19" fill="none" aria-hidden="true">
+          <path class="thin" d="M50 0.5v6.5H9" vector-effect="non-scaling-stroke" />
+          <path d="M6.3 10.5 9 7l2.7 3.5" vector-effect="non-scaling-stroke" />
+        </svg>
+        <ol class="motif-labels" role="list">{(behaviorSteps ?? []).map((step) => <li>{step}</li>)}</ol>
+      </div>
     </div>
   </div>
   <figcaption>{caption}</figcaption>
@@ -35,17 +81,135 @@ const { caption, summary, necessity, correctness, scopeSteps = [], behaviorSteps
 </figure>
 
 <style>
-  .api-preview { min-width: 0; margin: 0; }
-  .preview-questions { display: grid; gap: var(--space-8); padding-block: var(--space-4); }
-  .preview-question { min-width: 0; padding-block: var(--space-4); border-top: 1px solid var(--border); }
-  .behavior-preview { margin-left: var(--space-6); }
-  .preview-question > svg { display: block; width: 100%; height: 5rem; margin-top: var(--space-3); fill: none; stroke: var(--accent); stroke-width: 1.2; }
-  .preview-question .plate { fill: var(--muted); stroke: var(--primary); }
-  strong { display: block; color: var(--primary); font-size: var(--text-support); line-height: 1.5; font-weight: 500; }
-  .motif-labels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
-  .motif-labels li { font-size: var(--text-annotation); line-height: 1.5; }
-  figcaption { margin-top: var(--space-4); color: var(--primary); font: 400 1.5rem/1.2 var(--font-serif); }
+  .api-preview { min-width: 0; margin: 0; container-type: inline-size; }
+  .preview-frame { position: relative; isolation: isolate; display: grid; gap: var(--space-6); padding-inline: 1.9rem; }
+  .preview-question {
+    position: relative;
+    min-width: 0;
+    padding: var(--space-8);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--primary) 5%, var(--background));
+  }
+  /* Copper folded-corner accent, as in the supplied mockup. */
+  .preview-question::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 2rem;
+    height: 2rem;
+    border-start-start-radius: 1.25rem;
+    background: linear-gradient(135deg, var(--accent-strong) 0 50%, transparent 50%);
+  }
+  .preview-question > strong { display: block; color: var(--primary); font-family: var(--font-serif); font-size: clamp(1.25rem, 4cqw, 1.5rem); font-weight: 400; line-height: 1.3; }
+  /* Copper rails behind the panels: they exit each card's side, arc outward,
+     and reconnect behind the other card's edge. */
+  .rail {
+    position: absolute;
+    z-index: -1;
+    top: 20%;
+    bottom: 31%;
+    inset-inline-start: 0.35rem;
+    width: 1.8rem;
+    border-block: 1px solid var(--accent);
+    border-left: 1px solid var(--accent);
+    border-top-left-radius: 0.8rem;
+    border-bottom-left-radius: 0.8rem;
+  }
+  .rail-right {
+    inset-inline-start: unset;
+    inset-inline-end: 0.35rem;
+    border-left: none;
+    border-right: 1px solid var(--accent);
+    border-radius: 0;
+    border-top-right-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
+  }
+  .rail::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--accent-strong);
+  }
+  .rail-left::before { left: -0.25rem; }
+  .rail-right::before { right: -0.25rem; }
+  .motif-grid {
+    --arrow-track: 2.75rem;
+    position: relative;
+    margin-top: var(--space-5);
+    display: grid;
+    row-gap: 0;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) var(--arrow-track) minmax(0, 1fr) var(--arrow-track) minmax(0, 1fr);
+    grid-template-rows: 5.25rem minmax(0, auto);
+    grid-template-areas:
+      's1 a1 s2 a2 s3'
+      'labels labels labels labels labels';
+  }
+  .behavior-grid {
+    grid-template-rows: 5.25rem 1.7rem minmax(0, auto);
+    grid-template-areas:
+      's1 a1 s2 a2 s3'
+      '. . . . .'
+      'labels labels labels labels labels';
+  }
+  .motif-grid > .s1 { grid-area: s1; }
+  .motif-grid > .s2 { grid-area: s2; }
+  .motif-grid > .s3 { grid-area: s3; }
+  .motif-grid > .a1 { grid-area: a1; display: flex; justify-content: center; }
+  .motif-grid > .a2 { grid-area: a2; display: flex; justify-content: center; }
+  .motif-grid > .motif-labels { grid-area: labels; }
+  .motif-step { display: grid; align-self: stretch; align-content: center; justify-items: center; }
+  .motif-step img { display: block; height: auto; max-width: 5.5rem; object-fit: contain; }
+  .revalidate svg { width: 3.25rem; height: 3.25rem; color: var(--accent-strong); }
+  .motif-arrow { display: block; width: var(--arrow-track); height: 1rem; color: var(--accent); }
+  .motif-arrow path, .behavior-return path, .behavior-return-stacked path { stroke: var(--accent); stroke-width: 1.8px; }
+  .behavior-return .thin, .behavior-return-stacked .thin { stroke-width: 1.3px; }
+  /* Column centers: the three icon tracks share (100% - two arrow tracks);
+     the band spans from the middle icon's center to the last icon's center:
+     one icon track plus one arrow track. It overlaps the icon row's lower
+     edge so both endpoints touch. */
+  .behavior-return {
+    position: absolute;
+    top: calc(5.25rem - 1rem);
+    inset-inline-end: calc((100% - (2 * var(--arrow-track))) / 6);
+    inline-size: calc((100% - (2 * var(--arrow-track))) / 3 + var(--arrow-track));
+    block-size: 1.6rem;
+  }
+  .behavior-return-stacked { display: none; }
+  .motif-labels {
+    margin-top: var(--space-3);
+    padding: 0;
+    list-style: none;
+    display: grid;
+    align-content: end;
+    gap: 0 var(--space-2);
+    grid-template-columns: minmax(0, 1fr) var(--arrow-track) minmax(0, 1fr) var(--arrow-track) minmax(0, 1fr);
+  }
+  .motif-labels li { color: var(--muted-foreground); font-size: var(--text-annotation); line-height: 1.5; text-align: center; overflow-wrap: normal; text-wrap: pretty; }
+  .motif-labels li:nth-child(2) { grid-column: 3; }
+  .motif-labels li:nth-child(3) { grid-column: 5; }
+  figcaption { margin-top: var(--space-5); color: var(--primary); font: 400 1.5rem/1.2 var(--font-serif); }
   .diagram-summary { margin-top: var(--space-2); font-size: var(--text-support); }
-  @media (max-width: 60rem) { .preview-questions { max-width: 28rem; margin-inline: auto; } }
-  @media (max-width: 30rem) { .behavior-preview { margin-left: 0; } }
+  /* Caption block indented past the side rails on wide panels. */
+  :is(figcaption, .diagram-summary) { margin-inline-start: 4rem; }
+  /* Narrow panels recompose into the stacked evidence order. */
+  @container (max-width: 32rem) {
+    .motif-labels li { font-size: 0.8125rem; }
+  }
+  @container (max-width: 26rem) {
+    :is(figcaption, .diagram-summary) { margin-inline-start: 0; }
+    .scope-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: 's1' 'a1' 's2' 'a2' 's3' 'labels'; }
+    .behavior-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: 's1' 'a1' 's2' 'a2' 's3' 'r' 'labels'; }
+    .motif-arrow { transform: rotate(90deg); width: 2.25rem; margin-block: 0.1rem; justify-content: center; }
+    .behavior-return { display: none; }
+    .behavior-return-stacked { display: block; grid-area: r; width: min(60%, 18rem); height: 2rem; opacity: 0.9; margin-inline: auto; }
+    .motif-labels { grid-template-columns: minmax(0, 1fr); align-content: start; }
+    .motif-labels li, .motif-labels li:nth-child(2), .motif-labels li:nth-child(3) { grid-column: 1; }
+  }
 </style>
