@@ -21,6 +21,9 @@ const aboutLinks = (data.links ?? [])
   .filter((link): link is NonNullable<typeof link> => Boolean(link && link.label && safeHref(link.url)));
 const buildingFeatures = (building?.features ?? [])
   .map((feature) => ({ ...feature, href: safeHref(feature?.url) }));
+// Unset keeps the 40/60 layout; '30-70' widens the content column (64rem+).
+const split = (section?: { split?: string | null } | null) =>
+  section?.split === '30-70' ? 'about-section--wide' : '';
 ---
 
 <Container>
@@ -39,7 +42,7 @@ const buildingFeatures = (building?.features ?? [])
     </div>
   </section>
 
-  {path && <section class="about-section" aria-labelledby="path-heading">
+  {path && <section class:list={['about-section', split(path)]} aria-labelledby="path-heading">
     <div class="section-head">
       <p class="eyebrow" data-tina-field={tinaField(path, 'eyebrow')}>{path.eyebrow}</p>
       <h2 id="path-heading" data-tina-field={tinaField(path, 'title')}>{path.title}</h2>
@@ -61,7 +64,7 @@ const buildingFeatures = (building?.features ?? [])
     </ol>}
   </section>}
 
-  {principles && <section class="about-section" aria-labelledby="principles-heading">
+  {principles && <section class:list={['about-section', split(principles)]} aria-labelledby="principles-heading">
     <div class="section-head">
       <p class="eyebrow" data-tina-field={tinaField(principles, 'eyebrow')}>{principles.eyebrow}</p>
       <h2 id="principles-heading" class="statement" data-tina-field={tinaField(principles, 'statement')}>{principles.statement}</h2>
@@ -77,7 +80,7 @@ const buildingFeatures = (building?.features ?? [])
     </div>
   </section>}
 
-  {building && <section class="about-section" aria-labelledby="building-heading">
+  {building && <section class:list={['about-section', split(building)]} aria-labelledby="building-heading">
     <div class="section-head">
       <p class="eyebrow" data-tina-field={tinaField(building, 'eyebrow')}>{building.eyebrow}</p>
       <h2 id="building-heading" data-tina-field={tinaField(building, 'title')}>{building.title}</h2>
@@ -96,7 +99,7 @@ const buildingFeatures = (building?.features ?? [])
     </div>
   </section>}
 
-  {next && next.title && <section class="about-section" aria-labelledby="next-heading">
+  {next && next.title && <section class:list={['about-section', split(next)]} aria-labelledby="next-heading">
     <div class="section-head">
       <p class="eyebrow" data-tina-field={tinaField(next, 'eyebrow')}>{next.eyebrow}</p>
       <h2 id="next-heading" data-tina-field={tinaField(next, 'title')}>{next.title}</h2>
@@ -141,7 +144,7 @@ const buildingFeatures = (building?.features ?? [])
   .portrait-pending p { font-family: var(--font-serif); font-size: 1.25rem; color: var(--muted-foreground); }
 
   .about-section { display: grid; gap: var(--space-6); padding-block: clamp(3.5rem, 6vw, 5.5rem); }
-  .about-section + .about-section { border-top: 1px solid var(--border); }
+  :is(.about-section + .about-section, .hero + .about-section) { border-top: 1px solid var(--border); }
   .section-head h2 { margin-block: var(--space-4) 0; }
   .section-content { display: grid; gap: var(--space-8); }
   .about-section .eyebrow { margin-top: 0; }
@@ -154,30 +157,26 @@ const buildingFeatures = (building?.features ?? [])
   .section-body { max-width: var(--reading-width); }
   .section-body :global(strong) { color: var(--primary); }
 
-  .stages { display: grid; gap: var(--space-8); margin: var(--space-12) 0 0; padding: 0; list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .stages { display: grid; gap: var(--space-8); margin: 0; padding: 0; list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
   .stages li { display: grid; gap: var(--space-4); }
   .stages h3 { margin: 0; }
   .stages p { margin-top: var(--space-2); font-size: var(--text-support); }
   .stages :global(.about-icon.stage) { width: 4.5rem; height: 4.5rem; }
-  /* Fine copper connectors between stacked stages; horizontal when the three
+  /* Copper arrows between stacked stages; horizontal when the three
      columns have room for them below the row threshold. */
-  .stages li:not(:first-child) { position: relative; }
-  .stages li:not(:first-child)::before { content: ''; position: absolute; inset-inline-start: 4.5rem; top: -1.9rem; width: 1px; height: 1.5rem; background: var(--accent); opacity: 0.6; }
+  .stages li:not(:first-child) { position: relative; --stage-gap: var(--space-8); }
+  .stages li:not(:first-child)::before { content: '↓'; position: absolute; inset-inline-start: 2.25rem; top: calc(-0.5 * var(--stage-gap)); transform: translate(-50%, -50%); line-height: 1; color: var(--accent); opacity: 0.8; }
 
   .principles-list { display: grid; gap: var(--space-8); margin: 0; }
-  .principles-list dt { font-size: 1.25rem; font-family: var(--font-serif); color: var(--primary); }
-  .badge {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 3.5rem; height: 3.5rem; margin-right: var(--space-4); flex: none;
-    border: 1px solid var(--border); border-radius: 999px; background: var(--muted);
-  }
-  .badge :global(.about-icon.badge) { width: 1.75rem; height: 1.75rem; }
-  .principles-list dd { margin: var(--space-3) 0 0 var(--space-8); }
+  .principles-list dt { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); font-size: 1.25rem; font-family: var(--font-serif); color: var(--primary); }
+  .badge { display: block; width: 3.5rem; height: 3.5rem; }
+  .badge :global(.about-icon.badge) { width: 3.5rem; height: 3.5rem; }
+  .principles-list dd { margin: var(--space-3) 0 0; }
   .principle-text { color: var(--muted-foreground); font-size: var(--text-support); max-width: 42ch; }
   .principle-text :global(p) { font-size: var(--text-support); margin-top: var(--space-3); }
   .principle-text :global(p:first-child) { margin-top: 0; }
 
-  .feature-grid { display: grid; gap: var(--space-6); margin-top: var(--space-8); }
+  .feature-grid { display: grid; gap: var(--space-6); margin: 0; }
   .feature {
     display: grid; gap: var(--space-6); padding: var(--space-8);
     border: 1px solid var(--border); border-radius: var(--radius); background: var(--muted);
@@ -198,20 +197,22 @@ const buildingFeatures = (building?.features ?? [])
   }
   @media (min-width: 64rem) {
     .about-section { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-12); align-items: start; }
+    .about-section.about-section--wide { grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); }
     .stages { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .stages li:not(:first-child)::before { inset-inline-start: -1.5rem; top: 2.25rem; width: 1.5rem; height: 1px; }
+    .stages li:not(:first-child)::before { content: '→'; inset-inline-start: calc(-0.5 * var(--stage-gap)); top: 2.25rem; }
     .principles-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .principles-list dd { margin-left: 0; }
-    .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .feature { grid-template-columns: auto minmax(0, 1fr); }
   }
   @media (min-width: 80rem) {
     .stages { gap: var(--space-6); }
+    .stages li:not(:first-child) { --stage-gap: var(--space-6); }
+    /* The two endeavor cards pair up only above 1280px; 1280 itself stacks. */
+    .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stages li:not(:first-child) { --stage-gap: var(--space-6); }
     .stages li { grid-template-columns: auto minmax(0, 1fr); gap: var(--space-6); }
   }
   @media (max-width: 24rem) {
     .stages li { grid-template-columns: 1fr; }
     .stages li:not(:first-child)::before { display: none; }
-    .principles-list dd { margin-inline-start: 0; }
     .feature { grid-template-columns: 1fr; }
   }</style>

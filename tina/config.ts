@@ -262,6 +262,14 @@ const aboutIcon: TinaField = { type: 'string', name: 'icon', label: 'Illustratio
 // Editable narrative with emphasis; rendered through the shared rich-text pipeline.
 const narrative: TinaField = { type: 'rich-text', name: 'paragraphs', label: 'Narrative paragraphs' };
 
+// Optional per-section heading/content column split on About. Unset keeps the
+// 40/60 default in the layout; '30-70' widens the content side.
+const columnSplit: TinaField = { type: 'string', name: 'split', label: 'Heading : content split',
+  description: 'Ratio between the heading column and content column. Default 40 / 60.',
+  options: [
+    { value: '30-70', label: '30 / 70 — content-heavy' },
+  ] };
+
 // One fixed About composition, not a page builder. The portrait stays unset
 // until an authentic owner-supplied headshot exists; a placeholder shows until then.
 const about: TinaField = {
@@ -271,6 +279,7 @@ const about: TinaField = {
     { type: 'image', name: 'portrait', label: 'Portrait (owner to supply)', description: 'Leave empty until an approved, authentic headshot exists. A placeholder renders while unset.' },
     { type: 'string', name: 'portraitAlt', label: 'Portrait description (used only with a portrait)' },
     { type: 'object', name: 'path', label: 'Section 01 — The path here', fields: [
+      columnSplit,
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading', required: true },
       { type: 'string', name: 'summary', label: 'Lead summary', ui: { component: 'textarea' } },
@@ -284,6 +293,7 @@ const about: TinaField = {
         ] },
     ] },
     { type: 'object', name: 'principles', label: 'Section 02 — How I work', fields: [
+      columnSplit,
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'statement', label: 'Prominent statement', required: true },
       { type: 'string', name: 'intro', label: 'Introduction', ui: { component: 'textarea' } },
@@ -295,7 +305,8 @@ const about: TinaField = {
           { type: 'rich-text', name: 'text', label: 'Explanation' },
         ] },
     ] },
-    { type: 'object', name: 'building', label: 'Section 03 — Beyond my day job', fields: [
+    { type: 'object', name: 'building', label: 'Section 03 — Current endeavors', fields: [
+      columnSplit,
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading', required: true },
       { type: 'object', name: 'features', label: 'Endeavors', list: true,
@@ -309,6 +320,7 @@ const about: TinaField = {
         ] },
     ] },
     { type: 'object', name: 'next', label: 'Section 04 — What’s next', fields: [
+      columnSplit,
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading', required: true },
       narrative,
