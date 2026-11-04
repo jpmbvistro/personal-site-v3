@@ -61,7 +61,7 @@ const sectionsField = 'sections' in data ? tinaField(data, 'sections') : undefin
   .editorial-story :global(.story-section) { grid-column: 1 / -1; }
   .editorial-story :global(.entry-body > *) { grid-column: 1 / -1; }
   .editorial-story :global(.entry-body > .ux-figure:first-child) { grid-column: 2; grid-row: var(--hero-figure-row); align-self: center; margin-block: var(--space-8) var(--space-12); }
-  .editorial-story:has(.entry-body > .api-preview:first-child) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
+  .editorial-story:has(.entry-body > .api-preview:first-child) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .editorial-story:has(.api-preview) h1 { max-width: 14ch; }
   .editorial-story:has(.api-preview) .summary { max-width: 48ch; }
   .editorial-story:has(.entry-body > .harness-preview:first-child) { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
