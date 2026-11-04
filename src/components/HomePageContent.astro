@@ -78,8 +78,8 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
   .perspective-details { display: grid; gap: var(--space-8); margin-left: var(--space-6); }
   dl { display: grid; gap: var(--space-6); margin: 0; }
   dt { font-family: var(--font-serif); font-size: 1.375rem; color: var(--primary); }
-  dd { margin: var(--space-2) 0 0; font-size: var(--text-support); }
-  .perspective-details > a { align-self: end; padding-block: var(--space-3); font-size: var(--text-small); }
+  dd { margin: 0; font-size: var(--text-support); }
+  .perspective-details > a { grid-column: 1 / -1; justify-self: start; padding-block: var(--space-3); font-size: var(--text-small); text-decoration: underline; }
   .perspective-ribbon { position: absolute; z-index: -1; bottom: 0; right: -10%; width: 90%; stroke: var(--border); opacity: 0.45; }
   @media (min-width: 48rem) {
     .capabilities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
