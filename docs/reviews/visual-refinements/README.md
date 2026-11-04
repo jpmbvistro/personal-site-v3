@@ -98,6 +98,50 @@ Inspected the supplied Windows files through `/mnt/e/Downloads`:
 - `image-gen-3(3).png` — the owner's additional layered-stack illustration.
 - `architecture_diagram_png_assets/` and the matching ZIP manifest — all twelve
   elements inspected together, with dimensions, alpha channels and file sizes.
+- `Migration Hero Icons/` (Nov 3, 2026 pack): one composition mockup plus five
+  1254×1254 transparent icon PNGs for the API hero. Sources copied to
+  `docs/reviews/visual-refinements/sources/`; the mockup is stored as a review
+  reference only, never page content.
+
+### Nov 3, 2026 owner mockup pass — API hero recreation
+
+`ApiMigrationPreview.astro` now recreates the supplied composition: two softly
+outlined question panels with copper folded-corner accents, a three-step icon
+row per investigation, copper rails behind the panels connecting them, and the
+copper return beneath the behavioral row running from "Investigate ·
+revalidate" back to "Live comparison" with an upward arrowhead. Narrow
+recomposition stacks each investigation vertically with rotated flow arrows and
+an explicit stacked return row, then the labels.
+
+Raster selection follows the established derivative pipeline (Sharp trim →
+square contain → WebP quality 85):
+
+| Supplied file | Derivative stem | Use |
+| --- | --- | --- |
+| `..._16 AM-2.png` stacked layers | `inherited-stack` | Inherited work |
+| `..._17 AM-3.png` funnel | `usage-funnel` | Usage evidence |
+| `..._20 AM-4.png` branching flow | `necessity-branch` | Necessity decision |
+| `..._21 AM-5.png` overlapping cards | `behavior-cards` | Actual behavior |
+| `..._22 AM-6.png` paired comparison boxes | `live-comparison` | Live comparison |
+
+144px/288px transparent derivatives live in `public/uploads/architecture/`
+(about 52 KiB total). The pack supplies no investigate/revalidate icon, so the
+final step is a native SVG terminal (`>|`) in the surrounding copper — the
+same ArchitectureIcon practice for decorative outline symbols. Tina-owned
+props, class hooks and the `<ol class="motif-labels">` label list are
+unchanged; the pack's five icons cover the six supplied mockup slots with that
+one native substitution.
+
+Verification of this pass: `npm run check` 0 errors/0 warnings/0 hints (81
+files); targeted `tests/api-migration.spec.ts` 9/9 passed against the shared
+local dev server (all five widths, shared canvas, link resolution, the
+no-JavaScript run and the Tina edit/preview flow); `shell.spec` and
+`content.spec` passed except the established publish/unpublish datalayer race
+in the long-running local session's `.browser-fixture` toggle. Ad-hoc
+Playwright captures at 1440/1280/1024/768/390/320 confirmed no label overlap
+or document overflow, correct server-state icon loading, two-column rows
+through 768px width panels and stacked recomposition from 26rem panel width.
+
 
 The two composition files are treated as the references named in the task,
 not as evidence for technical facts. The alias filenames
