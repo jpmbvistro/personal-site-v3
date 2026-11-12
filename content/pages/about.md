@@ -10,7 +10,7 @@ links:
     url: /contact/
 about:
   eyebrow: ABOUT
-  portrait: /uploads/juan-vistro-portrait.webp
+  portrait: /uploads/juan_vistro_portrait_q76.webp
   portraitAlt: Portrait of Juan Vistro
   path:
     eyebrow: 01 / THE PATH HERE
