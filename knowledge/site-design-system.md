@@ -152,13 +152,13 @@ photography or a stylized synthetic portrait.
 documentation PR does **not** commit or publish it. Select an approved final
 image file and optimized formats during page implementation.
 
-**Update 2026-11-02:** the owner supplied an authentic headshot
-(`photo_compressed.png`). It is committed as an optimized derivative,
-`public/uploads/juan-vistro-portrait.webp` (transparent margins trimmed,
-832×842 alpha WebP, ~97 KB — same sharp-trim-and-convert pattern as the brand
-lockups; the 4.7 MB source is not committed). The Tina `about.portrait` field
-now references `/uploads/juan-vistro-portrait.webp` with
-`portraitAlt: Portrait of Juan Vistro`, so the placeholder no longer renders.
+**Update 2026-11-11:** the owner supplied a replacement headshot
+(`juan_vistro_portrait_q76.webp`). It is committed as
+`public/uploads/juan_vistro_portrait_q76.webp` (1024×906 opaque WebP, ~44 KB)
+and the Tina `about.portrait` field now references
+`/uploads/juan_vistro_portrait_q76.webp` with
+`portraitAlt: Portrait of Juan Vistro`. The previous 832×842 alpha derivative
+(`public/uploads/juan-vistro-portrait.webp`) is retained but no longer referenced.
 
 **Update 2026-11-02 (stages placement):** the owner asked for the career-stages
 strip (starting with Community & Programs) to span the left and right sides of
