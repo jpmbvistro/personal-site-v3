@@ -15,10 +15,18 @@ for (const width of [320, 390, 768, 1440]) {
     expect(await page.locator('[data-tina-field]').count()).toBeGreaterThan(20);
     await expect(page.locator('.hero-media')).toHaveCSS('aspect-ratio', '16 / 9');
 
-    const contactActions = page.getByRole('link', { name: 'Discuss an initiative' });
-    await expect(contactActions).toHaveCount(2);
-    for (let i = 0; i < await contactActions.count(); i += 1) {
-      await expect(contactActions.nth(i)).toHaveAttribute('href', '/contact/');
+    await expect(page.getByRole('link', { name: /Explore working together/i })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /Start a conversation/i })).toHaveCount(1);
+    await expect(page.getByRole('link', { name: /Send an inquiry instead/i })).toHaveCount(1);
+
+    await expect(page.getByRole('link', { name: /Explore working together/i })).toHaveAttribute('href', 'https://app.reclaim.ai/m/juanvistro/intro-conversation');
+    await expect(page.getByRole('link', { name: /Start a conversation/i })).toHaveAttribute('href', 'https://app.reclaim.ai/m/juanvistro/intro-conversation');
+    await expect(page.getByRole('link', { name: /Send an inquiry instead/i })).toHaveAttribute('href', 'https://forms.clickup.com/9014549590/f/8cmy72p-11434/0J4GZPYUQK3WOMCACO');
+
+    for (const name of [/Explore working together/i, /Start a conversation/i, /Send an inquiry instead/i]) {
+      const link = page.getByRole('link', { name });
+      await expect(link).toHaveAttribute('target', '_blank');
+      await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
     }
     if (width < 768) {
       await page.locator('[data-mobile-nav] summary').click();
@@ -30,7 +38,7 @@ for (const width of [320, 390, 768, 1440]) {
     await page.locator('.hero-actions a').focus();
     await expect(page.locator('.hero-actions a')).toHaveCSS('outline-style', 'solid');
     await expect(page.locator('.hero-actions a')).toHaveCSS('outline-color', 'rgb(243, 237, 227)');
-    await expect(page.getByRole('link', { name: /Reclaim|ClickUp|article/i })).toHaveCount(0);
+    await expect(page.locator('.hero-media video')).toHaveCount(1);
     await expect(page.locator('body > header')).toHaveCount(1);
     await expect(page.locator('body > footer')).toHaveCount(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

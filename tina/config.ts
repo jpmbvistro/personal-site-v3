@@ -392,6 +392,8 @@ const workWithMe: TinaField = {
       { type: 'string', name: 'closingLine', label: 'Closing line' },
       { type: 'string', name: 'actionLabel', label: 'Action label' },
       { type: 'string', name: 'actionUrl', label: 'Action URL' },
+      { type: 'string', name: 'inquiryLabel', label: 'Written inquiry action label' },
+      { type: 'string', name: 'inquiryUrl', label: 'Written inquiry URL' },
     ] },
   ],
 };

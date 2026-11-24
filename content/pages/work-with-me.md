@@ -5,8 +5,8 @@ workWithMe:
   hero:
     eyebrow: WORK WITH ME
     tagline: 'Engineering transformation, applied AI, and technology leadership.'
-    actionLabel: Discuss an initiative
-    actionUrl: /contact/
+    actionLabel: Explore working together
+    actionUrl: https://app.reclaim.ai/m/juanvistro/intro-conversation
   approach:
     eyebrow: THE APPROACH
     title: 'Improve the system. Not just the software.'
@@ -75,8 +75,10 @@ workWithMe:
     title: 'Let''s talk about what needs to change.'
     text: 'You don''t need a finished roadmap or a perfectly defined project to start. If you''re navigating an engineering challenge, evaluating an AI investment, or looking for technology leadership, I''d welcome a conversation about what you''re trying to accomplish and where I might help.'
     closingLine: 'A conversation first. A thoughtful next step if there''s a fit.'
-    actionLabel: Discuss an initiative
-    actionUrl: /contact/
+    actionLabel: Start a conversation
+    actionUrl: https://app.reclaim.ai/m/juanvistro/intro-conversation
+    inquiryLabel: Send an inquiry instead
+    inquiryUrl: https://forms.clickup.com/9014549590/f/8cmy72p-11434/0J4GZPYUQK3WOMCACO
 ---
 
 I help engineering and organizational leaders identify constraints, make deliberate technology and AI investments, and guide transformation from strategy through implementation and organizational change.
