@@ -1,0 +1,264 @@
+---
+import { tinaField } from '@tinacms/astro';
+import type { PageQuery } from '../../tina/__generated__/types';
+import RichText from './RichText.astro';
+import Container from './Container.astro';
+import ButtonLink from './ButtonLink.astro';
+import { safeHref } from '../lib/links';
+
+interface Props {
+  data: PageQuery['page'];
+}
+const { data } = Astro.props;
+const w = data.workWithMe;
+const hero = w?.hero;
+const approach = w?.approach;
+const evidence = w?.evidence;
+const focus = w?.focus;
+const engagements = w?.engagements;
+const closing = w?.closing;
+
+const contactFallback = '/contact/';
+const heroUrl = safeHref(hero?.actionUrl) ?? contactFallback;
+const closingUrl = safeHref(closing?.actionUrl) ?? contactFallback;
+const heroLabel = hero?.actionLabel || 'Discuss an initiative';
+const closingLabel = closing?.actionLabel || 'Discuss an initiative';
+
+const approachRows = [approach?.see, approach?.decide, approach?.leadStage]
+  .map((row, index) => ({ row, number: String(index + 1).padStart(2, '0') }))
+  .filter((item) => item.row);
+
+const engagementRows = [engagements?.assessment, engagements?.transformation, engagements?.embedded]
+  .map((row, index) => ({ row, number: String(index + 1).padStart(2, '0') }))
+  .filter((item) => item.row);
+---
+
+<section class="hero" aria-labelledby="work-with-me-hero">
+  <Container>
+    <div class="hero-copy">
+      {hero?.eyebrow && <p class="eyebrow hero-eyebrow" data-tina-field={tinaField(hero, 'eyebrow')}>{hero.eyebrow}</p>}
+      <h1 id="work-with-me-hero" data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+      {hero?.tagline && <p class="hero-tagline" data-tina-field={tinaField(hero, 'tagline')}>{hero.tagline}</p>}
+      <div class="hero-body prose" data-tina-field={tinaField(data, 'body')}>
+        <RichText content={data.body} />
+      </div>
+      <div class="hero-actions">
+        <ButtonLink href={heroUrl} variant="primary" data-tina-field={tinaField(hero, 'actionLabel')}>
+          {heroLabel} <span aria-hidden="true">↗</span>
+        </ButtonLink>
+      </div>
+    </div>
+    <div class="hero-media" aria-hidden="true"></div>
+  </Container>
+</section>
+
+{approach && <section class="approach" aria-labelledby="approach-heading">
+  <Container>
+    <div class="approach-copy">
+      {approach.eyebrow && <p class="eyebrow" data-tina-field={tinaField(approach, 'eyebrow')}>{approach.eyebrow}</p>}
+      <h2 id="approach-heading" data-tina-field={tinaField(approach, 'title')}>{approach.title}</h2>
+      {approach.lead && <p class="approach-lead" data-tina-field={tinaField(approach, 'lead')}>{approach.lead}</p>}
+      {approach.supporting && <p class="approach-supporting" data-tina-field={tinaField(approach, 'supporting')}>{approach.supporting}</p>}
+    </div>
+    <ol class="approach-rows">
+      {approachRows.map(({ row, number }) => row && <li>
+        <span class="row-number" aria-hidden="true">{number} /</span>
+        <div class="row-copy">
+          <h3 data-tina-field={tinaField(row, 'title')}>{row.title}</h3>
+          {row.text && <p data-tina-field={tinaField(row, 'text')}>{row.text}</p>}
+        </div>
+      </li>)}
+    </ol>
+  </Container>
+</section>}
+
+{evidence && <section class="evidence" aria-labelledby="evidence-heading">
+  <Container>
+    <div class="section-intro">
+      {evidence.eyebrow && <p class="eyebrow" data-tina-field={tinaField(evidence, 'eyebrow')}>{evidence.eyebrow}</p>}
+      <h2 id="evidence-heading" data-tina-field={tinaField(evidence, 'title')}>{evidence.title}</h2>
+      {evidence.intro && <p class="section-lead" data-tina-field={tinaField(evidence, 'intro')}>{evidence.intro}</p>}
+    </div>
+    {evidence.featured && <article class="evidence-card evidence-card--featured">
+      <p class="card-label" data-tina-field={tinaField(evidence.featured, 'label')}>{evidence.featured.label}</p>
+      <p class="card-value" data-tina-field={tinaField(evidence.featured, 'value')}>{evidence.featured.value}</p>
+      <h3 data-tina-field={tinaField(evidence.featured, 'title')}>{evidence.featured.title}</h3>
+      {evidence.featured.text && <p data-tina-field={tinaField(evidence.featured, 'text')}>{evidence.featured.text}</p>}
+    </article>}
+    <div class="evidence-secondary">
+      {[evidence.teams, evidence.delivery].map((card) => card && <article class="evidence-card">
+        <p class="card-label" data-tina-field={tinaField(card, 'label')}>{card.label}</p>
+        <p class="card-value" data-tina-field={tinaField(card, 'value')}>{card.value}</p>
+        <h3 data-tina-field={tinaField(card, 'title')}>{card.title}</h3>
+        {card.text && <p data-tina-field={tinaField(card, 'text')}>{card.text}</p>}
+      </article>)}
+    </div>
+  </Container>
+</section>}
+
+{focus && <section class="focus" aria-labelledby="focus-heading">
+  <Container>
+    <div class="section-intro">
+      {focus.eyebrow && <p class="eyebrow focus-eyebrow" data-tina-field={tinaField(focus, 'eyebrow')}>{focus.eyebrow}</p>}
+      <h2 id="focus-heading" data-tina-field={tinaField(focus, 'title')}>{focus.title}</h2>
+    </div>
+    <div class="focus-grid">
+      {[focus.engineering, focus.ai].map((item) => item && <article class="focus-item">
+        <p class="focus-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p>
+        <h3 data-tina-field={tinaField(item, 'statement')}>{item.statement}</h3>
+        {item.text && <p data-tina-field={tinaField(item, 'text')}>{item.text}</p>}
+      </article>)}
+    </div>
+  </Container>
+</section>}
+
+{engagements && <section class="engagements" aria-labelledby="engagements-heading">
+  <Container>
+    <div class="section-intro">
+      {engagements.eyebrow && <p class="eyebrow" data-tina-field={tinaField(engagements, 'eyebrow')}>{engagements.eyebrow}</p>}
+      <h2 id="engagements-heading" data-tina-field={tinaField(engagements, 'title')}>{engagements.title}</h2>
+      {engagements.intro && <p class="section-lead" data-tina-field={tinaField(engagements, 'intro')}>{engagements.intro}</p>}
+    </div>
+    <ol class="engagement-rows">
+      {engagementRows.map(({ row, number }) => row && <li>
+        <span class="row-number" aria-hidden="true">{number}</span>
+        <div class="engagement-copy">
+          <h3 data-tina-field={tinaField(row, 'title')}>{row.title}</h3>
+          {row.question && <p class="engagement-question" data-tina-field={tinaField(row, 'question')}>{row.question}</p>}
+          {row.description && <p data-tina-field={tinaField(row, 'description')}>{row.description}</p>}
+          {row.result && <p class="engagement-result" data-tina-field={tinaField(row, 'result')}>{row.result}</p>}
+        </div>
+      </li>)}
+    </ol>
+  </Container>
+</section>}
+
+{closing && <section class="closing" aria-labelledby="closing-heading">
+  <Container>
+    <div class="closing-copy">
+      {closing.eyebrow && <p class="eyebrow closing-eyebrow" data-tina-field={tinaField(closing, 'eyebrow')}>{closing.eyebrow}</p>}
+      <h2 id="closing-heading" data-tina-field={tinaField(closing, 'title')}>{closing.title}</h2>
+      {closing.text && <p class="closing-text" data-tina-field={tinaField(closing, 'text')}>{closing.text}</p>}
+      {closing.closingLine && <p class="closing-line" data-tina-field={tinaField(closing, 'closingLine')}>{closing.closingLine}</p>}
+      <ButtonLink href={closingUrl} variant="secondary" class="closing-button" data-tina-field={tinaField(closing, 'actionLabel')}>
+        {closingLabel} <span aria-hidden="true">↗</span>
+      </ButtonLink>
+    </div>
+  </Container>
+</section>}
+
+<style>
+  .hero {
+    --ring: var(--primary-foreground);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding-block: clamp(3rem, 5vw, 5rem);
+  }
+  .hero :global(.container) { display: grid; gap: var(--space-8); }
+  .hero-copy { min-width: 0; max-width: 46rem; }
+  .hero-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
+  .hero h1 { color: var(--primary-foreground); max-width: 16ch; }
+  .hero h1::after { content: ''; display: block; width: 3rem; height: 2px; margin-top: var(--space-6); background: var(--accent); }
+  .hero-tagline { margin-top: var(--space-4); font-family: var(--font-serif); font-size: var(--text-lead); color: var(--primary-foreground); }
+  .hero-body { margin-top: var(--space-6); max-width: 42rem; color: var(--primary-foreground); opacity: 0.9; }
+  .hero-body :global(p) { color: inherit; }
+  .hero-actions { margin-top: var(--space-8); }
+  .hero :global(.button-link) { background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); }
+  .hero :global(.button-link:hover) { background: var(--secondary); color: var(--primary); }
+  .hero-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    background:
+      radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 55%),
+      linear-gradient(135deg, color-mix(in srgb, var(--primary-foreground) 6%, transparent), color-mix(in srgb, var(--accent) 12%, transparent));
+    border: 1px solid color-mix(in srgb, var(--primary-foreground) 18%, transparent);
+  }
+
+  .approach { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+  .approach-copy { max-width: 42rem; }
+  .approach-lead, .approach-supporting { margin-top: var(--space-4); color: var(--muted-foreground); }
+  .approach-rows { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: grid; gap: var(--space-6); }
+  .approach-rows li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .approach-rows li:first-child { border-top: 0; padding-top: 0; }
+  .row-number { font-family: var(--font-serif); font-size: 1.25rem; color: var(--accent-strong); }
+  .row-copy h3 { margin: 0; font-size: 1.375rem; }
+  .row-copy p { margin-top: var(--space-2); color: var(--muted-foreground); }
+
+  .evidence { padding-block: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--border); }
+  .section-intro { max-width: 46rem; }
+  .section-lead { margin-top: var(--space-4); color: var(--muted-foreground); }
+  .evidence-card {
+    margin-top: var(--space-8);
+    padding: var(--space-8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--muted);
+  }
+  .evidence-card--featured { background: var(--background); }
+  .card-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
+  .card-value { margin-top: var(--space-3); font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; color: var(--primary); }
+  .evidence-card h3 { margin-top: var(--space-4); font-size: 1.25rem; }
+  .evidence-card p:last-child { margin-top: var(--space-3); color: var(--muted-foreground); }
+  .evidence-secondary { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
+  .evidence-secondary .evidence-card { margin-top: 0; }
+
+  .focus {
+    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .focus-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
+  .focus h2 { color: var(--primary-foreground); }
+  .focus-grid { display: grid; gap: var(--space-8); margin-top: var(--space-8); }
+  .focus-item { padding-top: var(--space-6); border-top: 1px solid color-mix(in srgb, var(--primary-foreground) 24%, transparent); }
+  .focus-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-foreground); opacity: 0.72; }
+  .focus-item h3 { margin-top: var(--space-3); color: var(--primary-foreground); font-family: var(--font-serif); font-size: 1.5rem; }
+  .focus-item p { margin-top: var(--space-3); color: var(--primary-foreground); opacity: 0.88; }
+
+  .engagements { padding-block: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--border); }
+  .engagement-rows { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: grid; gap: var(--space-8); }
+  .engagement-rows li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+    border-top: 1px solid var(--border);
+  }
+  .engagement-rows li:first-child { border-top: 0; padding-top: 0; }
+  .engagement-copy h3 { margin: 0; }
+  .engagement-question { margin-top: var(--space-2); font-family: var(--font-serif); font-style: italic; color: var(--primary); }
+  .engagement-copy p { margin-top: var(--space-3); color: var(--muted-foreground); }
+  .engagement-result { color: var(--muted-foreground); }
+  .engagement-result strong { color: var(--primary); }
+
+  .closing {
+    --ring: var(--primary-foreground);
+    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .closing-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
+  .closing h2 { color: var(--primary-foreground); }
+  .closing-text, .closing-line { margin-top: var(--space-4); color: var(--primary-foreground); opacity: 0.9; max-width: 52rem; }
+  .closing-line { font-family: var(--font-serif); font-style: italic; }
+  .closing :global(.button-link) { margin-top: var(--space-8); background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); }
+  .closing :global(.button-link:hover) { background: var(--secondary); color: var(--primary); }
+
+  @media (min-width: 64rem) {
+    .hero :global(.container) { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: clamp(var(--space-8), 4vw, var(--space-12)); }
+    .approach :global(.container) { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-12); align-items: start; }
+    .evidence-secondary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 39rem) {
+    .approach-rows li, .engagement-rows li { grid-template-columns: 1fr; }
+    .row-number { margin-bottom: var(--space-2); }
+  }
+</style>

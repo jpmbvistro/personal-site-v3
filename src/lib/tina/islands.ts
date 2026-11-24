@@ -1,6 +1,7 @@
 import type { IslandRegistry } from '@tinacms/astro/experimental';
 import HomePageContent from '../../components/HomePageContent.astro';
 import AboutPageContent from '../../components/AboutPageContent.astro';
+import WorkWithMePageContent from '../../components/WorkWithMePageContent.astro';
 import PageContent from '../../components/PageContent.astro';
 import EntryContent from '../../components/EntryContent.astro';
 import { getHomepage, getPage, getWork, getProject } from './data';
@@ -25,6 +26,12 @@ export const islands: IslandRegistry = {
     fetch: () => getPage('about.md'),
     component: AboutPageContent,
     wrapper: { tag: 'div', className: 'about-page' },
+    propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getPage>>).data.page }),
+  },
+  workWithMe: {
+    fetch: () => getPage('work-with-me.md'),
+    component: WorkWithMePageContent,
+    wrapper: { tag: 'div', className: 'work-with-me-page' },
     propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getPage>>).data.page }),
   },
   page: {

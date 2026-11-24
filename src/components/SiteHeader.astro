@@ -2,6 +2,11 @@
 import Container from './Container.astro';
 import MobileNav from './MobileNav.astro';
 import { navigation } from '../lib/navigation';
+
+const pathname = Astro.url.pathname;
+const isCurrent = (href: string) => href === '/'
+  ? pathname === '/'
+  : pathname === href || pathname.startsWith(href);
 ---
 
 <header>
@@ -10,7 +15,7 @@ import { navigation } from '../lib/navigation';
       <img src="/brand/juan-vistro-horizontal.webp" width="1179" height="490" alt="Juan Vistro" fetchpriority="high" />
     </a>
     <nav class="desktop-nav" aria-label="Main navigation">
-      {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
+      {navigation.map(({ label, href }) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
     </nav>
     <MobileNav />
   </Container>
@@ -46,5 +51,6 @@ import { navigation } from '../lib/navigation';
     text-decoration: none;
   }
   .desktop-nav a:hover { color: var(--primary); text-decoration: underline; }
+  .desktop-nav a[aria-current='page'] { font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.4em; }
   @media (min-width: 48rem) { .desktop-nav { display: flex; } }
 </style>
