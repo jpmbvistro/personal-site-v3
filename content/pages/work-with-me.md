@@ -31,12 +31,12 @@ workWithMe:
       title: 'Prioritizing technology investments against organizational needs'
       text: 'Led prioritization and implementation of fundraising technology stacks across five nonprofit organizations, balancing competing CRM, fundraising, and communications needs within budget constraints.'
     teams:
-      label: 'ENGINEERING TRANSFORMATION / MODERNA'
+      label: 'ENGINEERING TRANSFORMATION / GLOBAL BIOTECHNOLOGY COMPANY'
       value: '12 engineering teams'
       title: 'Modernization at organizational scale'
       text: 'Led cross-team engineering modernization, coordinating technical direction and delivery across 12 engineering teams.'
     delivery:
-      label: 'AI-ENABLED DELIVERY / MODERNA'
+      label: 'AI-ENABLED DELIVERY / GLOBAL BIOTECHNOLOGY COMPANY'
       value: '3 months → 1 month'
       title: 'Accelerating delivery without shifting the bottleneck'
       text: 'Reduced delivery time from three months to one through AI-enabled engineering workflows, without surfacing new downstream bottlenecks in the observed process.'
