@@ -13,12 +13,14 @@ interface Props {
   data: PageQuery['page'];
   work: Awaited<ReturnType<typeof getHomepage>>['work'];
   projects: Awaited<ReturnType<typeof getHomepage>>['projects'];
+  articles: Awaited<ReturnType<typeof getHomepage>>['articles'];
   resume?: string | null;
 }
-const { data, work, projects, resume } = Astro.props;
+const { data, work, projects, articles, resume } = Astro.props;
 const content = data.homepage;
-const featuredWork = selectFeatured(work, content?.featuredWork);
-const featuredProjects = selectFeatured(projects, content?.featuredProjects);
+const featuredWork = selectFeatured(work ?? [], content?.featuredWork);
+const featuredProjects = selectFeatured(projects ?? [], content?.featuredProjects);
+const featuredArticles = selectFeatured(articles ?? [], content?.featuredArticles);
 ---
 
 <Container>
@@ -40,6 +42,11 @@ const featuredProjects = selectFeatured(projects, content?.featuredProjects);
     <div class="section-intro" data-tina-field={tinaField(content, 'projects')}><p class="eyebrow">{content?.projects?.eyebrow}</p><h2 id="projects-heading">{content?.projects?.title}</h2><p>{content?.projects?.text}</p></div>
     {featuredProjects.length > 0 ? <div class="project-grid" data-tina-field={tinaField(content, 'featuredProjects')}>{featuredProjects.map((entry) => <HomepageEntryCard entry={entry} section="projects" />)}</div> : <p class="project-note" data-tina-field={tinaField(content?.projects, 'emptyText')}>{content?.projects?.emptyText}</p>}
   </section>
+
+  {featuredArticles.length > 0 && <section class="home-section articles" aria-labelledby="articles-heading">
+    <div class="section-intro"><p class="eyebrow">Articles</p><h2 id="articles-heading">Ideas and perspectives</h2></div>
+    <div class="article-list">{featuredArticles.map((entry) => <a href={`/articles/${entry._sys.breadcrumbs.join('/')}/`}>{entry.title}</a>)}</div>
+  </section>}
 
   {content?.perspective?.text && <section class="home-section perspective" aria-labelledby="perspective-heading">
     <h2 class="eyebrow" id="perspective-heading" data-tina-field={tinaField(content.perspective, 'eyebrow')}>{content.perspective.eyebrow}</h2>

@@ -203,6 +203,16 @@ const links: TinaField = {
   ],
 };
 
+const seo: TinaField = {
+  type: 'object', name: 'seo', label: 'SEO / social',
+  fields: [
+    { type: 'string', name: 'title', label: 'Search title (optional)' },
+    { type: 'string', name: 'description', label: 'Search / snippet / share description (optional)', ui: { component: 'textarea' } },
+    { type: 'image', name: 'socialImage', label: 'Social image (optional)' },
+    { type: 'string', name: 'socialImageAlt', label: 'Social image alt text' },
+  ],
+};
+
 // One fixed homepage composition, not a page builder. Slugs resolve only against
 // published records; missing, duplicate and draft selections never create links.
 const homepage: TinaField = {
@@ -222,7 +232,7 @@ const homepage: TinaField = {
       ] },
     { type: 'string', name: 'featuredWork', label: 'Featured Work slugs (in order)', list: true, description: 'Filename without .mdx; drafts and missing entries are omitted. No automatic selection.' },
     { type: 'string', name: 'featuredProjects', label: 'Featured Project slugs (in order)', list: true, description: 'Only explicitly published entries appear. No automatic selection.' },
-    ...['work', 'projects'].map((name): TinaField => ({ type: 'object', name, label: name === 'work' ? 'Selected Work introduction' : 'Asterism introduction', fields: [
+    { type: 'string', name: 'featuredArticles', label: 'Featured Article slugs (in order)', list: true, description: 'Only explicitly published entries appear. No automatic selection.' },    ...['work', 'projects'].map((name): TinaField => ({ type: 'object', name, label: name === 'work' ? 'Selected Work introduction' : 'Asterism introduction', fields: [
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading' },
       { type: 'string', name: 'text', label: 'Introduction', ui: { component: 'textarea' } },
@@ -334,6 +344,72 @@ const about: TinaField = {
   ],
 };
 
+// Fixed Work With Me composition: structured editable content, not a page builder.
+const workWithMe: TinaField = {
+  type: 'object', name: 'workWithMe', label: 'Work With Me content (Work With Me only)',
+  fields: [
+    { type: 'object', name: 'hero', label: 'Hero', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'tagline', label: 'Tagline / subheading' },
+      { type: 'string', name: 'actionLabel', label: 'Action label' },
+      { type: 'string', name: 'actionUrl', label: 'Action URL' },
+    ] },
+    { type: 'object', name: 'approach', label: 'Approach', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'string', name: 'lead', label: 'Paragraph 1', ui: { component: 'textarea' } },
+      { type: 'string', name: 'supporting', label: 'Paragraph 2', ui: { component: 'textarea' } },
+      ...['see', 'decide', 'leadStage'].map((name): TinaField => ({ type: 'object', name, label: name === 'see' ? 'See' : name === 'decide' ? 'Decide' : 'Lead', required: true, fields: [
+        { type: 'string', name: 'title', label: 'Heading', required: true },
+        { type: 'string', name: 'text', label: 'Explanation', ui: { component: 'textarea' } },
+      ] })),
+    ] },
+    { type: 'object', name: 'evidence', label: 'Evidence', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'string', name: 'intro', label: 'Lead', ui: { component: 'textarea' } },
+      ...['featured', 'teams', 'delivery'].map((name): TinaField => ({ type: 'object', name, label: name === 'featured' ? 'Featured card' : name === 'teams' ? 'Teams card' : 'Delivery card', required: true, fields: [
+        { type: 'string', name: 'label', label: 'Label', required: true },
+        { type: 'string', name: 'value', label: 'Large proof', required: true },
+        { type: 'string', name: 'title', label: 'Title', required: true },
+        { type: 'string', name: 'text', label: 'Body', ui: { component: 'textarea' } },
+      ] })),
+    ] },
+    { type: 'object', name: 'focus', label: 'Focus', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      ...['engineering', 'ai'].map((name): TinaField => ({ type: 'object', name, label: name === 'engineering' ? 'Engineering transformation' : 'AI strategy and implementation', required: true, fields: [
+        { type: 'string', name: 'label', label: 'Label', required: true },
+        { type: 'string', name: 'statement', label: 'Statement', required: true },
+        { type: 'string', name: 'text', label: 'Body', ui: { component: 'textarea' } },
+        { type: 'image', name: 'image', label: 'Illustration (optional)' },
+        { type: 'string', name: 'imageAlt', label: 'Illustration description' },
+      ] })),
+    ] },
+    { type: 'object', name: 'engagements', label: 'Engagements', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'string', name: 'intro', label: 'Introduction', ui: { component: 'textarea' } },
+      ...['assessment', 'transformation', 'embedded'].map((name): TinaField => ({ type: 'object', name, label: name === 'assessment' ? 'Strategic assessment' : name === 'transformation' ? 'Transformation leadership' : 'Embedded leadership', required: true, fields: [
+        { type: 'string', name: 'title', label: 'Heading', required: true },
+        { type: 'string', name: 'question', label: 'Question', required: true },
+        { type: 'string', name: 'description', label: 'Description', ui: { component: 'textarea' } },
+        { type: 'string', name: 'result', label: 'Intended result', ui: { component: 'textarea' } },
+      ] })),
+    ] },
+    { type: 'object', name: 'closing', label: 'Closing', fields: [
+      { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
+      { type: 'string', name: 'title', label: 'Heading', required: true },
+      { type: 'string', name: 'text', label: 'Copy', ui: { component: 'textarea' } },
+      { type: 'string', name: 'closingLine', label: 'Closing line' },
+      { type: 'string', name: 'actionLabel', label: 'Action label' },
+      { type: 'string', name: 'actionUrl', label: 'Action URL' },
+      { type: 'string', name: 'inquiryLabel', label: 'Written inquiry action label' },
+      { type: 'string', name: 'inquiryUrl', label: 'Written inquiry URL' },
+    ] },
+  ],
+};
+
 // Type-only configuration avoids loading Tina's entire browser runtime into the
 // Node CLI. The CLI still validates the schema before indexing/building.
 export default {
@@ -361,6 +437,8 @@ export default {
           { type: 'string', name: 'resume', label: 'Résumé URL (optional)', description: 'A résumé page or public-safe file URL, such as /resume/ or /uploads/resume.pdf.' },
           homepage,
           about,
+          workWithMe,
+          seo,
         ],
       },
       {
@@ -382,6 +460,7 @@ export default {
           { type: 'string', name: 'role', label: 'Role' },
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           links,
+          seo,
         ],
       },
       {
@@ -395,6 +474,26 @@ export default {
           { type: 'string', name: 'status', label: 'Status (your wording)' },
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           links,
+          seo,
+        ],
+      },
+      {
+        name: 'article', label: 'Articles', path: 'content/articles', format: 'mdx',
+        defaultItem: () => ({ draft: true }),
+        ui: { router: ({ document }) => process.env.TINA_PUBLIC_IS_LOCAL === 'true'
+          ? `/preview/articles/${document._sys.breadcrumbs.join('/')}/`
+          : `/articles/${document._sys.breadcrumbs.join('/')}/` },
+        fields: [
+          { type: 'string', name: 'title', label: 'Title', required: true, isTitle: true },
+          { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
+          { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
+          { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
+          body,
+          { type: 'string', name: 'tags', label: 'Tags', list: true },
+          { type: 'datetime', name: 'publishedAt', label: 'Published at' },
+          { type: 'datetime', name: 'updatedAt', label: 'Updated at' },
+          links,
+          seo,
         ],
       },
     ],

@@ -8,9 +8,14 @@ import { islands } from '../lib/tina/islands';
 
 interface Props { data: ProjectQuery['project']; preview?: boolean }
 const { data, preview = false } = Astro.props;
+const seo = (data.seo ?? {}) as any;
+const title = seo.title || `${data.title} — Juan Vistro`;
+const description = seo.description || data.summary || data.title;
+const image = seo.socialImage || undefined;
+const imageAlt = seo.socialImageAlt || undefined;
 ---
 
-<BaseLayout title={`${data.title} — Juan Vistro`} description={data.summary || data.title} noindex={preview}>
+<BaseLayout title={title} description={description} noindex={preview} image={image} imageAlt={imageAlt} ogTitle={data.title}>
   <Container class="detail-page">
     <a class="back-link" href="/projects/">← All projects</a>
     <TinaIsland name="project" wrapper={islands.project.wrapper} params={{ path: data._sys.relativePath, ...(preview ? { preview: '1' } : {}) }} primary>

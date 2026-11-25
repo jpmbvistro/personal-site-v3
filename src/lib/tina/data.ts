@@ -9,11 +9,11 @@ export const getPage = (relativePath: string) =>
 export const getHome = () => getPage('home.md');
 
 export async function getHomepage() {
-  const [home, work, projects, contact] = await Promise.all([
+  const [home, work, projects, articles, contact] = await Promise.all([
     // Contact supplies configuration, not a second editable primary document.
-    getHome(), getPublishedWork(), getPublishedProjects(), client.queries.page({ relativePath: 'contact.md' }),
+    getHome(), getPublishedWork(), getPublishedProjects(), getPublishedArticles(), client.queries.page({ relativePath: 'contact.md' }),
   ]);
-  return { ...home, work, projects, resume: contact.data.page.resume };
+  return { ...home, work, projects, articles, resume: contact.data.page.resume };
 }
 
 // Only an explicit false is published. Missing draft flags fail closed.
@@ -35,6 +35,14 @@ export async function getProject(relativePath: string, localPreview = false) {
   const result = await client.queries.project({ relativePath });
   if (!isPublished(result.data.project) && !(localDraftPreview && localPreview)) {
     throw new Error('Unpublished project');
+  }
+  return requestWithMetadata(result, { priority: 'primary' });
+}
+
+export async function getArticle(relativePath: string, localPreview = false) {
+  const result = await client.queries.article({ relativePath });
+  if (!isPublished(result.data.article) && !(localDraftPreview && localPreview)) {
+    throw new Error('Unpublished article');
   }
   return requestWithMetadata(result, { priority: 'primary' });
 }
@@ -61,6 +69,19 @@ export async function getPublishedProjects() {
       if (edge?.node && isPublished(edge.node)) entries.push(edge.node);
     }
     after = data.projectConnection.pageInfo.hasNextPage ? data.projectConnection.pageInfo.endCursor ?? undefined : undefined;
+  } while (after);
+  return entries;
+}
+
+export async function getPublishedArticles() {
+  const entries = [];
+  let after: string | undefined;
+  do {
+    const { data } = await client.queries.articleConnection({ first: 100, after, filter: { draft: { eq: false } } });
+    for (const edge of data.articleConnection.edges ?? []) {
+      if (edge?.node && isPublished(edge.node)) entries.push(edge.node);
+    }
+    after = data.articleConnection.pageInfo.hasNextPage ? data.articleConnection.pageInfo.endCursor ?? undefined : undefined;
   } while (after);
   return entries;
 }

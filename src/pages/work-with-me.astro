@@ -1,0 +1,32 @@
+---
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkWithMePageContent from '../components/WorkWithMePageContent.astro';
+import { getPage } from '../lib/tina/data';
+import { islands } from '../lib/tina/islands';
+
+const { data } = await getPage('work-with-me.md');
+const { data: aboutData } = await getPage('about.md');
+const seo = (data.page.seo ?? {}) as any;
+const title = seo.title || `${data.page.title} — Juan Vistro`;
+const description = seo.description || data.page.summary || data.page.title;
+const image = seo.socialImage || '/uploads/work-with-me-og-1200x630.png';
+const imageAlt = seo.socialImageAlt || 'See the whole system. Lead the change. An interconnected network links people, engineering leadership, technology, delivery systems, strategy, governance, adoption, and outcomes.';
+const portrait = aboutData.page.about?.portrait;
+const portraitAlt = aboutData.page.about?.portraitAlt;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogTitle={data.page.title}
+  image={image}
+  imageAlt={imageAlt}
+  imageWidth={1200}
+  imageHeight={630}
+  imageType="image/png"
+>
+  <TinaIsland name="workWithMe" wrapper={islands.workWithMe.wrapper} primary>
+    <WorkWithMePageContent data={data.page} portrait={portrait} portraitAlt={portraitAlt} />
+  </TinaIsland>
+</BaseLayout>

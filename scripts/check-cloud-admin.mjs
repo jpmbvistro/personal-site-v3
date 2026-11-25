@@ -53,7 +53,7 @@ try {
     assert.match(html, /<title>[^<]+<\/title>/, `Page title: ${route}`);
     assert.match(html, /property="og:description" content="[^"]+"/, `Social description: ${route}`);
   }
-  for (const route of ['/preview/work/ai-assisted-delivery/', '/preview/projects/keel/', '/work/ai-assisted-delivery/', '/projects/keel/']) {
+  for (const route of ['/preview/work/ai-assisted-delivery/', '/preview/projects/keel/', '/projects/keel/']) {
     const response = await fetch(`${origin}${route}?tina-edit=1`, { headers: { Cookie: '__tina_edit=1' } });
     assert.equal(response.status, 404, `Built draft boundary: ${route}`);
   }

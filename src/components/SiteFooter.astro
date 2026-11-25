@@ -1,6 +1,10 @@
 ---
 import Container from './Container.astro';
-import { navigation } from '../lib/navigation';
+import { buildNavigation } from '../lib/navigation';
+import { getPublishedArticles } from '../lib/tina/data';
+
+const hasArticles = (await getPublishedArticles()).length > 0;
+const navigation = [...buildNavigation(hasArticles), { label: 'Contact', href: '/contact/' }].filter((item, index, all) => all.findIndex((candidate) => candidate.href === item.href) === index);
 ---
 
 <footer>

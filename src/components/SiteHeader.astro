@@ -1,7 +1,16 @@
 ---
 import Container from './Container.astro';
 import MobileNav from './MobileNav.astro';
-import { navigation } from '../lib/navigation';
+import { buildNavigation } from '../lib/navigation';
+import { getPublishedArticles } from '../lib/tina/data';
+
+const hasArticles = (await getPublishedArticles()).length > 0;
+const navigation = buildNavigation(hasArticles);
+
+const pathname = Astro.url.pathname;
+const isCurrent = (href: string) => href === '/'
+  ? pathname === '/'
+  : pathname === href || pathname.startsWith(href);
 ---
 
 <header>
@@ -10,7 +19,7 @@ import { navigation } from '../lib/navigation';
       <img src="/brand/juan-vistro-horizontal.webp" width="1179" height="490" alt="Juan Vistro" fetchpriority="high" />
     </a>
     <nav class="desktop-nav" aria-label="Main navigation">
-      {navigation.map(({ label, href }) => <a href={href}>{label}</a>)}
+      {navigation.map(({ label, href, cta }) => <a href={href} class:list={{ 'nav-cta': cta }} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
     </nav>
     <MobileNav />
   </Container>
@@ -46,5 +55,35 @@ import { navigation } from '../lib/navigation';
     text-decoration: none;
   }
   .desktop-nav a:hover { color: var(--primary); text-decoration: underline; }
+  .desktop-nav a[aria-current='page'] { font-weight: 600; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.4em; }
+  .desktop-nav a.nav-cta {
+    box-sizing: border-box;
+    font-weight: 500;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius);
+    padding-inline: var(--space-4);
+    padding-block: 0;
+    min-height: 2.75rem;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  }
+  .desktop-nav a.nav-cta:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    text-decoration: none;
+  }
+  .desktop-nav a.nav-cta[aria-current='page'] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .desktop-nav a.nav-cta:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    text-decoration: none;
+  }
   @media (min-width: 48rem) { .desktop-nav { display: flex; } }
 </style>
