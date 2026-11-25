@@ -12,3 +12,10 @@ for (const [legacy, publicName] of [
     process.env[publicName] = process.env[legacy];
   }
 }
+
+// Vercel previews read content from the deployed branch so TinaCloud validates
+// the matching schema. An explicitly configured branch always wins, so
+// production keeps its intended target.
+if (!process.env.TINA_PUBLIC_BRANCH && process.env.VERCEL_GIT_COMMIT_REF) {
+  process.env.TINA_PUBLIC_BRANCH = process.env.VERCEL_GIT_COMMIT_REF;
+}
