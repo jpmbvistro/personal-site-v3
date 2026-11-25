@@ -1,14 +1,14 @@
 ---
 interface Props {
   entry: { title: string; summary?: string | null; _sys: { breadcrumbs: string[] } };
-  section: 'work' | 'projects';
+  section: 'work' | 'projects' | 'articles';
 }
 const { entry, section } = Astro.props;
 const href = `/${section}/${entry._sys.breadcrumbs.map(encodeURIComponent).join('/')}/`;
 ---
 
 <article class="entry-card">
-  <p class="eyebrow">{section === 'work' ? 'Professional work' : 'Project'}</p>
+  <p class="eyebrow">{section === 'work' ? 'Professional work' : section === 'projects' ? 'Project' : 'Article'}</p>
   <h3><a href={href}>{entry.title} <span aria-hidden="true">↗</span></a></h3>
   {entry.summary && <p>{entry.summary}</p>}
 </article>

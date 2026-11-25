@@ -5,9 +5,12 @@ import { getHomepage } from '../lib/tina/data';
 import { islands } from '../lib/tina/islands';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const { data, work, projects, resume } = await getHomepage();
+const { data, work, projects, articles, resume } = await getHomepage();
+const seo = (data.page.seo ?? {}) as any;
+const title = seo.title || 'Juan Vistro — Engineering & leadership';
+const description = seo.description || data.page.summary || data.page.title;
 ---
 
-<BaseLayout title="Juan Vistro — Engineering & leadership" description={data.page.summary || data.page.title} editorial>
-  <TinaIsland name="home" wrapper={islands.home.wrapper} primary><HomePageContent data={data.page} work={work} projects={projects} resume={resume} /></TinaIsland>
+<BaseLayout title={title} description={description} editorial image={seo.socialImage} imageAlt={seo.socialImageAlt} ogTitle={data.page.title}>
+  <TinaIsland name="home" wrapper={islands.home.wrapper} primary><HomePageContent data={data.page} work={work} projects={projects} articles={articles} resume={resume} /></TinaIsland>
 </BaseLayout>

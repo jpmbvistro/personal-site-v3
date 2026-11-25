@@ -102,7 +102,6 @@ test('keyboard skip link and mobile disclosure navigation', async ({ page }) => 
 
   await page.keyboard.press('Enter');
   await page.keyboard.press('Tab');
-  await page.keyboard.press('Tab');
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/\/work\/$/);
   await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeHidden();
@@ -119,7 +118,7 @@ test.describe('without JavaScript', () => {
     await page.locator('summary').click();
     const navigation = page.getByRole('navigation', { name: 'Mobile navigation' });
     await expect(navigation).toBeVisible();
-    await navigation.getByRole('link', { name: 'Work', exact: true }).click();
+    await navigation.getByRole('link', { name: 'Case Studies', exact: true }).click();
     await expect(page).toHaveURL(/\/work\/$/);
   });
 });

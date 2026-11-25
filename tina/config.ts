@@ -203,6 +203,16 @@ const links: TinaField = {
   ],
 };
 
+const seo: TinaField = {
+  type: 'object', name: 'seo', label: 'SEO / social',
+  fields: [
+    { type: 'string', name: 'title', label: 'Search title (optional)' },
+    { type: 'string', name: 'description', label: 'Search / snippet / share description (optional)', ui: { component: 'textarea' } },
+    { type: 'image', name: 'socialImage', label: 'Social image (optional)' },
+    { type: 'string', name: 'socialImageAlt', label: 'Social image alt text' },
+  ],
+};
+
 // One fixed homepage composition, not a page builder. Slugs resolve only against
 // published records; missing, duplicate and draft selections never create links.
 const homepage: TinaField = {
@@ -222,7 +232,7 @@ const homepage: TinaField = {
       ] },
     { type: 'string', name: 'featuredWork', label: 'Featured Work slugs (in order)', list: true, description: 'Filename without .mdx; drafts and missing entries are omitted. No automatic selection.' },
     { type: 'string', name: 'featuredProjects', label: 'Featured Project slugs (in order)', list: true, description: 'Only explicitly published entries appear. No automatic selection.' },
-    ...['work', 'projects'].map((name): TinaField => ({ type: 'object', name, label: name === 'work' ? 'Selected Work introduction' : 'Asterism introduction', fields: [
+    { type: 'string', name: 'featuredArticles', label: 'Featured Article slugs (in order)', list: true, description: 'Only explicitly published entries appear. No automatic selection.' },    ...['work', 'projects'].map((name): TinaField => ({ type: 'object', name, label: name === 'work' ? 'Selected Work introduction' : 'Asterism introduction', fields: [
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading' },
       { type: 'string', name: 'text', label: 'Introduction', ui: { component: 'textarea' } },
@@ -372,6 +382,8 @@ const workWithMe: TinaField = {
         { type: 'string', name: 'label', label: 'Label', required: true },
         { type: 'string', name: 'statement', label: 'Statement', required: true },
         { type: 'string', name: 'text', label: 'Body', ui: { component: 'textarea' } },
+        { type: 'image', name: 'image', label: 'Illustration (optional)' },
+        { type: 'string', name: 'imageAlt', label: 'Illustration description' },
       ] })),
     ] },
     { type: 'object', name: 'engagements', label: 'Engagements', fields: [
@@ -426,6 +438,7 @@ export default {
           homepage,
           about,
           workWithMe,
+          seo,
         ],
       },
       {
@@ -447,6 +460,7 @@ export default {
           { type: 'string', name: 'role', label: 'Role' },
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           links,
+          seo,
         ],
       },
       {
@@ -460,6 +474,26 @@ export default {
           { type: 'string', name: 'status', label: 'Status (your wording)' },
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           links,
+          seo,
+        ],
+      },
+      {
+        name: 'article', label: 'Articles', path: 'content/articles', format: 'mdx',
+        defaultItem: () => ({ draft: true }),
+        ui: { router: ({ document }) => process.env.TINA_PUBLIC_IS_LOCAL === 'true'
+          ? `/preview/articles/${document._sys.breadcrumbs.join('/')}/`
+          : `/articles/${document._sys.breadcrumbs.join('/')}/` },
+        fields: [
+          { type: 'string', name: 'title', label: 'Title', required: true, isTitle: true },
+          { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
+          { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
+          { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
+          body,
+          { type: 'string', name: 'tags', label: 'Tags', list: true },
+          { type: 'datetime', name: 'publishedAt', label: 'Published at' },
+          { type: 'datetime', name: 'updatedAt', label: 'Updated at' },
+          links,
+          seo,
         ],
       },
     ],

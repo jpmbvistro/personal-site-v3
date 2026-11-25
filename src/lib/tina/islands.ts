@@ -4,7 +4,8 @@ import AboutPageContent from '../../components/AboutPageContent.astro';
 import WorkWithMePageContent from '../../components/WorkWithMePageContent.astro';
 import PageContent from '../../components/PageContent.astro';
 import EntryContent from '../../components/EntryContent.astro';
-import { getHomepage, getPage, getWork, getProject } from './data';
+import ArticleContent from '../../components/ArticleContent.astro';
+import { getHomepage, getPage, getWork, getProject, getArticle } from './data';
 
 const pathFromParams = (params: URLSearchParams) => {
   const path = params.get('path') ?? '';
@@ -18,8 +19,8 @@ export const islands: IslandRegistry = {
     component: HomePageContent,
     wrapper: { tag: 'div', className: 'homepage' },
     propsFromData: (result) => {
-      const { data, work, projects, resume } = result as Awaited<ReturnType<typeof getHomepage>>;
-      return { data: data.page, work, projects, resume };
+      const { data, work, projects, articles, resume } = result as Awaited<ReturnType<typeof getHomepage>>;
+      return { data: data.page, work, projects, articles, resume };
     },
   },
   about: {
@@ -29,10 +30,20 @@ export const islands: IslandRegistry = {
     propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getPage>>).data.page }),
   },
   workWithMe: {
-    fetch: () => getPage('work-with-me.md'),
+    fetch: async () => {
+      const [page, about] = await Promise.all([getPage('work-with-me.md'), getPage('about.md')]);
+      return { page, about };
+    },
     component: WorkWithMePageContent,
     wrapper: { tag: 'div', className: 'work-with-me-page' },
-    propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getPage>>).data.page }),
+    propsFromData: (result) => {
+      const resolved = result as { page: Awaited<ReturnType<typeof getPage>>; about: Awaited<ReturnType<typeof getPage>> };
+      return {
+        data: resolved.page.data.page,
+        portrait: resolved.about.data.page.about?.portrait,
+        portraitAlt: resolved.about.data.page.about?.portraitAlt,
+      };
+    },
   },
   page: {
     fetch: (_request, params) => {
@@ -56,5 +67,11 @@ export const islands: IslandRegistry = {
     component: EntryContent,
     wrapper: { tag: 'article', className: 'entry-content' },
     propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getProject>>).data.project }),
+  },
+  article: {
+    fetch: (_request, params) => getArticle(pathFromParams(params), params.get('preview') === '1'),
+    component: ArticleContent,
+    wrapper: { tag: 'article', className: 'article-content' },
+    propsFromData: (result) => ({ data: (result as Awaited<ReturnType<typeof getArticle>>).data.article }),
   },
 };

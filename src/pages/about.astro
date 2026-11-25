@@ -6,9 +6,12 @@ import { getPage } from '../lib/tina/data';
 import { islands } from '../lib/tina/islands';
 
 const { data } = await getPage('about.md');
+const seo = (data.page.seo ?? {}) as any;
+const title = seo.title || `${data.page.title} — Juan Vistro`;
+const description = seo.description || data.page.summary || data.page.title;
 ---
 
-<BaseLayout title={`${data.page.title} — Juan Vistro`} description={data.page.summary || data.page.title}>
+<BaseLayout title={title} description={description} image={seo.socialImage} imageAlt={seo.socialImageAlt} ogTitle={data.page.title}>
   <TinaIsland name="about" wrapper={islands.about.wrapper} primary>
     <AboutPageContent data={data.page} />
   </TinaIsland>
