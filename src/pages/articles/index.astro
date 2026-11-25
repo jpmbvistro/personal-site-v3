@@ -1,0 +1,23 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import { getPublishedArticles } from '../../lib/tina/data';
+
+const articles = await getPublishedArticles();
+if (articles.length === 0) {
+  return new Response('Not found', { status: 404 });
+}
+---
+
+<BaseLayout title="Articles — Juan Vistro" description="Articles and perspectives.">
+  <Container class="landing-page">
+    <h1>Articles</h1>
+    <section class="listing" aria-label="Published articles">
+      <div class="entry-grid">{articles.map((entry) => <EntryCard entry={entry} section="articles" />)}</div>
+    </section>
+  </Container>
+</BaseLayout>
+---

@@ -35,9 +35,9 @@ for (const width of [320, 390, 768, 1440]) {
       await expect(page.locator('.desktop-nav a[aria-current="page"]')).toHaveAttribute('href', '/work-with-me/');
     }
     await page.keyboard.press('Tab');
-    await page.locator('.hero-actions a').focus();
-    await expect(page.locator('.hero-actions a')).toHaveCSS('outline-style', 'solid');
-    await expect(page.locator('.hero-actions a')).toHaveCSS('outline-color', 'rgb(243, 237, 227)');
+    await page.locator('.hero-actions .button-link').focus();
+    await expect(page.locator('.hero-actions .button-link')).toHaveCSS('outline-style', 'solid');
+    await expect(page.locator('.hero-actions .button-link')).toHaveCSS('outline-color', 'rgb(243, 237, 227)');
     await expect(page.locator('.hero-media video')).toHaveCount(1);
     await expect(page.locator('body > header')).toHaveCount(1);
     await expect(page.locator('body > footer')).toHaveCount(1);

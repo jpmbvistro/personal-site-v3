@@ -8,8 +8,10 @@ import { safeHref } from '../lib/links';
 
 interface Props {
   data: PageQuery['page'];
+  portrait?: string | null;
+  portraitAlt?: string | null;
 }
-const { data } = Astro.props;
+const { data, portrait, portraitAlt } = Astro.props;
 const w = data.workWithMe;
 const hero = w?.hero;
 const approach = w?.approach;
@@ -41,6 +43,14 @@ const approachRows = [approach?.see, approach?.decide, approach?.leadStage]
 const engagementRows = [engagements?.assessment, engagements?.transformation, engagements?.embedded]
   .map((row, index) => ({ row, number: String(index + 1).padStart(2, '0') }))
   .filter((item) => item.row);
+
+const evidenceCards = [
+  { card: evidence?.teams, link: '/work/scaling-ux-capability/', linkLabel: 'View UX enablement case study' },
+  { card: evidence?.delivery, link: '/work/ai-assisted-delivery/', linkLabel: 'View AI delivery case study' },
+  { card: evidence?.featured, link: '/work/nonprofit-crm-selection/', linkLabel: 'View CRM selection case study' },
+].filter((item) => item.card);
+
+const focusItems = [focus?.engineering, focus?.ai].filter(Boolean);
 ---
 
 <section class="hero" aria-labelledby="work-with-me-hero">
@@ -63,6 +73,7 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
         >
           {heroLabel} {heroExternal && <span aria-hidden="true">↗</span>}
         </ButtonLink>
+        <a class="hero-secondary-link" href="#selected-experience">See selected experience <span aria-hidden="true">↓</span></a>
       </div>
     </div>
     <div class="hero-media">
@@ -90,37 +101,58 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
       {approach.supporting && <p class="approach-supporting" data-tina-field={tinaField(approach, 'supporting')}>{approach.supporting}</p>}
     </div>
     <ol class="approach-rows">
-      {approachRows.map(({ row, number }) => row && <li>
-        <span class="row-number" aria-hidden="true">{number} /</span>
-        <div class="row-copy">
-          <h3 data-tina-field={tinaField(row, 'title')}>{row.title}</h3>
-          {row.text && <p data-tina-field={tinaField(row, 'text')}>{row.text}</p>}
-        </div>
-      </li>)}
+      {approachRows.map(({ row, number }, index) => {
+        const titleParts = (row?.title || '').split(/\s*[—–-]\s*/);
+        const stageName = titleParts[0]?.trim() || '';
+        const stageHeadline = titleParts.slice(1).join(' — ').trim();
+        return row && <li>
+          <span class="approach-number" aria-hidden="true">{number}</span>
+          <div class="row-copy">
+            <p class="stage-name">{stageName}</p>
+            {stageHeadline && <h3 data-tina-field={tinaField(row, 'title')}>{stageHeadline}</h3>}
+            {row.text && <p data-tina-field={tinaField(row, 'text')}>{row.text}</p>}
+          </div>
+          {index < approachRows.length - 1 && <span class="approach-connector" aria-hidden="true">→</span>}
+        </li>;
+      })}
     </ol>
   </Container>
 </section>}
 
-{evidence && <section class="evidence" aria-labelledby="evidence-heading">
+{evidence && <section class="evidence" id="selected-experience" aria-labelledby="evidence-heading">
   <Container>
     <div class="section-intro">
       {evidence.eyebrow && <p class="eyebrow" data-tina-field={tinaField(evidence, 'eyebrow')}>{evidence.eyebrow}</p>}
       <h2 id="evidence-heading" data-tina-field={tinaField(evidence, 'title')}>{evidence.title}</h2>
       {evidence.intro && <p class="section-lead" data-tina-field={tinaField(evidence, 'intro')}>{evidence.intro}</p>}
     </div>
-    {evidence.featured && <article class="evidence-card evidence-card--featured">
-      <p class="card-label" data-tina-field={tinaField(evidence.featured, 'label')}>{evidence.featured.label}</p>
-      <p class="card-value" data-tina-field={tinaField(evidence.featured, 'value')}>{evidence.featured.value}</p>
-      <h3 data-tina-field={tinaField(evidence.featured, 'title')}>{evidence.featured.title}</h3>
-      {evidence.featured.text && <p data-tina-field={tinaField(evidence.featured, 'text')}>{evidence.featured.text}</p>}
-    </article>}
-    <div class="evidence-secondary">
-      {[evidence.teams, evidence.delivery].map((card) => card && <article class="evidence-card">
-        <p class="card-label" data-tina-field={tinaField(card, 'label')}>{card.label}</p>
-        <p class="card-value" data-tina-field={tinaField(card, 'value')}>{card.value}</p>
-        <h3 data-tina-field={tinaField(card, 'title')}>{card.title}</h3>
-        {card.text && <p data-tina-field={tinaField(card, 'text')}>{card.text}</p>}
-      </article>)}
+    <div class="evidence-layout">
+      {evidenceCards.length > 0 && (() => {
+        const featured = evidenceCards[0];
+        const featuredCard = featured.card;
+        if (!featuredCard) return null;
+        const featuredValue = featuredCard.value || '';
+        const [featuredNumber, ...featuredUnit] = featuredValue.split(' ');
+        return <article class="evidence-featured evidence-card">
+          <p class="card-label" data-tina-field={tinaField(featuredCard, 'label')}>{featuredCard.label}</p>
+          <p class="featured-metric">
+            <span class="featured-metric-number">{featuredNumber}</span>
+            <span class="featured-metric-unit">{featuredUnit.join(' ')}</span>
+          </p>
+          <h3 data-tina-field={tinaField(featuredCard, 'title')}>{featuredCard.title}</h3>
+          {featuredCard.text && <p data-tina-field={tinaField(featuredCard, 'text')}>{featuredCard.text}</p>}
+          <a class="card-link" href={featured.link}>{featured.linkLabel} <span aria-hidden="true">↗</span></a>
+        </article>;
+      })()}
+      <div class="evidence-supporting">
+        {evidenceCards.slice(1).map(({ card, link, linkLabel }) => card && <article class="evidence-card evidence-supporting-item">
+          <p class="card-label" data-tina-field={tinaField(card, 'label')}>{card.label}</p>
+          <p class="card-value" data-tina-field={tinaField(card, 'value')}>{card.value}</p>
+          <h3 data-tina-field={tinaField(card, 'title')}>{card.title}</h3>
+          {card.text && <p data-tina-field={tinaField(card, 'text')}>{card.text}</p>}
+          <a class="card-link" href={link}>{linkLabel} <span aria-hidden="true">↗</span></a>
+        </article>)}
+      </div>
     </div>
   </Container>
 </section>}
@@ -132,11 +164,25 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
       <h2 id="focus-heading" data-tina-field={tinaField(focus, 'title')}>{focus.title}</h2>
     </div>
     <div class="focus-grid">
-      {[focus.engineering, focus.ai].map((item) => item && <article class="focus-item">
-        <p class="focus-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p>
-        <h3 data-tina-field={tinaField(item, 'statement')}>{item.statement}</h3>
-        {item.text && <p data-tina-field={tinaField(item, 'text')}>{item.text}</p>}
-      </article>)}
+      {focusItems.map((item, index) => {
+        const image = index === 0 ? focus?.engineering : focus?.ai;
+        const imageSrc = safeHref(image?.image);
+        return item && <article class="focus-item">
+          {imageSrc && <img
+            class="focus-image"
+            src={imageSrc}
+            alt={image?.imageAlt || ''}
+            width="887"
+            height="887"
+            loading="lazy"
+            decoding="async"
+            data-tina-field={tinaField(image, 'image')}
+          />}
+          <p class="focus-label" data-tina-field={tinaField(item, 'label')}>{item.label}</p>
+          <h3 data-tina-field={tinaField(item, 'statement')}>{item.statement}</h3>
+          {item.text && <p data-tina-field={tinaField(item, 'text')}>{item.text}</p>}
+        </article>;
+      })}
     </div>
   </Container>
 </section>}
@@ -150,11 +196,15 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
     </div>
     <ol class="engagement-rows">
       {engagementRows.map(({ row, number }) => row && <li>
-        <span class="row-number" aria-hidden="true">{number}</span>
-        <div class="engagement-copy">
+        <div class="engagement-identity">
+          <span class="engagement-number" aria-hidden="true">{number}</span>
           <h3 data-tina-field={tinaField(row, 'title')}>{row.title}</h3>
           {row.question && <p class="engagement-question" data-tina-field={tinaField(row, 'question')}>{row.question}</p>}
+        </div>
+        <div class="engagement-scope">
+          <p class="scope-label">What I do</p>
           {row.description && <p data-tina-field={tinaField(row, 'description')}>{row.description}</p>}
+          <p class="scope-label outcome-label">What you gain</p>
           {row.result && <p class="engagement-result" data-tina-field={tinaField(row, 'result')}>{row.result}</p>}
         </div>
       </li>)}
@@ -164,36 +214,41 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
 
 {closing && <section class="closing" aria-labelledby="closing-heading">
   <Container>
-    <div class="closing-copy">
-      {closing.eyebrow && <p class="eyebrow closing-eyebrow" data-tina-field={tinaField(closing, 'eyebrow')}>{closing.eyebrow}</p>}
-      <h2 id="closing-heading" data-tina-field={tinaField(closing, 'title')}>{closing.title}</h2>
-      {closing.text && <p class="closing-text" data-tina-field={tinaField(closing, 'text')}>{closing.text}</p>}
-      {closing.closingLine && <p class="closing-line" data-tina-field={tinaField(closing, 'closingLine')}>{closing.closingLine}</p>}
-      <div class="closing-actions">
-        <ButtonLink
-          href={closingUrl}
-          variant="secondary"
-          class="closing-button"
-          target={closingExternal ? '_blank' : undefined}
-          rel={closingExternal ? 'noopener noreferrer' : undefined}
-          aria-label={closingExternal ? `${closingLabel} (opens in new tab)` : undefined}
-          data-tina-field={tinaField(closing, 'actionLabel')}
-        >
-          {closingLabel} {closingExternal && <span aria-hidden="true">↗</span>}
-        </ButtonLink>
-        {showInquiry && (
-          <a
-            class="inquiry-link"
-            href={inquiryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${inquiryLabel} (opens in new tab)`}
-            data-tina-field={tinaField(closing, 'inquiryLabel')}
+    <div class:list={['closing-layout', { 'has-portrait': !!portrait }]}>
+      <div class="closing-copy">
+        {closing.eyebrow && <p class="eyebrow closing-eyebrow" data-tina-field={tinaField(closing, 'eyebrow')}>{closing.eyebrow}</p>}
+        <h2 id="closing-heading" data-tina-field={tinaField(closing, 'title')}>{closing.title}</h2>
+        {closing.text && <p class="closing-text" data-tina-field={tinaField(closing, 'text')}>{closing.text}</p>}
+        {closing.closingLine && <p class="closing-line" data-tina-field={tinaField(closing, 'closingLine')}>{closing.closingLine}</p>}
+        <div class="closing-actions">
+          <ButtonLink
+            href={closingUrl}
+            variant="secondary"
+            class="closing-button"
+            target={closingExternal ? '_blank' : undefined}
+            rel={closingExternal ? 'noopener noreferrer' : undefined}
+            aria-label={closingExternal ? `${closingLabel} (opens in new tab)` : undefined}
+            data-tina-field={tinaField(closing, 'actionLabel')}
           >
-            {inquiryLabel} <span aria-hidden="true">↗</span>
-          </a>
-        )}
+            {closingLabel} {closingExternal && <span aria-hidden="true">↗</span>}
+          </ButtonLink>
+          {showInquiry && (
+            <a
+              class="inquiry-link"
+              href={inquiryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${inquiryLabel} (opens in new tab)`}
+              data-tina-field={tinaField(closing, 'inquiryLabel')}
+            >
+              {inquiryLabel} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
       </div>
+      {portrait && <div class="closing-portrait">
+        <img src={portrait} alt={portraitAlt || ''} width="800" height="1000" loading="lazy" decoding="async" />
+      </div>}
     </div>
   </Container>
 </section>}
@@ -240,146 +295,252 @@ const engagementRows = [engagements?.assessment, engagements?.transformation, en
     --ring: var(--primary-foreground);
     background: #071322;
     color: var(--primary-foreground);
-    padding-block: clamp(3rem, 5vw, 5rem);
+    padding-block: clamp(4rem, 7vw, 7rem);
   }
-  .hero :global(.container) { display: grid; gap: var(--space-8); }
+  .hero :global(.container) { display: grid; gap: clamp(var(--space-8), 4vw, var(--space-12)); }
+  @media (min-width: 64rem) {
+    .hero :global(.container) { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); align-items: center; }
+  }
   .hero-copy { min-width: 0; max-width: 46rem; }
-  .hero-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
-  .hero h1 { color: var(--primary-foreground); max-width: 16ch; font-size: min(var(--text-display), 5rem); }
+  .hero-eyebrow { color: var(--primary-foreground); opacity: 0.72; letter-spacing: 0.16em; }
+  .hero h1 { color: var(--primary-foreground); max-width: 14ch; font-size: clamp(3rem, 2rem + 4vw, 5rem); line-height: 1.02; }
   .hero h1::after { content: ''; display: block; width: 3rem; height: 2px; margin-top: var(--space-6); background: var(--accent); }
-  .hero-tagline { margin-top: var(--space-4); font-family: var(--font-serif); font-size: var(--text-lead); color: var(--primary-foreground); }
-  .hero-body { margin-top: var(--space-6); max-width: 42rem; color: var(--primary-foreground); opacity: 0.9; }
+  .hero-tagline { margin-top: var(--space-4); font-family: var(--font-serif); font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem); color: var(--primary-foreground); opacity: 0.95; }
+  .hero-body { margin-top: var(--space-6); max-width: 42rem; color: var(--primary-foreground); opacity: 0.88; line-height: 1.65; }
   .hero-body :global(p) { color: inherit; }
-  .hero-actions { margin-top: var(--space-8); }
-  .hero :global(.button-link) { background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); }
+  .hero-actions { margin-top: var(--space-8); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
+  .hero :global(.button-link) { background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); padding-inline: var(--space-6); }
   .hero :global(.button-link:hover) { background: var(--secondary); color: var(--primary); }
+  .hero-secondary-link { color: var(--primary-foreground); opacity: 0.86; text-decoration: underline; text-underline-offset: 0.2em; font-size: var(--text-small); }
+  .hero-secondary-link:hover { opacity: 1; }
   .hero-media {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    border-radius: 2rem;
+    border-radius: 1.5rem;
     overflow: hidden;
     background:
       radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 55%),
       linear-gradient(135deg, color-mix(in srgb, var(--primary-foreground) 6%, transparent), color-mix(in srgb, var(--accent) 12%, transparent));
     border: 0;
   }
-  .hero-video {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
+  .hero-video { width: 100%; height: 100%; display: block; object-fit: cover; }
   .hero-video-control {
-    position: absolute;
-    right: var(--space-3);
-    bottom: var(--space-3);
-    min-height: 2rem;
-    padding: var(--space-1) var(--space-3);
+    position: absolute; right: var(--space-3); bottom: var(--space-3);
+    min-height: 2rem; padding: var(--space-1) var(--space-3);
     border: 1px solid color-mix(in srgb, var(--primary-foreground) 30%, transparent);
     border-radius: var(--radius);
     background: color-mix(in srgb, var(--primary) 72%, transparent);
-    color: var(--primary-foreground);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    cursor: pointer;
+    color: var(--primary-foreground); font-size: 0.8125rem; font-weight: 600; cursor: pointer;
   }
-  .hero-video-control:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
 
-  .approach { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
-  .approach-copy { max-width: 42rem; }
-  .approach-lead, .approach-supporting { margin-top: var(--space-4); color: var(--muted-foreground); }
-  .approach-rows { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: grid; gap: var(--space-6); }
+  .approach { padding-block: clamp(4rem, 7vw, 6rem); }
+  .approach-copy { max-width: 46rem; }
+  .approach-lead, .approach-supporting { margin-top: var(--space-4); color: var(--muted-foreground); line-height: 1.65; }
+  .approach-rows {
+    list-style: none; margin: clamp(3rem, 5vw, 4rem) 0 0; padding: 0;
+    position: relative;
+    display: grid; gap: var(--space-8);
+  }
+  @media (min-width: 64rem) {
+    .approach-rows { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8); }
+  }
   .approach-rows li {
+    position: relative;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: var(--space-6);
-    padding-block: var(--space-6);
-    border-top: 1px solid var(--border);
+    gap: var(--space-3);
+    padding-top: 2.5rem;
   }
-  .approach-rows li:first-child { border-top: 0; padding-top: 0; }
-  .row-number { font-family: var(--font-serif); font-size: 1.25rem; color: var(--accent-strong); }
-  .row-copy h3 { margin: 0; font-size: 1.375rem; }
-  .row-copy p { margin-top: var(--space-2); color: var(--muted-foreground); }
+  .approach-rows li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 1rem;
+    left: 1.25rem;
+    width: calc(100% + var(--space-8));
+    border-top: 1px solid var(--accent);
+    opacity: 0.7;
+  }
+  .approach-number {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    min-height: 2rem;
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    color: var(--accent-strong);
+    background: var(--background);
+  }
+  .stage-name {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 1.5rem + 1.5vw, 2.5rem);
+    line-height: 1.1;
+    color: var(--primary);
+    margin: 0;
+  }
+  .row-copy h3 { margin: 0; font-size: 1.125rem; color: var(--muted-foreground); font-weight: 500; }
+  .row-copy p { margin-top: var(--space-2); color: var(--muted-foreground); line-height: 1.6; }
+  .approach-connector { display: none; }
+  @media (max-width: 63.999rem) {
+    .approach-rows li {
+      position: relative;
+      display: flex;
+      gap: var(--space-4);
+      padding-left: 0;
+      padding-top: 0;
+      align-items: start;
+    }
+    .approach-rows li:not(:last-child)::after {
+      top: 1.75rem;
+      bottom: calc(-1 * var(--space-8) - 0.75rem);
+      left: 1.25rem;
+      width: 1px;
+      border-top: 0;
+      border-left: 1px solid var(--accent);
+    }
+    .approach-number {
+      position: static;
+      flex: 0 0 auto;
+      width: 2.5rem;
+      min-height: 1.5rem;
+      text-align: center;
+      margin-top: 0.25rem;
+      background: var(--background);
+    }
+    .row-copy { flex: 1 1 auto; min-width: 0; }
+    .approach-connector { display: none; }
+  }
 
-  .evidence { padding-block: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--border); }
+  .evidence { padding-block: clamp(4rem, 7vw, 6rem); border-top: 1px solid var(--border); }
   .section-intro { max-width: 46rem; }
-  .section-lead { margin-top: var(--space-4); color: var(--muted-foreground); }
-  .evidence-card {
-    margin-top: var(--space-8);
-    padding: var(--space-8);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--muted);
+  .section-lead { margin-top: var(--space-4); color: var(--muted-foreground); line-height: 1.65; }
+  .evidence-layout {
+    display: grid;
+    min-width: 0;
+    gap: clamp(var(--space-8), 4vw, var(--space-12));
+    margin-top: clamp(2rem, 4vw, 3rem);
   }
-  .evidence-card--featured { background: var(--background); }
+  @media (min-width: 64rem) {
+    .evidence-layout { grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr); }
+  }
+  .evidence-featured {
+    min-width: 0;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: var(--radius);
+    padding: clamp(var(--space-6), 3vw, var(--space-12));
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+  .evidence-featured .card-label { color: var(--primary-foreground); opacity: 1; }
+  .featured-metric { margin: 0; display: grid; gap: var(--space-1); }
+  .featured-metric-number {
+    font-family: var(--font-serif);
+    font-size: clamp(4.5rem, 8vw, 6rem);
+    line-height: 1;
+    color: var(--primary-foreground);
+  }
+  .featured-metric-unit {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    color: var(--primary-foreground);
+    opacity: 1;
+  }
+  .evidence-featured h3 { margin: 0; font-size: 1.5rem; color: var(--primary-foreground); }
+  .evidence-featured > p:not(.card-label, .featured-metric) { color: var(--primary-foreground); opacity: 1; line-height: 1.6; }
+  .evidence-featured .card-link { color: var(--primary-foreground); margin-top: var(--space-2); justify-self: start; }
+  .evidence-featured .card-link:hover { color: var(--primary-foreground); text-decoration-thickness: 2px; }
+  .evidence-featured .card-link:focus-visible { outline-color: var(--primary-foreground); }
+  .evidence-supporting { display: grid; min-width: 0; gap: var(--space-8); }
+  .evidence-supporting-item {
+    padding-block: var(--space-6);
+    border-bottom: 1px solid var(--border);
+  }
+  .evidence-supporting-item:last-child { border-bottom: 0; }
   .card-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-foreground); }
-  .card-value { margin-top: var(--space-3); font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; color: var(--primary); }
-  .evidence-card h3 { margin-top: var(--space-4); font-size: 1.25rem; }
-  .evidence-card p:last-child { margin-top: var(--space-3); color: var(--muted-foreground); }
-  .evidence-secondary { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
-  .evidence-secondary .evidence-card { margin-top: 0; }
+  .card-value { font-family: var(--font-serif); font-size: clamp(2.25rem, 3vw, 3rem); line-height: 1.05; color: var(--primary); }
+  .evidence-card h3 { margin-top: var(--space-2); font-size: 1.25rem; }
+  .evidence-card p { color: var(--muted-foreground); line-height: 1.6; }
+  .card-link { margin-top: var(--space-4); font-size: var(--text-small); font-weight: 500; color: var(--primary); text-decoration: underline; text-underline-offset: 0.2em; }
 
   .focus {
-    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+    padding-block: clamp(4rem, 7vw, 6rem);
     background: var(--primary);
     color: var(--primary-foreground);
   }
   .focus-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
   .focus h2 { color: var(--primary-foreground); }
-  .focus-grid { display: grid; gap: var(--space-8); margin-top: var(--space-8); }
-  .focus-item { padding-top: var(--space-6); border-top: 1px solid color-mix(in srgb, var(--primary-foreground) 24%, transparent); }
+  .focus-grid { display: grid; gap: clamp(var(--space-8), 4vw, var(--space-12)); margin-top: clamp(2rem, 4vw, 3rem); }
+  @media (min-width: 64rem) { .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .focus-item { display: grid; gap: var(--space-4); }
+  .focus-image { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 1rem; background: color-mix(in srgb, var(--primary-foreground) 6%, transparent); }
   .focus-label { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-foreground); opacity: 0.72; }
-  .focus-item h3 { margin-top: var(--space-3); color: var(--primary-foreground); font-family: var(--font-serif); font-size: 1.5rem; }
-  .focus-item p { margin-top: var(--space-3); color: var(--primary-foreground); opacity: 0.88; }
+  .focus-item h3 { color: var(--primary-foreground); font-family: var(--font-serif); font-size: 1.5rem; }
+  .focus-item p { color: var(--primary-foreground); opacity: 0.88; line-height: 1.65; }
 
-  .engagements { padding-block: clamp(3.5rem, 6vw, 5.5rem); border-top: 1px solid var(--border); }
-  .engagement-rows { list-style: none; margin: var(--space-8) 0 0; padding: 0; display: grid; gap: var(--space-8); }
+  .engagements { padding-block: clamp(4rem, 7vw, 6rem); border-top: 1px solid var(--border); }
+  .engagement-rows { list-style: none; margin: clamp(2rem, 4vw, 3rem) 0 0; padding: 0; }
   .engagement-rows li {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
     gap: var(--space-6);
-    padding-block: var(--space-6);
+    padding-block: clamp(var(--space-6), 3vw, var(--space-8));
     border-top: 1px solid var(--border);
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
+    align-items: start;
   }
   .engagement-rows li:first-child { border-top: 0; padding-top: 0; }
-  .engagement-copy h3 { margin: 0; }
+  @media (max-width: 63.999rem) {
+    .engagement-rows li { grid-template-columns: minmax(0, 1fr); }
+  }
+  .engagement-number {
+    display: block;
+    position: static;
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    color: var(--accent-strong);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+  .engagement-identity h3 { margin: 0; font-size: clamp(1.25rem, 2vw, 1.5rem); color: var(--primary); }
   .engagement-question { margin-top: var(--space-2); font-family: var(--font-serif); font-style: italic; color: var(--primary); }
-  .engagement-copy p { margin-top: var(--space-3); color: var(--muted-foreground); }
-  .engagement-result { color: var(--muted-foreground); }
-  .engagement-result strong { color: var(--primary); }
+  .scope-label {
+    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted-foreground);
+    margin: 0 0 var(--space-2);
+  }
+  .engagement-scope p { margin: 0 0 var(--space-4); color: var(--muted-foreground); line-height: 1.6; }
+  .engagement-scope p:last-child { margin-bottom: 0; }
+  .outcome-label { margin-top: var(--space-2); }
+  .engagement-result { margin: 0; color: var(--primary); font-weight: 500; line-height: 1.5; }
 
   .closing {
     --ring: var(--primary-foreground);
-    padding-block: clamp(3.5rem, 6vw, 5.5rem);
+    padding-block: clamp(4rem, 7vw, 6rem);
     background: var(--primary);
     color: var(--primary-foreground);
   }
-  .closing-eyebrow { color: var(--primary-foreground); opacity: 0.72; }
-  .closing h2 { color: var(--primary-foreground); }
-  .closing-text, .closing-line { margin-top: var(--space-4); color: var(--primary-foreground); opacity: 0.9; max-width: 52rem; }
+  .closing-layout { display: grid; gap: var(--space-8); }
+  .closing-portrait { display: none; }
+  @media (min-width: 64rem) {
+    .closing-layout.has-portrait { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: center; gap: var(--space-12); }
+    .closing-portrait { display: block; }
+    .closing-portrait img { width: 100%; height: auto; border-radius: 1.5rem; object-fit: cover; }
+  }
+  .closing h2 { color: var(--primary-foreground); font-size: clamp(2.25rem, 2rem + 2vw, 3.25rem); }
+  .closing-text, .closing-line { margin-top: var(--space-4); color: var(--primary-foreground); opacity: 0.9; max-width: 46rem; line-height: 1.65; }
   .closing-line { font-family: var(--font-serif); font-style: italic; }
   .closing-actions { margin-top: var(--space-8); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); }
   .closing :global(.button-link) { margin-top: 0; background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); }
   .closing :global(.button-link:hover) { background: var(--secondary); color: var(--primary); }
-  .inquiry-link {
-    color: var(--primary-foreground);
-    opacity: 0.88;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    font-weight: 500;
-  }
+  .inquiry-link { color: var(--primary-foreground); opacity: 0.88; text-decoration: underline; text-underline-offset: 0.2em; font-weight: 500; }
   .inquiry-link:hover { opacity: 1; }
 
-  @media (min-width: 64rem) {
-    .hero :global(.container) { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: clamp(var(--space-8), 4vw, var(--space-12)); }
-    .approach :global(.container) { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-12); align-items: start; }
-    .evidence-secondary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .evidence-card--featured { width: 50%; }
-    .focus-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
   @media (max-width: 39rem) {
     .approach-rows li, .engagement-rows li { grid-template-columns: 1fr; }
-    .row-number { margin-bottom: var(--space-2); }
   }
 </style>

@@ -15,9 +15,12 @@ const name = Astro.params.page!;
 const { data } = await getPage(`${name}.md`);
 const section = name === 'work' ? 'work' : 'projects';
 const entries = name === 'work' ? await getPublishedWork() : name === 'projects' ? await getPublishedProjects() : null;
+const seo = (data.page.seo ?? {}) as any;
+const title = seo.title || `${data.page.title} — Juan Vistro`;
+const description = seo.description || data.page.summary || data.page.title;
 ---
 
-<BaseLayout title={`${data.page.title} — Juan Vistro`} description={data.page.summary || data.page.title}>
+<BaseLayout title={title} description={description} image={seo.socialImage} imageAlt={seo.socialImageAlt} ogTitle={data.page.title}>
   <Container class="landing-page">
     <TinaIsland name="page" wrapper={islands.page.wrapper} params={{ page: name }} primary>
       <PageContent data={data.page} />

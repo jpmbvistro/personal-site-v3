@@ -1,5 +1,9 @@
 ---
-import { navigation } from '../lib/navigation';
+import { buildNavigation } from '../lib/navigation';
+import { getPublishedArticles } from '../lib/tina/data';
+
+const hasArticles = (await getPublishedArticles()).length > 0;
+const navigation = buildNavigation(hasArticles);
 
 const pathname = Astro.url.pathname;
 const isCurrent = (href: string) => href === '/'
@@ -15,7 +19,7 @@ const isCurrent = (href: string) => href === '/'
     </svg>
   </summary>
   <nav aria-label="Mobile navigation">
-    {navigation.map(({ label, href }) => <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
+    {navigation.map(({ label, href, cta }) => <a href={href} class:list={{ 'nav-cta': cta }} aria-current={isCurrent(href) ? 'page' : undefined}>{label}</a>)}
   </nav>
 </details>
 
@@ -73,5 +77,31 @@ const isCurrent = (href: string) => href === '/'
   }
   a:hover { color: var(--primary); background: var(--muted); }
   a[aria-current='page'] { border-inline-start: 2px solid var(--accent-strong); padding-inline-start: calc(var(--space-2) - 2px); font-weight: 600; }
+  a.nav-cta {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    margin-top: var(--space-2);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius);
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+    padding-inline: var(--space-4);
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+  a.nav-cta:hover { background: var(--primary); color: var(--primary-foreground); text-decoration: none; }
+  a.nav-cta[aria-current='page'] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+    border-inline-start: 1px solid var(--primary);
+    padding-inline-start: var(--space-4);
+  }
+  a.nav-cta:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; text-decoration: none; }
   @media (min-width: 48rem) { details { display: none; } }
 </style>

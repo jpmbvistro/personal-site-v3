@@ -47,10 +47,14 @@ workWithMe:
       label: 'Engineering Transformation'
       statement: 'Improve how engineering organizations deliver.'
       text: 'I help leaders understand how engineering work flows, identify constraints, and guide improvements across architecture, delivery processes, automation, reliability, and team coordination.'
+      image: /uploads/work-with-me/engineering-transformation.webp
+      imageAlt: 'An interconnected engineering system in which fragmented technical components become a coordinated platform supporting multiple teams.'
     ai:
       label: 'AI Strategy & Implementation'
       statement: 'Turn AI opportunities into responsible, useful systems.'
       text: 'I help organizations identify where AI can create meaningful value, evaluate investment and risk, and lead implementation with attention to privacy, governance, human judgment, and the people whose work is affected.'
+      image: /uploads/work-with-me/ai-strategy-implementation.webp
+      imageAlt: 'An interconnected AI strategy framework connecting opportunities, architecture, governance, human adoption, and measurable outcomes.'
   engagements:
     eyebrow: HOW WE WORK TOGETHER
     title: 'The right level of leadership for the challenge.'
@@ -79,6 +83,11 @@ workWithMe:
     actionUrl: https://app.reclaim.ai/m/juanvistro/intro-conversation
     inquiryLabel: Send an inquiry instead
     inquiryUrl: https://forms.clickup.com/9014549590/f/8cmy72p-11434/0J4GZPYUQK3WOMCACO
+seo:
+  title: 'Work With Me | Juan Vistro'
+  description: 'Engineering transformation, AI strategy, and technology leadership that connect organizational goals with implementation, governance, and adoption.'
+  socialImage: /uploads/work-with-me-og-1200x630.png
+  socialImageAlt: 'See the whole system. Lead the change. An interconnected network links people, engineering leadership, technology, delivery systems, strategy, governance, adoption, and outcomes.'
 ---
 
 I help engineering and organizational leaders identify constraints, make deliberate technology and AI investments, and guide transformation from strategy through implementation and organizational change.
