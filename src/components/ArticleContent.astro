@@ -47,7 +47,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
 </div>
 
 <style>
-  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: center; }
+  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: left; }
   h1 {
     max-width: 22ch;
     margin-top: 0;
@@ -69,7 +69,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     margin-top: var(--space-6);
     margin-inline: auto;
     max-width: 46rem;
-    justify-content: center;
+    justify-content: flex-start;
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
