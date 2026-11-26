@@ -5,10 +5,13 @@ interface Props {
   image?: string | null;
   alt?: string | null;
   caption?: string | null;
+  width?: number;
+  height?: number;
 }
-const { image, alt, caption } = Astro.props;
+const { image, alt, caption, width = 1280, height = 720 } = Astro.props;
 const src = safeHref(image);
-// Article derivatives keep the same 16:9 ratio at 1280px and 640px widths.
+// Derivatives ship at 1280px and 640px; width/height carry each asset's real
+// intrinsic ratio so the layout reservation matches the supplied artwork.
 const srcset = src?.endsWith('.webp') && !src.endsWith('-640.webp')
   ? `${src.replace(/\.webp$/, '-640.webp')} 640w, ${src} 1280w`
   : undefined;
@@ -20,8 +23,8 @@ const srcset = src?.endsWith('.webp') && !src.endsWith('-640.webp')
     srcset={srcset}
     sizes="(min-width: 60rem) 56rem, 100vw"
     alt={alt || ''}
-    width="1280"
-    height="720"
+    width={width}
+    height={height}
     loading="lazy"
     decoding="async"
   />

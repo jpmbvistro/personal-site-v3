@@ -99,6 +99,17 @@ const articleFigure: Template = {
     { type: 'image', name: 'image', label: 'Illustration', required: true },
     { type: 'string', name: 'alt', label: 'Image description (alt text)', required: true },
     { type: 'string', name: 'caption', label: 'Caption' },
+    { type: 'number', name: 'width', label: 'Intrinsic width (px)', description: 'Asset dimension for layout reservation; defaults to 1280.' },
+    { type: 'number', name: 'height', label: 'Intrinsic height (px)', description: 'Asset dimension for layout reservation; defaults to 720.' },
+  ],
+};
+
+// The thesis is the author's own text in situ, not an attributed quotation.
+const articleThesis: Template = {
+  name: 'ArticleThesis', label: 'Article thesis callout',
+  fields: [
+    { type: 'string', name: 'text', label: 'Thesis text', required: true, ui: { component: 'textarea' } },
+    { type: 'string', name: 'eyebrow', label: 'Eyebrow (optional)' },
   ],
 };
 
@@ -198,7 +209,7 @@ const body: TinaField = {
 // shared block set unchanged.
 const articleBody: TinaField = {
   ...body,
-  templates: [...visualBlocks, articleFigure],
+  templates: [...visualBlocks, articleFigure, articleThesis],
 };
 
 const entryFields: TinaField[] = [
@@ -509,6 +520,7 @@ export default {
           { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
           { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
           { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
+          { type: 'string', name: 'authorBio', label: 'Author bio (shown after the closing CTA)', ui: { component: 'textarea' } },
           // Distinct editorial role: on-page hero, not a body figure or social card.
           { type: 'image', name: 'heroImage', label: 'Hero illustration (on-page)', description: 'Wide editorial illustration shown after the heading. Not used for social previews.' },
           { type: 'string', name: 'heroImageAlt', label: 'Hero illustration description (alt text)' },

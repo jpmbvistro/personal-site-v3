@@ -33,7 +33,7 @@ const jsonLd = {
   '@type': 'BlogPosting',
   headline: data.title,
   description,
-  author: { '@type': 'Person', name: 'Juan Vistro' },
+  author: { '@type': 'Person', name: 'Juan Vistro', url: new URL('/about/', siteOrigin).href },
   ...(canonicalUrl ? { url: canonicalUrl, mainEntityOfPage: canonicalUrl } : {}),
   ...(absoluteImage ? { image: absoluteImage } : {}),
   ...(publishedAt ? { datePublished: publishedAt } : {}),

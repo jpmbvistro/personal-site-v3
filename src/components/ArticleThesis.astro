@@ -1,0 +1,39 @@
+---
+interface Props {
+  text?: string | null;
+  eyebrow?: string | null;
+}
+const { text, eyebrow } = Astro.props;
+---
+
+{text && <section class="article-thesis">
+  {eyebrow && <p class="thesis-eyebrow">{eyebrow}</p>}
+  <p class="thesis-text">{text}</p>
+</section>}
+
+<style>
+  /* The author's own in-situ conclusion, not a quotation or a card. */
+  .article-thesis {
+    max-width: 46rem;
+    margin: clamp(var(--space-12), 5vw, var(--space-16)) auto;
+    padding: var(--space-8) var(--space-8) var(--space-12);
+    background: var(--muted);
+    border-top: 1px solid var(--accent);
+  }
+  .article-thesis .thesis-eyebrow {
+    margin-bottom: var(--space-4);
+    color: var(--accent-strong);
+    font: 600 var(--text-small)/1.4 var(--font-sans);
+    letter-spacing: 0.08em;
+  }
+  /* Outrank the article prose rule while keeping the callout's own scale. */
+  .article-thesis .thesis-text {
+    margin: 0;
+    color: var(--primary);
+    font: 400 clamp(1.75rem, 1.3rem + 1.8vw, 2.25rem)/1.3 var(--font-serif);
+    text-wrap: balance;
+  }
+  @media (max-width: 40rem) {
+    .article-thesis { padding: var(--space-6) var(--space-6) var(--space-8); }
+  }
+</style>

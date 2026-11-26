@@ -1,0 +1,42 @@
+[
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "figures": 5,
+    "imagesLoaded": true,
+    "h1": "71.68px",
+    "thesis": "36px",
+    "byline": "By Juan Vistro\n11 min read",
+    "noindex": true
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "figures": 5,
+    "imagesLoaded": true,
+    "h1": "58.368px",
+    "thesis": "36px",
+    "byline": "By Juan Vistro\n11 min read",
+    "noindex": true
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "figures": 5,
+    "imagesLoaded": true,
+    "h1": "50.176px",
+    "thesis": "34.624px",
+    "byline": "By Juan Vistro\n11 min read",
+    "noindex": true
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "figures": 5,
+    "imagesLoaded": true,
+    "h1": "44px",
+    "thesis": "28px",
+    "byline": "By Juan Vistro\n11 min read",
+    "noindex": true
+  }
+]

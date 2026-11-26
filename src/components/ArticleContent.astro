@@ -3,12 +3,14 @@ import { tinaField } from '@tinacms/astro';
 import type { ArticleQuery } from '../../tina/__generated__/types';
 import RichText from './RichText.astro';
 import { safeHref } from '../lib/links';
+import { readingTimeMinutes } from '../lib/reading-time';
 
 interface Props { data: ArticleQuery['article'] }
 const { data } = Astro.props;
 const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ?? [];
 const published = data.publishedAt ? new Date(data.publishedAt) : null;
 const updated = data.updatedAt ? new Date(data.updatedAt) : null;
+const minutes = readingTimeMinutes(data.body);
 
 // The hero is a separate editorial field, not a body figure or the social card.
 const heroSrc = safeHref(data.heroImage);
@@ -19,13 +21,16 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
 <div class="article-story">
   {data.draft !== false && <p class="draft-note">Draft · Local editor preview only. Not published.</p>}
   <header class="article-heading">
-    <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
-    {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
-    <p class="byline">
-      <span>By Juan Vistro</span>
-      {published && <time datetime={data.publishedAt}>{published.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>}
-      {updated && <span>Updated {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
-    </p>
+    <div class="article-heading-inner">
+      <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+      {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
+      <p class="byline">
+        <a href="/about/">By Juan Vistro</a>
+        {published && <time datetime={data.publishedAt}>{published.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>}
+        {updated && <span>Updated {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+        <span>{minutes} min read</span>
+      </p>
+    </div>
     {heroSrc && <figure class="article-hero" data-tina-field={tinaField(data, 'heroImage')}>
       <img
         src={heroSrc}
@@ -44,18 +49,25 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   {links.length > 0 && <nav class="article-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
     {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
   </nav>}
+  {data.authorBio && <section class="author-bio" aria-label="About the author" data-tina-field={tinaField(data, 'authorBio')}>
+    <p>{data.authorBio}</p>
+    <a href="/about/">More about Juan Vistro</a>
+  </section>}
 </div>
 
 <style>
   .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: left; }
+  /* A centered editorial heading column; the hero keeps the wider canvas. */
+  .article-heading-inner { max-width: 60rem; margin-inline: auto; }
   h1 {
-    max-width: 22ch;
+    max-width: 100%;
     margin-top: 0;
     margin-inline: auto;
     font-size: clamp(2.75rem, 1.6rem + 3.2vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.035em;
-    overflow-wrap: anywhere;
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
   .subtitle {
     margin-top: var(--space-6);
@@ -100,7 +112,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   .article-body :global(h2) {
     max-width: 46rem;
     margin-inline: auto;
-    text-align: center;
+    text-align: left;
     margin-top: clamp(2.5rem, 4vw, var(--space-12));
     font-size: clamp(1.75rem, 1.35rem + 1vw, 2.5rem);
   }
@@ -112,6 +124,17 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     max-width: 46rem;
     margin: var(--space-8) auto 0;
   }
+  .author-bio {
+    max-width: 46rem;
+    margin: var(--space-12) auto 0;
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border);
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .author-bio p { font-size: inherit; }
+  .author-bio a { display: inline-block; margin-top: var(--space-3); }
   .draft-note {
     max-width: 46rem;
     margin: 0 auto var(--space-6);

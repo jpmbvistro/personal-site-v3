@@ -7,6 +7,7 @@ import LocalOwnershipDiagram from './LocalOwnershipDiagram.astro';
 import EditorialCallouts from './EditorialCallouts.astro';
 import BlockQuote from './BlockQuote.astro';
 import ArticleFigure from './ArticleFigure.astro';
+import ArticleThesis from './ArticleThesis.astro';
 import ApiMigrationPreview from './case-studies/ApiMigrationPreview.astro';
 import ApiMigrationDecisionDiagram from './case-studies/ApiMigrationDecisionDiagram.astro';
 import AgenticDeliveryPreview from './case-studies/AgenticDeliveryPreview.astro';
@@ -18,4 +19,4 @@ interface Props { content: TinaMarkdownProps['content'] }
 const { content } = Astro.props;
 ---
 
-<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ArticleFigure, ApiMigrationPreview, ApiMigrationDecisionDiagram, AgenticDeliveryPreview, AgenticDeliveryHarnessDiagram, CrmDecisionTransformation, DonorCostModelFigure }} />
+<TinaMarkdown content={content} components={{ MetricStrip, DistributedUxNetwork, LocalOwnershipDiagram, EditorialCallouts, BlockQuote, ArticleFigure, ArticleThesis, ApiMigrationPreview, ApiMigrationDecisionDiagram, AgenticDeliveryPreview, AgenticDeliveryHarnessDiagram, CrmDecisionTransformation, DonorCostModelFigure }} />

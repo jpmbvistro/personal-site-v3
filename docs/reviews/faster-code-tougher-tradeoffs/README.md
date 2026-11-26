@@ -18,6 +18,7 @@ bottle is the bottleneck figure; the workshop is the framework figure.
 | `Code_Porridge_Bottleneck.png` | Downstream bottleneck (giant Code Porridge bottle) | `public/uploads/articles/code-porridge-bottleneck.webp` |
 | `Goldilocks_and_the_Automation_Porridge.png` | Intentional Autonomy (three labeled bowls) | `public/uploads/articles/goldilocks-and-the-automation-porridge.webp` |
 | `The_Three_Bears__Cozy_Automation_Workshop.png` | Progressive framework (measuring/fitting equipment) | `public/uploads/articles/the-three-bears-cozy-automation-workshop.webp` |
+| `Porridge_Factory_Development_Cycle.png` | Technical cycle diagram (five stages, loop from 05 back to 01) | `public/uploads/articles/progressive-software-factory-development-cycle.webp` |
 
 The social card was supplied at 1731 × 909 (the same ~1.9:1 composition as
 1200 × 630) and resized without cropping so its title, author line and artwork
@@ -29,6 +30,18 @@ and byte sizes are in `assets.json`.
 The supplied social artwork supersedes the branching-workflow diagram from the
 original metadata table; `og:image:alt` describes the Goldilocks artwork that
 is actually committed. All other approved metadata strings are unchanged.
+
+The owner-supplied cycle art (1536 × 1024) was resized to 1280 × 853 and
+640 × 427 WebP without cropping; the figure carries those intrinsic dimensions
+so its layout reservation matches the artwork. It depicts the Goldilocks
+factory even though the original brief preferred a non-storybook diagram — the
+owner explicitly directed its use. Its stage labels are deliberately redundant
+with the five-step list in the prose, which remains the semantic equivalent,
+especially at mobile widths.
+
+Reading time is computed from authored prose only (paragraphs, list items,
+headings and original-text callout text; not image alt text, captions, labels
+or metadata) at 200 words per minute, rounded up with a one-minute floor.
 
 ## Verification
 
