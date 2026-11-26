@@ -9,33 +9,94 @@ const { data } = Astro.props;
 const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ?? [];
 const published = data.publishedAt ? new Date(data.publishedAt) : null;
 const updated = data.updatedAt ? new Date(data.updatedAt) : null;
+
+// The hero is a separate editorial field, not a body figure or the social card.
+const heroSrc = safeHref(data.heroImage);
+const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
+  ? `${heroSrc.replace(/\.webp$/, '-640.webp')} 640w, ${heroSrc} 1280w`
+  : undefined;
 ---
 <div class="article-story">
-{data.draft !== false && <p class="draft-note">Draft · Local editor preview only. Not published.</p>}
-<header class="article-heading">
-  <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
-  {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
-  <p class="byline">
-    <span>Juan Vistro</span>
-    {published && <time datetime={data.publishedAt}>{published.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>}
-    {updated && <span>Updated {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
-  </p>
-  {data.summary && <p class="summary" data-tina-field={tinaField(data, 'summary')}>{data.summary}</p>}
-  {(data.tags?.length ?? 0) > 0 && <ul class="tags" data-tina-field={tinaField(data, 'tags')}>{data.tags?.map((tag) => tag && <li>{tag}</li>)}</ul>}
-</header>
-<div class="prose article-body" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
-{links.length > 0 && <nav class="article-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
-  {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
-</nav>}
+  {data.draft !== false && <p class="draft-note">Draft · Local editor preview only. Not published.</p>}
+  <header class="article-heading">
+    <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+    {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
+    <p class="byline">
+      <span>By Juan Vistro</span>
+      {published && <time datetime={data.publishedAt}>{published.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>}
+      {updated && <span>Updated {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
+    </p>
+    {heroSrc && <figure class="article-hero" data-tina-field={tinaField(data, 'heroImage')}>
+      <img
+        src={heroSrc}
+        srcset={heroSrcset}
+        sizes="(min-width: 75rem) 71rem, 100vw"
+        alt={data.heroImageAlt || ''}
+        width="1280"
+        height="720"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </figure>}
+  </header>
+  <div class="prose article-body" data-tina-field={tinaField(data, 'body')}><RichText content={data.body} /></div>
+  {links.length > 0 && <nav class="article-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
+    {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
+  </nav>}
 </div>
 
 <style>
-  h1 { max-width: 20ch; margin-top: var(--space-4); font-size: clamp(2.25rem, 1.5rem + 3vw, 4rem); overflow-wrap: anywhere; }
-  .subtitle { margin-top: var(--space-4); max-width: 52ch; color: var(--muted-foreground); font-size: var(--text-lead); }
-  .byline { margin-top: var(--space-4); font-size: var(--text-small); color: var(--muted-foreground); display: flex; gap: var(--space-4); flex-wrap: wrap; }
-  .summary { margin-top: var(--space-6); max-width: 60ch; color: var(--muted-foreground); }
-  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); padding: 0; margin-top: var(--space-4); list-style: none; color: var(--muted-foreground); font-size: var(--text-small); }
-  .article-body { margin-top: var(--space-12); }
+  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); }
+  h1 {
+    max-width: 22ch;
+    margin-top: 0;
+    font-size: clamp(2.75rem, 1.6rem + 3.2vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    overflow-wrap: anywhere;
+  }
+  .subtitle {
+    margin-top: var(--space-6);
+    max-width: 44ch;
+    color: var(--muted-foreground);
+    font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+    line-height: 1.35;
+  }
+  .byline {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    color: var(--muted-foreground);
+    font-size: 0.9375rem;
+  }
+  .article-hero {
+    width: min(100%, 71.25rem);
+    margin: clamp(var(--space-8), 4vw, var(--space-12)) auto 0;
+  }
+  .article-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--muted);
+  }
+  /* A wide editorial canvas holds the figures, while prose keeps its measure. */
+  .article-body.prose { max-width: none; margin-top: clamp(2.5rem, 5vw, var(--space-16)); }
+  .article-body :global(:is(p, ul, ol, blockquote, h3, pre, table)) { max-width: 46rem; }
+  .article-body :global(:is(p, li)) {
+    font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+    line-height: 1.7;
+  }
+  .article-body :global(p + p) { margin-top: var(--space-6); }
+  .article-body :global(li + li) { margin-top: var(--space-2); }
+  .article-body :global(h2) {
+    max-width: 46rem;
+    margin-top: clamp(2.5rem, 4vw, var(--space-12));
+    font-size: clamp(1.75rem, 1.35rem + 1vw, 2.5rem);
+  }
   .article-links { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-8); }
   .draft-note { margin-bottom: var(--space-6); border-left: 3px solid var(--accent); padding: var(--space-4); background: var(--muted); }
 </style>

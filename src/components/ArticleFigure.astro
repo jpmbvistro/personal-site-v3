@@ -8,16 +8,31 @@ interface Props {
 }
 const { image, alt, caption } = Astro.props;
 const src = safeHref(image);
+// Article derivatives keep the same 16:9 ratio at 1280px and 640px widths.
+const srcset = src?.endsWith('.webp') && !src.endsWith('-640.webp')
+  ? `${src.replace(/\.webp$/, '-640.webp')} 640w, ${src} 1280w`
+  : undefined;
 ---
 
 {src && <figure class="article-figure">
-  <img src={src} alt={alt || ''} width="1280" height="720" loading="lazy" decoding="async" />
+  <img
+    src={src}
+    srcset={srcset}
+    sizes="(min-width: 60rem) 56rem, 100vw"
+    alt={alt || ''}
+    width="1280"
+    height="720"
+    loading="lazy"
+    decoding="async"
+  />
   {caption && <figcaption>{caption}</figcaption>}
 </figure>}
 
 <style>
   .article-figure {
-    margin-block: clamp(var(--space-8), 5vw, var(--space-12));
+    margin-block: clamp(var(--space-8), 4vw, var(--space-12));
+    margin-inline: auto;
+    width: min(100%, 56rem);
     min-width: 0;
   }
   img {
@@ -30,7 +45,6 @@ const src = safeHref(image);
   }
   figcaption {
     margin-top: var(--space-3);
-    max-width: 68ch;
     color: var(--muted-foreground);
     font-size: var(--text-small);
     line-height: 1.5;

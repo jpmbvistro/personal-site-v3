@@ -18,12 +18,24 @@
       "width": 1672,
       "height": 941
     },
-    "derivative": "public/uploads/articles/the-three-bears-cozy-automation-workshop.webp",
-    "derivativeDimensions": {
-      "width": 1280,
-      "height": 720
-    },
-    "bytes": 304730
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/the-three-bears-cozy-automation-workshop.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "bytes": 304730
+      },
+      {
+        "derivative": "public/uploads/articles/the-three-bears-cozy-automation-workshop-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 360
+        },
+        "bytes": 94516
+      }
+    ]
   },
   {
     "source": "docs/reviews/faster-code-tougher-tradeoffs/sources/Breadth_vs._Depth__Porridge_Automation_Lab.png",
@@ -31,12 +43,24 @@
       "width": 1672,
       "height": 941
     },
-    "derivative": "public/uploads/articles/breadth-vs-depth-porridge-automation-lab.webp",
-    "derivativeDimensions": {
-      "width": 1280,
-      "height": 720
-    },
-    "bytes": 251206
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/breadth-vs-depth-porridge-automation-lab.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "bytes": 251206
+      },
+      {
+        "derivative": "public/uploads/articles/breadth-vs-depth-porridge-automation-lab-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 360
+        },
+        "bytes": 89048
+      }
+    ]
   },
   {
     "source": "docs/reviews/faster-code-tougher-tradeoffs/sources/Goldilocks_and_the_Code_Review_Crunch.png",
@@ -44,12 +68,24 @@
       "width": 1672,
       "height": 941
     },
-    "derivative": "public/uploads/articles/goldilocks-and-the-code-review-crunch.webp",
-    "derivativeDimensions": {
-      "width": 1280,
-      "height": 720
-    },
-    "bytes": 288152
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/goldilocks-and-the-code-review-crunch.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "bytes": 288152
+      },
+      {
+        "derivative": "public/uploads/articles/goldilocks-and-the-code-review-crunch-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 360
+        },
+        "bytes": 99434
+      }
+    ]
   },
   {
     "source": "docs/reviews/faster-code-tougher-tradeoffs/sources/Code_Porridge_Bottleneck.png",
@@ -57,12 +93,24 @@
       "width": 1672,
       "height": 941
     },
-    "derivative": "public/uploads/articles/code-porridge-bottleneck.webp",
-    "derivativeDimensions": {
-      "width": 1280,
-      "height": 720
-    },
-    "bytes": 357138
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/code-porridge-bottleneck.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "bytes": 357138
+      },
+      {
+        "derivative": "public/uploads/articles/code-porridge-bottleneck-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 360
+        },
+        "bytes": 115470
+      }
+    ]
   },
   {
     "source": "docs/reviews/faster-code-tougher-tradeoffs/sources/Goldilocks_and_the_Automation_Porridge.png",
@@ -70,11 +118,23 @@
       "width": 1672,
       "height": 941
     },
-    "derivative": "public/uploads/articles/goldilocks-and-the-automation-porridge.webp",
-    "derivativeDimensions": {
-      "width": 1280,
-      "height": 720
-    },
-    "bytes": 311308
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/goldilocks-and-the-automation-porridge.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 720
+        },
+        "bytes": 311308
+      },
+      {
+        "derivative": "public/uploads/articles/goldilocks-and-the-automation-porridge-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 360
+        },
+        "bytes": 98026
+      }
+    ]
   }
 ]

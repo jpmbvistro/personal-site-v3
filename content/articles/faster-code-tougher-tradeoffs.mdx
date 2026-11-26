@@ -3,6 +3,8 @@ title: Faster Code, Tougher Tradeoffs
 draft: false
 subtitle: Balancing Speed, Risk, and Opportunity in AI-Driven Software Engineering
 summary: A framework for thinking about automation, risk, bottlenecks, and engineering leadership in the age of AI-driven software development.
+heroImage: /uploads/articles/goldilocks-and-the-code-review-crunch.webp
+heroImageAlt: 'Goldilocks oversees a software factory from a control room while robots produce porridge and three overwhelmed bears review and package it for deployment.'
 tags:
   - Software engineering
   - AI
@@ -15,7 +17,7 @@ seo:
   socialImageWidth: 1200
   socialImageHeight: 630
   socialImageType: image/png
-  socialImageAlt: 'Faster Code, Tougher Tradeoffs by Juan Vistro. A code-porridge factory illustration shows Juan with a speed, risk and opportunity checklist while robots pour code into a vat and the three bears review and package the output.'
+  socialImageAlt: 'Faster Code, Tougher Tradeoffs by Juan Vistro, illustrated with Goldilocks overseeing a software factory where robots produce porridge faster than three bears can review and package it.'
 ---
 
 Goldilocks found three bowls of porridge.
@@ -25,12 +27,6 @@ One was too hot. One was too cold. And the third was just right—for Goldilocks
 I wonder what the three bears would have said. Each might have thought their own bowl was just right for them.
 
 Oddly enough, I've been thinking about that story lately as I explore how AI is changing software engineering.
-
-<ArticleFigure
-  image="/uploads/articles/the-three-bears-cozy-automation-workshop.webp"
-  alt="Illustration of three bears and an engineer fitting automation into a shared porridge workshop: one bear is measured for an apron while robots stir bowls."
-  caption="Different needs, different definitions of “just right” — the same is true of automation."
-/>
 
 I recently came across a model describing six levels of autonomous software engineering. At the top was the *dark factory*, where agents handle software development with little or no human intervention.
 
@@ -90,8 +86,8 @@ That investment might benefit dozens of workflows without making any of them ful
 
 <ArticleFigure
   image="/uploads/articles/breadth-vs-depth-porridge-automation-lab.webp"
-  alt="Illustration comparing a wide shared pool of robot-stirred porridge with a tall tiered automation tower, representing breadth-first and depth-first approaches."
-  caption="Depth-first deepens one workflow; breadth-first raises a shared capability across many."
+  alt="One bear stands in a wide, shallow pool of porridge while another sits in a tall, narrow soaking tub, illustrating breadth-first and depth-first automation."
+  caption="Automation can expand across many workflows or deepen within one. The right investment depends on the system's needs."
 />
 
 I don't think there's an inherent order to these approaches.
@@ -131,9 +127,9 @@ This experience has made me pay closer attention to what happens after an automa
 When we make implementation faster, we might create more work for validation, review, integration, or release. A team that previously had enough review capacity may suddenly struggle to keep up.
 
 <ArticleFigure
-  image="/uploads/articles/goldilocks-and-the-code-review-crunch.webp"
-  alt="Illustration of a busy code review station with engineers and three bears surrounded by bowls of porridge moving along a conveyor toward deployment."
-  caption="Faster implementation can move the pressure to review and validation."
+  image="/uploads/articles/code-porridge-bottleneck.webp"
+  alt="Robots fill a giant glass bottle labeled Code (Porridge), overwhelming three bears responsible for reviewing and packaging the output while only a few boxes reach deployment."
+  caption="Producing more code does not necessarily increase delivery capacity. The constraint may move downstream."
 />
 
 It's also possible that the organization already has enough downstream capacity. That was my experience with an earlier agentic workflow I built in a team environment. I understood that the team had room to handle increased review demand, and during the period I observed, that prediction held.
@@ -153,12 +149,6 @@ But the larger and more consequential the change, the more important that foreca
 An existing organization may have spent years building infrastructure, staffing, and processes around its current delivery capacity.
 
 If we dramatically accelerate one stage, we might expose a constraint that the organization is much less equipped to handle.
-
-<ArticleFigure
-  image="/uploads/articles/code-porridge-bottleneck.webp"
-  alt="Illustration of code porridge flowing from robots through a glass vat into a crowded review and packaging station beside a deployment sign."
-  caption="A new constraint often appears downstream of the stage we accelerated."
-/>
 
 Maybe testing infrastructure can't scale. Maybe security review depends on a small number of specialists. Maybe the new volume of work changes responsibilities across several teams.
 
@@ -222,13 +212,13 @@ For another system, the risks might be significant enough that autonomous implem
 
 And an organization under intense competitive pressure might reasonably choose much greater autonomy, accepting more uncertainty in exchange for speed.
 
+These are all deliberate choices. They have different costs, and different consequences.
+
 <ArticleFigure
   image="/uploads/articles/goldilocks-and-the-automation-porridge.webp"
-  alt="Illustration of three bowls labeled Too Little Automation, Too Much Automation, and Intentional Autonomy, with people and robots working around them."
-  caption="The right level of autonomy depends on context, assurance, and consequences — not a universal middle setting."
+  alt="Goldilocks evaluates three porridge bowls representing insufficient automation, excessive automation, and intentional autonomy while the three bears observe."
+  caption="Just right—but for whom? The appropriate level of autonomy depends on the organization and the work."
 />
-
-These are all deliberate choices. They have different costs, and different consequences.
 
 The question isn't simply how much automation we can achieve.
 
@@ -245,6 +235,12 @@ I'm exploring a framework built around five recurring activities:
 3. **Evaluate the next improvement.** Consider depth-first and breadth-first opportunities alongside expected value, market opportunity, assurance requirements, downstream capacity, risk, and reversibility.
 4. **Run a bounded experiment.** Make the improvement with clear expectations about what success looks like and what would cause you to stop or reconsider.
 5. **Measure and reassess.** Look at the effect on the entire delivery system, including quality, review effort, reliability, cost, and any new constraints that emerge.
+
+<ArticleFigure
+  image="/uploads/articles/the-three-bears-cozy-automation-workshop.webp"
+  alt="Goldilocks measures one bear for customized porridge-making equipment while two other bears test different robotic tools and evaluate their results."
+  caption="The right tools for the right porridge. Measure, experiment, and adapt the system to the organization."
+/>
 
 Within that process, I keep returning to three capabilities: **execution, validation, and handoff**.
 

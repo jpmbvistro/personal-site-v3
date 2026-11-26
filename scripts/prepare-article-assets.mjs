@@ -46,14 +46,21 @@ for (const [supplied, derivativeName] of illustrations) {
   await copyFile(file, original);
   await chmod(original, 0o644);
   const metadata = await sharp(file).metadata();
-  const target = join(output, derivativeName);
-  await sharp(file).resize({ width: 1280, withoutEnlargement: true }).webp({ quality: 84 }).toFile(target);
+  const derivatives = [];
+  for (const width of [1280, 640]) {
+    const name = width === 1280 ? derivativeName : derivativeName.replace(/\.webp$/, '-640.webp');
+    const target = join(output, name);
+    await sharp(file).resize({ width, withoutEnlargement: true }).webp({ quality: 84 }).toFile(target);
+    derivatives.push({
+      derivative: target,
+      derivativeDimensions: { width, height: Math.round((metadata.height / metadata.width) * width) },
+      bytes: (await stat(target)).size,
+    });
+  }
   report.push({
     source: original,
     dimensions: { width: metadata.width, height: metadata.height },
-    derivative: target,
-    derivativeDimensions: { width: 1280, height: Math.round((metadata.height / metadata.width) * 1280) },
-    bytes: (await stat(target)).size,
+    derivatives,
   });
 }
 

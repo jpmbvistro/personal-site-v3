@@ -509,6 +509,9 @@ export default {
           { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
           { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
           { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
+          // Distinct editorial role: on-page hero, not a body figure or social card.
+          { type: 'image', name: 'heroImage', label: 'Hero illustration (on-page)', description: 'Wide editorial illustration shown after the heading. Not used for social previews.' },
+          { type: 'string', name: 'heroImageAlt', label: 'Hero illustration description (alt text)' },
           articleBody,
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           { type: 'datetime', name: 'publishedAt', label: 'Published at' },
