@@ -1,0 +1,38 @@
+---
+import { safeHref } from '../lib/links';
+
+interface Props {
+  image?: string | null;
+  alt?: string | null;
+  caption?: string | null;
+}
+const { image, alt, caption } = Astro.props;
+const src = safeHref(image);
+---
+
+{src && <figure class="article-figure">
+  <img src={src} alt={alt || ''} width="1280" height="720" loading="lazy" decoding="async" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>}
+
+<style>
+  .article-figure {
+    margin-block: clamp(var(--space-8), 5vw, var(--space-12));
+    min-width: 0;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--muted);
+  }
+  figcaption {
+    margin-top: var(--space-3);
+    max-width: 68ch;
+    color: var(--muted-foreground);
+    font-size: var(--text-small);
+    line-height: 1.5;
+  }
+</style>

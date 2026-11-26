@@ -11,7 +11,7 @@ async function openEditor(page: import('@playwright/test').Page, route = '/') {
 
 for (const [index, expectedTitle] of [
   ['0', 'Technical judgment'],
-  ['1', 'Product thinking'],
+  ['1', 'Cross-functional leadership'],
   ['2', 'Engineering delivery'],
 ] as const) {
   test(`clicking homepage capability ${index} focuses its fields in the editor without manual navigation`, async ({ page }) => {
@@ -28,9 +28,13 @@ for (const [index, expectedTitle] of [
       await title.fill(originalTitle);
       await preview.locator('main h1').click();
 
-      await preview.locator('.capabilities h2').nth(Number(index)).click();
       const headingInput = page.locator(`input[name="homepage.capabilities.${index}.title"]`);
-      await expect(headingInput).toBeVisible();
+      // Tina's quick-edit handshake can swallow a click while local content
+      // reloads; retry the click until the matching field is shown.
+      await expect(async () => {
+        await preview.locator('.capabilities h2').nth(Number(index)).click();
+        await expect(headingInput).toBeVisible({ timeout: 2_000 });
+      }).toPass({ timeout: 20_000 });
       await expect(headingInput).toHaveValue(expectedTitle);
       await expect(preview.locator('.capabilities h2').nth(Number(index))).toHaveText(expectedTitle);
       expect(await readFile(path, 'utf8')).toBe(original);

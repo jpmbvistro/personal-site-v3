@@ -91,3 +91,5 @@ seo:
 ---
 
 I help engineering and organizational leaders identify constraints, make deliberate technology and AI investments, and guide transformation from strategy through implementation and organizational change.
+
+I wrote more about this perspective in [Faster Code, Tougher Tradeoffs](/articles/faster-code-tougher-tradeoffs/).

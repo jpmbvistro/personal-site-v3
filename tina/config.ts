@@ -91,6 +91,17 @@ const blockQuote: Template = {
   ],
 };
 
+// Long-form articles use captioned illustrations. Tina owns the asset, alt
+// text and caption; the Astro figure owns responsive geometry.
+const articleFigure: Template = {
+  name: 'ArticleFigure', label: 'Article illustration',
+  fields: [
+    { type: 'image', name: 'image', label: 'Illustration', required: true },
+    { type: 'string', name: 'alt', label: 'Image description (alt text)', required: true },
+    { type: 'string', name: 'caption', label: 'Caption' },
+  ],
+};
+
 // Fixed, story-specific labels: content is editable, geometry is not a graph editor.
 const labelFields = (labels: Record<string, string>): TinaField[] => Object.entries(labels).map(([name, label]) => ({ type: 'string', name, label, required: true, ...(name === 'summary' ? { ui: { component: 'textarea' } } : {}) }));
 const apiPreview: Template = {
@@ -183,6 +194,13 @@ const body: TinaField = {
   templates: visualBlocks,
 };
 
+// Only articles need captioned illustrations; other collections keep the
+// shared block set unchanged.
+const articleBody: TinaField = {
+  ...body,
+  templates: [...visualBlocks, articleFigure],
+};
+
 const entryFields: TinaField[] = [
   { type: 'string', name: 'title', label: 'Title', required: true, isTitle: true },
   { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
@@ -209,6 +227,9 @@ const seo: TinaField = {
     { type: 'string', name: 'title', label: 'Search title (optional)' },
     { type: 'string', name: 'description', label: 'Search / snippet / share description (optional)', ui: { component: 'textarea' } },
     { type: 'image', name: 'socialImage', label: 'Social image (optional)' },
+    { type: 'number', name: 'socialImageWidth', label: 'Social image width (px)' },
+    { type: 'number', name: 'socialImageHeight', label: 'Social image height (px)' },
+    { type: 'string', name: 'socialImageType', label: 'Social image MIME type' },
     { type: 'string', name: 'socialImageAlt', label: 'Social image alt text' },
   ],
 };
@@ -488,7 +509,7 @@ export default {
           { type: 'boolean', name: 'draft', label: 'Draft (hidden from public pages)', required: true },
           { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
           { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
-          body,
+          articleBody,
           { type: 'string', name: 'tags', label: 'Tags', list: true },
           { type: 'datetime', name: 'publishedAt', label: 'Published at' },
           { type: 'datetime', name: 'updatedAt', label: 'Updated at' },

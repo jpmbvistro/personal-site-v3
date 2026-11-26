@@ -1,0 +1,293 @@
+---
+title: Faster Code, Tougher Tradeoffs
+draft: false
+subtitle: Balancing Speed, Risk, and Opportunity in AI-Driven Software Engineering
+summary: A framework for thinking about automation, risk, bottlenecks, and engineering leadership in the age of AI-driven software development.
+tags:
+  - Software engineering
+  - AI
+  - Engineering leadership
+  - Automation
+seo:
+  title: 'Faster Code, Tougher Tradeoffs | Juan Vistro'
+  description: 'A framework for thinking about automation, risk, bottlenecks, and engineering leadership in the age of AI-driven software development.'
+  socialImage: /uploads/faster-code-tougher-tradeoffs-og-1200x630.png
+  socialImageWidth: 1200
+  socialImageHeight: 630
+  socialImageType: image/png
+  socialImageAlt: 'Faster Code, Tougher Tradeoffs by Juan Vistro. A code-porridge factory illustration shows Juan with a speed, risk and opportunity checklist while robots pour code into a vat and the three bears review and package the output.'
+---
+
+Goldilocks found three bowls of porridge.
+
+One was too hot. One was too cold. And the third was just right—for Goldilocks.
+
+I wonder what the three bears would have said. Each might have thought their own bowl was just right for them.
+
+Oddly enough, I've been thinking about that story lately as I explore how AI is changing software engineering.
+
+<ArticleFigure
+  image="/uploads/articles/the-three-bears-cozy-automation-workshop.webp"
+  alt="Illustration of three bears and an engineer fitting automation into a shared porridge workshop: one bear is measured for an apron while robots stir bowls."
+  caption="Different needs, different definitions of “just right” — the same is true of automation."
+/>
+
+I recently came across a model describing six levels of autonomous software engineering. At the top was the *dark factory*, where agents handle software development with little or no human intervention.
+
+I understand the appeal. Imagine submitting a requirement and having a system plan, implement, test, and deliver the change without anyone needing to write or review code.
+
+But presenting that as the final level of software engineering implies that every organization should be working toward the same destination.
+
+And I'm not convinced that's true.
+
+A startup racing to establish itself in a competitive market might reasonably prioritize speed and accept substantial uncertainty. An engineering organization responsible for systems handling sensitive patient information might need much stronger assurance before allowing changes to proceed without human review.
+
+Neither is necessarily making the wrong choice.
+
+Just like the three bears, organizations have different needs, constraints, and preferences. And what works for one might be entirely inappropriate for another.
+
+The question isn't whether we've reached the highest level of autonomy.
+
+**It's how we determine the right amount of automation for the organization we're actually trying to lead.**
+
+I think it begins with understanding the software factory we already have.
+
+## Every engineering organization already has a production system
+
+Software factories aren't a new idea. Long before generative AI, engineering organizations were trying to improve software production through standardization, reusable components, tooling, coordination, and quality controls.
+
+AI agents bring new capabilities to that work, but they don't create the factory from nothing.
+
+Every engineering organization already has some way of turning requirements into software. It might be well documented or mostly informal. It might have sophisticated CI/CD infrastructure or rely on engineers manually moving work between systems.
+
+Either way, there are inputs, decisions, implementation steps, reviews, handoffs, and feedback.
+
+That's the existing production system.
+
+I find it much more productive to examine how that system could improve than to debate whether it has earned the label of software factory.
+
+That also gives us a more practical starting point: what is currently limiting our ability to deliver useful, trustworthy software?
+
+## Automation has breadth and depth
+
+I've started looking at software factory development through two complementary approaches: depth-first and breadth-first automation.
+
+**Depth-first automation** means taking a part of a workflow and increasing how completely it can operate.
+
+Consider a workflow that handles routine bug tickets.
+
+At first, an agent might implement a change and prepare a pull request. An engineer still needs to understand the change, inspect the code, validate the behavior, and approve the result.
+
+Over time, that same workflow might gain automated tests, independent review, remediation loops, and better evidence about what actually changed.
+
+The workflow becomes more complete without requiring the organization to automate everything else.
+
+**Breadth-first automation** expands a shared capability across multiple workflows or stages of delivery.
+
+Maybe several engineering teams struggle with inconsistent validation. Instead of investing in deeper execution automation for one team, the organization could improve shared testing infrastructure, review standards, or the evidence available at handoff.
+
+That investment might benefit dozens of workflows without making any of them fully autonomous.
+
+<ArticleFigure
+  image="/uploads/articles/breadth-vs-depth-porridge-automation-lab.webp"
+  alt="Illustration comparing a wide shared pool of robot-stirred porridge with a tall tiered automation tower, representing breadth-first and depth-first approaches."
+  caption="Depth-first deepens one workflow; breadth-first raises a shared capability across many."
+/>
+
+I don't think there's an inherent order to these approaches.
+
+A solo founder might benefit enormously from automating a complete workflow because they don't have enough hours to do everything manually. A larger engineering organization might already have plenty of implementation capacity but struggle with dependencies between teams.
+
+And the priorities can change.
+
+You might automate one workflow deeply, discover that verification has become the limiting factor, invest in shared verification capabilities, and then return to deepening execution.
+
+That isn't a failure to progress toward autonomy. It's the factory responding to what it needs.
+
+## When faster implementation creates a different problem
+
+I've experienced a version of this while building my own engineering tooling.
+
+I started building **Keel** because I needed a way to move GitHub issues toward pull requests without constantly sitting down to implement the code myself.
+
+I simply didn't have enough time.
+
+Automating that work addressed a real constraint. But I also knew that the amount of code being produced could exceed my ability to review it.
+
+And reviewing code wasn't just a matter of reading lines.
+
+I needed to understand what the changes actually did.
+
+Did the resulting behavior match the original intention? Had the implementation introduced something unexpected? Which parts of the change could I reasonably trust, and which needed closer attention?
+
+I found that establishing this confidence could take an enormous amount of time. Increasing implementation output without addressing that problem would only make my workload less manageable.
+
+That's part of why I'm building **Contour**, an approach to reviewing changes through their behavior, supporting evidence, and unresolved uncertainty.
+
+I don't see this as eliminating the responsibility of reviewing software. I'm trying to make that responsibility manageable when the volume and method of implementation have changed.
+
+This experience has made me pay closer attention to what happens after an automation improvement succeeds.
+
+When we make implementation faster, we might create more work for validation, review, integration, or release. A team that previously had enough review capacity may suddenly struggle to keep up.
+
+<ArticleFigure
+  image="/uploads/articles/goldilocks-and-the-code-review-crunch.webp"
+  alt="Illustration of a busy code review station with engineers and three bears surrounded by bowls of porridge moving along a conveyor toward deployment."
+  caption="Faster implementation can move the pressure to review and validation."
+/>
+
+It's also possible that the organization already has enough downstream capacity. That was my experience with an earlier agentic workflow I built in a team environment. I understood that the team had room to handle increased review demand, and during the period I observed, that prediction held.
+
+The important distinction is knowing something about the system around the activity we're trying to accelerate.
+
+## Forecasting the next bottleneck
+
+I think there's value in asking where a constraint might move *before* we make an automation investment.
+
+That doesn't mean every experiment needs a lengthy assessment.
+
+When I was initially building my own tooling, I needed to move quickly. I couldn't afford to forecast every possible downstream effect, and I accepted some uncertainty.
+
+But the larger and more consequential the change, the more important that forecasting becomes.
+
+An existing organization may have spent years building infrastructure, staffing, and processes around its current delivery capacity.
+
+If we dramatically accelerate one stage, we might expose a constraint that the organization is much less equipped to handle.
+
+<ArticleFigure
+  image="/uploads/articles/code-porridge-bottleneck.webp"
+  alt="Illustration of code porridge flowing from robots through a glass vat into a crowded review and packaging station beside a deployment sign."
+  caption="A new constraint often appears downstream of the stage we accelerated."
+/>
+
+Maybe testing infrastructure can't scale. Maybe security review depends on a small number of specialists. Maybe the new volume of work changes responsibilities across several teams.
+
+Sometimes the consequences are more difficult than the original bottleneck.
+
+And we should consider something else: **how reversible is the change?**
+
+Rolling back a software deployment is one thing. Reversing a hiring decision, an organizational restructuring, or a significant infrastructure investment is another.
+
+Those decisions have real costs, and reversing them can require as much or more time and money than making them in the first place.
+
+For me, this changes how automation opportunities should be evaluated.
+
+Alongside the expected improvement, I want to understand what happens if the investment succeeds, what happens if it doesn't, and what it would take to change direction.
+
+## Intentional Autonomy
+
+There's another side to these decisions that I don't think we can ignore.
+
+**Agentic tooling has made software implementation dramatically cheaper in many situations.**
+
+Work that previously required substantial engineering time can now be implemented much more quickly, sometimes with relatively little human involvement.
+
+That doesn't mean the total cost of delivering trustworthy software has fallen by the same amount. We still need to account for validation, integration, operations, and maintenance.
+
+But the opportunity is real.
+
+For some organizations, taking advantage of that reduction in implementation cost isn't just an engineering productivity improvement. It might be a necessary market strategy.
+
+A startup might need to establish itself before competitors do. An established company might need to respond quickly to changing customer expectations. In either case, delaying implementation has an opportunity cost.
+
+If a competitor can ship, learn from customers, and improve its product while you're still deciding how to automate development, that delay matters.
+
+So I don't think the answer is to always move cautiously.
+
+But I also don't think cheaper implementation means we should automatically give agents more authority everywhere.
+
+This is where I've been thinking about **Intentional Autonomy**.
+
+It's the deliberate choice of how much authority to give automated systems based on what an organization is trying to accomplish, the assurance required, the resources available, and the consequences of getting it wrong.
+
+Take an authentication change.
+
+Even if an agent produces an implementation that passes its tests, I would still want a software engineer to understand what changed, how it affects the system, and whether the behavior is consistent with the intended requirements.
+
+Authentication is an obvious example because the risks are easier to recognize. But the same reasoning applies to other consequential changes, particularly in regulated or security-sensitive environments.
+
+There's an interpretation problem here, too.
+
+Software requirements are rarely perfectly specified. Even with a detailed change request, there can be ambiguity between what was intended, how that intention was interpreted, and what the implementation actually does.
+
+As engineering becomes more automated, I think engineers will increasingly spend time designing the systems that produce changes and establishing confidence in the relationship between intention and actual behavior.
+
+That doesn't mean humans need to inspect every line of every change forever.
+
+The appropriate level of assurance should depend on the risk.
+
+An organization might allow highly autonomous development for a bounded, low-risk workflow while requiring explicit human review for changes to authentication or sensitive data handling.
+
+For another system, the risks might be significant enough that autonomous implementation shouldn't be enabled at all.
+
+And an organization under intense competitive pressure might reasonably choose much greater autonomy, accepting more uncertainty in exchange for speed.
+
+<ArticleFigure
+  image="/uploads/articles/goldilocks-and-the-automation-porridge.webp"
+  alt="Illustration of three bowls labeled Too Little Automation, Too Much Automation, and Intentional Autonomy, with people and robots working around them."
+  caption="The right level of autonomy depends on context, assurance, and consequences — not a universal middle setting."
+/>
+
+These are all deliberate choices. They have different costs, and different consequences.
+
+The question isn't simply how much automation we can achieve.
+
+**It's how much autonomy makes sense for the work we're doing, what we gain by enabling it, and what we're prepared to risk or give up.**
+
+For me, that's a more useful way to think about engineering maturity.
+
+## A framework for progressive software factory development
+
+I'm exploring a framework built around five recurring activities:
+
+1. **Map the existing delivery system.** Understand how work moves from a requirement to a delivered outcome, including the people, infrastructure, decisions, and handoffs involved.
+2. **Identify the current constraints.** Look for the activities or dependencies that actually limit delivery, rather than assuming implementation is always the problem.
+3. **Evaluate the next improvement.** Consider depth-first and breadth-first opportunities alongside expected value, market opportunity, assurance requirements, downstream capacity, risk, and reversibility.
+4. **Run a bounded experiment.** Make the improvement with clear expectations about what success looks like and what would cause you to stop or reconsider.
+5. **Measure and reassess.** Look at the effect on the entire delivery system, including quality, review effort, reliability, cost, and any new constraints that emerge.
+
+Within that process, I keep returning to three capabilities: **execution, validation, and handoff**.
+
+Each can be examined across planning, implementation, release, and operations.
+
+For example, an organization might have highly automated execution but still depend on manual validation and loosely coordinated handoffs. Another might have strong automated validation across many teams while keeping implementation largely human-directed.
+
+Those systems have different strengths and constraints.
+
+I wouldn't collapse them into a single automation maturity score.
+
+I'd rather have a useful picture of where work happens, where confidence is established, and where an additional investment could improve the system.
+
+And sometimes the right investment isn't another AI agent.
+
+It might be clearer requirements, better coordination between teams, simpler infrastructure, or a decision to retain human judgment at a particularly consequential point.
+
+## The factory should evolve with the organization
+
+I'm excited about what increasingly capable AI systems will make possible for software engineering.
+
+The reduction in implementation cost is too significant to ignore. For some organizations, moving quickly could be essential to their success.
+
+But I also think we risk making poor decisions if we treat fully autonomous development as the inevitable definition of success.
+
+There are situations where a dark factory may make sense. There are others where bounded automation, explicit human approval, or limited autonomous capabilities are necessary, valuable, or simply the better economic decision.
+
+The challenge for engineering leaders is to understand what their organization needs and make deliberate choices about how to get there.
+
+That requires paying attention to more than technical capability. It means understanding the people doing the work, the infrastructure supporting them, the investments being made, and the consequences of changing how the organization operates.
+
+I see **Progressive Software Factory Development** as a way of making those decisions continuously, rather than trying to arrive at a predetermined end state.
+
+And **Intentional Autonomy** gives us a principle for deciding how much of that system should operate independently.
+
+Back to Goldilocks. I don't think the goal is to find one perfect bowl of porridge and declare the problem solved.
+
+The three bears might have different preferences. Their needs might change tomorrow. And sometimes the best answer isn't adjusting the recipe. It's recognizing that the kitchen itself needs work.
+
+Engineering leadership requires that same willingness to examine the entire system, make deliberate tradeoffs, and change course when the evidence calls for it.
+
+**The measure of progress isn't how little humans participate. It's how effectively the entire system delivers trustworthy software and creates value.**
+
+That's the kind of software factory I want to keep building.
+
+Interested in applying these ideas to your engineering organization? [Learn more about working with me](/work-with-me/).
