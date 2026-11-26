@@ -47,10 +47,11 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
 </div>
 
 <style>
-  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); }
+  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: center; }
   h1 {
     max-width: 22ch;
     margin-top: 0;
+    margin-inline: auto;
     font-size: clamp(2.75rem, 1.6rem + 3.2vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.035em;
@@ -58,6 +59,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   }
   .subtitle {
     margin-top: var(--space-6);
+    margin-inline: auto;
     max-width: 44ch;
     color: var(--muted-foreground);
     font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
@@ -65,6 +67,9 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   }
   .byline {
     margin-top: var(--space-6);
+    margin-inline: auto;
+    max-width: 46rem;
+    justify-content: center;
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
@@ -85,7 +90,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   }
   /* A wide editorial canvas holds the figures, while prose keeps its measure. */
   .article-body.prose { max-width: none; margin-top: clamp(2.5rem, 5vw, var(--space-16)); }
-  .article-body :global(:is(p, ul, ol, blockquote, h3, pre, table)) { max-width: 46rem; }
+  .article-body :global(:is(p, ul, ol, blockquote, h3, pre, table)) { max-width: 46rem; margin-inline: auto; }
   .article-body :global(:is(p, li)) {
     font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
     line-height: 1.7;
@@ -94,9 +99,24 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   .article-body :global(li + li) { margin-top: var(--space-2); }
   .article-body :global(h2) {
     max-width: 46rem;
+    margin-inline: auto;
+    text-align: center;
     margin-top: clamp(2.5rem, 4vw, var(--space-12));
     font-size: clamp(1.75rem, 1.35rem + 1vw, 2.5rem);
   }
-  .article-links { display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-8); }
-  .draft-note { margin-bottom: var(--space-6); border-left: 3px solid var(--accent); padding: var(--space-4); background: var(--muted); }
+  .article-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-6);
+    max-width: 46rem;
+    margin: var(--space-8) auto 0;
+  }
+  .draft-note {
+    max-width: 46rem;
+    margin: 0 auto var(--space-6);
+    border-left: 3px solid var(--accent);
+    padding: var(--space-4);
+    background: var(--muted);
+  }
 </style>

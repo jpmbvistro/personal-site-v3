@@ -114,6 +114,15 @@ test('article typography follows the editorial scale at desktop width', async ({
   expect(await px('main .article-body p')).toBeGreaterThanOrEqual(18);
   expect(await px('main .article-body p')).toBeLessThanOrEqual(20);
   expect(await px('main .article-figure figcaption')).toBeGreaterThanOrEqual(14);
+
+  const center = async (selector: string) => {
+    const box = (await page.locator(selector).first().boundingBox())!;
+    return box.x + box.width / 2;
+  };
+  const heroCenter = await center('.article-hero img');
+  for (const selector of ['.back-link', 'main h1', 'main .subtitle', 'main .byline', 'main .article-body p', 'main .article-body h2']) {
+    expect(await center(selector), selector).toBeCloseTo(heroCenter, 0);
+  }
 });
 
 test('article and Work With Me link to each other', async ({ page, request }) => {
