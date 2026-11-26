@@ -19,7 +19,10 @@ for (const width of [390, 1440]) {
       expect(title.trim()).not.toBe('');
       const description = await page.locator('meta[name="description"]').getAttribute('content');
       expect(description?.trim()).toBeTruthy();
-      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
+      // Social titles follow the page's H1; the HTML <title> is the separate
+      // search title, so the two are intentionally allowed to differ.
+      const socialTitle = (await page.locator('main h1').innerText()).trim();
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', socialTitle);
       await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', description!);
       await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
       if (await page.locator('link[rel="canonical"]').count() === 0) {

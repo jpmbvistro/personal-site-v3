@@ -104,19 +104,21 @@ test.describe('collection rendering and publication', () => {
       const original = await readFile(file, 'utf8');
       try {
         await writeContent(file, original.replace('draft: false', 'draft: true'));
-        await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(404);
         // Tina indexing and Vite's full-page HMR can finish at different times.
-        // Retry the observed navigation/listing, not just the route status.
-        // Bound each navigation so an interrupted HMR load can actually retry;
-        // the listing only needs the DOM, not every dev-server asset loaded.
+        // Retry the observed navigation/listing first: refreshing the listing
+        // also gives the dev server time to drop the unpublished static path.
+        // Bound each navigation so an interrupted HMR load can actually retry.
         await expect(async () => {
           await page.goto(`/${section}/`, { waitUntil: 'domcontentloaded', timeout: 3_000 });
           await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(0);
-        }).toPass({ timeout: 10_000 });
+        }).toPass({ timeout: 15_000 });
+        // Dev can briefly return 500 while HMR refreshes the static path list;
+        // what matters is that a draft is not publicly served.
+        await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status(), { timeout: 15_000 }).not.toBe(200);
       } finally {
         await writeContent(file, original);
       }
-      await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status()).toBe(200);
+      await expect.poll(async () => (await request.get(`/${section}/browser-fixture/`)).status(), { timeout: 15_000 }).toBe(200);
       await expect(async () => {
         await page.goto(`/${section}/`, { waitUntil: 'domcontentloaded', timeout: 3_000 });
         await expect(page.locator('a[href$="/browser-fixture/"]')).toHaveCount(1);

@@ -22,13 +22,19 @@ const absoluteImage = image ? (image.startsWith('http') ? image : new URL(image,
 const publishedAt = data.publishedAt || undefined;
 const updatedAt = data.updatedAt || undefined;
 
+// Canonical, og:url and JSON-LD must all name the same live article route.
+// While SITE_URL is unset there is no canonical origin, so none is emitted.
+const canonicalUrl = Astro.site && !preview && data.draft === false
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : undefined;
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Article',
+  '@type': 'BlogPosting',
   headline: data.title,
   description,
   author: { '@type': 'Person', name: 'Juan Vistro' },
-  url: Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined,
+  ...(canonicalUrl ? { url: canonicalUrl, mainEntityOfPage: canonicalUrl } : {}),
   ...(absoluteImage ? { image: absoluteImage } : {}),
   ...(publishedAt ? { datePublished: publishedAt } : {}),
   ...(updatedAt ? { dateModified: updatedAt } : {}),
@@ -43,6 +49,9 @@ const jsonLd = {
   ogTitle={ogTitle}
   image={absoluteImage}
   imageAlt={imageAlt}
+  imageWidth={seo.socialImageWidth || undefined}
+  imageHeight={seo.socialImageHeight || undefined}
+  imageType={seo.socialImageType || undefined}
   jsonLd={jsonLd}
 >
   <Container class="detail-page">
@@ -52,4 +61,8 @@ const jsonLd = {
     </TinaIsland>
   </Container>
 </BaseLayout>
+
+<style>
+  .back-link { display: block; max-width: 46rem; margin-inline: auto; text-align: center; }
+</style>
 ---
