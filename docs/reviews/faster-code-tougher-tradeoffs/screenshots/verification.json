@@ -2,65 +2,45 @@
   {
     "width": 1440,
     "scrollWidth": 1440,
-    "cta": true,
+    "headerAlign": "center",
+    "bylineAlign": "center",
+    "metaAlign": "center",
+    "thesisAlign": "center",
+    "ctaAlign": "left",
     "portraitLoaded": true,
-    "buttons": [
-      {
-        "href": "/work-with-me/",
-        "text": "Learn more about working with me↗"
-      },
-      {
-        "href": "/about/",
-        "text": "More about Juan Vistro"
-      }
-    ]
+    "figureCount": 5
   },
   {
     "width": 1024,
     "scrollWidth": 1024,
-    "cta": true,
+    "headerAlign": "center",
+    "bylineAlign": "center",
+    "metaAlign": "center",
+    "thesisAlign": "center",
+    "ctaAlign": "left",
     "portraitLoaded": true,
-    "buttons": [
-      {
-        "href": "/work-with-me/",
-        "text": "Learn more about working with me↗"
-      },
-      {
-        "href": "/about/",
-        "text": "More about Juan Vistro"
-      }
-    ]
+    "figureCount": 5
   },
   {
     "width": 768,
     "scrollWidth": 768,
-    "cta": true,
+    "headerAlign": "center",
+    "bylineAlign": "center",
+    "metaAlign": "center",
+    "thesisAlign": "center",
+    "ctaAlign": "left",
     "portraitLoaded": true,
-    "buttons": [
-      {
-        "href": "/work-with-me/",
-        "text": "Learn more about working with me↗"
-      },
-      {
-        "href": "/about/",
-        "text": "More about Juan Vistro"
-      }
-    ]
+    "figureCount": 5
   },
   {
     "width": 390,
     "scrollWidth": 390,
-    "cta": true,
+    "headerAlign": "center",
+    "bylineAlign": "center",
+    "metaAlign": "center",
+    "thesisAlign": "center",
+    "ctaAlign": "left",
     "portraitLoaded": true,
-    "buttons": [
-      {
-        "href": "/work-with-me/",
-        "text": "Learn more about working with me↗"
-      },
-      {
-        "href": "/about/",
-        "text": "More about Juan Vistro"
-      }
-    ]
+    "figureCount": 5
   }
 ]

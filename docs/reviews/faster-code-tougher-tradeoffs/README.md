@@ -44,10 +44,17 @@ headings and original-text callout text; not image alt text, captions, labels,
 the closing CTA or metadata) at 200 words per minute, rounded up with a
 one-minute floor.
 
-The approved headshot (`juan_vistro_portrait_q76.webp`) appears beside the
-author bio after the closing action. Both the Work With Me invitation and the
-About-the-author link render as real button links, with the Work With Me action
-on the site's deep-green surface so it stays the primary closing action.
+Per the owner's reference renders, the heading column (title, subtitle, byline
+and meta line) is center-aligned, with the byline and reading time in a subtle
+ivory panel. No publication date is shown until one is real; when set, the
+panel shows `Published <date> · <minutes> min read`, with a separate
+`Last updated <date>` line only for a later substantive revision.
+
+The thesis eyebrow and text are centered. The closing Work With Me invitation
+sits below a copper rule with a primary button and no secondary About link.
+The `About the author` section has a heading, the author's name, bio and an
+underlined colored text link to `/about/` (not a button); the approved headshot
+(`juan_vistro_portrait_q76.webp`) spans the full height of those three lines.
 
 ## Verification
 

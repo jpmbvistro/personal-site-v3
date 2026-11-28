@@ -15,8 +15,11 @@ test('article renders the approved headline, subtitle and share metadata', async
   await expect(page.locator('main .subtitle')).toHaveText('Balancing Speed, Risk, and Opportunity in AI-Driven Software Engineering');
   await expect(page.locator('main .byline')).toContainText('By Juan Vistro');
   await expect(page.locator('main .byline a')).toHaveAttribute('href', '/about/');
-  await expect(page.locator('main .byline')).toContainText(/min read/);
+  await expect(page.locator('main .byline-panel')).toContainText(/min read/);
   await expect(page.locator('main header time')).toHaveCount(0);
+  for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .byline-meta']) {
+    await expect(page.locator(selector).first()).toHaveCSS('text-align', 'center');
+  }
   await expect(page).toHaveTitle(title);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description);
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
@@ -123,7 +126,9 @@ test('thesis is an original editorial callout, not an attributed quotation', asy
   await expect(page.locator('.article-body blockquote')).toHaveCount(0);
   await expect(page.locator('.article-thesis .thesis-text')).toHaveText(thesis);
   await expect(page.locator('.article-thesis .thesis-text')).not.toContainText(/[“”"]/);
+  await expect(page.locator('.article-thesis .thesis-text')).toHaveCSS('text-align', 'center');
   await expect(page.locator('.article-thesis .thesis-eyebrow')).toHaveText('THE MEASURE OF PROGRESS');
+  await expect(page.locator('.article-thesis .thesis-eyebrow')).toHaveCSS('text-align', 'center');
   await expect(page.locator('.article-thesis')).toHaveCSS('border-top-width', '1px');
   expect(await page.locator('.article-thesis').evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
 });
@@ -132,10 +137,19 @@ test('author bio follows the closing CTA and links to About', async ({ page }) =
   await page.goto(route);
   await expect(page.locator('.author-bio')).toHaveCount(1);
   await expect(page.locator('.author-bio')).toContainText('Juan Vistro is an engineering leader and technology strategist');
-  await expect(page.locator('.author-bio .button-link')).toHaveAttribute('href', '/about/');
-  await expect(page.locator('.author-bio .button-link')).toHaveClass(/primary/);
+  await expect(page.locator('.author-bio-title')).toHaveText('About the author');
+  await expect(page.locator('.author-name')).toHaveText('Juan Vistro');
+  const link = page.locator('.author-bio .author-link');
+  await expect(link).toHaveAttribute('href', '/about/');
+  await expect(link).toHaveCount(1);
+  expect(await link.evaluate((element) => element.classList.contains('button-link'))).toBe(false);
+  await expect(link).toHaveCSS('text-decoration-line', 'underline');
+  expect(await link.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
   await expect(page.locator('.author-portrait')).toHaveAttribute('src', '/uploads/juan_vistro_portrait_q76.webp');
   await expect(page.locator('.author-portrait')).toHaveAttribute('alt', 'Portrait of Juan Vistro');
+  const portrait = (await page.locator('.author-portrait').boundingBox())!;
+  const copy = (await page.locator('.author-bio-copy').boundingBox())!;
+  expect(Math.abs(portrait.height - copy.height)).toBeLessThanOrEqual(2);
   const order = await page.locator('#main').evaluate((main) => {
     const nodes = [...main.querySelectorAll('.article-body, .author-bio')];
     return nodes.map((node) => node.className);
@@ -144,7 +158,7 @@ test('author bio follows the closing CTA and links to About', async ({ page }) =
   await expect(page.locator('.article-body a[href="/work-with-me/"]')).toBeVisible();
 });
 
-test('the main closing CTA is a prominent button on the deep-green surface', async ({ page }) => {
+test('the main closing CTA is a primary button under a copper rule', async ({ page }) => {
   await page.goto(route);
   await expect(page.locator('.article-body .article-cta')).toHaveCount(1);
   await expect(page.locator('.article-cta .cta-invitation')).toHaveText('Interested in applying these ideas to your engineering organization?');
@@ -152,7 +166,11 @@ test('the main closing CTA is a prominent button on the deep-green surface', asy
   await expect(cta).toHaveAttribute('href', '/work-with-me/');
   await expect(cta).toHaveClass(/button-link/);
   await expect(cta).toHaveText(/Learn more about working with me/);
-  expect(await page.locator('.article-cta').evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
+  await expect(cta).toHaveClass(/primary/);
+  await expect(page.locator('.article-cta')).toHaveCSS('border-top-width', '1px');
+  await expect(page.locator('.article-cta .cta-invitation')).toHaveCSS('text-align', 'left');
+  expect(await page.locator('.article-cta').evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+  await expect(page.locator('.article-cta a[href="/about/"]')).toHaveCount(0);
   expect(await cta.evaluate((element) => getComputedStyle(element).minHeight)).toBe('44px');
 });
 
@@ -167,7 +185,7 @@ test('reading time is derived from prose at a documented 200 words per minute', 
     const words = text.trim().split(/\s+/).filter((word: string) => /\p{L}|\p{N}/u.test(word)).length;
     return Math.max(1, Math.ceil(words / 200));
   });
-  await expect(page.locator('.byline')).toContainText(`${expected} min read`);
+  await expect(page.locator('.byline-panel')).toContainText(`${expected} min read`);
 });
 
 test('Dan Shapiro is credited and linked at first mention', async ({ page }) => {
