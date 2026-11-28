@@ -20,6 +20,8 @@ test('article renders the approved headline, subtitle and share metadata', async
   for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .byline-meta']) {
     await expect(page.locator(selector).first()).toHaveCSS('text-align', 'center');
   }
+  expect(await page.locator('.byline-panel').evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+  expect(await page.locator('.byline-panel').evaluate((element) => getComputedStyle(element).paddingTop)).toBe('0px');
   await expect(page).toHaveTitle(title);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description);
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
@@ -147,9 +149,14 @@ test('author bio follows the closing CTA and links to About', async ({ page }) =
   expect(await link.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
   await expect(page.locator('.author-portrait')).toHaveAttribute('src', '/uploads/juan_vistro_portrait_q76.webp');
   await expect(page.locator('.author-portrait')).toHaveAttribute('alt', 'Portrait of Juan Vistro');
+  const title = (await page.locator('.author-bio-title').boundingBox())!;
   const portrait = (await page.locator('.author-portrait').boundingBox())!;
   const copy = (await page.locator('.author-bio-copy').boundingBox())!;
+  expect(title.y + title.height).toBeLessThanOrEqual(portrait.y + 2);
+  expect(title.y + title.height).toBeLessThanOrEqual(copy.y + 2);
+  expect(title.width).toBeGreaterThan(portrait.width + copy.width);
   expect(Math.abs(portrait.height - copy.height)).toBeLessThanOrEqual(2);
+  expect(portrait.width).toBeGreaterThanOrEqual(288);
   const order = await page.locator('#main').evaluate((main) => {
     const nodes = [...main.querySelectorAll('.article-body, .author-bio')];
     return nodes.map((node) => node.className);
