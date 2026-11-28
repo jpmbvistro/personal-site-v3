@@ -2,45 +2,33 @@
   {
     "width": 1440,
     "scrollWidth": 1440,
-    "titleAbove": true,
-    "titleSpans": true,
-    "portraitWidth": 288,
-    "copyWidth": 416,
-    "sameHeight": true,
-    "bylineBg": "rgba(0, 0, 0, 0)",
+    "backLinkLeft": true,
+    "byline": "Published September 30, 2026 · 11 min read",
+    "nameTop": true,
     "portraitLoaded": true
   },
   {
     "width": 1024,
     "scrollWidth": 1024,
-    "titleAbove": true,
-    "titleSpans": true,
-    "portraitWidth": 266.234375,
-    "copyWidth": 437.765625,
-    "sameHeight": true,
-    "bylineBg": "rgba(0, 0, 0, 0)",
+    "backLinkLeft": true,
+    "byline": "Published September 30, 2026 · 11 min read",
+    "nameTop": true,
     "portraitLoaded": true
   },
   {
     "width": 768,
     "scrollWidth": 768,
-    "titleAbove": true,
-    "titleSpans": true,
-    "portraitWidth": 199.671875,
-    "copyWidth": 474.875,
-    "sameHeight": true,
-    "bylineBg": "rgba(0, 0, 0, 0)",
+    "backLinkLeft": true,
+    "byline": "Published September 30, 2026 · 11 min read",
+    "nameTop": true,
     "portraitLoaded": true
   },
   {
     "width": 390,
     "scrollWidth": 390,
-    "titleAbove": true,
-    "titleSpans": true,
-    "portraitWidth": 144,
-    "copyWidth": 190,
-    "sameHeight": true,
-    "bylineBg": "rgba(0, 0, 0, 0)",
+    "backLinkLeft": true,
+    "byline": "Published September 30, 2026 · 11 min read",
+    "nameTop": true,
     "portraitLoaded": true
   }
 ]

@@ -2,6 +2,7 @@
 title: See the whole system. Lead the change.
 summary: 'Engineering transformation, applied AI, and technology leadership.'
 workWithMe:
+  articleSlug: faster-code-tougher-tradeoffs
   hero:
     eyebrow: WORK WITH ME
     tagline: 'Engineering transformation, applied AI, and technology leadership.'
@@ -92,4 +93,3 @@ seo:
 
 I help engineering and organizational leaders identify constraints, make deliberate technology and AI investments, and guide transformation from strategy through implementation and organizational change.
 
-I wrote more about this perspective in [Faster Code, Tougher Tradeoffs](/articles/faster-code-tougher-tradeoffs/).

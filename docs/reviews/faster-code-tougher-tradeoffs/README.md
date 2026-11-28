@@ -46,10 +46,17 @@ one-minute floor.
 
 Per the owner's reference renders, the heading column (title, subtitle, byline
 and meta line) is center-aligned; the author and reading-time/publish metadata
-are plain lines, not a callout panel. No publication date is shown until one is
-real; when set, the
-byline shows `Published <date> · <minutes> min read`, with a separate
-`Last updated <date>` line only for a later substantive revision.
+are plain lines, not a callout panel. The return link sits at the container's
+left edge, and the subtitle and byline sit close to the title.
+
+`publishedAt` is editable in Tina as a date-and-time field
+(`ui.timeFormat: 'h:mm A'`, stored in UTC). The owner-specified instant is
+`2026-09-30T08:00:00.000Z` — **08:00 UTC**, because no time zone was specified.
+The page renders only `Published September 30, 2026 · <minutes> min read` in
+UTC; the machine-readable JSON-LD keeps the full instant. A separate
+`Last updated <date>` line appears only for a later `updatedAt`. The article
+remains `draft: true`: this date is metadata, not a schedule, and the public
+route stays 404 until the owner publishes.
 
 The thesis eyebrow and text are centered. The closing Work With Me invitation
 sits below a copper rule with a primary button and no secondary About link.

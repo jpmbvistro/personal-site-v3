@@ -11,7 +11,8 @@ const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ??
 const published = data.publishedAt ? new Date(data.publishedAt) : null;
 const updated = data.updatedAt ? new Date(data.updatedAt) : null;
 const showUpdated = !!updated && !!published && updated > published;
-const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+// Store an exact UTC instant in Tina; render only the calendar date, in UTC.
+const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const minutes = readingTimeMinutes(data.body);
 
 // The hero is a separate editorial field, not a body figure or the social card.
@@ -92,7 +93,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     overflow-wrap: break-word;
   }
   .subtitle {
-    margin-top: var(--space-6);
+    margin-top: var(--space-3);
     margin-inline: auto;
     max-width: 44ch;
     color: var(--muted-foreground);
@@ -101,7 +102,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   }
   /* Plain centered byline and meta lines — not an editorial callout. */
   .byline-panel {
-    margin-top: var(--space-6);
+    margin-top: var(--space-3);
     text-align: center;
   }
   .byline {
@@ -185,7 +186,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     line-height: 1.15;
   }
   .author-bio .author-name {
-    margin: var(--space-6) 0 var(--space-3);
+    margin: 0 0 var(--space-3);
     font-family: var(--font-serif);
     font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
     font-weight: 400;

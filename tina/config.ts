@@ -396,6 +396,7 @@ const workWithMe: TinaField = {
       { type: 'string', name: 'actionLabel', label: 'Action label' },
       { type: 'string', name: 'actionUrl', label: 'Action URL' },
     ] },
+    { type: 'string', name: 'articleSlug', label: 'Published article slug for the hero backlink (optional)', description: 'Filename without .mdx. The sentence renders only when that article is published.' },
     { type: 'object', name: 'approach', label: 'Approach', fields: [
       { type: 'string', name: 'eyebrow', label: 'Eyebrow' },
       { type: 'string', name: 'title', label: 'Heading', required: true },
@@ -538,7 +539,7 @@ export default {
           { type: 'string', name: 'heroImageAlt', label: 'Hero illustration description (alt text)' },
           articleBody,
           { type: 'string', name: 'tags', label: 'Tags', list: true },
-          { type: 'datetime', name: 'publishedAt', label: 'Published at' },
+          { type: 'datetime', name: 'publishedAt', label: 'Published at (date and time)', ui: { timeFormat: 'h:mm A' } },
           { type: 'datetime', name: 'updatedAt', label: 'Updated at' },
           links,
           seo,

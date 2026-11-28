@@ -2,7 +2,7 @@
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorkWithMePageContent from '../components/WorkWithMePageContent.astro';
-import { getPage } from '../lib/tina/data';
+import { getPage, getPublishedArticles } from '../lib/tina/data';
 import { islands } from '../lib/tina/islands';
 
 const { data } = await getPage('work-with-me.md');
@@ -14,6 +14,10 @@ const image = seo.socialImage || '/uploads/work-with-me-og-1200x630.png';
 const imageAlt = seo.socialImageAlt || 'See the whole system. Lead the change. An interconnected network links people, engineering leadership, technology, delivery systems, strategy, governance, adoption, and outcomes.';
 const portrait = aboutData.page.about?.portrait;
 const portraitAlt = aboutData.page.about?.portraitAlt;
+// The hero backlink resolves only against genuinely public articles.
+const articleSlug = data.page.workWithMe?.articleSlug;
+const article = articleSlug ? (await getPublishedArticles()).find((entry) => entry._sys.breadcrumbs.join('/') === articleSlug) : undefined;
+const articleLink = articleSlug && article ? { href: `/articles/${articleSlug}/`, label: article.title } : null;
 ---
 
 <BaseLayout
@@ -27,6 +31,6 @@ const portraitAlt = aboutData.page.about?.portraitAlt;
   imageType="image/png"
 >
   <TinaIsland name="workWithMe" wrapper={islands.workWithMe.wrapper} primary>
-    <WorkWithMePageContent data={data.page} portrait={portrait} portraitAlt={portraitAlt} />
+    <WorkWithMePageContent data={data.page} portrait={portrait} portraitAlt={portraitAlt} articleLink={articleLink} />
   </TinaIsland>
 </BaseLayout>

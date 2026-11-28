@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 
-const route = '/articles/faster-code-tougher-tradeoffs/';
+// The article is an unpublished draft: the local editor preview is the only
+// place its rendered HTML is available; the public route must stay a 404.
+const route = '/preview/articles/faster-code-tougher-tradeoffs/';
 const title = 'Faster Code, Tougher Tradeoffs: AI Engineering Leadership | Juan Vistro';
 const description = 'How engineering leaders can balance AI automation, delivery bottlenecks, risk, and market opportunity through Intentional Autonomy.';
 const socialAlt = 'Faster Code, Tougher Tradeoffs by Juan Vistro, illustrated with Goldilocks overseeing a software factory where robots produce porridge faster than three bears can review and package it.';
@@ -16,7 +18,10 @@ test('article renders the approved headline, subtitle and share metadata', async
   await expect(page.locator('main .byline')).toContainText('By Juan Vistro');
   await expect(page.locator('main .byline a')).toHaveAttribute('href', '/about/');
   await expect(page.locator('main .byline-panel')).toContainText(/min read/);
-  await expect(page.locator('main header time')).toHaveCount(0);
+  await expect(page.locator('main header time')).toHaveCount(1);
+  await expect(page.locator('main header time')).toHaveAttribute('datetime', '2026-09-30T08:00:00.000Z');
+  await expect(page.locator('.byline-meta')).toContainText('Published September 30, 2026');
+  await expect(page.locator('.byline-meta')).not.toContainText(/8:00|08:00/);
   for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .byline-meta']) {
     await expect(page.locator(selector).first()).toHaveCSS('text-align', 'center');
   }
@@ -40,7 +45,7 @@ test('article renders the approved headline, subtitle and share metadata', async
   expect(structured.headline).toBe('Faster Code, Tougher Tradeoffs');
   expect(structured.description).toBe(description);
   expect(structured.author).toEqual({ '@type': 'Person', name: 'Juan Vistro', url: 'https://juanvistro.com/about/' });
-  expect(structured.datePublished).toBeUndefined();
+  expect(structured.datePublished).toBe('2026-09-30T08:00:00.000Z');
   expect(structured.dateModified).toBeUndefined();
   const canonicalLink = page.locator('link[rel="canonical"]');
   const canonical = (await canonicalLink.count()) ? await canonicalLink.getAttribute('href') : null;
@@ -227,17 +232,26 @@ test('article typography follows the editorial scale at desktop width', async ({
     return box.x + box.width / 2;
   };
   const heroCenter = await center('.article-hero img');
-  for (const selector of ['.back-link', 'main h1', 'main .subtitle', 'main .byline', 'main .article-body p', 'main .article-body h2']) {
+  for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .article-body p', 'main .article-body h2']) {
     expect(await center(selector), selector).toBeCloseTo(heroCenter, 0);
   }
+  const container = (await page.locator('#main .container').first().boundingBox())!;
+  const backLink = (await page.locator('.back-link').boundingBox())!;
+  expect(Math.abs(backLink.x - container.x)).toBeLessThanOrEqual(2);
 });
 
-test('article and Work With Me link to each other', async ({ page, request }) => {
-  await page.goto(route);
-  await expect(page.locator('.article-body a[href="/work-with-me/"]')).toBeVisible();
+test('draft article is hidden from public routes and has no reciprocal link', async ({ page, request }) => {
+  expect((await request.get('/articles/faster-code-tougher-tradeoffs/')).status()).toBe(404);
+  expect((await request.get('/articles/')).status()).toBe(404);
+  const home = await (await request.get('/')).text();
+  expect(home).not.toContain('/articles/faster-code-tougher-tradeoffs/');
   await page.goto('/work-with-me/');
-  await expect(page.locator('.hero-body a[href="/articles/faster-code-tougher-tradeoffs/"]')).toBeVisible();
-  expect((await request.get(route)).ok()).toBe(true);
+  await expect(page.locator('a[href="/articles/faster-code-tougher-tradeoffs/"]')).toHaveCount(0);
+  // A forged editor request cannot fetch the draft through the refresh island.
+  const island = await request.post('/tina-island/article?path=faster-code-tougher-tradeoffs.mdx', {
+    headers: { 'Content-Type': 'application/x-tina-preview+json' },
+  });
+  expect(island.status()).toBe(404);
 });
 
 for (const width of [320, 390, 768, 1024, 1440]) {
