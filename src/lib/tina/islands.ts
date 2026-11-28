@@ -5,7 +5,7 @@ import WorkWithMePageContent from '../../components/WorkWithMePageContent.astro'
 import PageContent from '../../components/PageContent.astro';
 import EntryContent from '../../components/EntryContent.astro';
 import ArticleContent from '../../components/ArticleContent.astro';
-import { getHomepage, getPage, getWork, getProject, getArticle } from './data';
+import { getHomepage, getPage, getWork, getProject, getArticle, getPublishedArticles } from './data';
 
 const pathFromParams = (params: URLSearchParams) => {
   const path = params.get('path') ?? '';
@@ -31,17 +31,24 @@ export const islands: IslandRegistry = {
   },
   workWithMe: {
     fetch: async () => {
-      const [page, about] = await Promise.all([getPage('work-with-me.md'), getPage('about.md')]);
-      return { page, about };
+      const [page, about, articles] = await Promise.all([getPage('work-with-me.md'), getPage('about.md'), getPublishedArticles()]);
+      return { page, about, articles };
     },
     component: WorkWithMePageContent,
     wrapper: { tag: 'div', className: 'work-with-me-page' },
     propsFromData: (result) => {
-      const resolved = result as { page: Awaited<ReturnType<typeof getPage>>; about: Awaited<ReturnType<typeof getPage>> };
+      const resolved = result as {
+        page: Awaited<ReturnType<typeof getPage>>;
+        about: Awaited<ReturnType<typeof getPage>>;
+        articles: Awaited<ReturnType<typeof getPublishedArticles>>;
+      };
+      const slug = resolved.page.data.page.workWithMe?.articleSlug;
+      const article = slug ? resolved.articles.find((entry) => entry._sys.breadcrumbs.join('/') === slug) : undefined;
       return {
         data: resolved.page.data.page,
         portrait: resolved.about.data.page.about?.portrait,
         portraitAlt: resolved.about.data.page.about?.portraitAlt,
+        articleLink: slug && article ? { href: `/articles/${slug}/`, label: article.title } : null,
       };
     },
   },

@@ -1,22 +1,38 @@
 import { expect, test } from '@playwright/test';
 
-const route = '/articles/faster-code-tougher-tradeoffs/';
-const description = 'A framework for thinking about automation, risk, bottlenecks, and engineering leadership in the age of AI-driven software development.';
+// The article is an unpublished draft: the local editor preview is the only
+// place its rendered HTML is available; the public route must stay a 404.
+const route = '/preview/articles/faster-code-tougher-tradeoffs/';
+const title = 'Faster Code, Tougher Tradeoffs: AI Engineering Leadership | Juan Vistro';
+const description = 'How engineering leaders can balance AI automation, delivery bottlenecks, risk, and market opportunity through Intentional Autonomy.';
 const socialAlt = 'Faster Code, Tougher Tradeoffs by Juan Vistro, illustrated with Goldilocks overseeing a software factory where robots produce porridge faster than three bears can review and package it.';
 const heroAlt = 'Goldilocks oversees a software factory from a control room while robots produce porridge and three overwhelmed bears review and package it for deployment.';
+const thesis = "The measure of progress isn't how little humans participate. It's how effectively the entire system delivers trustworthy software and creates value.";
+const diagramAlt = 'Five clockwise steps form a continuous loop: map the system, identify constraints, evaluate improvements, run bounded experiments, and measure and reassess, returning to the system map.';
 
 test('article renders the approved headline, subtitle and share metadata', async ({ page }) => {
   expect((await page.goto(route))?.status()).toBe(200);
   await expect(page.locator('main h1')).toHaveText('Faster Code, Tougher Tradeoffs');
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('main .subtitle')).toHaveText('Balancing Speed, Risk, and Opportunity in AI-Driven Software Engineering');
-  await expect(page.locator('main .byline')).toHaveText('By Juan Vistro');
-  await expect(page.locator('main header time')).toHaveCount(0);
-  await expect(page).toHaveTitle('Faster Code, Tougher Tradeoffs | Juan Vistro');
+  await expect(page.locator('main .byline')).toContainText('By Juan Vistro');
+  await expect(page.locator('main .byline a')).toHaveAttribute('href', '/about/');
+  await expect(page.locator('main .byline-panel')).toContainText(/min read/);
+  await expect(page.locator('main header time')).toHaveCount(1);
+  await expect(page.locator('main header time')).toHaveAttribute('datetime', '2026-09-30T08:00:00.000Z');
+  await expect(page.locator('.byline-meta')).toContainText('Published September 30, 2026');
+  await expect(page.locator('.byline-meta')).not.toContainText(/8:00|08:00/);
+  for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .byline-meta']) {
+    await expect(page.locator(selector).first()).toHaveCSS('text-align', 'center');
+  }
+  expect(await page.locator('.byline-panel').evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+  expect(await page.locator('.byline-panel').evaluate((element) => getComputedStyle(element).paddingTop)).toBe('0px');
+  await expect(page).toHaveTitle(title);
   await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description);
   await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Faster Code, Tougher Tradeoffs');
   await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', description);
+  await expect(page.locator('meta[name="twitter:description"]')).toHaveAttribute('content', description);
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /faster-code-tougher-tradeoffs-og-1200x630\.png$/);
   await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
   await expect(page.locator('meta[property="og:image:height"]')).toHaveAttribute('content', '630');
@@ -28,7 +44,9 @@ test('article renders the approved headline, subtitle and share metadata', async
   expect(structured['@type']).toBe('BlogPosting');
   expect(structured.headline).toBe('Faster Code, Tougher Tradeoffs');
   expect(structured.description).toBe(description);
-  expect(structured.author).toEqual({ '@type': 'Person', name: 'Juan Vistro' });
+  expect(structured.author).toEqual({ '@type': 'Person', name: 'Juan Vistro', url: 'https://juanvistro.com/about/' });
+  expect(structured.datePublished).toBe('2026-09-30T08:00:00.000Z');
+  expect(structured.dateModified).toBeUndefined();
   const canonicalLink = page.locator('link[rel="canonical"]');
   const canonical = (await canonicalLink.count()) ? await canonicalLink.getAttribute('href') : null;
   if (canonical) {
@@ -61,14 +79,15 @@ test('header order places the control-room hero after the byline and before the 
   await expect(page.locator('main img[src*="og-1200x630"]')).toHaveCount(0);
 });
 
-test('four captioned body figures appear at their exact paragraph anchors', async ({ page }) => {
+test('five captioned body figures appear at their exact paragraph anchors', async ({ page }) => {
   await page.goto(route);
   const figures = page.locator('.article-figure');
-  await expect(figures).toHaveCount(4);
+  await expect(figures).toHaveCount(5);
   await expect(figures.nth(0).locator('img')).toHaveAttribute('src', /breadth-vs-depth-porridge-automation-lab\.webp$/);
   await expect(figures.nth(1).locator('img')).toHaveAttribute('src', /code-porridge-bottleneck\.webp$/);
   await expect(figures.nth(2).locator('img')).toHaveAttribute('src', /goldilocks-and-the-automation-porridge\.webp$/);
   await expect(figures.nth(3).locator('img')).toHaveAttribute('src', /the-three-bears-cozy-automation-workshop\.webp$/);
+  await expect(figures.nth(4).locator('img')).toHaveAttribute('src', /progressive-software-factory-development-cycle\.webp$/);
 
   const anchors = await page.locator('.article-body').evaluate((body) => {
     const nodes = [...body.children];
@@ -89,6 +108,14 @@ test('four captioned body figures appear at their exact paragraph anchors', asyn
   expect(anchors[2].after).toContain("The question isn't simply how much automation we can achieve.");
   expect(anchors[3].before).toContain('Measure and reassess.');
   expect(anchors[3].after).toContain('Within that process, I keep returning to three capabilities');
+  expect(anchors[4].before).toContain("I wouldn't collapse them into a single automation maturity score.");
+  expect(anchors[4].after).toContain("I'd rather have a useful picture of where work happens");
+
+  const cycle = figures.nth(4).locator('img');
+  await expect(cycle).toHaveAttribute('alt', diagramAlt);
+  await expect(cycle).toHaveAttribute('width', '1280');
+  await expect(cycle).toHaveAttribute('height', '853');
+  await expect(figures.nth(4).locator('figcaption')).toHaveText('A continuous cycle for choosing, testing, and reassessing the next improvement—not a ladder toward maximum autonomy.');
 
   for (const figure of await figures.all()) {
     await expect(figure.locator('figcaption')).not.toBeEmpty();
@@ -98,6 +125,88 @@ test('four captioned body figures appear at their exact paragraph anchors', asyn
     await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
   }
+});
+
+test('thesis is an original editorial callout, not an attributed quotation', async ({ page }) => {
+  await page.goto(route);
+  await expect(page.locator('.article-body .article-thesis')).toHaveCount(1);
+  await expect(page.locator('.article-body blockquote')).toHaveCount(0);
+  await expect(page.locator('.article-thesis .thesis-text')).toHaveText(thesis);
+  await expect(page.locator('.article-thesis .thesis-text')).not.toContainText(/[“”"]/);
+  await expect(page.locator('.article-thesis .thesis-text')).toHaveCSS('text-align', 'center');
+  await expect(page.locator('.article-thesis .thesis-eyebrow')).toHaveText('THE MEASURE OF PROGRESS');
+  await expect(page.locator('.article-thesis .thesis-eyebrow')).toHaveCSS('text-align', 'center');
+  await expect(page.locator('.article-thesis')).toHaveCSS('border-top-width', '1px');
+  expect(await page.locator('.article-thesis').evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
+});
+
+test('author bio follows the closing CTA and links to About', async ({ page }) => {
+  await page.goto(route);
+  await expect(page.locator('.author-bio')).toHaveCount(1);
+  await expect(page.locator('.author-bio')).toContainText('Juan Vistro is an engineering leader and technology strategist');
+  await expect(page.locator('.author-bio-title')).toHaveText('About the author');
+  await expect(page.locator('.author-name')).toHaveText('Juan Vistro');
+  const link = page.locator('.author-bio .author-link');
+  await expect(link).toHaveAttribute('href', '/about/');
+  await expect(link).toHaveCount(1);
+  expect(await link.evaluate((element) => element.classList.contains('button-link'))).toBe(false);
+  await expect(link).toHaveCSS('text-decoration-line', 'underline');
+  expect(await link.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+  await expect(page.locator('.author-portrait')).toHaveAttribute('src', '/uploads/juan_vistro_portrait_q76.webp');
+  await expect(page.locator('.author-portrait')).toHaveAttribute('alt', 'Portrait of Juan Vistro');
+  const title = (await page.locator('.author-bio-title').boundingBox())!;
+  const portrait = (await page.locator('.author-portrait').boundingBox())!;
+  const copy = (await page.locator('.author-bio-copy').boundingBox())!;
+  expect(title.y + title.height).toBeLessThanOrEqual(portrait.y + 2);
+  expect(title.y + title.height).toBeLessThanOrEqual(copy.y + 2);
+  expect(title.width).toBeGreaterThan(portrait.width + copy.width);
+  expect(Math.abs(portrait.height - copy.height)).toBeLessThanOrEqual(2);
+  expect(portrait.width).toBeGreaterThanOrEqual(288);
+  const order = await page.locator('#main').evaluate((main) => {
+    const nodes = [...main.querySelectorAll('.article-body, .author-bio')];
+    return nodes.map((node) => node.className);
+  });
+  expect(order.indexOf('author-bio')).toBeGreaterThan(order.indexOf('article-body'));
+  await expect(page.locator('.article-body a[href="/work-with-me/"]')).toBeVisible();
+});
+
+test('the main closing CTA is a primary button under a copper rule', async ({ page }) => {
+  await page.goto(route);
+  await expect(page.locator('.article-body .article-cta')).toHaveCount(1);
+  await expect(page.locator('.article-cta .cta-invitation')).toHaveText('Interested in applying these ideas to your engineering organization?');
+  const cta = page.locator('.article-cta .button-link');
+  await expect(cta).toHaveAttribute('href', '/work-with-me/');
+  await expect(cta).toHaveClass(/button-link/);
+  await expect(cta).toHaveText(/Learn more about working with me/);
+  await expect(cta).toHaveClass(/primary/);
+  await expect(page.locator('.article-cta')).toHaveCSS('border-top-width', '1px');
+  await expect(page.locator('.article-cta .cta-invitation')).toHaveCSS('text-align', 'left');
+  expect(await page.locator('.article-cta').evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgba(0, 0, 0, 0)');
+  await expect(page.locator('.article-cta a[href="/about/"]')).toHaveCount(0);
+  expect(await cta.evaluate((element) => getComputedStyle(element).minHeight)).toBe('44px');
+});
+
+test('reading time is derived from prose at a documented 200 words per minute', async ({ page }) => {
+  await page.goto(route);
+  const expected = await page.locator('.article-body').evaluate((element) => {
+    const body = element as HTMLElement;
+    let text = body.innerText;
+    for (const node of body.querySelectorAll('figcaption, .thesis-eyebrow, .article-cta')) {
+      text = text.replace(node.textContent ?? '', ' ');
+    }
+    const words = text.trim().split(/\s+/).filter((word: string) => /\p{L}|\p{N}/u.test(word)).length;
+    return Math.max(1, Math.ceil(words / 200));
+  });
+  await expect(page.locator('.byline-panel')).toContainText(`${expected} min read`);
+});
+
+test('Dan Shapiro is credited and linked at first mention', async ({ page }) => {
+  await page.goto(route);
+  const link = page.locator('.article-body a[href="https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/"]');
+  await expect(link).toHaveCount(1);
+  await expect(link).toHaveText('Dan Shapiro');
+  await expect(page.locator('.article-body')).toContainText('levels of automation ranging from zero to five');
+  await expect(page.locator('.article-body')).toContainText('Take an authentication change.');
 });
 
 test('article typography follows the editorial scale at desktop width', async ({ page }) => {
@@ -114,23 +223,35 @@ test('article typography follows the editorial scale at desktop width', async ({
   expect(await px('main .article-body p')).toBeGreaterThanOrEqual(18);
   expect(await px('main .article-body p')).toBeLessThanOrEqual(20);
   expect(await px('main .article-figure figcaption')).toBeGreaterThanOrEqual(14);
+  expect(await px('main .thesis-text')).toBeGreaterThanOrEqual(28);
+  expect(await px('main .thesis-text')).toBeLessThanOrEqual(36);
+  await expect(page.locator('main .article-body h2').first()).toHaveCSS('text-align', 'left');
 
   const center = async (selector: string) => {
     const box = (await page.locator(selector).first().boundingBox())!;
     return box.x + box.width / 2;
   };
   const heroCenter = await center('.article-hero img');
-  for (const selector of ['.back-link', 'main h1', 'main .subtitle', 'main .byline', 'main .article-body p', 'main .article-body h2']) {
+  for (const selector of ['main h1', 'main .subtitle', 'main .byline', 'main .article-body p', 'main .article-body h2']) {
     expect(await center(selector), selector).toBeCloseTo(heroCenter, 0);
   }
+  const container = (await page.locator('#main .container').first().boundingBox())!;
+  const backLink = (await page.locator('.back-link').boundingBox())!;
+  expect(Math.abs(backLink.x - container.x)).toBeLessThanOrEqual(2);
 });
 
-test('article and Work With Me link to each other', async ({ page, request }) => {
-  await page.goto(route);
-  await expect(page.locator('.article-body a[href="/work-with-me/"]')).toBeVisible();
+test('draft article is hidden from public routes and has no reciprocal link', async ({ page, request }) => {
+  expect((await request.get('/articles/faster-code-tougher-tradeoffs/')).status()).toBe(404);
+  expect((await request.get('/articles/')).status()).toBe(404);
+  const home = await (await request.get('/')).text();
+  expect(home).not.toContain('/articles/faster-code-tougher-tradeoffs/');
   await page.goto('/work-with-me/');
-  await expect(page.locator('.hero-body a[href="/articles/faster-code-tougher-tradeoffs/"]')).toBeVisible();
-  expect((await request.get(route)).ok()).toBe(true);
+  await expect(page.locator('a[href="/articles/faster-code-tougher-tradeoffs/"]')).toHaveCount(0);
+  // A forged editor request cannot fetch the draft through the refresh island.
+  const island = await request.post('/tina-island/article?path=faster-code-tougher-tradeoffs.mdx', {
+    headers: { 'Content-Type': 'application/x-tina-preview+json' },
+  });
+  expect(island.status()).toBe(404);
 });
 
 for (const width of [320, 390, 768, 1024, 1440]) {

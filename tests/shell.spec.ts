@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 const brandRoutes = [
   '/', '/work/', '/projects/', '/about/', '/contact/', '/resume/',
-  '/articles/faster-code-tougher-tradeoffs/',
+  '/preview/articles/faster-code-tougher-tradeoffs/',
   '/work/scaling-ux-capability/', '/work/api-migration-confidence/',
   '/work/ai-assisted-delivery/', '/work/nonprofit-crm-selection/',
   '/preview/projects/keel/',

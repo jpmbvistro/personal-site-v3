@@ -10,8 +10,9 @@ interface Props {
   data: PageQuery['page'];
   portrait?: string | null;
   portraitAlt?: string | null;
+  articleLink?: { href: string; label: string } | null;
 }
-const { data, portrait, portraitAlt } = Astro.props;
+const { data, portrait, portraitAlt, articleLink } = Astro.props;
 const w = data.workWithMe;
 const hero = w?.hero;
 const approach = w?.approach;
@@ -62,6 +63,7 @@ const focusItems = [focus?.engineering, focus?.ai].filter(Boolean);
       <div class="hero-body prose" data-tina-field={tinaField(data, 'body')}>
         <RichText content={data.body} />
       </div>
+      {articleLink && <p class="hero-article-link">I wrote more about this perspective in <a href={articleLink.href}>{articleLink.label}</a>.</p>}
       <div class="hero-actions">
         <ButtonLink
           href={heroUrl}
@@ -308,6 +310,8 @@ const focusItems = [focus?.engineering, focus?.ai].filter(Boolean);
   .hero-tagline { margin-top: var(--space-4); font-family: var(--font-serif); font-size: clamp(1.25rem, 1rem + 1vw, 1.5rem); color: var(--primary-foreground); opacity: 0.95; }
   .hero-body { margin-top: var(--space-6); max-width: 42rem; color: var(--primary-foreground); opacity: 0.88; line-height: 1.65; }
   .hero-body :global(p) { color: inherit; }
+  .hero-article-link { margin-top: var(--space-4); max-width: 42rem; color: var(--primary-foreground); opacity: 0.88; line-height: 1.65; }
+  .hero-article-link a { color: inherit; text-decoration: underline; text-underline-offset: 0.25em; }
   .hero-actions { margin-top: var(--space-8); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
   .hero :global(.button-link) { background: var(--primary-foreground); color: var(--primary); border-color: var(--primary-foreground); padding-inline: var(--space-6); }
   .hero :global(.button-link:hover) { background: var(--secondary); color: var(--primary); }

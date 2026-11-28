@@ -19,7 +19,7 @@ for (const slug of workSlugs) {
   const source = await readFile(new URL(`../content/work/${slug}.mdx`, import.meta.url), 'utf8');
   if (!/^draft: false$/m.test(source)) workDrafts.push(slug);
 }
-const draftRoutes = [...workDrafts.map((slug) => `work/${slug}`), 'work/static-editorial-draft', 'projects/keel', 'projects/static-unpublished'];
+const draftRoutes = [...workDrafts.map((slug) => `work/${slug}`), 'work/static-editorial-draft', 'projects/keel', 'projects/static-unpublished', 'articles/faster-code-tougher-tradeoffs'];
 const runBuild = async (env = {}) => {
   const child = spawn('npm', ['run', 'build'], { stdio: 'inherit', env: { ...process.env, ...env } });
   const [code] = await once(child, 'exit');
@@ -144,7 +144,7 @@ try {
   });
   assert.equal(published.status, 200, 'Published island must render with the CMS available');
   assert.match(await published.text(), /35\/40/);
-  for (const [collection, path] of [...workDrafts.map((slug) => ['work', `${slug}.mdx`]), ['work', 'static-editorial-draft.mdx'], ['project', 'keel.mdx']]) {
+  for (const [collection, path] of [...workDrafts.map((slug) => ['work', `${slug}.mdx`]), ['work', 'static-editorial-draft.mdx'], ['project', 'keel.mdx'], ['article', 'faster-code-tougher-tradeoffs.mdx']]) {
     const response = await fetch(`http://127.0.0.1:4323/tina-island/${collection}?path=${path}&preview=1`, {
       method: 'POST', headers: { 'Content-Type': 'application/x-tina-preview+json', Cookie: '__tina_edit=1', 'Sec-Fetch-Dest': 'iframe' },
     });

@@ -136,5 +136,30 @@
         "bytes": 98026
       }
     ]
+  },
+  {
+    "source": "docs/reviews/faster-code-tougher-tradeoffs/sources/Porridge_Factory_Development_Cycle.png",
+    "dimensions": {
+      "width": 1536,
+      "height": 1024
+    },
+    "derivatives": [
+      {
+        "derivative": "public/uploads/articles/progressive-software-factory-development-cycle.webp",
+        "derivativeDimensions": {
+          "width": 1280,
+          "height": 853
+        },
+        "bytes": 392894
+      },
+      {
+        "derivative": "public/uploads/articles/progressive-software-factory-development-cycle-640.webp",
+        "derivativeDimensions": {
+          "width": 640,
+          "height": 427
+        },
+        "bytes": 117578
+      }
+    ]
   }
 ]

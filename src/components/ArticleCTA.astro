@@ -1,0 +1,34 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { safeHref } from '../lib/links';
+
+interface Props {
+  text?: string | null;
+  label?: string | null;
+  url?: string | null;
+}
+const { text, label, url: rawUrl } = Astro.props;
+const url = safeHref(rawUrl);
+---
+
+{text && url && label && <section class="article-cta">
+  <p class="cta-invitation">{text}</p>
+  <ButtonLink href={url} variant="primary">{label}</ButtonLink>
+</section>}
+
+<style>
+  /* One closing action below a copper rule — no panel competing with the prose. */
+  .article-cta {
+    max-width: 46rem;
+    margin: var(--space-12) auto 0;
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--accent);
+  }
+  .article-cta .cta-invitation {
+    margin: 0;
+    color: var(--primary);
+    font: 400 clamp(1.5rem, 1.3rem + 1vw, 2rem)/1.3 var(--font-serif);
+    text-align: left;
+  }
+  .article-cta :global(.button-link) { margin-top: var(--space-6); }
+</style>

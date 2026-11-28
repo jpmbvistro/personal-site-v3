@@ -3,15 +3,21 @@ import { tinaField } from '@tinacms/astro';
 import type { ArticleQuery } from '../../tina/__generated__/types';
 import RichText from './RichText.astro';
 import { safeHref } from '../lib/links';
+import { readingTimeMinutes } from '../lib/reading-time';
 
 interface Props { data: ArticleQuery['article'] }
 const { data } = Astro.props;
 const links = data.links?.filter((link) => link?.label && safeHref(link.url)) ?? [];
 const published = data.publishedAt ? new Date(data.publishedAt) : null;
 const updated = data.updatedAt ? new Date(data.updatedAt) : null;
+const showUpdated = !!updated && !!published && updated > published;
+// Store an exact UTC instant in Tina; render only the calendar date, in UTC.
+const formatDate = (date: Date) => date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const minutes = readingTimeMinutes(data.body);
 
 // The hero is a separate editorial field, not a body figure or the social card.
 const heroSrc = safeHref(data.heroImage);
+const portraitSrc = safeHref(data.authorPortrait);
 const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   ? `${heroSrc.replace(/\.webp$/, '-640.webp')} 640w, ${heroSrc} 1280w`
   : undefined;
@@ -19,13 +25,19 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
 <div class="article-story">
   {data.draft !== false && <p class="draft-note">Draft · Local editor preview only. Not published.</p>}
   <header class="article-heading">
-    <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
-    {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
-    <p class="byline">
-      <span>By Juan Vistro</span>
-      {published && <time datetime={data.publishedAt}>{published.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>}
-      {updated && <span>Updated {updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>}
-    </p>
+    <div class="article-heading-inner">
+      <h1 data-tina-field={tinaField(data, 'title')}>{data.title}</h1>
+      {data.subtitle && <p class="subtitle" data-tina-field={tinaField(data, 'subtitle')}>{data.subtitle}</p>}
+      <div class="byline-panel">
+        <p class="byline"><a href="/about/">By Juan Vistro</a></p>
+        <p class="byline-meta">
+          {published && <time datetime={data.publishedAt}>Published {formatDate(published)}</time>}
+          {published && <span aria-hidden="true"> · </span>}
+          <span>{minutes} min read</span>
+          {showUpdated && <span class="updated-line">Last updated <time datetime={data.updatedAt}>{formatDate(updated!)}</time></span>}
+        </p>
+      </div>
+    </div>
     {heroSrc && <figure class="article-hero" data-tina-field={tinaField(data, 'heroImage')}>
       <img
         src={heroSrc}
@@ -44,38 +56,69 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   {links.length > 0 && <nav class="article-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
     {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
   </nav>}
+  {(data.authorBio || portraitSrc) && <section class="author-bio" aria-labelledby="author-bio-title">
+    <h2 id="author-bio-title" class="author-bio-title">About the author</h2>
+    <div class="author-bio-body">
+      {portraitSrc && <img
+        class="author-portrait"
+        src={portraitSrc}
+        alt={data.authorPortraitAlt || 'Portrait of Juan Vistro'}
+        width="1024"
+        height="906"
+        loading="lazy"
+        decoding="async"
+        data-tina-field={tinaField(data, 'authorPortrait')}
+      />}
+      <div class="author-bio-copy">
+        <h3 class="author-name">Juan Vistro</h3>
+        {data.authorBio && <p data-tina-field={tinaField(data, 'authorBio')}>{data.authorBio}</p>}
+        <a class="author-link" href="/about/">More about Juan Vistro</a>
+      </div>
+    </div>
+  </section>}
 </div>
 
 <style>
-  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: left; }
+  .article-heading { margin-top: clamp(var(--space-4), 2.5vw, var(--space-8)); text-align: center; }
+  /* One centered editorial column; the hero keeps the wider canvas. */
+  .article-heading-inner { max-width: 60rem; margin-inline: auto; }
   h1 {
-    max-width: 22ch;
+    max-width: 100%;
     margin-top: 0;
     margin-inline: auto;
     font-size: clamp(2.75rem, 1.6rem + 3.2vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.035em;
-    overflow-wrap: anywhere;
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
   .subtitle {
-    margin-top: var(--space-6);
+    margin-top: var(--space-3);
     margin-inline: auto;
     max-width: 44ch;
     color: var(--muted-foreground);
     font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
     line-height: 1.35;
   }
+  /* Plain centered byline and meta lines — not an editorial callout. */
+  .byline-panel {
+    margin-top: var(--space-3);
+    text-align: center;
+  }
   .byline {
-    margin-top: var(--space-6);
-    margin-inline: auto;
-    max-width: 46rem;
-    justify-content: flex-start;
-    display: flex;
-    gap: var(--space-4);
-    flex-wrap: wrap;
+    margin: 0;
+    color: var(--primary);
+    font: 600 1.25rem/1.35 var(--font-serif);
+  }
+  .byline a { color: inherit; text-decoration: none; }
+  .byline a:hover, .byline a:focus-visible { text-decoration: underline; }
+  .byline-meta {
+    margin-top: var(--space-2);
     color: var(--muted-foreground);
     font-size: 0.9375rem;
+    line-height: 1.6;
   }
+  .updated-line { display: block; }
   .article-hero {
     width: min(100%, 71.25rem);
     margin: clamp(var(--space-8), 4vw, var(--space-12)) auto 0;
@@ -100,7 +143,7 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   .article-body :global(h2) {
     max-width: 46rem;
     margin-inline: auto;
-    text-align: center;
+    text-align: left;
     margin-top: clamp(2.5rem, 4vw, var(--space-12));
     font-size: clamp(1.75rem, 1.35rem + 1vw, 2.5rem);
   }
@@ -111,6 +154,57 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     gap: var(--space-6);
     max-width: 46rem;
     margin: var(--space-8) auto 0;
+  }
+  /* The heading spans both columns; the portrait fills the details' height. */
+  .author-bio {
+    max-width: 46rem;
+    margin: var(--space-12) auto 0;
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border);
+  }
+  .author-bio-body {
+    display: grid;
+    grid-template-columns: clamp(12rem, 26vw, 18rem) minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: stretch;
+  }
+  .author-portrait {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 14rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--muted);
+    object-fit: cover;
+    object-position: center 15%;
+  }
+  .author-bio-copy { min-width: 0; }
+  .author-bio .author-bio-title {
+    margin: 0 0 var(--space-6);
+    font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.5rem);
+    line-height: 1.15;
+  }
+  .author-bio .author-name {
+    margin: 0 0 var(--space-3);
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  .author-bio-copy p { color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.6; }
+  .author-bio .author-link {
+    display: inline-block;
+    margin-top: var(--space-4);
+    color: var(--primary);
+    font-size: 0.9375rem;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+  @media (max-width: 40rem) {
+    .author-bio-body { grid-template-columns: 9rem minmax(0, 1fr); gap: var(--space-4); }
+    .author-portrait { min-height: 12rem; object-position: center 20%; }
   }
   .draft-note {
     max-width: 46rem;

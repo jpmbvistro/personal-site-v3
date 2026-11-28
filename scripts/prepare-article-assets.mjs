@@ -20,6 +20,7 @@ const illustrations = [
   ['Goldilocks_and_the_Code_Review_Crunch.png', 'goldilocks-and-the-code-review-crunch.webp'],
   ['Code_Porridge_Bottleneck.png', 'code-porridge-bottleneck.webp'],
   ['Goldilocks_and_the_Automation_Porridge.png', 'goldilocks-and-the-automation-porridge.webp'],
+  ['Porridge_Factory_Development_Cycle.png', 'progressive-software-factory-development-cycle.webp'],
 ];
 
 const report = [];
