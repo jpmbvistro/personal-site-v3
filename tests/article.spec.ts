@@ -132,7 +132,10 @@ test('author bio follows the closing CTA and links to About', async ({ page }) =
   await page.goto(route);
   await expect(page.locator('.author-bio')).toHaveCount(1);
   await expect(page.locator('.author-bio')).toContainText('Juan Vistro is an engineering leader and technology strategist');
-  await expect(page.locator('.author-bio a')).toHaveAttribute('href', '/about/');
+  await expect(page.locator('.author-bio .button-link')).toHaveAttribute('href', '/about/');
+  await expect(page.locator('.author-bio .button-link')).toHaveClass(/primary/);
+  await expect(page.locator('.author-portrait')).toHaveAttribute('src', '/uploads/juan_vistro_portrait_q76.webp');
+  await expect(page.locator('.author-portrait')).toHaveAttribute('alt', 'Portrait of Juan Vistro');
   const order = await page.locator('#main').evaluate((main) => {
     const nodes = [...main.querySelectorAll('.article-body, .author-bio')];
     return nodes.map((node) => node.className);
@@ -141,12 +144,24 @@ test('author bio follows the closing CTA and links to About', async ({ page }) =
   await expect(page.locator('.article-body a[href="/work-with-me/"]')).toBeVisible();
 });
 
+test('the main closing CTA is a prominent button on the deep-green surface', async ({ page }) => {
+  await page.goto(route);
+  await expect(page.locator('.article-body .article-cta')).toHaveCount(1);
+  await expect(page.locator('.article-cta .cta-invitation')).toHaveText('Interested in applying these ideas to your engineering organization?');
+  const cta = page.locator('.article-cta .button-link');
+  await expect(cta).toHaveAttribute('href', '/work-with-me/');
+  await expect(cta).toHaveClass(/button-link/);
+  await expect(cta).toHaveText(/Learn more about working with me/);
+  expect(await page.locator('.article-cta').evaluate((element) => getComputedStyle(element).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
+  expect(await cta.evaluate((element) => getComputedStyle(element).minHeight)).toBe('44px');
+});
+
 test('reading time is derived from prose at a documented 200 words per minute', async ({ page }) => {
   await page.goto(route);
   const expected = await page.locator('.article-body').evaluate((element) => {
     const body = element as HTMLElement;
     let text = body.innerText;
-    for (const node of body.querySelectorAll('figcaption, .thesis-eyebrow')) {
+    for (const node of body.querySelectorAll('figcaption, .thesis-eyebrow, .article-cta')) {
       text = text.replace(node.textContent ?? '', ' ');
     }
     const words = text.trim().split(/\s+/).filter((word: string) => /\p{L}|\p{N}/u.test(word)).length;

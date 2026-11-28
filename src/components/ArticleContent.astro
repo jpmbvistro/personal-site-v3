@@ -2,6 +2,7 @@
 import { tinaField } from '@tinacms/astro';
 import type { ArticleQuery } from '../../tina/__generated__/types';
 import RichText from './RichText.astro';
+import ButtonLink from './ButtonLink.astro';
 import { safeHref } from '../lib/links';
 import { readingTimeMinutes } from '../lib/reading-time';
 
@@ -14,6 +15,7 @@ const minutes = readingTimeMinutes(data.body);
 
 // The hero is a separate editorial field, not a body figure or the social card.
 const heroSrc = safeHref(data.heroImage);
+const portraitSrc = safeHref(data.authorPortrait);
 const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   ? `${heroSrc.replace(/\.webp$/, '-640.webp')} 640w, ${heroSrc} 1280w`
   : undefined;
@@ -49,9 +51,21 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
   {links.length > 0 && <nav class="article-links" aria-label="Related links" data-tina-field={tinaField(data, 'links')}>
     {links.map((link) => link && <a href={safeHref(link.url)}>{link.label} <span aria-hidden="true">↗</span></a>)}
   </nav>}
-  {data.authorBio && <section class="author-bio" aria-label="About the author" data-tina-field={tinaField(data, 'authorBio')}>
-    <p>{data.authorBio}</p>
-    <a href="/about/">More about Juan Vistro</a>
+  {(data.authorBio || portraitSrc) && <section class="author-bio" aria-label="About the author">
+    {portraitSrc && <img
+      class="author-portrait"
+      src={portraitSrc}
+      alt={data.authorPortraitAlt || 'Portrait of Juan Vistro'}
+      width="1024"
+      height="906"
+      loading="lazy"
+      decoding="async"
+      data-tina-field={tinaField(data, 'authorPortrait')}
+    />}
+    <div class="author-bio-copy">
+      {data.authorBio && <p data-tina-field={tinaField(data, 'authorBio')}>{data.authorBio}</p>}
+      <ButtonLink href="/about/" variant="primary">More about Juan Vistro</ButtonLink>
+    </div>
   </section>}
 </div>
 
@@ -125,16 +139,31 @@ const heroSrcset = heroSrc?.endsWith('.webp') && !heroSrc.endsWith('-640.webp')
     margin: var(--space-8) auto 0;
   }
   .author-bio {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
     max-width: 46rem;
     margin: var(--space-12) auto 0;
     padding-top: var(--space-6);
     border-top: 1px solid var(--border);
-    color: var(--muted-foreground);
-    font-size: 0.9375rem;
-    line-height: 1.6;
   }
-  .author-bio p { font-size: inherit; }
-  .author-bio a { display: inline-block; margin-top: var(--space-3); }
+  .author-portrait {
+    display: block;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: var(--muted);
+    object-fit: cover;
+    object-position: center top;
+  }
+  .author-bio-copy p { color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.6; }
+  .author-bio-copy :global(.button-link) { margin-top: var(--space-4); font-size: var(--text-small); }
+  @media (max-width: 30rem) {
+    .author-bio { grid-template-columns: 4.5rem minmax(0, 1fr); gap: var(--space-4); }
+    .author-portrait { width: 4.5rem; height: 4.5rem; }
+  }
   .draft-note {
     max-width: 46rem;
     margin: 0 auto var(--space-6);

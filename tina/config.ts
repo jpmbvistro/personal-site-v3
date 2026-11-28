@@ -104,6 +104,16 @@ const articleFigure: Template = {
   ],
 };
 
+// A single closing action, distinct from the adjacent author context.
+const articleCta: Template = {
+  name: 'ArticleCTA', label: 'Article closing call to action',
+  fields: [
+    { type: 'string', name: 'text', label: 'Invitation', required: true, ui: { component: 'textarea' } },
+    { type: 'string', name: 'label', label: 'Button label', required: true },
+    { type: 'string', name: 'url', label: 'Destination', required: true },
+  ],
+};
+
 // The thesis is the author's own text in situ, not an attributed quotation.
 const articleThesis: Template = {
   name: 'ArticleThesis', label: 'Article thesis callout',
@@ -209,7 +219,7 @@ const body: TinaField = {
 // shared block set unchanged.
 const articleBody: TinaField = {
   ...body,
-  templates: [...visualBlocks, articleFigure, articleThesis],
+  templates: [...visualBlocks, articleFigure, articleThesis, articleCta],
 };
 
 const entryFields: TinaField[] = [
@@ -521,6 +531,8 @@ export default {
           { type: 'string', name: 'subtitle', label: 'Subtitle / deck' },
           { type: 'string', name: 'summary', label: 'Summary', ui: { component: 'textarea' } },
           { type: 'string', name: 'authorBio', label: 'Author bio (shown after the closing CTA)', ui: { component: 'textarea' } },
+          { type: 'image', name: 'authorPortrait', label: 'Author portrait (approved headshot)' },
+          { type: 'string', name: 'authorPortraitAlt', label: 'Author portrait description (alt text)' },
           // Distinct editorial role: on-page hero, not a body figure or social card.
           { type: 'image', name: 'heroImage', label: 'Hero illustration (on-page)', description: 'Wide editorial illustration shown after the heading. Not used for social previews.' },
           { type: 'string', name: 'heroImageAlt', label: 'Hero illustration description (alt text)' },

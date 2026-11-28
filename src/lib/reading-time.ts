@@ -7,12 +7,15 @@ export const WORDS_PER_MINUTE = 200;
 
 type RichTextNode = {
   type?: string;
+  name?: string;
   text?: string;
   children?: RichTextNode[];
   props?: Record<string, unknown>;
 };
 
 const proseProps = ['text', 'quote'];
+// Actions and illustration metadata are not article prose.
+const nonProseComponents = new Set(['ArticleFigure', 'ArticleCTA']);
 
 function collectText(node: unknown, words: string[]): void {
   if (!node || typeof node !== 'object') return;
@@ -22,7 +25,7 @@ function collectText(node: unknown, words: string[]): void {
   }
   const value = node as RichTextNode;
   if (typeof value.text === 'string' && value.text.trim()) words.push(value.text.trim());
-  if (value.props) {
+  if (value.props && !nonProseComponents.has(value.name ?? '')) {
     for (const key of proseProps) {
       const prop = value.props[key];
       if (typeof prop === 'string' && prop.trim()) words.push(prop.trim());

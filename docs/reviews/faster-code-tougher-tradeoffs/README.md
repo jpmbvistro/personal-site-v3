@@ -40,8 +40,14 @@ with the five-step list in the prose, which remains the semantic equivalent,
 especially at mobile widths.
 
 Reading time is computed from authored prose only (paragraphs, list items,
-headings and original-text callout text; not image alt text, captions, labels
-or metadata) at 200 words per minute, rounded up with a one-minute floor.
+headings and original-text callout text; not image alt text, captions, labels,
+the closing CTA or metadata) at 200 words per minute, rounded up with a
+one-minute floor.
+
+The approved headshot (`juan_vistro_portrait_q76.webp`) appears beside the
+author bio after the closing action. Both the Work With Me invitation and the
+About-the-author link render as real button links, with the Work With Me action
+on the site's deep-green surface so it stays the primary closing action.
 
 ## Verification
 

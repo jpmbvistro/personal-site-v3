@@ -1,0 +1,42 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { safeHref } from '../lib/links';
+
+interface Props {
+  text?: string | null;
+  label?: string | null;
+  url?: string | null;
+}
+const { text, label, url: rawUrl } = Astro.props;
+const url = safeHref(rawUrl);
+---
+
+{text && url && label && <section class="article-cta">
+  <p class="cta-invitation">{text}</p>
+  <ButtonLink href={url} variant="secondary">{label} <span aria-hidden="true">↗</span></ButtonLink>
+</section>}
+
+<style>
+  /* One strong closing action on the site's deep-green surface. */
+  .article-cta {
+    --ring: var(--background);
+    max-width: 46rem;
+    margin: var(--space-12) auto 0;
+    padding: var(--space-8);
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .article-cta .cta-invitation {
+    margin: 0;
+    color: inherit;
+    font: 400 clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem)/1.4 var(--font-serif);
+  }
+  .article-cta :global(.button-link.secondary) {
+    margin-top: var(--space-6);
+    background: var(--background);
+    color: var(--primary);
+    border-color: var(--background);
+  }
+  .article-cta :global(.button-link.secondary:hover) { background: var(--secondary); }
+</style>
